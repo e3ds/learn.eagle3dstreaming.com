@@ -1,0 +1,854 @@
+<title>Microphone Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+  :root {
+    --ground:      #FAFBFA;
+    --surface:     #FFFFFF;
+    --surface-2:   #F1F4F3;
+    --line:        #DDE3E1;
+    --line-strong: #C2CCC9;
+    --ink:         #141A19;
+    --ink-2:       #4A5654;
+    --ink-3:       #737F7D;
+    --accent:      #176B6B;
+    --accent-soft: #DCEBEA;
+    --warn:        #96631A;
+    --warn-soft:   #F6EEDC;
+    --track:       #D8E0DE;
+
+    --measure: 66ch;
+    --r: 3px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0F1413;
+      --surface:     #161C1B;
+      --surface-2:   #1D2524;
+      --line:        #2A3433;
+      --line-strong: #3C4846;
+      --ink:         #E8EEEC;
+      --ink-2:       #A8B4B2;
+      --ink-3:       #7C8886;
+      --accent:      #5FC2BC;
+      --accent-soft: #14302F;
+      --warn:        #D9A54E;
+      --warn-soft:   #2E2617;
+      --track:       #2A3433;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #0F1413;
+    --surface:     #161C1B;
+    --surface-2:   #1D2524;
+    --line:        #2A3433;
+    --line-strong: #3C4846;
+    --ink:         #E8EEEC;
+    --ink-2:       #A8B4B2;
+    --ink-3:       #7C8886;
+    --accent:      #5FC2BC;
+    --accent-soft: #14302F;
+    --warn:        #D9A54E;
+    --warn-soft:   #2E2617;
+    --track:       #2A3433;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 22px; margin-bottom: 40px; }
+
+  .eyebrow {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700; font-size: clamp(30px, 5vw, 42px);
+    line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 12px;
+    text-wrap: balance;
+  }
+
+  .standfirst { margin: 0; max-width: var(--measure); color: var(--ink-2); font-size: 18px; }
+
+  section { margin-top: 52px; scroll-margin-top: 24px; }
+  .card { scroll-margin-top: 24px; }
+
+  h2 {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600; font-size: 13px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 20px;
+    padding-bottom: 9px; border-bottom: 1px solid var(--line);
+  }
+
+  p { max-width: var(--measure); margin: 0 0 16px; }
+  p:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; }
+
+  .settings { display: flex; flex-direction: column; gap: 18px; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r); padding: 22px 24px 24px;
+  }
+
+  .card h3 {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600; font-size: 20px; letter-spacing: -0.01em;
+    margin: 0 0 6px; color: var(--ink);
+  }
+
+  .purpose { color: var(--ink-2); margin-bottom: 20px; }
+
+  .range { margin: 0 0 20px; }
+
+  .range-bar {
+    position: relative; height: 8px; background: var(--track);
+    border-radius: 99px; margin: 26px 0 8px;
+  }
+
+  .range-fill { position: absolute; inset: 0; background: var(--accent); border-radius: 99px; opacity: 0.5; }
+
+  .range-mark {
+    position: absolute; top: -5px; width: 3px; height: 18px;
+    background: var(--ink); border-radius: 2px; transform: translateX(-50%);
+  }
+
+  .range-mark-label {
+    position: absolute; top: -26px; transform: translateX(-50%); white-space: nowrap;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px; font-weight: 500; color: var(--ink);
+  }
+
+  .range-ends {
+    display: flex; justify-content: space-between;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink-3);
+  }
+
+  .bounds { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 620px) { .bounds { grid-template-columns: 1fr; } }
+
+  .bound {
+    background: var(--surface-2); border-left: 2px solid var(--line-strong);
+    border-radius: 0 var(--r) var(--r) 0; padding: 12px 14px;
+  }
+
+  .bound-label {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 10.5px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: 5px;
+  }
+
+  .bound p { font-size: 15.5px; line-height: 1.55; margin: 0; max-width: none; }
+
+  .pick {
+    margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line);
+    font-size: 16px; color: var(--ink-2);
+  }
+
+  .pick strong { color: var(--ink); }
+
+
+  /* A depiction of the live panel, so it keeps the panel's own colours in both
+     themes instead of following the page. */
+  .panel-replica {
+    background: #1c1c1c;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 16px 18px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.85;
+    color: #7CFF6B;
+    overflow-x: auto;
+    margin: 0 0 8px;
+  }
+
+  .panel-replica .pr-title { font-weight: 700; margin-bottom: 6px; }
+
+  .panel-replica .pr-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .panel-replica .pr-row span:first-child { opacity: 0.78; }
+
+  .caption {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin: 0 0 28px;
+    max-width: var(--measure);
+  }
+
+  .rowdoc td:first-child {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .group-row td {
+    background: var(--surface-2);
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  h3.sub {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin: 44px 0 10px;
+    scroll-margin-top: 24px;
+  }
+
+  .scroller { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; background: var(--surface); }
+
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+
+  thead th {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-3); background: var(--surface-2); white-space: nowrap;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  td.num {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums; font-size: 13.5px; white-space: nowrap;
+  }
+
+  .note {
+    background: var(--surface-2); border-left: 3px solid var(--accent);
+    border-radius: 0 var(--r) var(--r) 0; padding: 16px 18px; margin: 0 0 18px;
+  }
+
+  .note:last-child { margin-bottom: 0; }
+  .note.caution { border-left-color: var(--warn); }
+
+  .note h4 {
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px; font-weight: 600; margin: 0 0 7px; color: var(--ink);
+  }
+
+  .note p { font-size: 16px; margin: 0 0 10px; }
+  .note p:last-child { margin-bottom: 0; }
+
+  .reading {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.85em; background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r); padding: 1px 6px; white-space: nowrap;
+  }
+
+  ul, ol { max-width: var(--measure); padding-left: 20px; margin: 0 0 16px; }
+  li { margin-bottom: 9px; }
+  li:last-child { margin-bottom: 0; }
+
+  footer {
+    margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line);
+    font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px; color: var(--ink-3);
+  }
+
+  /* A ring rather than a background wash: the cards already own their
+     background, and animating that would flash the page colour through them
+     before snapping back. */
+  :target { animation: settle 1.8s ease-out; }
+  @keyframes settle {
+    from { box-shadow: 0 0 0 3px var(--accent); }
+    to   { box-shadow: 0 0 0 3px transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) { :target { animation: none; } }
+
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Streaming app settings &middot; Microphone</p>
+    <h1>Microphone Settings</h1>
+    <p class="standfirst">
+      These settings control the microphone your viewers speak into and what reaches your app.
+      Here is what each one does, what you can set it to, and what changes if you go all the way to
+      either end.
+    </p>
+  </header>
+
+  <section id="use-browser-side-microphone">
+    <h2>Start here</h2>
+
+    <p>
+      Turn on <strong>Use Browser side Microphone</strong> first. It captures the viewer's
+      microphone in their browser and sends it to your app, and every other setting on this tab
+      describes that microphone &mdash; so the rest stays greyed out until you switch it on.
+    </p>
+
+    <p>
+      When it is on, each viewer is asked by their browser for permission to use the microphone the
+      first time they open the stream. If they say no, there is no microphone; nothing you set here
+      can override that.
+    </p>
+
+    <div class="note">
+      <h4>You can leave any field blank</h4>
+      <p>
+        A blank field means &ldquo;leave it as it is&rdquo;. Nothing breaks and nothing is set to
+        zero &mdash; the standard behaviour simply stays in place. Fill in only the settings you
+        actually want to change.
+      </p>
+    </div>
+
+    <div class="note caution">
+      <h4>Some devices will not do what you ask</h4>
+      <p>
+        These settings are requests to the viewer's browser, and their hardware has the final say.
+        Ask for a low sample rate on a microphone that only supports one rate and you will get that
+        rate instead.
+      </p>
+      <p>
+        This is normal, and you can see it happening: switch on
+        <strong>Show microphone info in the info panel</strong> and the stream's info panel lists
+        what you asked for next to what the browser actually gave, like
+        <span class="reading">48000 Hz (asked 8000)</span>.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sound quality &mdash; three switches</h2>
+
+    <p>
+      All three are <strong>off</strong> by default, which gives the fastest, most direct sound.
+      Each one adds a small amount of processing, so turn them on to solve a problem rather than as
+      a matter of course.
+    </p>
+
+    <div class="settings">
+
+      <div class="card" id="echo-cancellation">
+        <h3>Echo cancellation</h3>
+        <p class="purpose">
+          Stops your app's own sound coming back in through the viewer's microphone.
+        </p>
+        <div class="bounds">
+          <div class="bound">
+            <span class="bound-label">Off &mdash; the default</span>
+            <p>
+              Perfectly fine when viewers wear headphones. On speakers, the microphone picks up your
+              app's audio and sends it back, and the app hears it as if the viewer were speaking.
+            </p>
+          </div>
+          <div class="bound">
+            <span class="bound-label">On</span>
+            <p>
+              The browser removes your app's sound from what the microphone hears. Adds a small
+              delay, and can make a voice sound thinner when someone talks over loud app audio.
+            </p>
+          </div>
+        </div>
+        <p class="pick">
+          <strong>Turn it on if</strong> your app hears itself, or viewers are likely to use
+          speakers rather than headphones.
+        </p>
+      </div>
+
+      <div class="card" id="noise-suppression">
+        <h3>Noise suppression</h3>
+        <p class="purpose">
+          Reduces steady background sound &mdash; fans, air conditioning, traffic hum.
+        </p>
+        <div class="bounds">
+          <div class="bound">
+            <span class="bound-label">Off &mdash; the default</span>
+            <p>
+              Everything the microphone hears is sent through. The right choice if the sounds in the
+              room are part of what you want to capture.
+            </p>
+          </div>
+          <div class="bound">
+            <span class="bound-label">On</span>
+            <p>
+              Constant background sound is filtered out. It works on steady noise; sudden sounds
+              still come through. It can occasionally clip the first moment of very quiet speech.
+            </p>
+          </div>
+        </div>
+        <p class="pick">
+          <strong>Turn it on if</strong> viewers are in noisy places &mdash; offices, showrooms,
+          trade stands.
+        </p>
+      </div>
+
+      <div class="card" id="automatic-gain-control">
+        <h3>Automatic gain control</h3>
+        <p class="purpose">
+          Evens out voices that are too quiet or too loud, so everyone reaches your app at a similar
+          volume.
+        </p>
+        <div class="bounds">
+          <div class="bound">
+            <span class="bound-label">Off &mdash; the default</span>
+            <p>
+              Volume is whatever the viewer's microphone produces. Someone sitting back from a laptop
+              will be faint; someone speaking close may sound harsh.
+            </p>
+          </div>
+          <div class="bound">
+            <span class="bound-label">On</span>
+            <p>
+              The browser raises quiet voices and holds back loud ones. In a silent room it also
+              lifts the background between sentences, which can be faintly audible.
+            </p>
+          </div>
+        </div>
+        <p class="pick">
+          <strong>Turn it on if</strong> some viewers come through much quieter than others.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Microphone limits &mdash; four numbers</h2>
+
+    <p>
+      Each of these accepts a range. If you enter something outside it, the settings will not save
+      and you will be told which field and what range it accepts &mdash; nothing is silently
+      adjusted behind your back.
+    </p>
+
+    <div class="settings">
+
+      <div class="card" id="max-bitrate">
+        <h3>Max bitrate</h3>
+        <p class="purpose">
+          How much data the microphone is allowed to use, in bits per second. This limits only what
+          the viewer sends up to your app &mdash; the sound your app sends back to them is not
+          affected.
+        </p>
+
+        <div class="range">
+          <div class="range-bar">
+            <div class="range-fill"></div>
+            <div class="range-mark" style="left: 5.2%;"><span class="range-mark-label" style="left: 1px;">32000 speech</span></div>
+          </div>
+          <div class="range-ends">
+            <span>6000 lowest</span>
+            <span>510000 highest &middot; default</span>
+          </div>
+        </div>
+
+        <div class="bounds">
+          <div class="bound">
+            <span class="bound-label">At the lowest &mdash; 6000</span>
+            <p>
+              Speech is still understandable but sounds thin and compressed. Uses a tiny fraction of
+              the data. Worth it only for viewers on genuinely poor connections.
+            </p>
+          </div>
+          <div class="bound">
+            <span class="bound-label">At the highest &mdash; 510000</span>
+            <p>
+              The default, and effectively no limit at all. A microphone left here can use several
+              hundred times more data than speech needs &mdash; data taken away from your video
+              quality.
+            </p>
+          </div>
+        </div>
+
+        <p class="pick">
+          <strong>Recommended: 32000.</strong> Comfortable for speech and leaves the bandwidth for
+          your video. Raise it only if you are capturing music or something other than talking.
+        </p>
+      </div>
+
+      <div class="card" id="sample-rate">
+        <h3>Sample rate</h3>
+        <p class="purpose">
+          How finely the microphone is measured, in hertz. A higher number captures more of the
+          higher frequencies in a voice.
+        </p>
+
+        <div class="range">
+          <div class="range-bar">
+            <div class="range-fill"></div>
+            <div class="range-mark" style="left: 100%;"><span class="range-mark-label" style="left: -34px;">48000 default</span></div>
+          </div>
+          <div class="range-ends">
+            <span>8000 lowest</span>
+            <span>48000 highest</span>
+          </div>
+        </div>
+
+        <div class="bounds">
+          <div class="bound">
+            <span class="bound-label">At the lowest &mdash; 8000</span>
+            <p>
+              Telephone quality. Speech is clear, but sounds like <em>s</em> and <em>f</em> lose their
+              crispness. Most devices will refuse this and give you 48000 anyway.
+            </p>
+          </div>
+          <div class="bound">
+            <span class="bound-label">At the highest &mdash; 48000</span>
+            <p>
+              Full quality, and what nearly every device offers. This is what you will normally get
+              whether you ask for it or not.
+            </p>
+          </div>
+        </div>
+
+        <p class="pick">
+          <strong>Recommended: leave it blank.</strong> Almost every microphone runs at 48000 and
+          will ignore a lower request.
+        </p>
+      </div>
+
+      <div class="card" id="channels">
+        <h3>Channels</h3>
+        <p class="purpose">
+          Whether the microphone is treated as mono (one channel) or stereo (two).
+        </p>
+
+        <div class="range">
+          <div class="range-bar">
+            <div class="range-fill"></div>
+            <div class="range-mark" style="left: 0;"><span class="range-mark-label" style="left: 22px;">1 default</span></div>
+          </div>
+          <div class="range-ends">
+            <span>1 &mdash; mono</span>
+            <span>2 &mdash; stereo</span>
+          </div>
+        </div>
+
+        <div class="bounds">
+          <div class="bound">
+            <span class="bound-label">At the lowest &mdash; 1</span>
+            <p>
+              Mono, and the right answer for a person talking. Half the data of stereo with nothing
+              lost that a listener could hear.
+            </p>
+          </div>
+          <div class="bound">
+            <span class="bound-label">At the highest &mdash; 2</span>
+            <p>
+              Stereo. Doubles the data for a voice that has no stereo information in it. Some
+              equipment reports two channels whatever you ask for.
+            </p>
+          </div>
+        </div>
+
+        <p class="pick">
+          <strong>Recommended: 1.</strong> Change it only if you are deliberately capturing something
+          with a left and right side.
+        </p>
+      </div>
+
+      <div class="card" id="max-capture-rate">
+        <h3>Max capture rate</h3>
+        <p class="purpose">
+          The highest rate the viewer's end is allowed to send. Related to sample rate, but this one
+          announces a ceiling rather than asking the microphone for a setting.
+        </p>
+
+        <div class="range">
+          <div class="range-bar">
+            <div class="range-fill"></div>
+            <div class="range-mark" style="left: 100%;"><span class="range-mark-label" style="left: -34px;">48000 default</span></div>
+          </div>
+          <div class="range-ends">
+            <span>8000 lowest</span>
+            <span>48000 highest</span>
+          </div>
+        </div>
+
+        <div class="bounds">
+          <div class="bound">
+            <span class="bound-label">At the lowest &mdash; 8000</span>
+            <p>
+              Tells the connection not to carry anything above telephone quality, so no data is spent
+              on higher frequencies. A real saving, but a blunt one.
+            </p>
+          </div>
+          <div class="bound">
+            <span class="bound-label">At the highest &mdash; 48000</span>
+            <p>
+              No ceiling, which is the default. Lowering it often changes very little in practice,
+              because the quality is already decided by the max bitrate above.
+            </p>
+          </div>
+        </div>
+
+        <p class="pick">
+          <strong>Recommended: leave it blank</strong> and use <strong>Max bitrate</strong> instead
+          if you need to reduce what the microphone uses.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Checking that it works</h2>
+
+    <div class="card" id="show-microphone-info-in-the-info-panel">
+      <h3>Show microphone info in the info panel</h3>
+      <p class="purpose">
+        Adds a microphone section to the stream's info panel: whether permission was given, whether
+        sound is being sent, the delay, the data rate, the input level, and each setting shown as
+        what the browser gave you next to what you asked for.
+      </p>
+      <div class="bounds">
+        <div class="bound">
+          <span class="bound-label">On &mdash; the default</span>
+          <p>
+            The quickest way to answer &ldquo;is the microphone working, and did my settings take
+            effect?&rdquo; It only reports; it cannot change the sound.
+          </p>
+        </div>
+        <div class="bound">
+          <span class="bound-label">Off</span>
+          <p>
+            Hides the section from viewers. Everything else carries on working exactly as before.
+          </p>
+        </div>
+      </div>
+      <p class="pick">
+        <strong>Turn it off</strong> for a polished, customer-facing stream where viewers should not
+        see technical detail.
+      </p>
+    </div>
+
+    <h3 class="sub" id="reading-the-info-panel">Reading the info panel</h3>
+
+    <p>
+      This is the microphone section as a viewer sees it, taken from a real session. Every row is
+      explained underneath.
+    </p>
+
+      <div class="panel-replica">
+        <div class="pr-title">Microphone</div>
+        <div class="pr-row"><span>Permission</span><span>granted</span></div>
+        <div class="pr-row"><span>Track</span><span>live</span></div>
+        <div class="pr-row"><span>Muted</span><span>false</span></div>
+        <div class="pr-row"><span>Enabled</span><span>true</span></div>
+        <div class="pr-row"><span>Sending</span><span>yes</span></div>
+        <div class="pr-row"><span>Latency (round trip)</span><span>513 ms</span></div>
+        <div class="pr-row"><span>Worst latency</span><span>4258 ms</span></div>
+        <div class="pr-row"><span>Jitter</span><span>3.6 ms</span></div>
+        <div class="pr-row"><span>Packets sent</span><span>1835</span></div>
+        <div class="pr-row"><span>Packets lost</span><span>0</span></div>
+        <div class="pr-row"><span>Bitrate</span><span>5.7 kbps</span></div>
+        <div class="pr-row"><span>Peak bitrate</span><span>6.1 kbps</span></div>
+        <div class="pr-row"><span>Average bitrate</span><span>5.6 kbps</span></div>
+        <div class="pr-row"><span>Input level</span><span>31 %</span></div>
+        <div class="pr-row"><span>Codec</span><span>opus</span></div>
+        <div class="pr-row"><span>Bitrate cap</span><span>6 kbps &middot; SDP allows 510 kbps</span></div>
+        <div class="pr-row"><span>SDP stereo</span><span>true</span></div>
+        <div class="pr-row"><span>Audio streams</span><span>1</span></div>
+        <div class="pr-row"><span>Bytes sent</span><span>25711</span></div>
+        <div class="pr-row"><span>Sample rate</span><span>48000 Hz (asked 8000)</span></div>
+        <div class="pr-row"><span>Channels</span><span>2 (asked 1)</span></div>
+        <div class="pr-row"><span>Echo cancellation</span><span>false (asked 1)</span></div>
+        <div class="pr-row"><span>Noise suppression</span><span>false (asked 1)</span></div>
+        <div class="pr-row"><span>Gain control</span><span>false (asked 1)</span></div>
+        <div class="pr-row"><span>Device</span><span>59e6fc1f787e</span></div>
+      </div>
+    <p class="caption">
+      Healthy in most respects &mdash; audio is flowing and nothing is being lost &mdash; but four
+      settings were refused by the device, and the round trip is spiking badly.
+    </p>
+
+    <div class="scroller">
+      <table class="rowdoc">
+        <thead><tr><th>Row</th><th>What it tells you</th></tr></thead>
+        <tbody>
+          <tr class="group-row"><td colspan="2">Is the microphone working at all</td></tr>
+          <tr><td>Permission</td><td>Whether the viewer allowed their browser to use the microphone. <strong>granted</strong> is what you want. <strong>denied</strong> means they refused, and nothing else here will work until they allow it and reload. <strong>prompt</strong> means they have not answered yet. <strong>unavailable</strong> means their browser will not report it &mdash; which is not the same as denied.</td></tr>
+          <tr><td>Track</td><td>Whether a microphone is actually attached. <strong>live</strong> is healthy. <strong>ended</strong> means it was working and stopped. <strong>none</strong> means one was never attached.</td></tr>
+          <tr><td>Muted</td><td>The browser reporting that no sound is arriving from the device &mdash; a physical mute switch, or muted in the operating system. <strong>false</strong> is healthy.</td></tr>
+          <tr><td>Enabled</td><td>Whether the page has switched the microphone off. Separate from Muted, and normally <strong>true</strong>.</td></tr>
+          <tr><td>Sending</td><td>The row to read first. <strong>yes</strong> means audio is genuinely leaving the viewer's browser. If this says no while Permission is granted and Track is live, the microphone is connected but silent.</td></tr>
+          <tr class="group-row"><td colspan="2">Connection quality</td></tr>
+          <tr><td>Latency (round trip)</td><td>How long a packet takes to reach the server and come back. This is network delay, not microphone delay. Under about 150&nbsp;ms feels immediate; several hundred is noticeable in conversation.</td></tr>
+          <tr><td>Worst latency</td><td>The highest round trip seen this session. A large gap between this and the current figure means the connection is unstable rather than simply slow &mdash; a steady 500&nbsp;ms is easier to talk over than 80&nbsp;ms that spikes to 4000.</td></tr>
+          <tr><td>Jitter</td><td>How much the spacing between packets varies. Low single figures are healthy. High jitter is heard as choppy or robotic audio even when nothing is being lost.</td></tr>
+          <tr><td>Packets sent</td><td>A running total for the session. It should keep climbing while someone is speaking.</td></tr>
+          <tr><td>Packets lost</td><td>A running total. <strong>0</strong>, or close to it, is what you want. A steadily rising number means audio is being dropped on the way.</td></tr>
+          <tr class="group-row"><td colspan="2">How much data the microphone is using</td></tr>
+          <tr><td>Bitrate</td><td>What it is using right now. Drops to 0.0 when nothing is being sent.</td></tr>
+          <tr><td>Peak bitrate</td><td>The highest seen this session.</td></tr>
+          <tr><td>Average bitrate</td><td>The average across the whole session. It falls on its own while nothing is being sent, because the session keeps getting longer &mdash; expected, not a fault.</td></tr>
+          <tr><td>Bytes sent</td><td>A running total for the session.</td></tr>
+          <tr><td>Bitrate cap</td><td>Two limits shown together, because both are in force. The first is your <strong>Max bitrate</strong> setting; the second is the ceiling agreed when the connection was set up. <strong>The lower of the two wins</strong>, so &ldquo;6 kbps &middot; SDP allows 510 kbps&rdquo; means your setting is what is actually limiting it.</td></tr>
+          <tr class="group-row"><td colspan="2">What the microphone is doing</td></tr>
+          <tr><td>Input level</td><td>How loud the signal is, as a percentage. Watch it while the viewer speaks: if it stays at 0&nbsp;% they are connected but the microphone is picking up nothing &mdash; wrong device selected, or muted in the operating system.</td></tr>
+          <tr><td>Codec</td><td>The audio format in use. Always <strong>opus</strong>.</td></tr>
+          <tr><td>Audio streams</td><td>How many separate audio streams are being sent. Normally <strong>1</strong>.</td></tr>
+          <tr><td>SDP stereo</td><td>Whether the connection was set up able to carry stereo. This describes the connection, not the microphone &mdash; the microphone's own setting is Channels, below.</td></tr>
+          <tr><td>Device</td><td>A short identifier for the microphone in use. It is unique to your site, so the same physical microphone shows a different identifier elsewhere. It tells you whether two sessions used the same device, not which device it is.</td></tr>
+          <tr class="group-row"><td colspan="2">Your settings, and what the browser did with them</td></tr>
+          <tr><td>Sample rate</td><td>Every row in this group shows what the browser actually gave you. The note in brackets appears only when that differs from what you asked for, so <span class="reading">48000 Hz (asked 8000)</span> means your setting arrived and the device would not do it.</td></tr>
+          <tr><td>Channels</td><td>Same. <span class="reading">2 (asked 1)</span> is a device that only reports stereo.</td></tr>
+          <tr><td>Echo cancellation</td><td>Same. <span class="reading">false (asked 1)</span> means you switched it on and the device would not apply it. The <strong>1</strong> is how the setting is stored; it means on.</td></tr>
+          <tr><td>Noise suppression</td><td>Same as echo cancellation.</td></tr>
+          <tr><td>Gain control</td><td>Same as echo cancellation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note" style="margin-top:22px">
+      <h4>Once the track has ended, the live rows stop meaning anything</h4>
+      <p>
+        Latency, jitter and input level are only meaningful while <strong>Track</strong> says
+        <strong>live</strong>. When it says <strong>ended</strong>, read those rows as the last
+        measurement before it stopped, not as the situation now. The running totals &mdash; packets,
+        bytes, worst latency &mdash; stay true for the session as a whole.
+      </p>
+    </div>
+
+    <h3 class="sub" id="switched-off-mid-stream">If the microphone is switched off during a stream</h3>
+
+    <p>
+      A viewer can withdraw microphone permission in their browser while the stream is running. Only
+      four rows react &mdash; and the last column is the one that surprises people.
+    </p>
+
+    <div class="scroller">
+      <table>
+        <thead><tr><th>Row</th><th>While working</th><th>Switched off mid-stream</th><th>Switched back on</th></tr></thead>
+        <tbody>
+          <tr><td>Permission</td><td>granted</td><td><strong>denied</strong></td><td><strong>granted</strong></td></tr>
+          <tr><td>Track</td><td>live</td><td><strong>ended</strong></td><td><strong>still ended</strong></td></tr>
+          <tr><td>Sending</td><td>yes</td><td><strong>no</strong></td><td><strong>still no</strong></td></tr>
+          <tr><td>Bitrate</td><td>6.3 kbps</td><td><strong>0.0 kbps</strong></td><td>0.0 kbps</td></tr>
+          <tr><td>Muted</td><td>false</td><td>false</td><td>false</td></tr>
+          <tr><td>Enabled</td><td>true</td><td>true</td><td>true</td></tr>
+          <tr><td>Latency, Jitter, Input level</td><td>updating</td><td>stop updating</td><td>stop updating</td></tr>
+          <tr><td>Packets sent, Bytes sent</td><td>rising</td><td>stop rising, total kept</td><td>total kept</td></tr>
+          <tr><td>Packets lost, Worst latency, Peak bitrate</td><td>session totals</td><td>kept</td><td>kept</td></tr>
+          <tr><td>Average bitrate</td><td>settles</td><td>falls slowly</td><td>falls slowly</td></tr>
+          <tr><td>Sample rate, Channels, processing rows</td><td>current</td><td>last known</td><td>last known</td></tr>
+          <tr><td>Codec, Bitrate cap, SDP stereo, Audio streams, Device</td><td>unchanged</td><td>unchanged</td><td>unchanged</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note caution" style="margin-top:22px">
+      <h4>Allowing it again does not bring the microphone back</h4>
+      <p>
+        <strong>Permission</strong> returns to <strong>granted</strong> immediately, but
+        <strong>Track</strong> stays <strong>ended</strong> and <strong>Sending</strong> stays
+        <strong>no</strong>. Withdrawing permission destroys the microphone connection, and allowing
+        it again does not rebuild it &mdash; nothing asks for the microphone a second time until the
+        page is loaded fresh.
+      </p>
+      <p>
+        <strong>The viewer has to reload the page.</strong> If someone reports that they allowed it
+        again and it still does not work, this is why.
+      </p>
+    </div>
+
+    <p style="margin-top:22px">
+      The running totals are left alone on purpose, so after a viewer switches the microphone off
+      you can still see how much they sent and how the connection behaved while it was working.
+    </p>
+
+  </section>
+
+  <section>
+    <h2>At a glance</h2>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr>
+            <th>Setting</th>
+            <th>Accepts</th>
+            <th>Default</th>
+            <th>Suggested</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Echo cancellation</td><td class="num">on / off</td><td class="num">off</td><td>On for speakers</td></tr>
+          <tr><td>Noise suppression</td><td class="num">on / off</td><td class="num">off</td><td>On in noisy places</td></tr>
+          <tr><td>Automatic gain control</td><td class="num">on / off</td><td class="num">off</td><td>On for uneven voices</td></tr>
+          <tr><td>Max bitrate</td><td class="num">6000 &ndash; 510000</td><td class="num">510000</td><td class="num">32000</td></tr>
+          <tr><td>Sample rate</td><td class="num">8000 &ndash; 48000</td><td class="num">48000</td><td>Leave blank</td></tr>
+          <tr><td>Channels</td><td class="num">1 &ndash; 2</td><td class="num">1</td><td class="num">1</td></tr>
+          <tr><td>Max capture rate</td><td class="num">8000 &ndash; 48000</td><td class="num">48000</td><td>Leave blank</td></tr>
+          <tr><td>Show microphone info</td><td class="num">on / off</td><td class="num">on</td><td>Off for customers</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top:16px">
+      Saved settings reach viewers the next time they open the stream. Anyone already watching keeps
+      the settings they started with until they reload.
+    </p>
+  </section>
+
+  <section>
+    <h2>If something is not working</h2>
+
+    <ol>
+      <li>
+        <strong>No sound reaching your app at all.</strong> Check the info panel: if
+        <em>Permission</em> says <span class="reading">denied</span>, the viewer refused the browser's
+        request. They need to allow the microphone for your site and reload the page.
+      </li>
+      <li>
+        <strong>It worked and then stopped.</strong> If <em>Track</em> says
+        <span class="reading">ended</span>, the microphone was switched off part-way through &mdash;
+        usually the viewer withdrew permission. Turning permission back on does not restart it; the
+        page has to be reloaded.
+      </li>
+      <li>
+        <strong>A setting does not seem to apply.</strong> Look for a note in brackets, like
+        <span class="reading">48000 Hz (asked 8000)</span>. That means your setting arrived and the
+        viewer's device would not do it. A row with no note in brackets was accepted.
+      </li>
+      <li>
+        <strong>Your app hears its own audio.</strong> Turn on <strong>Echo cancellation</strong>, or
+        ask viewers to use headphones.
+      </li>
+      <li>
+        <strong>Video quality drops when someone speaks.</strong> The microphone is probably using
+        more data than it needs. Set <strong>Max bitrate</strong> to 32000.
+      </li>
+    </ol>
+  </section>
+
+  <footer>
+    Microphone tab, streaming app settings.
+  </footer>
+
+</div>
