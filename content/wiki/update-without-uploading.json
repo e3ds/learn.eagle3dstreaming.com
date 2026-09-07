@@ -1,0 +1,13 @@
+{
+ "title": "Update without uploading",
+ "slug": "update-without-uploading",
+ "section": "System Requirements",
+ "parents": [
+  "streaming-agent"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/update-app-without-uploading-a-new-build",
+ "rewritten": true,
+ "replaces": [
+  "update-app-without-uploading-a-new-build"
+ ]
+}
