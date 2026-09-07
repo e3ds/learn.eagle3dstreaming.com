@@ -296,7 +296,17 @@ constant so moving them to a bucket or CDN later is one line, not 302 edits.
 
 ---
 
-## 9. State of the migration
+## 9. Still to do, beyond the page rewrite
+
+**The API reference at `agw.eaglepixelstreaming.com/api-docs/` is not part of
+this site and is in poor shape.** It is a generated Swagger page, and it needs
+bringing up to the same standard as the rest of the documentation - which
+probably means pulling it into `learn` as a written reference rather than
+linking out to a schema dump. Raised 2026-09-07. Not started.
+
+---
+
+## 10. State of the migration
 
 The old wiki holds **302 published pages, 117,620 words, 1,394 images (~211 MB),
 566 code blocks and 88 tables**, five levels deep. It is in good condition: no

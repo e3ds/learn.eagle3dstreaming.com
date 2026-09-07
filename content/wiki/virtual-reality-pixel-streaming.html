@@ -1,75 +1,106 @@
-<p>In the previous chapter, we showcased multiplayer-player pixel streaming. In this chapter, we will demonstrate how to set up Virtual Reality pixel streaming.</p>
+<p class="standfirst">
+  Stream a VR application to a headset over the web. The headset's browser opens
+  a link; the rendering happens on Eagle 3D Streaming's GPU machines, exactly as
+  it does for any other app.
+</p>
 
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p>Upon completing this chapter, you will learn :</p>
-<ul>
-<li>
-<p>Create a VR project</p>
-</li>
-<li>
-<p>Set up the created VR project for uploading in Eagle 3D Streaming Platform</p>
-</li>
-<li>
-<p>Packaging the project</p>
-</li>
-<li>
-<p>Uploading the project to Eagle 3D Streaming platform</p>
-</li>
-<li>
-<p>Streaming the VR app using VR headset</p>
-</li>
-</ul>
+<p>
+  There is a live example you can open in a headset right now:
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/VRDemo/vrConfig"
+     rel="noreferrer" target="_blank">the VR demo</a>.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>Use Unreal Engine 5.5.</strong> Not 5.4, not 5.6. Other versions
+    have known faults in VR streaming &mdash; 360&deg; view distortion and
+    double vision &mdash; that nothing on our side can correct. Check this
+    first: everything else you do is wasted if the engine version is wrong.
+  </p>
 </aside>
+
+<h2>What is different about VR</h2>
+
+<p>
+  Most of it is the same as any other app: build it, package it for Windows,
+  upload the ZIP, open the link. Three things are not.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Difference</th><th>What it means for you</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>The engine version is fixed</td>
+        <td>Unreal 5.5. Anything else distorts the view or doubles it.</td>
+      </tr>
+      <tr>
+        <td>OpenXR must be <em>disabled</em></td>
+        <td>Counter-intuitive, and easy to get backwards. It is switched off, not on.</td>
+      </tr>
+      <tr>
+        <td>The VR template spawns in the floor</td>
+        <td>Unreal's own template puts the player through the ground at start. There is a fix, and you will need it.</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<div data-appearance="warning" role="note">
-<aside class="callout note">
-<p>Limitations of VR Pixel Streaming:</p>
-<ul>
-<li>
-<p><strong>Unreal Engine Version:</strong> You must use <strong>Unreal Engine 5.5</strong>. Other versions have known issues, including <strong>360° view distortion</strong> and <strong>double vision artifacts</strong>.</p>
-</li>
-<li>
-<p><strong>VR Template Character Position:</strong> When using the VR template provided by the Unreal Editor, the default character may spawn incorrectly at the start of Pixel Streaming. To prevent this, you must adjust the actor's or character's position before packaging your project.</p>
-</li>
-<li>
-<p><strong>Linux Compatibility:</strong> We have not tested Linux builds in VR streaming environments. Therefore, compatibility and performance on Linux-based VR setups are not currently verified.</p>
-</li>
-</ul>
-</aside>
+<h2>What we have tested</h2>
+
+<div class="prereq">
+  <h2>Known good, and known unknown</h2>
+  <ul>
+    <li><strong>Tested:</strong> Oculus Quest 2 and Quest 3.</li>
+    <li><strong>Expected to work, untested:</strong> the original Quest, and
+      other headsets with a modern browser. If yours does not,
+      <a href="mailto:support@eagle3dstreaming.com">tell us</a> &mdash; that is
+      how this list grows.</li>
+    <li><strong>Not tested at all:</strong> Linux builds in VR. Compatibility
+      and performance there are unverified, so treat it as unsupported rather
+      than as likely to work.</li>
+  </ul>
 </div>
 
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p>Always test your VR project locally before uploading it to Eagle 3D Streaming. For instructions on how to do this, please refer to the following documentation: <a href="/wiki/testing-unreal-vr-app-using-epics-signaling-server"><strong>Testing Unreal VR App Using Epic's Signaling Server with a VR Headset</strong></a></p>
-</aside>
-</div>
+<h2>The path</h2>
 
-<p>Pixel streaming for Virtual Reality using <strong>Oculus Quest 2</strong> is demonstrated in the video below.</p>
+<ol class="steps">
+  <li>
+    <h3>Build and configure the project</h3>
+    <p>
+      Create a VR project, enable Pixel Streaming, disable OpenXR, fix the
+      player start, and package it. <a href="/wiki/vr-project-setup">Setting up
+      a VR project</a> covers all of it.
+    </p>
+  </li>
+  <li>
+    <h3>Test it locally, with a headset</h3>
+    <p>
+      Against Epic's own signalling server, before it goes near the platform. A
+      VR fault is far harder to read through a stream than on your own machine,
+      and this step removes a whole class of confusion later.
+    </p>
+  </li>
+  <li>
+    <h3>Upload it like any other app</h3>
+    <p>
+      Nothing VR-specific: the same ZIP, the same Control Panel. See
+      <a href="/wiki/upload-from-the-control-panel">uploading from the Control
+      Panel</a>.
+    </p>
+  </li>
+  <li>
+    <h3>Open the link in the headset's browser</h3>
+    <p>
+      Each app has its own streaming URL, of the form
+      <code>connector.eagle3dstreaming.com/v5/&lt;owner&gt;/&lt;app&gt;/&lt;config&gt;</code>.
+      Open it in the headset's browser &mdash; there is nothing to install on
+      the device.
+    </p>
+  </li>
+</ol>
 
-<div data-autoscale="" data-ratio="16:9" data-service="external_content">
-<div data-placeholder="">
-<template>
- <a href="https://youtu.be/wCi16n652u4" rel="noreferrer" target="_blank">
-
-</a> 
-</template>
-</div>
-</div>
-
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p><strong>You can view our streaming Virtual Reality demo app at the following URL:</strong></p>
-<p><a href="https://connector.eagle3dstreaming.com/v5/demo/VRDemo/vrConfig" rel="external noreferrer"><u><strong>https://connector.eagle3dstreaming.com/v5/demo/VRDemo/vrConfig</strong></u></a></p>
-</aside>
-</div>
-
-<p>Follow the guidelines below sequentially to create a VR project, set it up for uploading, and stream it:</p>
-
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p>We have tested our system only on Oculus Quest 2 and 3. We assume it will also work on the original Oculus Quest and should be compatible with other VR headsets as well.</p>
-<p>If it does not work with any VR headset, please let us know at <a href="mailto:support@eagle3dstreaming.com" rel="external noreferrer"><strong>support@eagle3dstreaming.com</strong></a></p>
-</aside>
+<div class="next">
+  <a href="/wiki/vr-project-setup">Set up a VR project &rarr;</a>
+  <p>Every step, including the two settings that are easy to get backwards.</p>
 </div>

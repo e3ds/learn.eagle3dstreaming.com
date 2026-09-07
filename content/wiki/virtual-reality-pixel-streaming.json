@@ -1,7 +1,12 @@
 {
- "title": "Virtual Reality Pixel Streaming",
+ "title": "Virtual reality streaming",
  "slug": "virtual-reality-pixel-streaming",
- "section": "(top level)",
+ "section": "Virtual Reality Pixel Streaming",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/virtual-reality-pixel-streaming"
+ "source": "https://docs.eagle3dstreaming.com/wiki/virtual-reality-pixel-streaming",
+ "rewritten": true,
+ "replaces": [
+  "summary-of-virtual-reality-streaming",
+  "upload-and-stream-your-vr-app"
+ ]
 }
