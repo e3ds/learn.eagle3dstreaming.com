@@ -1,0 +1,21 @@
+{
+ "title": "Apps, links and versions",
+ "slug": "apps-and-versions",
+ "section": "Control Panel Features",
+ "parents": [
+  "control-panel-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/version-rollback-version-management",
+ "rewritten": true,
+ "replaces": [
+  "generate-a-streaming-link-for-your-app",
+  "play-your-app",
+  "copy-your-streaming-url",
+  "delete-a-streaming-link",
+  "select-a-version-of-your-app-to-run-it",
+  "delete-a-version-of-your-app-new-control-panel",
+  "upload-another-version-of-your-app",
+  "version-rollback-version-management",
+  "delete-your-app-optional"
+ ]
+}
