@@ -1,0 +1,105 @@
+<p class="standfirst">
+  The controls a viewer sees on top of your stream: the settings bar, quality
+  readout, screenshots, notifications and voice chat. All of them are off or on
+  per configuration.
+</p>
+
+<p>
+  <strong>Stream link &rsaquo; Edit Config &rsaquo; Advanced Options &rsaquo;
+  Streaming UI.</strong> Each is a toggle; save afterwards, and the change
+  applies to new sessions.
+</p>
+
+<h2>The settings bar, and what depends on it</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>Several settings only appear if the settings bar is on.</strong>
+    <strong>Settings Control Bar</strong> is what puts the gear icon on screen
+    during a session &mdash; and the quality menu, the screenshot button and the
+    draggable-button option all live behind that icon. Enable them with the bar
+    switched off and nothing visible changes, which reads as a setting that does
+    not work.
+  </p>
+</aside>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Setting</th><th>What the viewer gets</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Settings control bar</strong></td>
+        <td>The gear icon during the session. The gateway to everything below it.</td>
+      </tr>
+      <tr>
+        <td><strong>Quality control menu</strong></td>
+        <td>Stream quality readings, useful when diagnosing a poor connection.</td>
+      </tr>
+      <tr>
+        <td><strong>Screenshot</strong></td>
+        <td>A capture button in the settings panel.</td>
+      </tr>
+      <tr>
+        <td><strong>Draggable settings button</strong></td>
+        <td>Lets the viewer move the gear icon, for when it covers something in your app.</td>
+      </tr>
+      <tr>
+        <td><strong>Runtime notifications</strong></td>
+        <td>Messages during the session &mdash; warnings and status.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Input</h2>
+
+<ul>
+  <li>
+    <strong>Fake mouse with touches</strong> turns touches on a phone or tablet
+    into mouse events. Without it, an app built for a mouse receives nothing
+    usable from a touchscreen &mdash; and it looks like the stream is ignoring
+    the viewer rather than like a missing setting.
+  </li>
+  <li>
+    <strong>Enable browser microphone</strong> lets the viewer speak into your
+    app.
+    <a href="/wiki/microphone-settings">Microphone settings</a> covers what each
+    related option does and what each end of its range means.
+  </li>
+</ul>
+
+<h2>Autoplay</h2>
+
+<p>
+  <strong>Autoplay</strong> starts the video as soon as it is ready, rather than
+  waiting.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>It does not remove the first click.</strong> Browsers will not start
+    audio and video without one interaction from the user &mdash; that is a
+    browser rule and no setting overrides it. Autoplay removes a second,
+    separate wait; the viewer still touches the loading screen once.
+  </p>
+</aside>
+
+<h2>Voice and sharing</h2>
+
+<ul>
+  <li>
+    <strong>VoIP</strong> gives viewers real-time voice communication with each
+    other during a session &mdash; for a shared review or a guided demo, rather
+    than for talking to the app.
+  </li>
+  <li>
+    <strong>Sharing a session with guests</strong> lets other people join the
+    same running session, so a colleague or client sees what you see rather than
+    starting their own.
+  </li>
+</ul>
+
+<div class="next">
+  <a href="/wiki/app-configuration">All configuration options &rarr;</a>
+  <p>Access, loading screen and developer settings.</p>
+</div>
