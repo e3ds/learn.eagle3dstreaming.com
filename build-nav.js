@@ -30,6 +30,11 @@ const END = "<!-- E3DS-NAV:END -->";
 
 const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
+// Internal review only until the rewrite lands. docs.eagle3dstreaming.com is
+// still the public site, so this one must not be indexed alongside it.
+// AT LAUNCH: remove this and site/robots.txt - checklist is in that file.
+const NOINDEX = '<meta name="robots" content="noindex,nofollow">';
+
 const STYLE = `<style id="e3dsNavStyle">
   /* The white areas. the html element had NO background of its own, so anywhere the
      body's background did not reach, what showed through was the browser's
@@ -155,7 +160,7 @@ function navFor(nav, currentUrl) {
 
 function stamp(file, nav) {
   const rel = "/" + path.relative(ROOT, file).split(path.sep).join("/");
-  const block = BEGIN + "\n" + STYLE + "\n" + DOC_STYLE + "\n"
+  const block = BEGIN + NOINDEX + "\n" + STYLE + "\n" + DOC_STYLE + "\n"
     + navFor(nav, rel) + "\n" + TOGGLE + "\n" + END;
 
   let html = fs.readFileSync(file, "utf8");

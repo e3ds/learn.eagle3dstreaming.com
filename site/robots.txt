@@ -1,0 +1,13 @@
+# learn.eagle3dstreaming.com is NOT the public documentation yet.
+# docs.eagle3dstreaming.com is still the live site; this one is for internal
+# review while the wiki is rewritten.
+#
+# Indexing both would split the ranking between two copies of the same content
+# and expose unreviewed pages as if they were finished.
+#
+# ===> AT LAUNCH: delete this file, remove the noindex tag from template.html
+#      and build-nav.js, and switch the canonical link back to this domain.
+#      See CLAUDE.md section 10.
+
+User-agent: *
+Disallow: /
