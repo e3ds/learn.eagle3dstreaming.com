@@ -1,7 +1,12 @@
 {
- "title": "System Requirements",
+ "title": "System requirements",
  "slug": "system-requirements",
- "section": "(top level)",
+ "section": "System Requirements",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/system-requirements"
+ "source": "https://docs.eagle3dstreaming.com/wiki/hardware-and-software-specifications",
+ "rewritten": true,
+ "replaces": [
+  "hardware-and-software-specifications",
+  "performance-specifications"
+ ]
 }
