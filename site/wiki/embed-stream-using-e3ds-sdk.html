@@ -410,14 +410,28 @@
   </p>
 </aside>
 
-<h2>Serve it over HTTP</h2>
+<h2>Serving it</h2>
 
 <p>
-  The demo has to be served, not opened from disk. Browsers block the requests
-  it makes from a <code>file:///</code> address.
+  Opening <code>index.html</code> straight from disk does work &mdash; the token
+  endpoint sends <code>Access-Control-Allow-Origin: *</code>, which accepts the
+  <code>null</code> origin a <code>file://</code> page has. It is the quickest
+  way to try the demo.
 </p>
 
 <pre><code class="language-bash">python -m http.server 8000     # or:  npx serve .     # or:  php -S localhost:8000</code></pre>
+
+<div class="outcome">
+  <strong>Serve it anyway, once you are past the first look</strong>
+  <p>
+    Not because <code>file://</code> is blocked, but because it works only for
+    as long as that endpoint accepts any origin &mdash; a server-side policy you
+    do not control and would not be told about. Serving over
+    <code>http://</code> is how your real integration will run, so a problem
+    that only appears there is better found now than after you have moved the
+    files into your own application.
+  </p>
+</div>
 
 <h2>Script order is not arbitrary</h2>
 
