@@ -211,18 +211,121 @@ must be in the HTML, not assembled by JavaScript.**
 
 ---
 
-## 8. State of the migration
+## 8. How a page is built
 
-| page | status |
+```
+content/wiki/<slug>.html   the article, and nothing else
+content/wiki/<slug>.json   its title and its ancestors
+template.html              the page shell - the design, once
+       |
+       |  node build.js
+       v
+site/wiki/<slug>.html      a finished static page
+```
+
+**The content and the shell are separate for one reason: 300 pages have to look
+like one product.** If every page carried its own header, styles and navigation,
+changing the design would mean editing 300 files, and the ones that got missed
+would stay wrong until a customer found them. Here the design exists once and
+every page is regenerated from it.
+
+`build.js` also derives the tree from the pages themselves — each fragment's
+`.json` states its ancestors — so the navigation cannot drift from what exists.
+There is no list of pages to forget to update. It writes `site/llms.txt` on
+every run for the same reason.
+
+**Still nothing at request time.** The output is plain static HTML; the server
+hands over the file unchanged. `?edit=1` remains the only exception.
+
+**URLs are the old wiki's URLs.** A page lives at `/wiki/<slug>`, matching
+`docs.eagle3dstreaming.com/wiki/<slug>` exactly, so every existing link,
+bookmark, support email and search result keeps working and the ranking
+transfers rather than splitting. `server.js` resolves the extensionless path to
+the `.html` file — that is file lookup, not rendering. **If nginx is ever pointed
+at `site/` directly it needs `try_files $uri $uri.html $uri/index.html`, or every
+one of those URLs 404s.**
+
+### The migration tool
+
+`migration/convert.py` turns a crawled Confluence page into a fragment. It lives
+in `migration/` because it runs until the wiki is moved and then never again,
+while `build.js` runs forever — keeping them apart stops the migration's
+throwaway assumptions leaking into what we maintain.
+
+```
+python migration/convert.py "Getting Started"     one section, plus its ancestors
+python migration/convert.py --all                 everything
+node build.js
+```
+
+A section's own landing page is not filed *inside* the section — it is the parent
+of it — so a batch pulls in ancestors too. Without that, `/wiki/getting-started`
+is a 404 and the tree has a hole in it.
+
+What it does to the markup, and why:
+
+| | |
 |---|---|
-| Microphone settings | written, needs converting from standalone HTML |
-| Fullscreen button | written, needs converting from standalone HTML |
-| everything on the old wiki | **not started** |
+| uses a real parser | these pages nest six levels deep; regular expressions match the wrong closing tag and the damage is silent — the page still renders, just missing a column |
+| strips theme furniture | copy buttons, anchor icons, i18n markers, scroll wrappers — none of it is content, all of it would be frozen into our pages forever |
+| panels → callouts | Confluence gives an information note and a warning identical markup; the flavour is only in the text (`Note :`, `Tip :`), so it is read from there |
+| tables get a `thead` | a first row of all `<th>` is a header row Confluence never declared; this is what lets a screen reader say which column a cell is in |
+| tables get a scroll box | otherwise a wide table scrolls the whole page sideways |
+| alt text from captions | Confluence sets alt to the upload filename — `image-20241221.png` read aloud is worse than silence, so a caption is used, or nothing |
+| images pulled local | including ones hotlinked from outside |
 
-Both existing pages were built as self-contained HTML files with inline CSS
-before this repo existed. They carry their content well and their structure is
-right; converting them to Markdown is mechanical, and doing so is what finally
-lets them carry screenshots.
+**Pictures hotlinked from elsewhere are downloaded, not linked.** Six pages
+embed images that were pasted from a Google Doc and never uploaded to Confluence
+at all. Those `lh7-rt.googleusercontent.com` URLs expire, so the old site is
+already carrying pictures that will one day vanish. Copying them ends that
+dependency rather than inheriting it.
+
+Images live in `site/images/` and are committed. `build.js` has an `IMAGE_BASE`
+constant so moving them to a bucket or CDN later is one line, not 302 edits.
+
+---
+
+## 9. State of the migration
+
+The old wiki holds **302 published pages, 117,620 words, 1,394 images (~211 MB),
+566 code blocks and 88 tables**, five levels deep. It is in good condition: no
+duplicate titles, no abandoned stubs. The 13 very short pages are all hubs that
+exist to link onward.
+
+Everything needed is in the served HTML — text, headings, code, tables, image
+URLs — and each page states its ancestors in its breadcrumbs. **No Confluence
+access or export is needed**, unless there are unpublished or permission-restricted
+pages, which a crawl cannot see.
+
+| batch | pages | status |
+|---|---|---|
+| Getting Started | 18 | **done** — VERIFIED below |
+| Control Panel Features | 61 | not started |
+| App Configuration | 43 | not started |
+| Developer Guides | 43 | not started |
+| Embed Stream into Webpage | 40 | not started |
+| Multiplayer Pixel Streaming | 39 | not started |
+| Foundational knowledge | 20 | not started |
+| System Requirements | 11 | not started |
+| Linux Pixel Streaming | 9 | not started |
+| Virtual Reality Pixel Streaming | 4 | not started |
+| What's New | 3 | not started |
+| Microphone settings, Fullscreen button | 2 | hand-written, not yet fragments |
+
+**VERIFIED** for Getting Started on 2026-09-06, by counting the source against
+the output page by page: **4,435 of 4,435 words, 109 of 109 images, 176 of 176
+links**, and every probe for leftover theme markup clean. All 218 image
+references resolve to a file on disk. Pages serve locally and over
+`https://learn.eagle3dstreaming.com`.
+
+**NOT verified:** how the converter handles tables and code blocks — Getting
+Started contains none of either. The first batch that does (Developer Guides has
+the most code, Embed Stream the most tables) must be checked with that in mind
+rather than assumed to work because this one did.
+
+The two hand-written pages predate the template and still carry their own
+inline CSS. They should become fragments like everything else, so that a change
+to the design reaches them too.
 
 **Nothing here is live to customers yet.** The Control Panel links to these
 pages, so a broken build here shows up as a broken info button there.

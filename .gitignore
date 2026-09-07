@@ -4,3 +4,6 @@ node_modules/
 
 # runtime log, not source
 learn.log
+
+# the crawled mirror lives in the scratchpad, not the repo
+docs-mirror/

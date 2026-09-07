@@ -402,9 +402,19 @@ const server = http.createServer((req, res) => {
   const abs = safePath(req.url);
   if (!abs) return send(res, 403, "outside the site directory");
 
+  /* Resolve a URL to a file. Extensionless paths are tried with .html so the
+   * wiki's own URLs keep working unchanged - /wiki/getting-started must land on
+   * the same page it always did, or every existing link, bookmark and search
+   * result breaks the day we switch over. This is file lookup, not rendering:
+   * the bytes still come straight off disk. If nginx ever serves site/ directly
+   * it needs the matching `try_files $uri $uri.html $uri/index.html`. */
   let file = abs;
-  try { if (fs.statSync(file).isDirectory()) file = path.join(file, "index.html"); }
-  catch (e) { return send(res, 404, "not found"); }
+  try {
+    if (fs.statSync(file).isDirectory()) file = path.join(file, "index.html");
+  } catch (e) {
+    if (!path.extname(file) && fs.existsSync(file + ".html")) file += ".html";
+    else return send(res, 404, "not found");
+  }
 
   fs.readFile(file, (err, buf) => {
     if (err) return send(res, 404, "not found");
