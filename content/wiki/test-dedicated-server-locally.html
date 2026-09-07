@@ -1,0 +1,96 @@
+<p class="standfirst">
+  Run your dedicated server and two clients on one machine, and confirm they meet
+  &mdash; before any of it goes near the platform.
+</p>
+
+<h2>Server build and client build are different things</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Server</th><th>Client</th></tr></thead>
+    <tbody>
+      <tr><td>File</td><td><code>YourProjectServer.exe</code></td><td><code>YourProject.exe</code></td></tr>
+      <tr><td>Job</td><td>Hosts the session and manages everyone connected to it.</td><td>Joins a session and plays.</td></tr>
+      <tr><td>On screen</td><td>Nothing &mdash; it is a console process.</td><td>A normal game window.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Double-clicking the server looks like it did nothing. It didn't do
+    nothing.</strong> The server has no window, so it starts silently and keeps
+    running, holding memory and CPU. Check <strong>Task Manager &rarr;
+    Details</strong> for <code>BootstrapPackagedGame.exe</code> and end it.
+    Launching through a shortcut with <code>-log</code>, as below, avoids the
+    problem entirely by giving you a console to watch.
+  </p>
+</aside>
+
+<h2>Start the server</h2>
+
+<ol class="steps">
+  <li>
+    <p>Right-click <code>YourProjectServer.exe</code> and <strong>Create shortcut</strong>.</p>
+    <figure><img src="/images/image-20251105-061011-f2c9b9.png" alt="The created shortcut to the server executable" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Open the shortcut's <strong>Properties</strong>, and at the end of the <strong>Target</strong> field add a space and <code>-log</code>.</p>
+    <figure><img src="/images/image-20251105-061213-370567.png" alt="Adding the -log argument to the shortcut Target field" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Run the shortcut. A console window opens with the server's log.</p>
+    <figure><img src="/images/image-20251105-070445-44d046.png" alt="The server console window showing log output" loading="lazy"></figure>
+  </li>
+</ol>
+
+<h2>Find the port</h2>
+
+<p>
+  Read the listening port out of the log &mdash; usually <strong>7777</strong>.
+</p>
+
+<figure><img src="/images/image-20251105-061706-4a6710.png" alt="The server log showing its listening port" loading="lazy"></figure>
+
+<aside class="callout tip">
+  <p>
+    <strong>Do not assume 7777.</strong> If another server instance is already
+    running &mdash; including one you started by double-clicking and forgot about
+    &mdash; Unreal increments the port, and your client will try to connect to a
+    server that is not there. The log is the authority.
+  </p>
+</aside>
+
+<h2>Connect a client</h2>
+
+<ol class="steps">
+  <li><p>Run <code>YourProject.exe</code> and wait for the menu or play screen.</p></li>
+  <li>
+    <p>Press <strong>~</strong> to open the in-game console.</p>
+    <figure><img src="/images/image-20251105-062150-391d43.png" alt="The in-game console bar opened with the tilde key" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Type the connect command with the port from the log:</p>
+<pre><code>open 127.0.0.1:7777</code></pre>
+  </li>
+</ol>
+
+<p>
+  Then do it again in a second client instance, so two players are in the same
+  session. If the game is fullscreen and you cannot reach the other window, the
+  Windows key or Alt+Tab gets you out.
+</p>
+
+<div class="outcome">
+  <strong>What success looks like</strong>
+  <p>
+    Both clients in the same session, seeing each other. That confirms the
+    server accepts connections and replication works &mdash; which is what you
+    want established before adding streaming, scaling and the platform on top.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/server-scaling-plugin">Server Scaling plugin &rarr;</a>
+  <p>Removing the typed address, once the pair works locally.</p>
+</div>

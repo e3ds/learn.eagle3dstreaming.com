@@ -1,0 +1,66 @@
+<p class="standfirst">
+  Same machine running the app and the signalling server &mdash; but watched from
+  a phone, tablet or second computer on the same network.
+</p>
+
+<p>
+  This is the test worth doing before you promise anyone the app works on mobile.
+  Touch input, screen size and the on-screen keyboard all behave differently, and
+  none of that shows up when you test in a desktop tab.
+</p>
+
+<div class="prereq">
+  <strong>Before you start</strong>
+  <p>
+    <a href="/wiki/test-from-your-browser">The local test</a> already working,
+    and both devices on the same network. If the local test does not work, this
+    one cannot.
+  </p>
+</div>
+
+<ol class="steps">
+  <li>
+    <p>Start your app from the shortcut with the streaming arguments, and leave its terminal open.</p>
+  </li>
+  <li>
+    <p>Run <code>run_local.bat</code> (or <code>Start.bat</code>) from the signalling server folder, and leave that terminal open too.</p>
+    <figure><img src="/images/image-20241020-064434-e07637.png" alt="Running run_local.bat to start the signalling server" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>In a command prompt, run <code>ipconfig</code> and find the <strong>IPv4 Address</strong> of the machine.</p>
+    <figure><img src="/images/image-20241030-151720-547f81.png" alt="Finding the IPv4 address with ipconfig" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>On the other device, open a browser and go to that address.</p>
+    <figure><img src="/images/image-20241030-152530-f66489.png" alt="Opening the host machine's IP address from a mobile browser" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Press <strong>CLICK TO START</strong>.</p>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>What this tells you that the local test does not</strong>
+  <p>
+    Whether your interface is usable at that screen size, whether touch reaches
+    the controls, and whether text fields bring up
+    <a href="/wiki/on-screen-keyboard">the on-screen keyboard</a>. It does not
+    tell you anything about real-world latency &mdash; everything here is on your
+    own network.
+  </p>
+</div>
+
+<aside class="callout tip">
+  <p>
+    <strong>If the address does not load, it is the network, not the app.</strong>
+    The usual causes are the two devices being on different networks (a guest
+    Wi-Fi, or one on mobile data), or Windows Firewall blocking the port.
+    Confirm the same address still works in a browser on the host machine first
+    &mdash; that separates the two possibilities in one step.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/test-linux-locally">Test a Linux build &rarr;</a>
+  <p>The same idea, with the differences a Linux package brings.</p>
+</div>

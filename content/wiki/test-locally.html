@@ -1,0 +1,51 @@
+<p class="standfirst">
+  Run your packaged app against Epic's signalling server on your own machine,
+  before it ever reaches the Control Panel.
+</p>
+
+<h2>Why bother, when uploading also tests it</h2>
+
+<p>
+  Uploading does test your app &mdash;
+  <a href="/wiki/what-happens-when">at phase 6, after four other phases</a>, and
+  the answer comes back as a red bar rather than a log you can read. Testing
+  locally puts the same failure in front of you in a terminal, in seconds, with
+  no upload in between.
+</p>
+
+<div class="outcome">
+  <strong>What it actually proves</strong>
+  <p>
+    That the build is valid, that Pixel Streaming is enabled in it, and that the
+    app streams and accepts input. Almost every upload that fails at testing
+    fails one of those three, and all three are visible locally.
+  </p>
+</div>
+
+<h2>Pick your case</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>You want to test</th><th>Go to</th></tr></thead>
+    <tbody>
+      <tr><td>A Windows build, from the same computer</td><td><a href="/wiki/test-from-your-browser">From your browser</a></td></tr>
+      <tr><td>A Windows build, from a phone or a second computer</td><td><a href="/wiki/test-on-another-device">From another device</a></td></tr>
+      <tr><td>A Linux build</td><td><a href="/wiki/test-linux-locally">Linux locally</a></td></tr>
+      <tr><td>A VR app</td><td><a href="/wiki/test-vr-locally">VR locally</a></td></tr>
+      <tr><td>A multiplayer dedicated server</td><td><a href="/wiki/test-dedicated-server-locally">Dedicated server locally</a></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout tip">
+  <p>
+    <strong>Start with the simplest one that reproduces your problem.</strong>
+    Testing from your own browser removes the network entirely; if it fails
+    there, nothing about phones, VR or servers is the cause.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/test-from-your-browser">Test from your browser &rarr;</a>
+  <p>The base case, and the one everything else builds on.</p>
+</div>

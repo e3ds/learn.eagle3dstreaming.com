@@ -1,0 +1,120 @@
+<p class="standfirst">
+  Run your packaged Windows app and Epic's signalling server on one machine, and
+  stream it to a browser tab on that same machine.
+</p>
+
+<div class="prereq">
+  <strong>Before you start</strong>
+  <p>
+    A packaged Windows build with the
+    <a href="/wiki/plugin-compatibility">Pixel Streaming plugin</a> enabled. If
+    you want a build known to be good to compare against, the demo app on this
+    page's source has already passed the upload sequence.
+  </p>
+</div>
+
+<h2>Step 1. Check the build runs at all</h2>
+
+<p>
+  Double-click the <code>.exe</code>. It should open as an ordinary desktop
+  application.
+</p>
+
+<figure><img src="/images/image-20251124-030734-a3a27b.png" alt="The packaged app running as a normal desktop window" loading="lazy"></figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>If it does not launch here, stop.</strong> A build that will not run
+    as a desktop app is not a valid package, and no amount of Pixel Streaming
+    configuration will make it stream. Fix the packaging first.
+  </p>
+</aside>
+
+<h2>Step 2. Fetch the signalling server</h2>
+
+<p>
+  Epic's servers are not in the package by default &mdash; a script downloads
+  them. Find it under your packaged build:
+</p>
+
+<pre><code>&lt;Packaged Folder&gt;\Windows\&lt;YourProject&gt;\Samples\PixelStreaming\WebServers\get_ps_servers.bat</code></pre>
+
+<p>
+  Run it. A terminal opens, files download, and it closes itself when finished.
+</p>
+
+<figure><img src="/images/image-20241228-151910-7cee38.png" alt="get_ps_servers.bat downloading the signalling server files" loading="lazy"></figure>
+
+<h2>Step 3. Start the signalling server</h2>
+
+<pre><code>&lt;Packaged Folder&gt;\Windows\&lt;YourProject&gt;\Samples\PixelStreaming\WebServers\SignalingWebServer\platform_scripts\cmd\run_local.bat</code></pre>
+
+<aside class="callout note">
+  <p>
+    <strong>On newer Unreal versions this file is called
+    <code>Start.bat</code>.</strong> Same folder, same job &mdash; if
+    <code>run_local.bat</code> is not there, that is what you are looking for.
+  </p>
+</aside>
+
+<p>Leave that terminal open for the rest of this guide.</p>
+
+<h2>Step 4. Launch the app with streaming arguments</h2>
+
+<p>
+  The app needs to be told to stream rather than open a window. Make a shortcut
+  to the <code>.exe</code>, open its <strong>Properties</strong>, and append this
+  to the end of the <strong>Target</strong> field, after a space:
+</p>
+
+<pre><code>-log -AudioMixer -PixelStreamingIP=localhost -PixelStreamingPort=8888 -RenderOffScreen -AllowPixelStreamingCommands</code></pre>
+
+<p>So the whole field reads something like:</p>
+
+<pre><code>"C:\...\MyProject2\Packaged Folder\Windows\MyProject2.exe" -log -AudioMixer -PixelStreamingIP=localhost -PixelStreamingPort=8888 -RenderOffScreen -AllowPixelStreamingCommands</code></pre>
+
+<figure><img src="/images/image-20241228-153439-7ce44a.png" alt="The streaming arguments appended to the shortcut's Target field" loading="lazy"></figure>
+
+<p>
+  Click OK, then run the shortcut &mdash; not the original <code>.exe</code>.
+  Leave its terminal open too.
+</p>
+
+<h2>Step 5. Open it in a browser</h2>
+
+<p>
+  Go to <code>localhost</code> or <code>127.0.0.1</code> and press
+  <strong>CLICK TO START</strong>.
+</p>
+
+<figure><img src="/images/image-20241020-073406-158dbc.png" alt="The app streaming at 127.0.0.1 in a browser" loading="lazy"></figure>
+
+<div class="outcome">
+  <strong>You should see your app, and it should respond to input</strong>
+  <p>
+    That is the same thing the platform checks when you upload. If it works here,
+    the build itself is not the reason an upload fails.
+  </p>
+</div>
+
+<h2>If the page loads but the app never appears</h2>
+
+<figure>
+  <img src="/images/image-20241020-074102-7626b5.png" alt="The signalling server page with no stream connected" loading="lazy">
+  <figcaption>The signalling server is running, but no application connected to it.</figcaption>
+</figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>This is what a build without Pixel Streaming looks like.</strong> The
+    server is fine; nothing connected to it. Enable the plugin, repackage, and
+    try again &mdash; and note that this is exactly the failure that produces the
+    yellow warning at
+    <a href="/wiki/what-happens-when">phase 1 of an upload</a>.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/test-on-another-device">Test from another device &rarr;</a>
+  <p>The same setup, reached from a phone on your network.</p>
+</div>
