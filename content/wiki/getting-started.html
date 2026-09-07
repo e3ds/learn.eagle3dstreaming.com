@@ -1,43 +1,100 @@
-<p>This document will guide you through streaming a pre-packaged application first, followed by detailed instructions on building and streaming your own application.</p>
+<p class="standfirst">
+  This is the shortest path from a new account to your own Unreal application
+  running in a browser. Following it end to end takes about half an hour, most
+  of which is Unreal packaging your project while you wait.
+</p>
 
-<p>A simple demo application is shown streaming below.</p>
+<p>
+  Eagle 3D Streaming runs your application on a cloud machine with a real GPU
+  and sends the picture to a browser as video. Your users need no download, no
+  installation and no graphics card of their own &mdash; they open a link. What
+  you upload is a packaged Windows build of your project; everything after that
+  happens on our machines.
+</p>
 
-<div data-autoscale="" data-ratio="16:9" data-service="external_content">
-<div data-placeholder="">
-<template>
- <a href="https://youtu.be/PYQlx4Zos_s" rel="noreferrer" target="_blank">
+<h2>Start with something that already works</h2>
 
-</a> 
-</template>
+<p>
+  Before packaging anything of your own, stream a sample app we provide. It
+  takes a few minutes, and it proves the whole chain &mdash; your account, the
+  platform, your network and your browser &mdash; before your own build is part
+  of the picture. If something is wrong at that point, it is wrong in a much
+  smaller place.
+</p>
+
+<div class="outcome">
+  <strong>Do this first</strong>
+  <p>
+    <a href="/wiki/create-your-account">Create your account</a>, then
+    <a href="/wiki/stream-a-sample-app">stream the sample app</a>. Once you have
+    seen a stream running, come back for your own application.
+  </p>
 </div>
+
+<p>
+  If you would rather see one before signing up, this is a live stream of that
+  same demo:
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/DemoAppTP/default"
+     rel="noreferrer" target="_blank">open the demo app</a>.
+</p>
+
+<h2>Then bring your own application</h2>
+
+<p>
+  Getting your own project streaming has two halves. First you prepare it in
+  Unreal: enable the Pixel Streaming plugin, package it for Windows, and put the
+  result in a ZIP file. Then you upload that ZIP &mdash; and there are two ways
+  to do that.
+</p>
+
+<div class="choices">
+  <div class="choice pick">
+    <span class="tag">Start here</span>
+    <h3>Upload from the Control Panel</h3>
+    <p>
+      You package the project yourself and upload the ZIP through a web page.
+      Nothing to install, and it works the same way for everyone on your team.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>Upload from Unreal</h3>
+    <p>
+      A plugin packages and uploads in one action, without leaving the editor.
+      Worth installing once you upload often enough that the manual steps become
+      tedious.
+    </p>
+  </div>
 </div>
 
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p><strong>You can view our streaming demo app at the following URL </strong></p>
-<p><a href="https://connector.eagle3dstreaming.com/v5/demo/DemoAppTP/default" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/DemoAppTP/default</strong></a></p>
-</aside>
+<p>
+  Both produce exactly the same result. The plugin saves time; it does not
+  unlock anything. Start with the Control Panel, and move to the plugin when the
+  repetition costs you more than the setup would.
+</p>
+
+<h2>What you need</h2>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li>An email address you can receive mail at &mdash; signing up sends a
+      one-time code.</li>
+    <li><strong>Unreal Engine 5.1 or newer</strong>, if you intend to stream
+      your own project. Earlier versions are not supported.</li>
+    <li>Visual Studio set up for Unreal development, which Unreal's own
+      installation guide covers.</li>
+    <li>Disk space for a packaged build. A modest project produces a few
+      gigabytes.</li>
+  </ul>
 </div>
 
-<p>Follow the roadmap below to begin your streaming journey with Eagle 3D Streaming:</p>
+<p>
+  You do not need a powerful computer to <em>stream</em> &mdash; the rendering
+  happens on our machines. You need one capable of running Unreal only because
+  that is where you build your project.
+</p>
 
-<hr/>
-<h3 id="Need-help?"><span id="GettingStarted-Needhelp?"></span>Need help? 
- </h3>
-<p>If you need any assistance, feel free to reach out through any of the following channels:</p>
-<ul>
-<li>
-<p>🛠️ <strong>Support Portal:</strong> <a href="https://support.eagle3dstreaming.com/" rel="external noreferrer">Contact Our Support Team</a></p>
-</li>
-<li>
-<p>💬 <strong>Discord Community (Faster Support):</strong> <a href="https://discord.com/invite/yvkZewuXKG" rel="noreferrer" target="_blank">Join Our Discord Community</a></p>
-</li>
-<li>
-<p>📧 <strong>Email Support:</strong> <a href="mailto:support@eagle3dstreaming.com" rel="external noreferrer">support@eagle3dstreaming.com</a></p>
-</li>
-</ul>
-
-<p>🆓 <a href="https://controlpanel.eagle3dstreaming.com/signup" rel="external noreferrer"><strong>Get Started for free</strong></a></p>
-
-<p>Follow us on:</p>
-<p><a href="https://www.facebook.com/Eagle3DStreaming/" rel="noreferrer" target="_blank"><strong>Facebook</strong></a> | <a href="https://github.com/e3ds" rel="noreferrer" target="_blank"><strong>GitHub</strong></a> | <a href="https://www.linkedin.com/company/eagle-3d-streaming" rel="noreferrer" target="_blank"><strong>LinkedIn</strong></a> | <a href="https://www.youtube.com/@eagle3dstreaming" rel="noreferrer" target="_blank"><strong>YouTube</strong></a></p>
+<div class="next">
+  <a href="/wiki/create-your-account">Create your account &rarr;</a>
+  <p>Five steps, and you finish inside the Control Panel.</p>
+</div>
