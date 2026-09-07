@@ -1,0 +1,14 @@
+{
+ "title": "What happens when you upload and stream",
+ "slug": "what-happens-when",
+ "section": "Control Panel Features",
+ "parents": [
+  "control-panel-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/phases-after-accessing-the-streaming-url",
+ "rewritten": true,
+ "replaces": [
+  "phases-after-accessing-the-streaming-url",
+  "phases-in-the-upload-sequence"
+ ]
+}
