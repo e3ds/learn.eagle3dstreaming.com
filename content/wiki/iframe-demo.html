@@ -1,0 +1,130 @@
+<p class="standfirst">
+  A working page that drives a streamed Unreal app &mdash; teleporting an avatar,
+  opening URLs, switching maps &mdash; with the source for both the page and the
+  Blueprint side.
+</p>
+
+<p>
+  <a href="https://iframe_react.eagle3dstreaming.com/"><strong>Live demo</strong></a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://github.com/e3ds/E3DS-Iframe-Demo"><strong>Source on GitHub</strong></a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://github.com/e3ds/E3DS-Iframe-Demo/blob/main/ReadMe.MD">running it locally</a>
+</p>
+
+<figure>
+  <img src="/images/image-20221017-101348-da5a55.png" alt="The iframe demo when first loaded" loading="lazy">
+  <figcaption>The demo on load: the streamed app on the right, the page's own buttons on the left.</figcaption>
+</figure>
+
+<h2>What it demonstrates</h2>
+
+<p>
+  Every button on the left belongs to the <em>page</em>, not to the app. Clicking
+  one sends a message into the iframe, the app receives it, and something happens
+  in the 3D scene &mdash; the avatar walks to a location, a URL opens, the level
+  changes.
+</p>
+
+<div class="outcome">
+  <strong>This is the pattern behind most real integrations</strong>
+  <p>
+    Your own interface &mdash; your buttons, your styling, your framework &mdash;
+    with the stream as one element inside it. The app does not need to draw the
+    UI, and the page does not need to know anything about Unreal beyond the
+    message it sends.
+  </p>
+</div>
+
+<h2>How a message gets there</h2>
+
+<p>
+  The page posts a JSON string into the iframe. The wrapper picks it up and hands
+  the inner value to the app:
+</p>
+
+<pre><code class="language-javascript">function switchMap(val) {
+  let descriptor = {
+    "type": "changeLevel",
+    "value": val          // must match the Unreal .umap name
+  };
+
+  let obj = {
+    cmd: "sendToUe4",
+    value: descriptor,
+  };
+
+  document.getElementById("iframe_1")
+    .contentWindow.postMessage(JSON.stringify(obj), "*");
+}</code></pre>
+
+<p>
+  <code>cmd: "sendToUe4"</code> is the envelope &mdash; it means "pass this
+  through to the app". <code>value</code> is yours: the app decides what
+  <code>type</code> and <code>value</code> mean. The teleport buttons use the same
+  envelope with a different payload:
+</p>
+
+<pre><code class="language-javascript">{ cmd: 'ueapp04', value: { Teleport: 1 } }</code></pre>
+
+<aside class="callout warning">
+  <p>
+    <strong>The value must match the Unreal name exactly.</strong> For
+    <code>changeLevel</code> that is the <code>.umap</code> name, and a mismatch
+    fails silently &mdash; the message is delivered, the app looks for a level
+    that does not exist, and nothing visible happens. There is no error in the
+    page's console, because as far as the page is concerned the send succeeded.
+  </p>
+</aside>
+
+<h2>The iframe itself</h2>
+
+<pre><code class="language-html">&lt;iframe
+  allow="camera;microphone"
+  id="iframe_1"
+  src="https://connector.eagle3dstreaming.com/v5/demo/YourApp/YourConfig"
+  width="100%" height="100%"
+  allowfullscreen&gt;
+&lt;/iframe&gt;</code></pre>
+
+<p>
+  <code>src</code> is your app's streaming URL. The <code>allow</code> attribute
+  matters if your app uses the
+  <a href="/wiki/audio-and-microphone">microphone or camera</a> &mdash; without
+  it the browser refuses those permissions to the frame regardless of what the
+  viewer allows for the page.
+</p>
+
+<h2>The other direction</h2>
+
+<p>
+  The demo also receives &mdash; the "get user info" button asks the app for
+  something and displays the answer. That is the same channel in reverse; see
+  <a href="/wiki/sending-and-receiving-data">sending and receiving data</a>.
+</p>
+
+<figure><img src="/images/image-20221019-103419-d93709.png" alt="The demo displaying information returned from the app" loading="lazy"></figure>
+
+<h2>Trying the map-switching branch</h2>
+
+<pre><code class="language-bash">git clone https://github.com/e3ds/E3DS-Iframe-Demo
+cd E3DS-Iframe-Demo
+git checkout demo-to-change-levels</code></pre>
+
+<p>
+  Then open <code>E3DS_Iframe_Demo.htm</code> in a browser. The
+  <code>switchMap()</code> function above is in <code>js/demo.js</code>.
+</p>
+
+<h3>The Unreal side</h3>
+
+<ol class="steps">
+  <li><p>Enable the Pixel Streaming plugin in your project.</p></li>
+  <li><p>Add a <strong>PixelStreamingInput</strong> component to the Player Controller.</p></li>
+  <li><p>In its Details panel, under <strong>Events</strong>, click <strong>Input event</strong> to generate the node, and handle the descriptor your page sends.</p></li>
+</ol>
+
+<div class="next">
+  <a href="/wiki/embed-stream-using-iframe">Embedding with an iframe &rarr;</a>
+  <p>Putting the stream into your own site, beyond the demo.</p>
+</div>
