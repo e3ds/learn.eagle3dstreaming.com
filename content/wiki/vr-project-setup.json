@@ -1,0 +1,14 @@
+{
+ "title": "Set up a VR project",
+ "slug": "vr-project-setup",
+ "section": "Virtual Reality Pixel Streaming",
+ "parents": [
+  "virtual-reality-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/create-a-vr-project-and-set-it-up-for-uploading",
+ "rewritten": true,
+ "replaces": [
+  "create-a-vr-project-and-set-it-up-for-uploading",
+  "fixing-ground-stuck-issue-in-vr"
+ ]
+}

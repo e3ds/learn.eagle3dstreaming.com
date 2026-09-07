@@ -1,0 +1,199 @@
+<p class="standfirst">
+  Create a VR project, configure it for streaming, fix the two problems the
+  Unreal template ships with, and package it ready to upload.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li><strong>Unreal Engine 5.5.</strong> Not another version &mdash; see
+      <a href="/wiki/virtual-reality-pixel-streaming">why</a>.</li>
+    <li>Visual Studio configured for Unreal. Packaging fails without it, and the
+      failure does not say so clearly.</li>
+    <li>A headset for testing. We have verified Quest 2 and Quest 3.</li>
+  </ul>
+</div>
+
+<h2>Create the project</h2>
+
+<p>
+  In Unreal Editor, create a new project, choose <strong>Virtual Reality</strong>
+  under <strong>Games</strong>, name it and press <strong>Create</strong>.
+</p>
+
+<figure>
+  <img src="/images/image-20241113-145313-12df92.png" loading="lazy" decoding="async"
+       alt="Choosing the Virtual Reality template in the Unreal project browser">
+  <figcaption>The Virtual Reality template.</figcaption>
+</figure>
+
+<h2>Configure the plugins</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>One plugin goes on and one goes off.</strong> Pixel Streaming is
+    enabled; <strong>OpenXR is disabled</strong>. Disabling OpenXR in a VR
+    project reads like a mistake, which is why it is the step people skip.
+    Streaming will not work correctly with it left on.
+  </p>
+</aside>
+
+<ol class="steps">
+  <li>
+    <h3>Open Edit &rsaquo; Plugins</h3>
+    <figure>
+      <img src="/images/image-20241113-150350-d6109e.png" loading="lazy" decoding="async"
+           alt="The Plugins entry in Unreal's Edit menu">
+      <figcaption>Edit &rsaquo; Plugins.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Search "Pixel Streaming" and enable it</h3>
+    <figure>
+      <img src="/images/image-20241113-150707-1c6a68.png" loading="lazy" decoding="async"
+           alt="Enabling the Pixel Streaming plugin">
+      <figcaption>Pixel Streaming: on.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Search "OpenXR" and disable it</h3>
+    <figure>
+      <img src="/images/image-20241113-150947-a9da69.png" loading="lazy" decoding="async"
+           alt="Disabling the OpenXR plugin">
+      <figcaption>OpenXR: off.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Restart, then dismiss the popup that follows</h3>
+    <figure>
+      <img src="/images/image-20241113-151157-6047d4.png" loading="lazy" decoding="async"
+           alt="Restarting the editor to apply plugin changes">
+      <figcaption>Restart Now.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>Clean up the template</h2>
+
+<p>
+  Two things in Unreal's VR template need attention before it will stream
+  properly.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Delete <code>B_Asset Guideline</code> from the Content Drawer</h3>
+    <p>It is a guide asset for people working in the editor, and has no place in a streamed build.</p>
+    <figure>
+      <img src="/images/image-20241113-151942-67b71d.png" loading="lazy" decoding="async"
+           alt="Deleting the asset guideline blueprint from the Content Drawer">
+      <figcaption>Removing the guideline asset.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Open <code>VRPawn</code>, then compile and save</h3>
+    <figure>
+      <img src="/images/image-20241113-152125-8e71f6.png" loading="lazy" decoding="async"
+           alt="Opening VRPawn in the Content Drawer">
+      <figcaption>VRPawn, compiled and saved.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>Fix the player spawning in the floor</h2>
+
+<p>
+  The template's player starts partly below the ground, and returns there after
+  every teleport. The cause is worth knowing, because it explains why moving the
+  Player Start is the fix: <strong>teleportation moves the
+  <em>centre</em> of the player to the target</strong>, without accounting for
+  the collision capsule &mdash; so the lower half of the capsule ends up inside
+  the floor.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Raise the Player Start along Z</h3>
+    <p>
+      Select the <strong>Player Start</strong> actor in your level and move it
+      up until the collision capsule clears the ground. In the stock template
+      about <strong>+110 units</strong> is enough. Aim for standing on the
+      ground &mdash; neither sunk into it nor floating above it.
+    </p>
+    <figure>
+      <img src="/images/image-20250803-090357-83ac3d.png" loading="lazy" decoding="async"
+           alt="The Player Start actor showing the Bad Size warning">
+      <figcaption>Before: the capsule intersects the floor.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Check the warning has gone</h3>
+    <p>
+      Unreal draws a red <strong>Bad Size</strong> label on a Player Start whose
+      capsule is obstructed. When your offset is right, that label disappears
+      &mdash; which makes this the rare fix you can confirm without launching
+      anything.
+    </p>
+    <figure>
+      <img src="/images/image-20250803-090714-6b2bfd.png" loading="lazy" decoding="async"
+           alt="The Player Start actor with the warning cleared">
+      <figcaption>After: the warning is gone.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<aside class="callout note">
+  <p>
+    <strong>The Player Start shows the capsule of your game mode's default pawn
+    class</strong>, not of whatever pawn you happen to have selected. If the
+    warning behaves strangely, check that the game mode names the pawn you
+    actually spawn.
+  </p>
+</aside>
+
+<h2>Package it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Platforms &rsaquo; Windows &rsaquo; Package Project</h3>
+    <p>Choose an <strong>empty</strong> folder for the output.</p>
+    <figure>
+      <img src="/images/image-20241115-035205-3684e7.png" loading="lazy" decoding="async"
+           alt="Packaging the project for Windows">
+      <figcaption>Packaging for Windows.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Watch the output if it fails</h3>
+    <p>
+      Press <strong>Show Output Logs</strong>. The most common cause of a
+      packaging failure is Visual Studio not being configured for Unreal, which
+      the log will say and the dialog will not.
+    </p>
+  </li>
+  <li>
+    <h3>Zip the contents of the Windows folder</h3>
+    <p>
+      Select everything <em>inside</em> it and compress that &mdash; not the
+      folder itself, which buries the <code>.exe</code> a level too deep.
+    </p>
+    <figure>
+      <img src="/images/image-20241115-040211-9da98c.png" loading="lazy" decoding="async"
+           alt="Creating the ZIP from the packaged Windows folder">
+      <figcaption>The ZIP you upload.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You now have</strong>
+  <p>
+    A ZIP ready to upload. Test it locally with a headset first, then upload it
+    exactly like any other application.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/upload-from-the-control-panel">Upload it &rarr;</a>
+  <p>Then open the app's streaming URL in the headset's browser.</p>
+</div>
