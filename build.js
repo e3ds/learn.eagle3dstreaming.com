@@ -171,7 +171,14 @@ function main() {
   const llms = ["# Eagle 3D Streaming documentation", ""]
     .concat(pages.sort((a, b) => a.slug.localeCompare(b.slug))
       .map((p) => "- [" + p.title + "](https://learn.eagle3dstreaming.com/wiki/" + p.slug + ")"));
-  fs.writeFileSync(path.join(ROOT, "site", "llms.txt"), llms.join("\n") + "\n", "utf8");
+  /* WITHHELD until launch. llms.txt exists to invite language models to index
+   * the site, and not all of them honour robots.txt. While this is an internal
+   * review copy that is precisely what we do not want. Flip LAUNCHED when the
+   * site goes public - the full checklist is in site/robots.txt. */
+  const LAUNCHED = false;
+  const llmsPath = path.join(ROOT, "site", "llms.txt");
+  if (LAUNCHED) fs.writeFileSync(llmsPath, llms.join("\n") + "\n", "utf8");
+  else if (fs.existsSync(llmsPath)) fs.unlinkSync(llmsPath);
 
   console.log("  " + written + " pages written to site/wiki/");
   console.log("  " + tree.roots.length + " top-level, deepest branch "

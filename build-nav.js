@@ -45,11 +45,20 @@ const STYLE = `<style id="e3dsNavStyle">
   html { background: var(--ground); }
   body { min-height: 100vh; background: var(--ground); }
   body { display:flex; align-items:flex-start; }
+  /* The nav STRETCHES to the full page height, and the sticky part is the inner
+     element. It used to be height:100vh, which paints the left column with
+     --surface for exactly one screen and leaves everything below it a different
+     colour - a visible band partway down a long page, in the wrong colour, which
+     is what "the white part" was.
+     align-self is needed because the container sets align-items:flex-start. */
   #e3dsNav {
-    flex:0 0 258px; width:258px; position:sticky; top:0; height:100vh;
-    overflow-y:auto; border-right:1px solid var(--line); background:var(--surface);
+    flex:0 0 258px; width:258px; align-self:stretch;
+    border-right:1px solid var(--line); background:var(--surface);
   }
-  .e3dsNavInner { padding:22px 14px 40px; }
+  .e3dsNavInner {
+    position:sticky; top:0; max-height:100vh; overflow-y:auto;
+    padding:22px 14px 40px;
+  }
   .e3dsNavHome {
     display:block; font-family:Archivo,Arial,sans-serif; font-weight:700;
     font-size:14px; line-height:1.3; margin-bottom:18px;
@@ -94,9 +103,11 @@ const STYLE = `<style id="e3dsNavStyle">
   @media (max-width:760px) {
     body { display:block; }
     #e3dsNav {
-      position:fixed; left:0; top:0; z-index:9998; transform:translateX(-100%);
-      transition:transform .18s; box-shadow:2px 0 18px rgba(0,0,0,.35);
+      position:fixed; left:0; top:0; height:100vh; z-index:9998;
+      transform:translateX(-100%); transition:transform .18s;
+      box-shadow:2px 0 18px rgba(0,0,0,.35);
     }
+    .e3dsNavInner { max-height:100vh; }
     body.e3dsNavOpen #e3dsNav { transform:none; }
     #e3dsNavToggle {
       display:block; position:fixed; left:12px; bottom:12px; z-index:9999;
