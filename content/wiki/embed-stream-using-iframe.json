@@ -3,7 +3,7 @@
  "slug": "embed-stream-using-iframe",
  "section": "Embed Stream into Webpage",
  "parents": [
-  "embed-stream-into-webpage"
+  "embedding-new"
  ],
  "source": "https://docs.eagle3dstreaming.com/wiki/embed-stream-using-iframe",
  "rewritten": true,
@@ -12,5 +12,6 @@
   "iframe-stages",
   "embed-streaming-within-react-webpage-using-iframe",
   "copy-a-streaming-iframe-script"
- ]
+ ],
+ "order": 1
 }

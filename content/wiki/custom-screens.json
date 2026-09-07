@@ -14,5 +14,6 @@
   "set-up-custom-session-expired-screen",
   "custom-session-expired-screen",
   "handling-app-crash-message-in-iframe"
- ]
+ ],
+ "order": 4
 }

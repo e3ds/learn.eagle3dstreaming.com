@@ -1,5 +1,5 @@
 {
- "title": "Three ways to embed (new draft)",
+ "title": "Three ways to embed",
  "slug": "embedding-new",
  "section": "Embed Stream into Webpage",
  "parents": [
@@ -7,5 +7,6 @@
  ],
  "source": "new draft, 2026-09-07",
  "rewritten": true,
- "replaces": []
+ "replaces": [],
+ "order": 1
 }

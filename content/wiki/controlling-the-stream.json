@@ -21,5 +21,6 @@
   "runtime-events-utility-functions",
   "advanced-features-sdk-behavior",
   "toggle-between-hover-and-locked-mouse-using-sdk"
- ]
+ ],
+ "order": 3
 }

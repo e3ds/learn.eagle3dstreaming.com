@@ -1,0 +1,144 @@
+<p class="standfirst">
+  Every way a session can end, and the message the platform sends with it.
+  <code>onRedirectingWithMessage</code> delivers all of them, which is why it is
+  the one callback worth building on.
+</p>
+
+<div class="prereq">
+  <strong>How you receive these</strong>
+  <p>
+    One callback, whatever the reason:
+  </p>
+</div>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onRedirectingWithMessage = function (message) {
+    showMyEndScreen(message);   // one screen, every reason below
+};</code></pre>
+
+<aside class="callout warning">
+  <p>
+    <strong>Show the message. Do not parse it.</strong> The wording is written
+    for a person to read and it changes &mdash; some of these carry a duration,
+    a machine name or a username spliced in, and new ones are added over time.
+    Code that branches on the text will break on a wording change nobody thought
+    of as breaking. If you need to react differently to different endings, ask
+    us for a machine-readable code rather than matching strings.
+  </p>
+</aside>
+
+<h2>Someone ended it deliberately</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What happened</th><th>What the viewer is told</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>You kicked them</strong> from <a href="/wiki/monitoring-sessions">Utilities &rarr; Running Streaming Sessions</a> in the Control Panel</td>
+        <td>You have been kicked out</td>
+      </tr>
+      <tr>
+        <td><strong>A meeting host closed the meeting</strong>, ending it for every guest</td>
+        <td>Host's Streaming Closed</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="outcome">
+  <strong>The kick is the one you can trigger yourself</strong>
+  <p>
+    Open <a href="/wiki/monitoring-sessions">Utilities</a>, find the session, and
+    press <strong>Kick Player</strong>. Your own SDK page receives
+    <code>onRedirectingWithMessage</code> a moment later. That is the cheapest
+    way to test your end-of-session screen against a real event rather than by
+    calling the callback by hand.
+  </p>
+</div>
+
+<h2>Time ran out</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What happened</th><th>What the viewer is told</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>The <a href="/wiki/session-and-access">maximum session length</a> was reached &mdash; if you set an hour, this arrives after an hour</td>
+        <td>Session lasted for &lt;duration&gt;. Session expired.</td>
+      </tr>
+      <tr>
+        <td>The link itself had an expiry and it passed</td>
+        <td>Url Expired</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>The application stopped</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What happened</th><th>What the viewer is told</th></tr></thead>
+    <tbody>
+      <tr><td>Your app crashed</td><td>App Crashed</td></tr>
+      <tr><td>The machine hosting it is not online &mdash; switched off, or the name is wrong</td><td>The machine "&lt;name&gt;" is not currently online…</td></tr>
+      <tr><td>Every machine that could run your app is busy</td><td>The requested exe launcher is currently busy. Please try again later.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>The account cannot stream</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What happened</th><th>What the viewer is told</th></tr></thead>
+    <tbody>
+      <tr><td>No such account</td><td>User &lt;name&gt; not found. Please register from…</td></tr>
+      <tr><td>No active plan</td><td>User &lt;name&gt; does not have an active subscription…</td></tr>
+      <tr><td>The plan lapsed</td><td>User &lt;name&gt; subscription expired. Please renew…</td></tr>
+      <tr><td>Your <a href="/wiki/capacity-and-regions">concurrent-user limit</a> is full</td><td>User &lt;name&gt; has reached maxUserLimit of &lt;n&gt;</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout note">
+  <p>
+    <strong>These four are about your account, not your viewer</strong> &mdash;
+    and they are shown to the viewer, who can do nothing about any of them and
+    should probably not read them. If your app is public, this is the strongest
+    reason to replace the default screen with your own: catch the message, log
+    it for yourself, and show the visitor something that makes sense from where
+    they are sitting.
+  </p>
+</aside>
+
+<h2>Access was refused</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What happened</th><th>What the viewer is told</th></tr></thead>
+    <tbody>
+      <tr><td>Wrong password on a password-protected link</td><td>You did not enter the correct password. Please refresh the page.</td></tr>
+      <tr><td>The token did not verify</td><td>Token verification: &lt;reason&gt;</td></tr>
+      <tr><td>The app is built on UE 4.27, which is no longer supported</td><td>Your application is running on UE4.27… Please upgrade to UE5.1 or later.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>This list will grow</h2>
+
+<div class="outcome">
+  <strong>Which is the argument for one screen, not a branch per message</strong>
+  <p>
+    New endings are added as the platform changes, and they arrive through the
+    same callback with wording you have never seen. A page that shows whatever
+    it is given handles them all on the day they appear. A page that matches
+    known strings silently shows nothing for the one it does not recognise
+    &mdash; and that is the case you will hear about from a customer rather than
+    find yourself.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/custom-screens">Custom screens &rarr;</a>
+  <p>Replacing the default end-of-session overlay with your own.</p>
+</div>
