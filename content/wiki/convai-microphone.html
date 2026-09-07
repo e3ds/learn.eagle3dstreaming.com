@@ -1,0 +1,95 @@
+<p class="standfirst">
+  A Convai project expects a microphone attached to the machine it runs on. In a
+  streamed app there isn't one &mdash; the microphone is at the viewer's end. Here
+  is how to connect the two.
+</p>
+
+<p>
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/e3ds_mic_demo/mic"><strong>Live demo</strong></a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://drive.google.com/file/d/1y1s6XkphAIcEPPBSfVQ-UAz0WHwgrI20/view">demo project</a>
+  &nbsp;&middot;&nbsp;
+  <a href="https://youtu.be/pyHYiOCCXT8">video walkthrough</a>
+</p>
+
+<div class="outcome">
+  <strong>Why it needs configuring at all</strong>
+  <p>
+    Convai listens to Unreal's audio input, and on a streaming machine that input
+    is empty. The browser has the viewer's voice; Pixel Streaming can carry it;
+    the work is pointing Convai at that stream instead of at the local device
+    that does not exist.
+  </p>
+</div>
+
+<h2>Part 1. The character Blueprint</h2>
+
+<ol class="steps">
+  <li>
+    <p>Open your character Blueprint and add a <strong>PixelStreamingAudio</strong> component, wiring up the audio-streaming nodes.</p>
+    <figure><img src="/images/image-20250826-151423-44a18b.png" alt="The audio nodes added to the character Blueprint" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>In that component's settings, <strong>disable "Use Pixel Streaming Mic Input"</strong>.</p>
+    <figure><img src="/images/image-20250828-072429-15e811.png" alt="Disabling Use Pixel Streaming Mic Input" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Add an <strong>AudioInput</strong> node under the PixelStreamingAudio component.</p>
+    <figure><img src="/images/image_2025-11-01_02-03-22-20251031-202333-eea9ee.png" alt="Adding AudioInput under PixelStreamingAudio" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Under <strong>Edit &rarr; Project Settings &rarr; Convai</strong>, enter the API key from your <a href="https://convai.com/pipeline/dashboard">Convai dashboard</a>.</p>
+    <figure><img src="/images/image-20251031-143633-3650eb.png" alt="Entering the Convai API key in project settings" loading="lazy"></figure>
+  </li>
+</ol>
+
+<aside class="callout note">
+  <p>
+    <strong>Step 2 is the counter-intuitive one.</strong> The setting called "Use
+    Pixel Streaming Mic Input" is turned <em>off</em> &mdash; the explicit
+    AudioInput node is what feeds Convai, and leaving both enabled has them
+    competing for the same audio.
+  </p>
+</aside>
+
+<h2>Part 2. On the platform</h2>
+
+<ol class="steps">
+  <li><p>Package and <a href="/wiki/upload-from-the-control-panel">upload the project</a>.</p></li>
+  <li><p>Create a configuration for it, and enable <strong><a href="/microphone-settings.html">Browser Microphone</a></strong>.</p></li>
+</ol>
+
+<div class="outcome">
+  <strong>Both halves are required</strong>
+  <p>
+    The Blueprint work routes the audio inside Unreal; the configuration setting
+    is what makes the browser capture it in the first place. With one but not the
+    other, the character simply never hears anything.
+  </p>
+</div>
+
+<h2>When the character does not respond</h2>
+
+<p>Work through these in order &mdash; most reports are the first two.</p>
+
+<ul>
+  <li><strong>The permission was denied.</strong> Click the lock icon in the
+    address bar, then <strong>Site settings &rarr; Microphone &rarr; Allow</strong>,
+    and refresh. See <a href="/wiki/audio-and-microphone">audio and microphone</a>,
+    where a blocked mic can stop the stream starting at all.</li>
+  <li><strong>The prompt never appeared</strong> because pop-ups are blocked.
+    Same menu: allow <strong>Pop-ups and redirects</strong>, then refresh.</li>
+  <li><strong>The tab is muted.</strong> Right-click the browser tab and check
+    "Mute site" is off &mdash; and check system volume.</li>
+  <li><strong>The browser restricts it.</strong> Chrome, Edge and Firefox are
+    the supported ones. Safari and some mobile browsers limit microphone access
+    depending on version.</li>
+  <li><strong>An old permission is cached.</strong> After changing any of the
+    above, clear the cache and start a fresh session &mdash; the old decision can
+    survive a reload.</li>
+</ul>
+
+<div class="next">
+  <a href="/microphone-settings.html">Microphone settings &rarr;</a>
+  <p>The configuration side, for any app that listens.</p>
+</div>

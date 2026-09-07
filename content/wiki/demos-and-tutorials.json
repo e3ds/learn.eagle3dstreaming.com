@@ -1,9 +1,12 @@
 {
- "title": "Demos and Tutorials",
+ "title": "Demos",
  "slug": "demos-and-tutorials",
  "section": "Developer Guides",
  "parents": [
   "development-guides"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/demos-and-tutorials"
+ "source": "https://docs.eagle3dstreaming.com/wiki/demos-and-tutorials",
+ "rewritten": true,
+ "replaces": [],
+ "order": 70
 }

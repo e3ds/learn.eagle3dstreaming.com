@@ -1,0 +1,14 @@
+{
+ "title": "Convai microphone",
+ "slug": "convai-microphone",
+ "section": "Developer Guides",
+ "parents": [
+  "demos-and-tutorials"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/integration-of-mic-in-a-project-using-convai",
+ "rewritten": true,
+ "replaces": [
+  "integration-of-mic-in-a-project-using-convai"
+ ],
+ "order": 2
+}

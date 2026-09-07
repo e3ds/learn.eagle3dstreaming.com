@@ -1,7 +1,9 @@
 {
- "title": "Developer Guides",
+ "title": "Developer guides",
  "slug": "development-guides",
- "section": "(top level)",
+ "section": "Developer Guides",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/development-guides"
+ "source": "https://docs.eagle3dstreaming.com/wiki/development-guides",
+ "rewritten": true,
+ "replaces": []
 }
