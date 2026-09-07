@@ -1,0 +1,14 @@
+{
+ "title": "Analytics API",
+ "slug": "analytics-api",
+ "section": "Developer Guides",
+ "parents": [
+  "api-reference"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/use-the-eagle-pixel-streaming-analytics-api",
+ "rewritten": true,
+ "replaces": [
+  "use-the-eagle-pixel-streaming-analytics-api"
+ ],
+ "order": 2
+}

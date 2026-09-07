@@ -1,9 +1,12 @@
 {
- "title": "API Reference",
+ "title": "API reference",
  "slug": "api-reference",
  "section": "Developer Guides",
  "parents": [
   "development-guides"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/api-reference"
+ "source": "https://docs.eagle3dstreaming.com/wiki/api-reference",
+ "rewritten": true,
+ "replaces": [],
+ "order": 60
 }

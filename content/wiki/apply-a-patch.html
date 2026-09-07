@@ -1,0 +1,76 @@
+<p class="standfirst">
+  Upload a prepared demo build and a ready-made patch, and watch the app change
+  &mdash; the quickest way to understand patching before your own project is
+  involved.
+</p>
+
+<div class="prereq">
+  <strong>You need</strong>
+  <p>
+    The <a href="https://drive.google.com/file/d/1bYO_AfpTDxEi-9_3z8UcGCEsMYAcqMfJ/view?usp=sharing">packaged demo project</a>,
+    which contains both the build and a patch file. No Unreal Engine required.
+  </p>
+</div>
+
+<ol class="steps">
+  <li>
+    <p><strong>Upload the ZIP</strong> to the Control Panel as an ordinary app &mdash; see <a href="/wiki/upload-from-the-control-panel">uploading from the Control Panel</a>.</p>
+  </li>
+  <li>
+    <p><strong>Play it</strong> and note what it looks like. This is the "before".</p>
+    <figure><img src="/images/AD_4nXc94Jw9BAE_ypC-OhOhhNvqresQboVfMyYTpI5p3EOLxmHe-48233a.png" alt="The demo app streaming before the patch is applied" loading="lazy"></figure>
+  </li>
+</ol>
+
+<h2>The patch upload URL</h2>
+
+<p>
+  Patches do not go through the normal upload page. You construct their address
+  from your username and your app name:
+</p>
+
+<pre><code>https://upload-old.eagle3dstreaming.com/patch/{userName}/{appName}/latest</code></pre>
+
+<p>
+  So for username <code>demo</code> and app <code>patchDemo</code>:
+</p>
+
+<pre><code>https://upload-old.eagle3dstreaming.com/patch/demo/patchDemo/latest</code></pre>
+
+<aside class="callout note">
+  <p>
+    <strong>Both parts must match exactly.</strong> The username is the one you
+    sign in to the Control Panel with, and the app name is the one you gave when
+    uploading &mdash; not the display title. A mismatch gives you a page that
+    accepts a file and patches nothing.
+  </p>
+</aside>
+
+<ol class="steps">
+  <li>
+    <p>Open that URL.</p>
+    <figure><img src="/images/AD_4nXeeq_AEcCZAqhs5BaEnJJkvWHP60tBqf_giOXbAWawMVqEA-bc1150.png" alt="The patch upload page" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Choose the <code>.pak</code> file from the extracted demo ZIP.</p>
+    <figure><img src="/images/AD_4nXeoyWoSZcBjAQLMycAdBa_EaBlKq_MyjG2VvfG761BQObRM-cdcfa1.png" alt="Selecting the pak file to upload" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Upload it.</p>
+    <figure><img src="/images/AD_4nXd7HoHVMqe8weyzqeApLp-gh7aBHD6pGS4vQwfj0aue14Ru-fb95f6.png" alt="The patch upload completing" loading="lazy"></figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>Play the app again</strong>
+  <p>
+    It should now show the patched content &mdash; without the base build having
+    been re-uploaded. That difference, between a few megabytes and the whole
+    package, is the entire point of the mechanism.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/patch-launch-profiles">Set up your own profiles &rarr;</a>
+  <p>Producing base builds and patches from your own project.</p>
+</div>

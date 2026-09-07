@@ -1,0 +1,86 @@
+<p class="standfirst">
+  Patching needs two custom launch profiles in Unreal's Project Launcher: one
+  that produces the base build, and one that produces patches against it.
+</p>
+
+<div class="prereq">
+  <strong>Where these live</strong>
+  <p>
+    <strong>Platforms &rarr; Project Launcher &rarr; Add a Custom Launch
+    Profile</strong>. You will make two, and keep both &mdash; the base profile
+    is not a one-off.
+  </p>
+</div>
+
+<h2>Profile 1: the base build</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Cook Mode</td><td>By The Book</td></tr>
+      <tr><td>Platform</td><td>Windows</td></tr>
+      <tr><td>Culture</td><td>en</td></tr>
+      <tr><td>Maps</td><td>Your working map</td></tr>
+      <tr><td>Release / DLC / Patching</td><td><strong>Create a release version of the game for distribution</strong>, release version <code>1.0</code></td></tr>
+      <tr><td>Advanced</td><td>Iterative Cooking, Compress Content, Store all content in a single file (unrealPak)</td></tr>
+      <tr><td>Package</td><td>Package &amp; store locally, <strong>Retain the staged directory</strong></td></tr>
+      <tr><td>Deploy</td><td>Do not deploy</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<figure><img src="/images/AD_4nXck20_eFa0-A3e1NAN_GNli6po-6kL63b7cHKNwdZvTMdo3-5e21b0.png" alt="The base packaged profile in Project Launcher" loading="lazy"></figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>"Create a release version" is what makes patching possible
+    later.</strong> It records the state of this build so a future patch can be
+    computed as the difference from it. A base packaged without it cannot be
+    patched, and you will not find that out until you try to build the patch.
+  </p>
+</aside>
+
+<h2>Profile 2: the patch</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Cook Mode</td><td>By The Book</td></tr>
+      <tr><td>Platform / Culture / Maps</td><td>Same as the base</td></tr>
+      <tr><td>New release version</td><td><code>1.1</code></td></tr>
+      <tr><td>Release version this is based on</td><td><code>1.0</code></td></tr>
+      <tr><td>Generate Patch</td><td>Enabled</td></tr>
+      <tr><td>Advanced</td><td>Compress Content, Store all content in a single file (unrealPak)</td></tr>
+      <tr><td>Package</td><td>Package &amp; store locally, Retain the staged directory</td></tr>
+      <tr><td>Deploy</td><td>Do not deploy</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<figure><img src="/images/AD_4nXcvJIgmxCdDcULVFYYkzCW8rfotS2gVhsFglf0ziWB3hZZ9-b7e2ab.png" alt="The patch profile with Generate Patch enabled" loading="lazy"></figure>
+
+<div class="outcome">
+  <strong>The two version fields are the whole mechanism</strong>
+  <p>
+    <em>Based on</em> says which build to compare against; <em>new release
+    version</em> names what you are producing. Point the patch at the wrong base
+    and you get a patch file that appears fine and does not work against the
+    build you actually shipped.
+  </p>
+</div>
+
+<h2>Rules that bite later</h2>
+
+<ul>
+  <li><strong>Keep the base <code>.pak</code>.</strong> The app will not run without it.</li>
+  <li><strong>Upload the base first, then patches in order.</strong> Higher-numbered patches override lower ones, so sequence is meaning, not tidiness.</li>
+  <li><strong>Name them consistently</strong> &mdash; <code>testPatch3-Windows_0_P.pak</code>, <code>testPatch3-Windows_1_P.pak</code>, and so on.</li>
+  <li><strong>Keep old patch files.</strong> Removing a patch reverts the app to the previous version, which is a useful escape hatch only if you still have the files.</li>
+</ul>
+
+<div class="next">
+  <a href="/wiki/create-a-patch">Make your own patch &rarr;</a>
+  <p>Changing a project and producing a patch from it.</p>
+</div>

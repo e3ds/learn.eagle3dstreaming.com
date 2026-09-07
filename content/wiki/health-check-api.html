@@ -1,0 +1,88 @@
+<p class="standfirst">
+  One endpoint that tells you whether the Pixel Streaming service is operational
+  &mdash; for a status indicator in your own product, or for uptime monitoring.
+</p>
+
+<h2>Request</h2>
+
+<pre><code>POST https://agw.eagle3dstreaming.com/api/v4/health-check</code></pre>
+
+<pre><code>Content-Type: application/json</code></pre>
+
+<pre><code class="language-json">{
+  "apiKey": "your Eagle 3D Streaming API key"
+}</code></pre>
+
+<h2>Response</h2>
+
+<p>Healthy:</p>
+
+<pre><code class="language-json">{
+  "status": "ok",
+  "checks": { "connector": "healthy" },
+  "timestamp": "2026-04-24T04:32:40.168Z",
+  "version": "1.0.0"
+}</code></pre>
+
+<p>Not healthy:</p>
+
+<pre><code class="language-json">{
+  "status": "unhealthy",
+  "checks": { "connector": "unhealthy" },
+  "timestamp": "2026-04-24T06:44:20.479Z",
+  "message": "One or more health checks failed"
+}</code></pre>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Field</th><th>Type</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><code>status</code></td><td>string</td><td><code>ok</code>, <code>unhealthy</code>, or <code>error</code>.</td></tr>
+      <tr><td><code>checks.connector</code></td><td>string</td><td>The streaming connector: <code>healthy</code> or <code>unhealthy</code>.</td></tr>
+      <tr><td><code>timestamp</code></td><td>string</td><td>UTC time of the response.</td></tr>
+      <tr><td><code>version</code></td><td>string</td><td>API version. Only present on success.</td></tr>
+      <tr><td><code>message</code></td><td>string</td><td>Detail. Only present when unhealthy.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>The three statuses are not two</h2>
+
+<div class="outcome">
+  <strong><code>error</code> is about your request, not our service</strong>
+  <p>
+    <code>ok</code> means the service is up and <code>unhealthy</code> means it
+    is not &mdash; but <code>error</code> means the call itself failed
+    authentication or validation. A status page that treats <code>error</code>
+    as an outage will report us down when the real problem is a key that expired
+    on your side.
+  </p>
+</div>
+
+<p>The two failure shapes look like this:</p>
+
+<pre><code class="language-json">{
+  "error": "Invalid API Key",
+  "status": 401,
+  "meta": { "error": { "message": "illegal argument" }, "status": 403 }
+}</code></pre>
+
+<pre><code class="language-json">{
+  "status": "error",
+  "code": "MISSING_API_KEY",
+  "message": "API key is required and must be non-empty",
+  "timestamp": "2026-04-24T04:38:06.038Z"
+}</code></pre>
+
+<h2>What to use it for</h2>
+
+<ul>
+  <li>A live service-status indicator in your own application.</li>
+  <li>Telling a viewer why a stream will not start, instead of letting them wait.</li>
+  <li>Feeding an uptime monitor or an internal dashboard.</li>
+</ul>
+
+<div class="next">
+  <a href="/wiki/analytics-api">Analytics API &rarr;</a>
+  <p>Session records and streamed minutes over a date range.</p>
+</div>
