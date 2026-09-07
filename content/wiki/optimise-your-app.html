@@ -1,0 +1,159 @@
+<p class="standfirst">
+  What to change in your Unreal project to make it stream well: fewer dropped
+  frames, less input lag, and a shorter wait before anyone can use it.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>Streaming cannot be faster than your app.</strong> Run the packaged
+    build on your own machine and time it &mdash; that is the ceiling. The
+    platform is built to add as little as possible on top, but it cannot make a
+    slow application fast. If the native build takes forty seconds to reach its
+    main menu, so will the stream.
+  </p>
+</aside>
+
+<h2>The three with the largest effect</h2>
+
+<p>Change these first. Together they cost almost nothing and are worth more than everything below.</p>
+
+<ol class="steps">
+  <li>
+    <h3>Stream at 1280 &times; 720, 30 fps</h3>
+    <p>
+      Every frame is encoded, sent and decoded. Halving the pixels halves that
+      work at every stage &mdash; on our GPU, on the network, and on your user's
+      phone. This single setting moves more than any graphics option.
+    </p>
+  </li>
+  <li>
+    <h3>Turn off motion blur</h3>
+    <p>
+      It is expensive exactly when you can least afford it: during fast motion,
+      when the encoder is already working hardest. Removing it steadies the
+      frame rate at the moments users notice most.
+    </p>
+  </li>
+  <li>
+    <h3>Do not enable ray tracing</h3>
+    <p>
+      It adds real-time lighting work to every frame and raises latency directly.
+      It also has its own memory pool, separate from textures, which is a common
+      cause of running out of GPU memory mid-session.
+    </p>
+  </li>
+</ol>
+
+<h2>Lighting and graphics</h2>
+
+<ul>
+  <li><strong>Prefer baked lighting.</strong> It is computed once, ahead of
+    time. Dynamic lights are recomputed every frame, on both CPU and GPU. Keep
+    the number of dynamic sources as low as the scene allows.</li>
+  <li><strong>Enable the hardware video decoder</strong> in Project Settings.
+    It moves decode work off the CPU and onto dedicated GPU hardware, so it
+    stops competing with your application.</li>
+  <li><strong>Trim post-processing.</strong> Screen-space reflections, ambient
+    occlusion, bloom and depth of field are applied to every frame, and their
+    cost grows with resolution. Reducing their quality is usually invisible in a
+    stream and measurably cheaper.</li>
+</ul>
+
+<h2>The cursor</h2>
+
+<p>
+  Two cursors are visible at once unless you prevent it &mdash; the browser's
+  and your app's &mdash; and the effect is disorienting in a way users report as
+  "laggy" even when the frame rate is fine.
+</p>
+
+<ul>
+  <li>Set a custom mouse cursor image with <strong>zero alpha</strong>, so the
+    in-game cursor is invisible and only the browser's remains.</li>
+  <li>In Project Settings, set the Cursor HUD to <strong>software
+    cursors</strong> and configure the Pixel Streamer default cursor class.</li>
+</ul>
+
+<h2>Load time</h2>
+
+<p>
+  The wait before anyone can interact is the part users judge hardest, because
+  it happens before they have seen anything worth waiting for.
+</p>
+
+<ul>
+  <li><strong>Stream your levels.</strong> Load parts of the map as they are
+    needed rather than all of it at once. The first thing a user sees arrives
+    sooner, and memory stays lower throughout.</li>
+  <li><strong>Show a loading screen.</strong> A blank frame reads as a broken
+    stream. You can set one, including a short video, from the Control Panel.</li>
+</ul>
+
+<h2>Everything else, in order of what it buys you</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Area</th><th>What to do</th><th>Why it helps</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Network</td>
+        <td>Wired where possible, and pick the server region closest to your users.</td>
+        <td>Streaming is far more sensitive to jitter and round-trip time than to raw bandwidth.</td>
+      </tr>
+      <tr>
+        <td>Bitrate</td>
+        <td>Tune target and maximum bitrate to the audience &mdash; lower for mobile and cellular.</td>
+        <td>Trades image quality against buffering, packet loss and dropped frames.</td>
+      </tr>
+      <tr>
+        <td>Texture pool</td>
+        <td>Size the texture streaming pool deliberately and use compressed formats.</td>
+        <td>The main lever on GPU memory, and what prevents textures popping in.</td>
+      </tr>
+      <tr>
+        <td>Level of detail</td>
+        <td>Configure LODs and distance culling for meshes and foliage.</td>
+        <td>Fewer polygons per frame, directly.</td>
+      </tr>
+      <tr>
+        <td>Occlusion culling</td>
+        <td>Enable it, so hidden objects are not drawn.</td>
+        <td>Removes draw calls that could never have been seen.</td>
+      </tr>
+      <tr>
+        <td>Scalability</td>
+        <td>Use Unreal's scalability settings for shadows, effects and view distance.</td>
+        <td>One dial for the quality-versus-performance trade, rather than dozens.</td>
+      </tr>
+      <tr>
+        <td>Idle timeout</td>
+        <td>Set session and idle timeouts in the Control Panel.</td>
+        <td>Releases machines nobody is using &mdash; availability for others, and cost for you.</td>
+      </tr>
+      <tr>
+        <td>Browser</td>
+        <td>Recommend an up-to-date Chromium browser: Chrome or Edge.</td>
+        <td>The most consistent WebRTC behaviour, which is what the stream runs on.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>On phones</h2>
+
+<p>
+  A phone is not a small desktop. It has less bandwidth, a smaller screen, and a
+  thermal budget that a sustained stream will find.
+</p>
+
+<ul>
+  <li><strong>Lower the resolution and bitrate</strong> for mobile sessions. The
+    screen cannot show the difference, and the connection often cannot carry it.</li>
+  <li><strong>Simplify the interface.</strong> Controls sized for a mouse are
+    hard to hit with a thumb, and a stream cannot make a small target easier.</li>
+</ul>
+
+<div class="next">
+  <a href="/wiki/system-requirements">The hardware your app runs on &rarr;</a>
+  <p>The memory and GPU budget these changes are keeping you inside.</p>
+</div>

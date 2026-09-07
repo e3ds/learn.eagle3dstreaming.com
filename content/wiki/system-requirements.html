@@ -1,1 +1,93 @@
-<p>Minimum and recommended requirements and specifications necessary for streaming UE apps in Eagle 3D Streaming.</p>
+<p class="standfirst">
+  Your application runs on our servers, not on your users' machines. This is the
+  hardware it gets, the budget it has to fit inside, and what happens if it does
+  not.
+</p>
+
+<h2>What your app runs on</h2>
+
+<p>
+  Our streaming servers are in the United States and Europe. We can also deploy
+  on AWS, GCP and Azure &mdash; see <a href="/wiki/cloud-vms">cloud VMs</a> if
+  you need a specific region or want to use your own account.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead>
+      <tr><th>Resource</th><th>The machine has</th><th>Your app should use up to</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Memory</td><td>32 GB</td><td>20 GB</td></tr>
+      <tr><td>GPU memory</td><td>8&ndash;16 GB</td><td>4&ndash;6 GB</td></tr>
+      <tr><td>CPU</td><td>Intel i7 / AMD R7</td><td>50&ndash;70% utilisation</td></tr>
+      <tr><td>GPU</td><td>RTX 4080 / 5070</td><td>50&ndash;70% utilisation</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  <strong>The right-hand column is the one that matters.</strong> The machine's
+  full capacity is not yours to spend: the operating system, the encoder that
+  turns your frames into video, and the streaming stack all need room. An app
+  that fits the middle column but not the right one will look fine in testing
+  and fail under load.
+</p>
+
+<div class="outcome">
+  <strong>The number to check first</strong>
+  <p>
+    <strong>GPU memory.</strong> Running out of it is the most common reason an
+    upload fails its test or a stream dies mid-session, and the error it
+    produces &mdash; <code>Out of Video Memory</code> &mdash; usually arrives
+    without warning after several minutes of apparently normal running.
+  </p>
+</div>
+
+<h2>Where to start</h2>
+
+<p>
+  These three settings do more for streaming performance than anything else, and
+  cost the least to change:
+</p>
+
+<div class="prereq">
+  <h2>Recommended baseline</h2>
+  <ul>
+    <li><strong>1280 &times; 720</strong> resolution. Streaming is video, and a
+      smaller frame is a smaller, faster, more reliable video.</li>
+    <li><strong>30 frames per second.</strong></li>
+    <li><strong>PAK files disabled</strong> in Project Settings. They slow the
+      start of every session.</li>
+  </ul>
+</div>
+
+<p>
+  <a href="/wiki/optimise-your-app">Optimising your app</a> goes considerably
+  further, including the settings that matter specifically on phones.
+</p>
+
+<h2>If your app needs more</h2>
+
+<p>
+  Some applications genuinely cannot fit &mdash; a large architectural scene, a
+  simulation with heavy physics, anything built for a workstation.
+  <a href="https://support.eagle3dstreaming.com/" rel="noreferrer" target="_blank">Contact
+  support</a> rather than trying to squeeze it in. Custom hardware is available,
+  and a machine sized for the app costs far less than a stream that fails in
+  front of your customers.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>An app that exceeds the hardware does not fail politely.</strong> It
+    may crash during the upload test, or run for several minutes and then stop
+    mid-session. Neither failure names the resource that ran out, which is why
+    the budget above is worth checking before you upload rather than after.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/optimise-your-app">Optimise your app &rarr;</a>
+  <p>Cursor, resolution, load time, and the settings that matter on phones.</p>
+</div>
