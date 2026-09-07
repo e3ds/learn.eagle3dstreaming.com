@@ -1,0 +1,138 @@
+<p class="standfirst">
+  Your page and your Unreal application can talk to each other in both
+  directions. This page covers all four cases, for both the SDK and the iframe,
+  so you can see them side by side rather than choosing a method first.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li>An embedded stream &mdash; with
+      <a href="/wiki/embed-stream-using-e3ds-sdk">the SDK</a> or
+      <a href="/wiki/embed-stream-using-iframe">an iframe</a>.</li>
+    <li>The <strong>Pixel Streaming</strong> plugin enabled in your Unreal
+      project.</li>
+    <li>A <strong>Pixel Streaming Input</strong> component on an Actor Blueprint
+      &mdash; this is what makes an Unreal actor able to send and receive at all.</li>
+  </ul>
+</div>
+
+<h2>Page &rarr; Unreal</h2>
+
+<h3>With the SDK</h3>
+
+<p>One call. Whatever you pass arrives in your app.</p>
+
+<pre><code class="language-javascript">e3ds_controller.sendToUnreal("This message is sent by the frontend");
+
+// objects work too
+e3ds_controller.sendToUnreal({ Character: "Aurora" });</code></pre>
+
+<aside class="callout note">
+  <p>
+    <strong><code>sendDataToUE</code> is the same function</strong> under a
+    second name &mdash; some examples use one, some the other. Either is fine;
+    pick one and be consistent within your own code.
+  </p>
+</aside>
+
+<h3>With an iframe</h3>
+
+<p>
+  You post a message to the frame, and the message must be a <strong>JSON
+  object</strong> carrying a specific command key:
+</p>
+
+<pre><code class="language-javascript">const message = {
+  cmd: "sendDataToUE",          // required, exactly this
+  value: { message: "Hello World!" }
+};</code></pre>
+
+<aside class="callout warning">
+  <p>
+    <strong>Without <code>cmd: "sendDataToUE"</code> the message goes nowhere
+    and nothing complains.</strong> The frame receives it and simply does not
+    forward it to Unreal &mdash; no error, no warning, no delivery. If data is
+    not arriving in your app, check this first.
+  </p>
+</aside>
+
+<h2>Unreal &rarr; page</h2>
+
+<h3>In Unreal, either way</h3>
+
+<p>
+  The Unreal side is identical for both integration methods. In the Blueprint
+  where the event happens:
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Add a Pixel Streaming Input component</h3>
+    <p>
+      Open the Actor Blueprint, press <strong>Add Component</strong> in the
+      Components panel, and add <strong>Pixel Streaming Input</strong>. Without
+      it the node below has nothing to send through.
+    </p>
+  </li>
+  <li>
+    <h3>Call Send Pixel Streaming Response</h3>
+    <p>
+      Right-click in the graph, add <strong>Send Pixel Streaming
+      Response</strong>, and give it the string you want the page to receive.
+    </p>
+  </li>
+</ol>
+
+<h3>Receiving it, with the SDK</h3>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onResponseFromUnreal = function (descriptor) {
+  console.log("Message from Unreal:", descriptor);
+};</code></pre>
+
+<p>
+  Assign it before the stream starts. Callbacks are optional &mdash; the ones
+  you do not define are simply never called &mdash; but one assigned late has
+  already missed whatever arrived first.
+</p>
+
+<h3>Receiving it, in an iframe</h3>
+
+<p>
+  Listen for messages from the frame and read the payload the same way you would
+  any <code>postMessage</code>. The data your Blueprint sent arrives as the
+  message's value.
+</p>
+
+<h2>Which to use for what</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>You want to</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Send your own data &mdash; a name, a colour, a choice</td>
+        <td><code>sendToUnreal</code>, and handle it in your Blueprint</td>
+      </tr>
+      <tr>
+        <td>Change something the platform understands, such as resolution</td>
+        <td><code>sendCommandToUE</code></td>
+      </tr>
+      <tr>
+        <td>Run an Unreal console command</td>
+        <td><code>sendConsoleCommandToUE</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  The distinction matters: <code>sendToUnreal</code> reaches <em>your</em> code
+  and does whatever you wrote. The other two reach the engine and the platform,
+  and do fixed things.
+</p>
+
+<div class="next">
+  <a href="/wiki/controlling-the-stream">Control the stream &rarr;</a>
+  <p>Quality, resolution, fullscreen, mouse behaviour and screenshots.</p>
+</div>

@@ -1,0 +1,22 @@
+{
+ "title": "Sending and receiving data",
+ "slug": "sending-and-receiving-data",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/communication",
+ "rewritten": true,
+ "replaces": [
+  "communication",
+  "communication-in-sdk",
+  "send-data-from-webpage-sender-to-unreal-app-receiv",
+  "send-data-from-webpage-to-unreal-app",
+  "receive-data-in-unreal-app-receiver-from-webpage-s",
+  "receive-data-in-unreal-app-from-webpage",
+  "send-data-from-unreal-app-sender-to-webpage-receiv",
+  "send-data-from-unreal-app-to-webpage",
+  "receive-data-in-webpage-receiver-from-unreal-app-s",
+  "receive-data-in-webpage-from-unreal-app"
+ ]
+}
