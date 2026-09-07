@@ -156,6 +156,7 @@ function main() {
       .replace(/\{\{breadcrumbs\}\}/g, crumbsHtml(p, tree.bySlug))
       .replace(/\{\{children\}\}/g, childrenHtml(p, tree.kids))
       .replace(/\{\{description\}\}/g, describe(body, p.title))
+      .replace(/\{\{canonical\}\}/g, esc(p.source || ("https://learn.eagle3dstreaming.com/wiki/" + p.slug)))
       .replace(/\{\{slug\}\}/g, p.slug)
       .replace(/\{\{title\}\}/g, esc(p.title))
       .replace(/\{\{h1\}\}/g, esc(p.title))
