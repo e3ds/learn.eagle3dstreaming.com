@@ -52,9 +52,12 @@
 
 <aside class="callout warning">
   <p>
-    <strong>Do not enable Pixel Streaming Plugin 2.</strong> Keep using the
-    previous version. Plugin 2 causes upload failures and interrupted streaming,
-    and the error it produces does not name it as the cause.
+    <strong>Check your Pixel Streaming plugin version before uploading.</strong>
+    Plugin 2 streams only on Unreal 5.7 and newer, and never supports
+    communication between the page and your app. On Unreal 5.5 or 5.6 it does
+    not stream at all &mdash; and the failure surfaces here, at upload testing,
+    rather than when you enabled it.
+    <a href="/wiki/plugin-compatibility">The full compatibility table</a>.
   </p>
 </aside>
 

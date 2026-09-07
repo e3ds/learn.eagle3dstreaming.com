@@ -1,0 +1,13 @@
+{
+ "title": "Pixel Streaming plugin versions",
+ "slug": "plugin-compatibility",
+ "section": "Control Panel Features",
+ "parents": [
+  "control-panel-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/pixel-streaming-plugin-2-compatibility",
+ "rewritten": true,
+ "replaces": [
+  "pixel-streaming-plugin-2-compatibility"
+ ]
+}

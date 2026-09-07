@@ -1,9 +1,13 @@
 {
- "title": "Meeting Links",
+ "title": "Meeting links",
  "slug": "meeting-links",
  "section": "Control Panel Features",
  "parents": [
   "control-panel-features"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/meeting-links"
+ "source": "https://docs.eagle3dstreaming.com/wiki/meeting-links",
+ "rewritten": true,
+ "replaces": [
+  "generate-a-meeting-link-for-your-app"
+ ]
 }
