@@ -1,0 +1,78 @@
+<p class="standfirst">
+  Corporate networks, school networks and public Wi-Fi often block the
+  connections a stream needs. When that happens your app is fine &mdash; the
+  network between it and your user is not.
+</p>
+
+<h2>What a blocked network looks like</h2>
+
+<p>
+  The stream does not start, or starts and immediately stops. It usually works
+  for you and fails for one customer, or works everywhere except one office
+  &mdash; which is the pattern that identifies it. A fault in your app does not
+  care which building the viewer is in.
+</p>
+
+<p>Three things cause it, in rough order of likelihood:</p>
+
+<ul>
+  <li><strong>Firewall rules</strong> blocking the ports or protocols streaming
+    needs. Corporate filters such as Cisco Umbrella do this by policy, not by
+    accident.</li>
+  <li><strong>A proxy or VPN</strong> in the path. Both interfere with the
+    direct connection a stream depends on.</li>
+  <li><strong>Port forwarding or network configuration</strong> on the viewer's
+    side that prevents the connection completing.</li>
+</ul>
+
+<aside class="callout note">
+  <p>
+    <strong>This is not something we can fix from our side.</strong> The block
+    is inside the viewer's network, applied by their organisation, and it is
+    working as their administrator configured it. What we can do is tell you
+    exactly what to ask for.
+  </p>
+</aside>
+
+<h2>What to do</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Confirm it is the network, not the app</h3>
+    <p>
+      Open the same stream from a different network &mdash; a phone on mobile
+      data is the quickest test, since it shares nothing with the office
+      network. If it works there, the app is fine and the network is the
+      problem.
+    </p>
+  </li>
+  <li>
+    <h3>Contact the IT department or network administrator</h3>
+    <p>
+      They can say why it is blocked, and whether the restriction is deliberate.
+      Often it is a general category rule that was never aimed at you.
+    </p>
+  </li>
+  <li>
+    <h3>Ask for the streaming URL to be whitelisted</h3>
+    <p>
+      A specific, small request is far more likely to be granted than "please
+      allow streaming". Give them the exact app URL, and ask that the ports and
+      protocols pixel streaming needs are not blocked for it.
+    </p>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>If you are preparing for an event</strong>
+  <p>
+    Test from the venue's network, on the venue's Wi-Fi, before the day. A
+    corporate guest network discovered an hour before a demo is not a problem
+    anyone can solve in an hour.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/system-requirements">System requirements &rarr;</a>
+  <p>The hardware side, if the network turns out not to be the cause.</p>
+</div>

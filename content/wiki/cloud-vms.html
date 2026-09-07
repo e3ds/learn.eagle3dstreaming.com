@@ -1,0 +1,111 @@
+<p class="standfirst">
+  For an event, a specific region, or a machine bigger than our standard
+  hardware, your app can run on a dedicated cloud VM &mdash; either yours or one
+  we provision for you.
+</p>
+
+<h2>Start by sending us the app URL</h2>
+
+<p>
+  Whichever route you take, this comes first. From a running app we can measure
+  what it actually needs, rather than guessing from a description of it. That
+  one step lets us tell you whether hardware you already have is enough, what to
+  provision if it is not, and where a choice would cause trouble under load.
+</p>
+
+<h2>Two routes</h2>
+
+<div class="choices">
+  <div class="choice">
+    <h3>Bring your own VM</h3>
+    <p>
+      You provision it under your own cloud account. We confirm it meets what
+      your app needs and configure pixel streaming on top. You keep control of
+      the account, the billing and the region.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>Ask us to provide one</h3>
+    <p>
+      We choose, provision and manage the machine. You send the app URL and, if
+      you have one, a preferred provider. We handle setup and hosting for the
+      event end to end.
+    </p>
+  </div>
+</div>
+
+<p>
+  If you are bringing your own, tell us the <strong>cloud provider</strong>, the
+  <strong>GPU model</strong>, the <strong>VRAM</strong>, the <strong>CPU</strong>
+  tier or core count, and the <strong>system memory</strong>. Those five let us
+  confirm the machine before you commit to it.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>Do not undersize the VM to save money.</strong> Cheapest is rarely
+    the right fit, and underpowered hardware does not fail gently &mdash; it
+    stutters, lags, or drops the stream, during the live event you booked it
+    for. Pick from what the app actually needs, which the URL check tells us. If
+    you are weighing a cheaper option, ask us to confirm the minimum viable spec
+    first.
+  </p>
+</aside>
+
+<h2>Providers and GPUs we commonly set up</h2>
+
+<p>
+  <strong>We are not limited to this list.</strong> If your provider is not
+  here, send it along with your app URL and we will confirm compatible hardware
+  for it. These are simply the ones we have ready-made configurations for.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Provider</th><th>Instance types</th><th>GPU</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2">AWS</td><td><code>g4dn</code></td><td>NVIDIA T4</td></tr>
+      <tr><td><code>g5</code></td><td>NVIDIA A10</td></tr>
+      <tr><td>GCP</td><td><code>n1-standard</code></td><td>NVIDIA T4</td></tr>
+      <tr><td rowspan="3">Azure</td><td><code>Standard_NCasT4_v3</code></td><td>NVIDIA T4</td></tr>
+      <tr><td><code>Standard_NVadsA10 v5</code></td><td>NVIDIA A10</td></tr>
+      <tr><td><code>Standard_NC_v3</code></td><td>NVIDIA Tesla V100</td></tr>
+      <tr><td>CoreWeave</td><td>vCPU and memory adjustable</td><td>Quadro RTX 4000, RTX 5000, RTX A6000, A10</td></tr>
+      <tr><td>Oracle</td><td colspan="2">Supported &mdash; specifications not yet published here.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Hosting a multiplayer server app</h2>
+
+<p>
+  Multiplayer server apps can be hosted free on our shared machines. That is
+  genuinely useful for testing, demos and light multiplayer &mdash; and the word
+  doing the work is <em>shared</em>.
+</p>
+
+<div class="prereq">
+  <h2>What free shared hosting means</h2>
+  <ul>
+    <li><strong>Shared infrastructure.</strong> Several server apps may run on
+      one machine. A server app that needs substantial CPU, memory or network is
+      not a good fit.</li>
+    <li><strong>United States only.</strong> Players far from the US &mdash; in
+      Asia or the Middle East, for instance &mdash; will feel the distance as
+      latency.</li>
+    <li><strong>Physical machines in our data centre.</strong> A power, hardware
+      or network failure there means the server app does not start, and nobody
+      can join a session until it is back.</li>
+  </ul>
+</div>
+
+<p>
+  For anything with real players depending on it, a dedicated VM from the
+  section above is the answer. The free tier is for proving the thing works, not
+  for running it in front of an audience.
+</p>
+
+<div class="next">
+  <a href="/wiki/system-requirements">Standard hardware &rarr;</a>
+  <p>What your app gets without a dedicated VM, and the budget it must fit.</p>
+</div>

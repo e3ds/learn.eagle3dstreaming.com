@@ -1,0 +1,14 @@
+{
+ "title": "Cloud VMs",
+ "slug": "cloud-vms",
+ "section": "System Requirements",
+ "parents": [
+  "system-requirements"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/cloud-vm-hardware-specifications",
+ "rewritten": true,
+ "replaces": [
+  "cloud-vm-hardware-specifications",
+  "multiplayer-server-app-hosting-hardware"
+ ]
+}
