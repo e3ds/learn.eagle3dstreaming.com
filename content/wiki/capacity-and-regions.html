@@ -1,0 +1,79 @@
+<p class="standfirst">
+  How many people can stream your app at once, where they connect from, and what
+  happens when either limit is reached.
+</p>
+
+<h2>Concurrent users</h2>
+
+<p>
+  <strong>CCU is how many people are streaming at the same moment</strong>
+  &mdash; not how many visit in a day.
+</p>
+
+<div class="outcome">
+  <strong>The distinction that matters</strong>
+  <p>
+    If 100 people use your app across a day but never more than 6 are streaming
+    at once, you are using <strong>6 CCU</strong>. Capacity is about the peak,
+    not the total.
+  </p>
+</div>
+
+<p>
+  A session ending releases its CCU immediately, and the next person waiting can
+  use it. So the practical questions are how many people arrive together, and
+  how long each one stays &mdash; which is why the
+  <a href="/wiki/session-and-access">idle timeout</a> matters more than it
+  sounds: a session nobody is using still occupies a slot somebody else wants.
+</p>
+
+<h2>Regions</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Plan</th><th>Where your app can run</th></tr></thead>
+    <tbody>
+      <tr><td>Trial</td><td>USA, Europe</td></tr>
+      <tr><td>Core</td><td>USA, Europe</td></tr>
+      <tr><td>Enterprise</td><td>Global &mdash; deployment in your preferred cloud region</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  Viewers are served from the nearest available region. When that region has no
+  capacity, the session is routed to another one rather than refused &mdash; the
+  stream works, and it works with more latency.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>This is worth knowing before an event rather than during one.</strong>
+    A demo in Asia on a Core plan is served from the USA or Europe, and the
+    distance is felt as lag no amount of tuning removes. If your audience is far
+    from both,
+    <a href="/wiki/cloud-vms">a dedicated VM in their region</a> is the answer,
+    and it needs arranging in advance.
+  </p>
+</aside>
+
+<p>
+  You can pin a region for a configuration in
+  <a href="/wiki/developer-options">the developer options</a>, and confirm which
+  one actually served a session from the <strong>Info</strong> button inside the
+  stream.
+</p>
+
+<h2>Upload speed by region</h2>
+
+<p>
+  How quickly your build reaches our machines depends on where you are uploading
+  from. It affects how long an upload takes and nothing about how the app
+  streams afterwards &mdash; a slow upload from a distant office does not
+  produce a slow stream.
+</p>
+
+<div class="next">
+  <a href="/wiki/session-and-access">Session limits &rarr;</a>
+  <p>The settings that free capacity by ending sessions nobody is using.</p>
+</div>

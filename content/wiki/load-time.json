@@ -1,0 +1,16 @@
+{
+ "title": "Load time",
+ "slug": "load-time",
+ "section": "Foundational knowledge",
+ "parents": [
+  "blogs-and-articles"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/the-concept-of-load-time-in-eagle-3d-streaming",
+ "rewritten": true,
+ "replaces": [
+  "the-load-time-in-eagle-3d-streaming",
+  "the-concept-of-load-time-in-eagle-3d-streaming",
+  "determine-the-load-time-of-your-application",
+  "eagle-3d-s-guidelines-for-a-minimized-load-time"
+ ]
+}

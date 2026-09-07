@@ -1,0 +1,76 @@
+<p class="standfirst">
+  Two ways several people can use one application: each in their own session, or
+  all watching the same one. They cost differently, and they are for different
+  situations.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Dedicated</th><th>Shared</th></tr></thead>
+    <tbody>
+      <tr><td>What each person gets</td><td>Their own session</td><td>The host's view</td></tr>
+      <tr><td>GPU machines used</td><td>One per person</td><td>One in total</td></tr>
+      <tr><td>Who can control it</td><td>Everyone, their own</td><td>The host, and whoever they hand it to</td></tr>
+      <tr><td>What they see</td><td>Independent</td><td>Identical</td></tr>
+      <tr><td>Concurrent users consumed</td><td>One each</td><td>One in total</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Dedicated: everyone has their own</h2>
+
+<p>
+  Everyone opens the same URL and each gets an independent session on its own
+  machine &mdash; their own view, their own input, their own progress through
+  the app. Nobody affects anybody else.
+</p>
+
+<p>
+  This is the default, and it is what you want when people are using the app
+  rather than being shown it: a configurator where each customer builds their
+  own product, a training scenario each person works through at their own pace.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>Each session is a concurrent user.</strong> Twenty people in
+    dedicated mode is twenty machines and twenty CCU. If they are all watching
+    the same thing anyway, shared mode does the same job for one &mdash; see
+    <a href="/wiki/capacity-and-regions">capacity</a>.
+  </p>
+</aside>
+
+<h2>Shared: everybody watches one</h2>
+
+<p>
+  Built on the meeting system. A <strong>host</strong> starts the session with a
+  host URL and shares a <strong>guest URL</strong>; everyone who joins sees the
+  host's view of the same running application.
+</p>
+
+<p>
+  <strong>Guests watch by default.</strong> They cannot drive the app unless the
+  host explicitly hands them control during the meeting &mdash; which is what
+  makes this safe for a presentation: nobody can move the camera while you are
+  mid-sentence.
+</p>
+
+<p>
+  This suits a demo to a room, a design review where one person drives, or a
+  lesson. Everyone sees the same thing at the same moment, because it is
+  literally the same session.
+</p>
+
+<div class="outcome">
+  <strong>Choosing between them</strong>
+  <p>
+    Ask whether people need to do <em>different</em> things. If yes, dedicated.
+    If they are all looking at the same thing while one person drives, shared
+    &mdash; one machine instead of twenty, and everyone genuinely in step.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/capacity-and-regions">Capacity and regions &rarr;</a>
+  <p>How concurrent users are counted, and where sessions are served from.</p>
+</div>
