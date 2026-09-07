@@ -50,8 +50,9 @@ half irrelevant to whoever is reading it.
 knowing "there is no sound", not "the microphone constraint was refused". A page
 named after the cause is a page they cannot find.
 
-**The folder tree IS the navigation.** No hand-maintained sidebar file, so the
-menu cannot drift out of step with what exists.
+**One manifest IS the navigation.** `nav.json` lists every page once and
+`build-nav.js` stamps the tree into all of them (§5), so the menu cannot drift
+page by page — but it does have to be re-run when a page is added.
 
 ---
 
@@ -103,11 +104,55 @@ is wrong.
 
 ---
 
-## 5. Hosting
+## 5. The navigation tree
+
+The tree down the left of every page is generated from **`nav.json`**, the one
+place a page is listed, by **`build-nav.js`**:
+
+```
+node build-nav.js
+```
+
+Run it after adding a page or changing `nav.json`. It rewrites only the block
+between the `E3DS-NAV:BEGIN` / `E3DS-NAV:END` markers in each file; everything a
+person wrote sits outside them and is never touched, so it is safe to run over
+pages that have been edited in the browser. Running it twice changes nothing.
+
+**Nothing is assembled at request time.** This was tried the other way first —
+the server injected the tree into each response — and it is explicitly rejected:
+**no server-side rendering for documentation.** Stamping it into the files
+instead means what a crawler downloads is exactly what is in the file (§6 needs
+this), and the site would still be correct served by nginx alone with no Node in
+front of it. The cost is remembering to run the script; the check below catches
+the other half of that.
+
+The tree sits **outside `.wrap`**, which is the element the editor makes
+editable, so editing a page cannot reach the navigation and saving cannot damage
+it.
+
+`build-nav.js` warns if `nav.json` links to a page that does not exist, rather
+than letting a reader find the 404. Entries marked `"planned": true` render
+greyed and unclickable **on purpose** — a reader can see what is coming, and it
+stops a section quietly never being written because nobody remembered it.
+
+**VERIFIED** on 2026-09-06: all three pages stamped, the second run byte-identical
+to the first, each page served byte-for-byte identical to the file on disk, and
+the current page highlighted correctly per file. Checked locally on :6500 and
+over `https://learn.eagle3dstreaming.com`.
+
+---
+
+## 6. Hosting
 
 `server.js` serves `site/` on port 6500 and handles the save endpoint; nginx
 proxies the domain to it. **One server block covers the whole tree** — there is
 no per-file nginx entry and there must never be one.
+
+The server no longer changes any page it serves: a `.html` response is the file
+on disk, byte for byte. The single exception is `?edit=1`, which appends the
+editing bar and is never what a reader or a crawler asks for. That means Node is
+a convenience here, not a dependency — pointing nginx straight at `site/` would
+serve the same bytes, minus the ability to edit.
 
 - config: `C:/Program Files/nginx/conf/sites-enabled/learn.eagle3dstreaming.com.conf`
 - certificate: the existing wildcard `*.eagle3dstreaming.com`, so a new
@@ -117,7 +162,7 @@ no per-file nginx entry and there must never be one.
 
 ---
 
-## 6. Search engines and AI crawlers
+## 7. Search engines and AI crawlers
 
 Both want the same thing, which is why one decision serves both: **the content
 must be in the HTML, not assembled by JavaScript.**
@@ -130,7 +175,7 @@ must be in the HTML, not assembled by JavaScript.**
 
 ---
 
-## 7. State of the migration
+## 8. State of the migration
 
 | page | status |
 |---|---|

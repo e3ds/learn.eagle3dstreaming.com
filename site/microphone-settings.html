@@ -290,6 +290,69 @@
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 </style>
 
+<!-- E3DS-NAV:BEGIN generated from nav.json by build-nav.js - do not edit by hand -->
+<style id="e3dsNavStyle">
+  body { display:flex; align-items:flex-start; }
+  #e3dsNav {
+    flex:0 0 258px; width:258px; position:sticky; top:0; height:100vh;
+    overflow-y:auto; border-right:1px solid var(--line); background:var(--surface);
+  }
+  .e3dsNavInner { padding:22px 14px 40px; }
+  .e3dsNavHome {
+    display:block; font-family:Archivo,Arial,sans-serif; font-weight:700;
+    font-size:14px; line-height:1.3; margin-bottom:18px;
+    text-decoration:none; color:var(--ink);
+  }
+  .e3dsNavSec { margin-bottom:4px; }
+  .e3dsNavSec > summary {
+    cursor:pointer; list-style:none; padding:6px 8px; border-radius:5px;
+    font-family:Archivo,Arial,sans-serif; font-size:12px; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);
+  }
+  .e3dsNavSec > summary::-webkit-details-marker { display:none; }
+  .e3dsNavSec > summary::before {
+    content:"\25B8"; display:inline-block; width:1.1em; font-size:9px;
+    transition:transform .12s;
+  }
+  .e3dsNavSec[open] > summary::before { transform:rotate(90deg); }
+  .e3dsNavSec ul { list-style:none; margin:2px 0 8px; padding:0 0 0 18px; }
+  .e3dsNavSec a {
+    display:block; padding:5px 8px; border-radius:5px; font-size:15px;
+    text-decoration:none; color:var(--ink-2);
+  }
+  .e3dsNavSec a:hover { background:var(--surface-2); color:var(--ink); }
+  /* The page being read is marked with a rail as well as colour: colour alone
+     is easy to lose halfway down a long tree. */
+  .e3dsNavSec a.on {
+    color:var(--accent); font-weight:600; background:var(--surface-2);
+    box-shadow:inset 2px 0 0 var(--accent);
+  }
+  .e3dsNavSec li.planned {
+    padding:5px 8px; font-size:15px; color:var(--ink-3); opacity:.6; font-style:italic;
+  }
+  .wrap { flex:1; min-width:0; }
+  #e3dsNavToggle { display:none; }
+  /* Narrower than this the tree would take most of the screen, so it becomes a
+     drawer instead of a column. */
+  @media (max-width:900px) {
+    body { display:block; }
+    #e3dsNav {
+      position:fixed; left:0; top:0; z-index:9998; transform:translateX(-100%);
+      transition:transform .18s; box-shadow:2px 0 18px rgba(0,0,0,.35);
+    }
+    body.e3dsNavOpen #e3dsNav { transform:none; }
+    #e3dsNavToggle {
+      display:block; position:fixed; left:12px; bottom:12px; z-index:9999;
+      padding:10px 15px; border-radius:8px; border:1px solid var(--line);
+      background:var(--surface); color:var(--ink);
+      font:15px Archivo,Arial,sans-serif; cursor:pointer;
+    }
+  }
+</style>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><details class="e3dsNavSec"><summary>Getting started</summary><ul><li class="planned">Your first stream</li><li class="planned">Uploading an app</li></ul></details><details class="e3dsNavSec" open><summary>Streaming settings</summary><ul><li><a class="on" aria-current="page" href="/microphone-settings.html">Microphone</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li><li class="planned">Link expiration</li><li class="planned">Session limits</li><li class="planned">Control bar and buttons</li></ul></details><details class="e3dsNavSec"><summary>Embedding</summary><ul><li class="planned">In an iframe</li><li class="planned">The web SDK</li></ul></details><details class="e3dsNavSec"><summary>Troubleshooting</summary><ul><li class="planned">No video</li><li class="planned">No sound</li><li class="planned">The stream paused</li></ul></details></nav></aside>
+<button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
+<!-- E3DS-NAV:END -->
+
 <div class="wrap">
 
   <header class="masthead">

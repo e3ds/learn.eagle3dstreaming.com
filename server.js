@@ -109,6 +109,9 @@ const EDITOR = `
      * rather than out of the live page, so the page keeps working while the
      * save is in flight and a failed save leaves nothing half-removed. */
     var clone = document.documentElement.cloneNode(true);
+    /* Only the editing machinery is stripped. The navigation is part of the
+     * page on disk and must survive a save - it is not stripped, and it sits
+     * outside .wrap so editing cannot reach it either. */
     ["e3dsEditBar", "e3dsEditStyle"].forEach(function (id) {
       var n = clone.querySelector("#" + id); if (n) n.remove();
     });
@@ -201,6 +204,11 @@ const server = http.createServer((req, res) => {
     if (err) return send(res, 404, "not found");
     const ext = path.extname(file).toLowerCase();
     const type = TYPES[ext] || "application/octet-stream";
+    /* Pages are served exactly as they sit on disk - nothing is assembled per
+     * request. The navigation is stamped into the files by build-nav.js, so the
+     * markup a crawler sees is the markup in the file, and the site would still
+     * be correct served by nginx alone. The editor is the one exception, and
+     * only when it is explicitly asked for. */
     if (ext === ".html" && /(\?|&)edit=1(&|$)/.test(req.url)) {
       let html = buf.toString("utf8");
       html = html.includes("</body>") ? html.replace("</body>", EDITOR + "</body>") : html + EDITOR;
