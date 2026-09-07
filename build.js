@@ -130,7 +130,26 @@ function buildTree(pages) {
     if (parent) (kids[parent] = kids[parent] || []).push(p);
     else roots.push(p);
   }
-  for (const k in kids) kids[k].sort((a, b) => a.title.localeCompare(b.title));
+  /* [E3DS-CHILD-ORDER] Declared order for children too, not just for the
+   * top-level groups.
+   *
+   * These were sorted alphabetically, which is the same mistake NAV_GROUPS
+   * exists to fix - one level further down, where nobody had noticed it. Under
+   * Embedding it put "Branding and hosting" first and the page that tells you
+   * which method to choose last, so a reader arriving at the section met the
+   * decorating step before the deciding one.
+   *
+   * A page may declare `order` in its JSON. Those come first, in that order;
+   * anything without one falls in behind, alphabetically as before - so this
+   * only affects sections where somebody has actually thought about the
+   * sequence. */
+  const byOrder = (a, b) => {
+    const ao = typeof a.order === "number" ? a.order : Infinity;
+    const bo = typeof b.order === "number" ? b.order : Infinity;
+    if (ao !== bo) return ao - bo;
+    return a.title.localeCompare(b.title);
+  };
+  for (const k in kids) kids[k].sort(byOrder);
   roots.sort((a, b) => a.title.localeCompare(b.title));
   return { kids, roots, bySlug };
 }
