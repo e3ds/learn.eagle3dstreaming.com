@@ -1,5 +1,5 @@
 {
- "title": "Loading Screen",
+ "title": "Loading screen",
  "slug": "loading-screen",
  "section": "App Configuration",
  "parents": [
@@ -7,5 +7,16 @@
   "edit-your-config",
   "edit-the-advanced-options-features-of-your-config"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/loading-screen"
+ "source": "https://docs.eagle3dstreaming.com/wiki/loading-screen",
+ "rewritten": true,
+ "replaces": [
+  "2d-image-asset",
+  "2d-video-asset",
+  "logo",
+  "loading-background",
+  "loading-image",
+  "play-button",
+  "queue-background",
+  "title-bar-icon"
+ ]
 }
