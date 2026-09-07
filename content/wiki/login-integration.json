@@ -1,0 +1,14 @@
+{
+ "title": "Putting a login in front",
+ "slug": "login-integration",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/login-integration-with-e3ds-sdk",
+ "rewritten": true,
+ "replaces": [
+  "login-integration-with-e3ds-sdk",
+  "login-integration-in-iframe"
+ ]
+}

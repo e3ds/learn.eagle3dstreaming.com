@@ -1,9 +1,14 @@
 {
- "title": "Embed Stream using E3DS SDK",
+ "title": "Embed with the SDK",
  "slug": "embed-stream-using-e3ds-sdk",
  "section": "Embed Stream into Webpage",
  "parents": [
   "embed-stream-into-webpage"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/embed-stream-using-e3ds-sdk"
+ "source": "https://docs.eagle3dstreaming.com/wiki/embed-stream-using-e3ds-sdk",
+ "rewritten": true,
+ "replaces": [
+  "sdk-integration-guide",
+  "transition-from-old-sdk-to-new-sdk"
+ ]
 }

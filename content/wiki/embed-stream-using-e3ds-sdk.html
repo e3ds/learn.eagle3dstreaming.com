@@ -1,48 +1,111 @@
-<p>This section provides an overview of embedding an Unreal Engine Pixel Streaming session into your website using the Eagle 3D Streaming (E3DS) Frontend SDK. The SDK offers a secure and streamlined integration process, making it easy to connect your web application to an E3DS stream.</p>
+<p class="standfirst">
+  The Frontend SDK puts the stream directly in your page and handles the parts
+  you would otherwise write yourself: token generation, authentication, the
+  connection, and starting the stream.
+</p>
 
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p><strong>Want to jump straight into integration?</strong></p>
-<p>Follow the <a href="/wiki/sdk-integration-guide">SDK Integration Guide</a> to get started right away.</p>
+<aside class="callout warning">
+  <p>
+    <strong>The old SDK no longer works.</strong> Our streaming infrastructure
+    was upgraded and the previous SDK is not compatible with it. Integrations
+    still using it have <em>stopped</em> streaming, not degraded.
+  </p>
+  <p>
+    <strong>Nothing changes in your Unreal application.</strong> The work is
+    entirely on the web side, which makes the move smaller than it sounds.
+  </p>
 </aside>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li>An app uploaded and streaming from the Control Panel.</li>
+    <li>Your <strong>Streaming API key</strong> &mdash; and read the warning
+      below, because there is more than one kind of key.</li>
+    <li>Your username, and the app and configuration names exactly as the
+      Control Panel shows them.</li>
+  </ul>
 </div>
 
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p><strong>Why Use the Frontend SDK?</strong></p>
-<p>The E3DS SDK provides a secure and optimized integration layer for embedding your Unreal Pixel Streaming applications into any website.
-   <br/>
-   It manages:</p>
-<ul>
-<li>
-<p>Secure token generation</p>
-</li>
-<li>
-<p>Authentication</p>
-</li>
-<li>
-<p>Connection handling</p>
-</li>
-<li>
-<p>Stream initialization</p>
-</li>
-<li>
-<p>Modern, production-ready embed workflow</p>
-</li>
-</ul>
-<p>This removes the need to manually handle browser scripts or low-level streaming logic.</p>
-</aside>
+<h2>Start from the sample, not from scratch</h2>
+
+<p>
+  Download the
+  <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">demo
+  project</a>, get it streaming <em>your</em> app, and only then move the pieces
+  into your real application. It is a working integration, so anything that
+  fails is your configuration rather than your code &mdash; a far smaller thing
+  to debug than both at once.
+</p>
+
+<p>
+  There is a
+  <a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html"
+     rel="noreferrer" target="_blank">live version</a> you can open before
+  downloading anything.
+</p>
+
+<h2>Configure it</h2>
+
+<p>
+  Everything you need to change is in <code>tokenManager.js</code>, which
+  generates and manages the token that authorises a session.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Field</th><th>Set it to</th></tr></thead>
+    <tbody>
+      <tr><td><code>streamingApiKey</code></td><td>Your <strong>Streaming</strong> API key.</td></tr>
+      <tr><td><code>clientUserName</code></td><td>Your username on the platform.</td></tr>
+      <tr><td><code>tokenExpiryDuration</code></td><td>How long a token stays valid.</td></tr>
+      <tr><td><code>domain</code></td><td><code>connector.eagle3dstreaming.com</code></td></tr>
+      <tr><td><code>appName</code></td><td>The application to embed, named as in the Control Panel.</td></tr>
+      <tr><td><code>configurationName</code></td><td>Which of its configurations to use.</td></tr>
+    </tbody>
+  </table>
 </div>
 
-<p>This Section Is Organized Into the Following Guides:</p>
-
-<h2 id="Resources" style=""><span id="EmbedStreamusingE3DSSDK-Resources"></span>Resources
- </h2>
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p>Live Streaming URL:</p>
-<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank">https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</a> <strong> </strong></p>
-<p>Demo Project GitHub Repository:</p>
-<p><a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">https://github.com/e3ds/pixelstreaming-sdk</a> <strong> </strong></p>
+<aside class="callout warning">
+  <p>
+    <strong>There are two kinds of API key, and only one works here.</strong>
+    Use the <strong>Streaming API key</strong>. The other looks identical, is
+    for a different purpose, and fails at token generation with nothing that
+    says "wrong sort of key".
+  </p>
 </aside>
+
+<aside class="callout note">
+  <p>
+    <strong>Enterprise plans use a different domain.</strong> Replace
+    <code>connector.eagle3dstreaming.com</code> with the custom domain provided
+    to you. If you are not sure which applies,
+    <a href="mailto:support@eagle3dstreaming.com">ask support</a> rather than
+    guessing &mdash; a wrong domain fails at connection time and looks like a
+    network fault.
+  </p>
+</aside>
+
+<h2>Moving it into your own application</h2>
+
+<p>
+  Once the sample streams your app: load the SDK, and call
+  <code>e3ds_controller.main()</code> with the token data. From there,
+  <a href="/wiki/sending-and-receiving-data">send and receive data</a> and
+  <a href="/wiki/controlling-the-stream">control the stream</a>.
+</p>
+
+<aside class="callout tip">
+  <p>
+    <strong>Your API key should not reach the browser in production.</strong>
+    The sample keeps it in a JavaScript file because it is a sample &mdash;
+    anyone who opens developer tools can read it. In a real integration the
+    token request belongs on your server, so the key stays there and the browser
+    only ever receives a short-lived token.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/controlling-the-stream">Control the stream &rarr;</a>
+  <p>Quality, resolution, fullscreen, and the callbacks that tell you what is happening.</p>
 </div>
