@@ -1,0 +1,136 @@
+<p class="standfirst">
+  Unreal can build a Linux version from a Windows machine, once you install the
+  cross-compile toolchain. You do this once per engine version.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li>Unreal Engine installed through the Epic Games Launcher.</li>
+    <li>A project to build. A <strong>Third Person</strong> template is enough
+      to try it.</li>
+  </ul>
+</div>
+
+<h2>Install the cross-compile toolchain</h2>
+
+<p>
+  Unreal cannot produce a Linux build out of the box. The toolchain is an
+  optional component of the engine install, and it must match the engine version
+  you are building with.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Open the Epic Games Launcher and go to Unreal Engine &rsaquo; Library</h3>
+    <figure>
+      <img src="/images/image-20260520-064432-405c55.png" loading="lazy" decoding="async"
+           alt="The Unreal Engine library in the Epic Games Launcher">
+      <figcaption>Your installed engine versions.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Open the menu beside the engine version you will use</h3>
+    <p>The three-dot icon next to that version.</p>
+    <figure>
+      <img src="/images/image-20260520-064604-ecbc23.png" loading="lazy" decoding="async"
+           alt="The options menu beside an installed engine version">
+      <figcaption>The version's menu.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Choose Options</h3>
+    <p>This opens the list of optional components for that install.</p>
+    <figure>
+      <img src="/images/image-20260520-064810-61388a.png" loading="lazy" decoding="async"
+           alt="The Options entry in the engine version menu">
+      <figcaption>Options.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Tick the Linux target platform and apply</h3>
+    <p>
+      The download is large and the install takes a while. It only happens once
+      per engine version &mdash; but note that installing a <em>new</em> engine
+      version later means doing this again for it.
+    </p>
+    <figure>
+      <img src="/images/image-20260520-065111-93fefa.png" loading="lazy" decoding="async"
+           alt="Selecting the Linux target platform component">
+      <figcaption>The Linux component.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>
+    Unreal Editor offers <strong>Linux</strong> under
+    <strong>Platforms</strong>. If it does not appear, the editor was open
+    during the install &mdash; restart it.
+  </p>
+</div>
+
+<h2>Package the project</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Enable Pixel Streaming, and restart the editor</h3>
+    <p>
+      In <strong>Edit &rsaquo; Plugins</strong>, search for Pixel Streaming,
+      enable it, and restart. This matters more for Linux than for Windows:
+      <strong>we do not stream-test Linux uploads</strong>, so a build without
+      the plugin will upload happily and fail only when a user opens it.
+    </p>
+    <figure>
+      <img src="/images/image-20260520-071819-7443de.png" loading="lazy" decoding="async"
+           alt="Enabling the Pixel Streaming plugin">
+      <figcaption>Pixel Streaming, enabled before packaging.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Go to Platforms &rsaquo; Linux &rsaquo; Package Project</h3>
+    <p>Choose an empty folder for the output.</p>
+    <figure>
+      <img src="/images/image-20260520-072046-2b4639.png" loading="lazy" decoding="async"
+           alt="Packaging the project for Linux">
+      <figcaption>Packaging for Linux.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Wait, and read the log if it fails</h3>
+    <p>
+      The first Linux package of a project is slow &mdash; shaders are compiled
+      for a platform this project has never targeted before.
+    </p>
+    <figure>
+      <img src="/images/image-20260520-072447-0b9a63.png" loading="lazy" decoding="async"
+           alt="Packaging progress for the Linux build">
+      <figcaption>Packaging in progress.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Zip the contents of the output folder</h3>
+    <p>
+      Select everything <em>inside</em> it &mdash; not the folder &mdash; and
+      compress it to a ZIP. A Linux build has a <code>.sh</code> launcher at its
+      root instead of an <code>.exe</code>, and <strong>the name of that file
+      matters when you upload</strong>.
+    </p>
+    <figure>
+      <img src="/images/image-20260520-072706-e40d92.png" loading="lazy" decoding="async"
+           alt="The packaged Linux build's contents">
+      <figcaption>Inside the packaged folder: note the <code>.sh</code> file.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You now have</strong>
+  <p>A ZIP with a <code>.sh</code> launcher at its top level. Note its name &mdash; the next page needs it.</p>
+</div>
+
+<div class="next">
+  <a href="/wiki/linux-upload-and-stream">Upload and stream it &rarr;</a>
+  <p>Including the platform setting that decides whether it ever gets a machine.</p>
+</div>

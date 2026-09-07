@@ -1,34 +1,88 @@
-<p>In the previous chapters, we showcased Pixel Streaming for a Windows build. In this chapter, we will demonstrate Pixel Streaming for a Linux build.</p>
+<p class="standfirst">
+  Stream a Linux build of your Unreal project. The path is the same as for
+  Windows &mdash; build, upload, stream &mdash; with a cross-compile toolchain
+  at the start and one configuration setting that must be right.
+</p>
 
-<p>A simple demo application is shown streaming below.</p>
-<div data-autoscale="" data-ratio="16:9" data-service="external_content">
-<div data-placeholder="">
-<template>
- <a href="https://youtu.be/c6oa2Gl_YcQ" rel="noreferrer" target="_blank">
+<p>
+  There is a live example:
+  <a href="https://connector_linux.eagle3dstreaming.com/v5/demo/e3ds_linux_demo/linux"
+     rel="noreferrer" target="_blank">the Linux demo app</a>. If you want to try
+  the upload without building anything first,
+  <a href="https://drive.google.com/file/d/1ahvPowqqU3jf5TzsfeH7b1fnIYMlZFAj/view?usp=sharing"
+     rel="noreferrer" target="_blank">download the sample ZIP</a> and use that.
+</p>
 
-</a> 
-</template>
-</div>
-</div>
+<h2>Read this before you start</h2>
 
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p><strong>You can view our streaming Linux build demo app at the following URL:</strong></p>
-<p><a href="https://connector_linux.eagle3dstreaming.com/v5/demo/e3ds_linux_demo/linux" rel="external noreferrer"><strong>https://connector_linux.eagle3dstreaming.com/v5/demo/e3ds_linux_demo/linux</strong></a></p>
+<p>
+  Two limitations, stated plainly, because both are much easier to plan around
+  than to discover.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>We do not check whether your Linux build has Pixel Streaming
+    enabled.</strong> Windows uploads are stream-tested; Linux uploads are not.
+    A build with the plugin missing uploads successfully, looks correct in the
+    Control Panel, and fails only when somebody opens the stream. Verify the
+    plugin before packaging &mdash; nothing downstream will catch it for you.
+  </p>
 </aside>
-</div>
 
-<div data-appearance="info" role="note">
 <aside class="callout note">
-<p><strong>We will use the following ZIP file for this documents. To expedite the process, you can download it from the link below:</strong></p>
-<p><a href="https://drive.google.com/file/d/1ahvPowqqU3jf5TzsfeH7b1fnIYMlZFAj/view?usp=sharing" rel="noreferrer" target="_blank"><strong>Download ZIP File</strong></a></p>
+  <p>
+    <strong>Linux streams start more slowly than Windows ones.</strong> That is
+    infrastructure, not your build: demand for Linux streaming is low, so those
+    machines are not kept warm the way the Windows fleet is. Every session
+    allocates a machine, starts it, downloads your app and then launches it
+    &mdash; and you wait for all four.
+  </p>
+  <p>
+    If start time matters for your use &mdash; a demo to a client, an event with
+    an audience already waiting &mdash;
+    <a href="https://support.eagle3dstreaming.com/" rel="noreferrer" target="_blank">talk
+    to support beforehand</a>. There are things we can do, but not at short
+    notice.
+  </p>
 </aside>
-</div>
 
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p>Please note that we have <strong>not tested Linux build streaming in VR environments</strong>, so compatibility and performance on Linux-based VR setups are not currently verified.</p>
-</aside>
-</div>
+<p>
+  One more: <strong>Linux builds in VR are untested.</strong> Not known to be
+  broken &mdash; simply never verified. Treat it as unsupported rather than as
+  likely to work.
+</p>
 
-<p>Follow the guidelines below to begin your streaming journey with Linux build:</p>
+<h2>The path</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Install the cross-compile toolchain, then package</h3>
+    <p>
+      You build the Linux version from Windows, using Unreal's cross-compile
+      toolchain. <a href="/wiki/linux-build">Build a Linux package</a> covers
+      installing it and producing the build.
+    </p>
+  </li>
+  <li>
+    <h3>Set the platform in your configuration</h3>
+    <p>
+      The step that is easiest to miss and hardest to diagnose: a Linux app
+      whose configuration still says Windows waits in the queue for a machine
+      that will never match it.
+    </p>
+  </li>
+  <li>
+    <h3>Upload and stream</h3>
+    <p>
+      The same Control Panel as any other app, with one naming rule specific to
+      Linux. <a href="/wiki/linux-upload-and-stream">Upload and stream a Linux
+      build</a>.
+    </p>
+  </li>
+</ol>
+
+<div class="next">
+  <a href="/wiki/linux-build">Build a Linux package &rarr;</a>
+  <p>The cross-compile toolchain, then packaging from Windows.</p>
+</div>

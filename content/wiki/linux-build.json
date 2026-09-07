@@ -1,0 +1,15 @@
+{
+ "title": "Build a Linux package",
+ "slug": "linux-build",
+ "section": "Linux Pixel Streaming",
+ "parents": [
+  "linux-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/create-package-a-linux-build",
+ "rewritten": true,
+ "replaces": [
+  "create-a-linux-build",
+  "setup-the-linux-cross-compile-toolchain",
+  "create-package-a-linux-build"
+ ]
+}
