@@ -1,7 +1,13 @@
 {
- "title": "Linux Pixel Streaming",
+ "title": "Linux streaming",
  "slug": "linux-pixel-streaming",
- "section": "(top level)",
+ "section": "Linux Pixel Streaming",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/linux-pixel-streaming"
+ "source": "https://docs.eagle3dstreaming.com/wiki/linux-pixel-streaming",
+ "rewritten": true,
+ "replaces": [
+  "summary-of-pixel-streaming-for-linux-build",
+  "current-limitations-and-solutions",
+  "why-load-time-is-high"
+ ]
 }

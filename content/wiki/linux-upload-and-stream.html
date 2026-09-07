@@ -1,0 +1,160 @@
+<p class="standfirst">
+  Upload the Linux ZIP and stream it. Two things differ from a Windows upload,
+  and both cause failures that do not explain themselves.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li>A packaged Linux ZIP with a <code>.sh</code> launcher at its top level
+      &mdash; see <a href="/wiki/linux-build">Build a Linux package</a>.</li>
+    <li>Or, to try the process without building,
+      <a href="https://drive.google.com/file/d/1ahvPowqqU3jf5TzsfeH7b1fnIYMlZFAj/view?usp=sharing"
+         rel="noreferrer" target="_blank">the sample ZIP</a>.</li>
+  </ul>
+</div>
+
+<h2>1. Tell the configuration it is a Linux build</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>Do this first, and do not skip it.</strong> A Linux app whose
+    configuration still says Windows will sit in the queue waiting for a machine
+    that will never match it. The symptom is "stuck waiting for a machine" with
+    no error at all &mdash; and it looks identical to being busy.
+  </p>
+</aside>
+
+<ol class="steps">
+  <li>
+    <h3>Create a stream link, and open its configuration</h3>
+    <figure>
+      <img src="/images/image-20250324-152940-b8120b.png" loading="lazy" decoding="async"
+           alt="Creating a new stream link in the Control Panel">
+      <figcaption>Create a new stream link.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Press Edit Config, and turn on Advanced Options</h3>
+    <p>The platform setting is not visible until Advanced Options is enabled.</p>
+    <figure>
+      <img src="/images/image-20250324-153148-966b7e.png" loading="lazy" decoding="async"
+           alt="Enabling Advanced Options in the configuration editor">
+      <figcaption>Advanced Options.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>In the Development tab, set Platform to "Linux UE Build for PS"</h3>
+    <figure>
+      <img src="/images/image-20250324-153251-a1e5e1.png" loading="lazy" decoding="async"
+           alt="Selecting the Linux platform in the Development tab">
+      <figcaption>The setting that decides which machines can run your app.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Save</h3>
+    <figure>
+      <img src="/images/image-20250324-153410-ad3829.png" loading="lazy" decoding="async"
+           alt="Saving the configuration">
+      <figcaption>Save.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>2. Upload the ZIP</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>The application name must match the <code>.sh</code> file at the
+    root of your ZIP.</strong> If the launcher is <code>MyProject.sh</code>,
+    name the application <code>MyProject</code>. This is the Linux equivalent of
+    the <code>.exe</code> rule on Windows, and a mismatch fails at launch rather
+    than at upload &mdash; well after the point where the cause is obvious.
+  </p>
+</aside>
+
+<ol class="steps">
+  <li>
+    <h3>Sign in and press Add Application</h3>
+    <figure>
+      <img src="/images/image-20241203-174651-b989d9.png" loading="lazy" decoding="async"
+           alt="The Add Application button">
+      <figcaption>Add Application.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Browse for your ZIP</h3>
+    <figure>
+      <img src="/images/external-a65d683c0c-a65d68.png" loading="lazy" decoding="async"
+           alt="Browsing for the ZIP file">
+      <figcaption>Browse, or drag it in.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Name it after the <code>.sh</code> file, then upload</h3>
+    <figure>
+      <img src="/images/image-20250324-154738-6881a7.png" loading="lazy" decoding="async"
+           alt="Naming the application to match the .sh launcher">
+      <figcaption>The name must match the launcher.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Wait for it to be prepared</h3>
+    <figure>
+      <img src="/images/image-20250324-154946-8bc081.png" loading="lazy" decoding="async"
+           alt="The application uploading">
+      <figcaption>Uploading.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>3. Stream it</h2>
+
+<p>
+  Press <strong>Play App</strong>. A Linux session goes through four stages, and
+  it is worth knowing them because the wait is longer than on Windows.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Stage</th><th>What is happening</th><th>If it stops here</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Requesting a slot</td>
+        <td>Finding capacity for your session.</td>
+        <td>Usually brief. Persistent waiting means capacity, not configuration.</td>
+      </tr>
+      <tr>
+        <td>Waiting for a machine</td>
+        <td>A Linux machine is being allocated and started.</td>
+        <td><strong>Check the platform setting above.</strong> A config still set to Windows waits here forever.</td>
+      </tr>
+      <tr>
+        <td>Launching the app</td>
+        <td>Your build is downloaded to the machine and started.</td>
+        <td>Longer for a large build &mdash; the whole ZIP is transferred.</td>
+      </tr>
+      <tr>
+        <td>Streaming</td>
+        <td>Video is flowing.</td>
+        <td>&mdash;</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<figure>
+  <img src="/images/image-20250324-153518-0d0e69.png" loading="lazy" decoding="async"
+       alt="The Play App button in the Control Panel">
+  <figcaption>Play App.</figcaption>
+</figure>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>Your Linux build is running in the browser and responding to input.</p>
+</div>
+
+<div class="next">
+  <a href="/wiki/linux-pixel-streaming">Back to Linux streaming &rarr;</a>
+  <p>Including why the wait is longer, and what to do if it matters for you.</p>
+</div>

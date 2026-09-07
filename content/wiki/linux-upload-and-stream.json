@@ -1,0 +1,15 @@
+{
+ "title": "Upload and stream a Linux build",
+ "slug": "linux-upload-and-stream",
+ "section": "Linux Pixel Streaming",
+ "parents": [
+  "linux-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/upload-a-linux-build",
+ "rewritten": true,
+ "replaces": [
+  "create-a-config-for-linux-build-streaming",
+  "upload-a-linux-build",
+  "streaming-the-app"
+ ]
+}
