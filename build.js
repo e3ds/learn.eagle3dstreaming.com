@@ -146,9 +146,31 @@ function navHtml(tree, current) {
     if (!mine.length) continue;
     mine.forEach((p) => grouped.add(p.slug));
     const holdsCurrent = mine.some((p) => holds(p));
+
+    /* A group that holds exactly ONE page is that page - its heading links to
+     * it and its children hang below. Otherwise the tree reads
+     *
+     *     GETTING STARTED
+     *       Getting Started        <- the same thing, twice
+     *       Create your account
+     *
+     * which makes a reader look for the difference between two identical names.
+     * With several pages the heading is a plain label, because there is no one
+     * page for it to mean. */
+    let label, children;
+    if (mine.length === 1) {
+      const p = mine[0];
+      const on = p.slug === current;
+      label = '<a href="' + (p.url || ("/wiki/" + p.slug)) + '"'
+        + (on ? ' class="on" aria-current="page"' : "") + ">" + esc(g.title) + "</a>";
+      children = (kids[p.slug] || []).map((c) => node(c, 1)).join("");
+    } else {
+      label = "<span>" + esc(g.title) + "</span>";
+      children = mine.map((p) => node(p, 1)).join("");
+    }
+
     out += '<li><details class="e3dsNavSec e3dsNavGroup"' + (holdsCurrent ? " open" : "")
-      + "><summary><span>" + esc(g.title) + "</span></summary><ul>"
-      + mine.map((p) => node(p, 1)).join("") + "</ul></details></li>";
+      + "><summary>" + label + "</summary><ul>" + children + "</ul></details></li>";
   }
   /* Anything no group claimed, so a new batch is visible the day it lands. */
   out += roots.filter((r) => !grouped.has(r.slug)).map((r) => node(r, 0)).join("");
