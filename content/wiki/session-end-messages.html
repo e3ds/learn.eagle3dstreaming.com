@@ -49,13 +49,18 @@
 </p>
 
 <figure>
-  <img src="/images/image-20241101-155015-2043ee.png" alt="The Utilities section in the Control Panel" loading="lazy">
-  <figcaption>Control Panel &rarr; <strong>Utilities</strong> &rarr; Running Streaming Sessions.</figcaption>
+  <img src="/images/image-20241101-155015-2043ee.png" alt="The Utilities item in the Control Panel sidebar" loading="lazy">
+  <figcaption>Open <strong>Utilities</strong> from the Control Panel sidebar.</figcaption>
 </figure>
 
 <figure>
   <img src="/images/image-20241101-165720-8359ac.png" alt="The Kick Player button beside a running session" loading="lazy">
   <figcaption><strong>Kick Player</strong> ends that one session immediately.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/image-20241101-170104-fc916b.png" alt="The session list after the kick, with that row gone" loading="lazy">
+  <figcaption>After the kick, that session is gone from the list &mdash; the machine is released immediately.</figcaption>
 </figure>
 
 <p>
@@ -64,10 +69,12 @@
 
 <pre><code>You have been kicked out</code></pre>
 
-<figure>
-  <img src="/images/image-20241101-170104-fc916b.png" alt="What the kicked viewer sees" loading="lazy">
-  <figcaption>What the viewer sees. In an SDK integration this is your screen, built from the message.</figcaption>
-</figure>
+<p>
+  On our own player that produces a "session has ended" screen. In an SDK
+  integration nothing is drawn for you: the message arrives at
+  <code>onRedirectingWithMessage</code> and what the viewer sees is whatever you
+  build from it.
+</p>
 
 <div class="outcome">
   <strong>This is the one you can trigger on demand, so test with it</strong>
