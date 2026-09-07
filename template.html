@@ -208,6 +208,24 @@
     text-decoration:none}
   .next p{margin:4px 0 0;color:var(--ink-2);font-size:15.5px}
 
+  /* [E3DS-VIDEO] A link, not a YouTube iframe.
+     An embedded player is roughly a megabyte of third-party JavaScript and sets
+     cookies on our documentation domain, on every page carrying one, whether or
+     not anyone presses play. A link costs nothing until it is wanted. */
+  .video{display:flex;gap:14px;align-items:center;margin:22px 0;padding:14px 16px;
+    border:1px solid var(--line);border-radius:6px;background:var(--surface);
+    text-decoration:none;color:inherit}
+  .video:hover{border-color:var(--accent)}
+  .video .play{flex:0 0 auto;width:38px;height:38px;border-radius:50%;
+    background:var(--accent);display:flex;align-items:center;justify-content:center}
+  .video .play::after{content:"";border-style:solid;border-width:8px 0 8px 13px;
+    border-color:transparent transparent transparent var(--ground);margin-left:3px}
+  .video .meta{min-width:0}
+  .video .meta strong{display:block;font-family:Archivo,Arial,sans-serif;
+    font-size:15.5px;font-weight:600;margin-bottom:2px}
+  .video .meta span{font-family:Archivo,Arial,sans-serif;font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+
   /* NAV-CSS:BEGIN - extracted by build.js and stamped into the hand-written
      pages too, so there is exactly one copy of these rules. */
   /* ---- the tree down the left ---------------------------------------- */

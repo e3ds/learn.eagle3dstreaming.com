@@ -156,43 +156,21 @@
   the player to render into.
 </p>
 
-<h2>Keep your key off the browser</h2>
+<h2>One thing to know before you go live</h2>
 
 <p>
-  Anything in a web page can be read by anyone who visits it. The demo puts the
-  key in <code>config.js</code> because it is a demo, and that is fine for a
-  local experiment or an internal trial. It is not fine for a public site:
-  <strong>the API key does not expire, and it can be used to start sessions
-  billed to your account.</strong>
-</p>
-
-<p>
-  The fix is one change. Keep the key on your own server, and let the browser
-  receive only the token:
-</p>
-
-<pre><code>Browser                Your server              Eagle 3D Streaming
-   │  "I'd like to stream" │                            │
-   ├──────────────────────▶│  API key + app details     │
-   │                       ├───────────────────────────▶│
-   │                       │        short-lived token   │
-   │   just the token      │◀───────────────────────────┤
-   │◀──────────────────────┤                            │
-   │  start the session with that token                 │
-   ├───────────────────────────────────────────────────▶│</code></pre>
-
-<p>
-  Point <code>requestSessionToken()</code> in
-  <code>scripts/session-token.js</code> at your own endpoint instead of ours.
-  Nothing else in the demo changes. The <strong>token</strong> is safe to send to
-  the browser &mdash; it expires in about a minute and covers a single session.
-  The <strong>key</strong> is not.
+  The demo keeps your API key in <code>config.js</code>, which means every
+  visitor to the page can read it. That is fine for what you are doing now
+  &mdash; trying it out, an internal demo, development against your own app.
 </p>
 
 <aside class="callout warning">
   <p>
-    <strong>If you have ever committed a real API key to a public repository,
-    treat it as compromised</strong> and issue a new one from the Control Panel.
+    <strong>It is not fine on a public site.</strong> The key does not expire,
+    and anyone who reads it can start sessions billed to your account. Before
+    you put this on a page the public can reach, move the key to a server:
+    <a href="/wiki/sdk-secure-the-key">keeping your API key off the browser</a>.
+    It is one change to one function, and nothing else in your integration moves.
   </p>
 </aside>
 
