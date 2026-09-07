@@ -102,6 +102,42 @@ To undo a bad edit, copy the wanted file out of `.backups/` over the one in
 Nobody should ever need to write HTML to fix a typo. If they do, something here
 is wrong.
 
+### Pictures
+
+**Paste a screenshot straight into the page**, or press *Add picture* to choose
+a file. Either way you are asked for a short description, which becomes both the
+caption under the image and its `alt` text — one question, because asking twice
+for the same sentence only teaches people to skip it.
+
+Pictures are stored as **files** in `site/images/` and referenced by URL. They
+are never embedded in the page, and the paste is intercepted specifically to
+stop the browser doing that: left alone a browser inlines a pasted screenshot as
+base64, so a 400 KB picture becomes ~550 KB of text inside the HTML, the page
+stops being cacheable apart from its pictures, and two or three of them pass the
+save limit.
+
+What an upload has to get past:
+
+| | |
+|---|---|
+| password | the same one as saving, sent with the upload |
+| magic numbers | PNG, JPEG, GIF and WebP only, checked against the **bytes** — an extension is just the end of a filename and proves nothing |
+| no SVG | it is a document, it can carry script, and it would run on our own origin |
+| name rewritten | reduced to letters, digits and dashes, so nothing from the filename reaches the disk or the URL intact |
+| never overwrites | a second `screenshot.png` becomes `screenshot-2.png`; two pages uploading the same name must not silently change each other |
+| 8 MB | over that it answers **with a reason** rather than dropping the connection — a dead socket tells the person nothing |
+
+Styling for pictures is stamped into every page by `build-nav.js` (§5) along
+with the tree, so images never overflow the column and captions match the page.
+
+**VERIFIED** on 2026-09-06, server side, by uploading against a running server:
+a valid PNG is accepted; the same name twice produces `-2`; a wrong password is
+refused; an executable renamed `.png` is refused; an SVG carrying `<script>` is
+refused; `../../../server.js` as a filename lands harmlessly as
+`site/images/server.png`; 9 MB returns the size message and writes nothing.
+**NOT verified:** the browser half — paste interception and inserting at the
+cursor — which needs a real browser and has not been through one yet.
+
 ---
 
 ## 5. The navigation tree

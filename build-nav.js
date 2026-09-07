@@ -89,6 +89,25 @@ const STYLE = `<style id="e3dsNavStyle">
   }
 </style>`;
 
+/* Styling for pictures added through the editor. It rides along in the stamped
+ * block for the same reason the tree does: it has to be on every page, and one
+ * definition stamped everywhere cannot drift the way forty hand-copies would.
+ * Kept as its own element so it stays obvious that this is about content, not
+ * about the navigation. */
+const DOC_STYLE = `<style id="e3dsDocStyle">
+  .e3dsFig { margin:32px 0; }
+  /* Pictures never overflow their column, and the box holds its shape before
+     the image arrives so the text below does not jump as the page loads. */
+  .e3dsFig img {
+    display:block; max-width:100%; height:auto;
+    border:1px solid var(--line); border-radius:3px; background:var(--surface-2);
+  }
+  .e3dsFig figcaption {
+    margin-top:9px; font-family:Archivo,Arial,sans-serif; font-size:14px;
+    line-height:1.45; color:var(--ink-3);
+  }
+</style>`;
+
 const TOGGLE =
   '<button id="e3dsNavToggle" aria-label="Show the contents" ' +
   'onclick="document.body.classList.toggle(\'e3dsNavOpen\')">Contents</button>';
@@ -123,7 +142,8 @@ function navFor(nav, currentUrl) {
 
 function stamp(file, nav) {
   const rel = "/" + path.relative(ROOT, file).split(path.sep).join("/");
-  const block = BEGIN + "\n" + STYLE + "\n" + navFor(nav, rel) + "\n" + TOGGLE + "\n" + END;
+  const block = BEGIN + "\n" + STYLE + "\n" + DOC_STYLE + "\n"
+    + navFor(nav, rel) + "\n" + TOGGLE + "\n" + END;
 
   let html = fs.readFileSync(file, "utf8");
   const b = html.indexOf(BEGIN);

@@ -349,6 +349,19 @@
     }
   }
 </style>
+<style id="e3dsDocStyle">
+  .e3dsFig { margin:32px 0; }
+  /* Pictures never overflow their column, and the box holds its shape before
+     the image arrives so the text below does not jump as the page loads. */
+  .e3dsFig img {
+    display:block; max-width:100%; height:auto;
+    border:1px solid var(--line); border-radius:3px; background:var(--surface-2);
+  }
+  .e3dsFig figcaption {
+    margin-top:9px; font-family:Archivo,Arial,sans-serif; font-size:14px;
+    line-height:1.45; color:var(--ink-3);
+  }
+</style>
 <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><details class="e3dsNavSec"><summary>Getting started</summary><ul><li class="planned">Your first stream</li><li class="planned">Uploading an app</li></ul></details><details class="e3dsNavSec" open><summary>Streaming settings</summary><ul><li><a class="on" aria-current="page" href="/microphone-settings.html">Microphone</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li><li class="planned">Link expiration</li><li class="planned">Session limits</li><li class="planned">Control bar and buttons</li></ul></details><details class="e3dsNavSec"><summary>Embedding</summary><ul><li class="planned">In an iframe</li><li class="planned">The web SDK</li></ul></details><details class="e3dsNavSec"><summary>Troubleshooting</summary><ul><li class="planned">No video</li><li class="planned">No sound</li><li class="planned">The stream paused</li></ul></details></nav></aside>
 <button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
 <!-- E3DS-NAV:END -->
