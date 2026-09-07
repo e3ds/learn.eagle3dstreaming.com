@@ -1,0 +1,123 @@
+<p class="standfirst">
+  Unreal-side questions that come up repeatedly when preparing an app for
+  streaming: which build configuration, how to get logs out of it, how to reach
+  files you packaged, and how your app should talk to the page.
+</p>
+
+<h2>Choosing a build configuration</h2>
+
+<p>
+  Unreal offers several, and the choice is a trade between how fast it runs and
+  how much it can tell you when something goes wrong.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Configuration</th><th>Use it</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Development</strong></td>
+        <td>While building and diagnosing. Slower, and it keeps the logging and tooling you need to find a fault.</td>
+      </tr>
+      <tr>
+        <td><strong>Shipping</strong></td>
+        <td>For release. Fastest, smallest &mdash; and it strips out the logging, which is the trade.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Logs cannot be added to a Shipping build after it is packaged.</strong>
+    They are compiled out, not switched off. Getting them back means building
+    from Unreal's <em>source</em> engine from GitHub with modified engine code,
+    switching your project to that engine and regenerating the solution &mdash;
+    which is a day's work, not a setting.
+  </p>
+  <p>
+    So: while an app is still being diagnosed, package Development. Move to
+    Shipping when you no longer expect to need the logs, not before.
+  </p>
+</aside>
+
+<h2>Talking to the page: VaRest or Pixel Streaming Input</h2>
+
+<p>
+  Both plugins can handle the JSON that arrives from a web page, which is why
+  the choice comes up at all.
+</p>
+
+<div class="choices">
+  <div class="choice pick">
+    <span class="tag">Prefer this</span>
+    <h3>Pixel Streaming Input</h3>
+    <p>
+      Epic's own, built for exactly this, and already required for streaming.
+      Nothing extra to install and nothing extra to keep working across engine
+      upgrades.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>VaRest</h3>
+    <p>
+      A general-purpose JSON plugin. Worth it only if you are already using it
+      for other work in the project &mdash; then it is one JSON approach instead
+      of two.
+    </p>
+  </div>
+</div>
+
+<p>
+  Sending in the other direction is the same either way: the <strong>Send Pixel
+  Streaming Response</strong> node, with a Pixel Streaming Input component on
+  the actor. See
+  <a href="/wiki/sending-and-receiving-data">sending and receiving data</a> for
+  the page's half.
+</p>
+
+<h2>Files you packaged, and how to reach them</h2>
+
+<p>
+  Non-asset files &mdash; videos, text, configuration &mdash; need to be
+  included in the package deliberately, and then found at runtime.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>Use relative paths, not absolute ones.</strong> An absolute path is
+    correct on your machine and wrong on ours: the app runs from a different
+    directory on a streaming machine, so a path that begins with your drive
+    letter cannot resolve. This is a common cause of an app that works locally
+    and fails as soon as it streams.
+  </p>
+</aside>
+
+<h2>The mouse cursor</h2>
+
+<p>
+  A streamed app shows the browser's cursor as well as its own, which is
+  disorienting enough that people report it as lag. The fix is to hide the app's
+  cursor &mdash; a custom cursor image with zero alpha &mdash; so only the
+  browser's remains. <a href="/wiki/optimise-your-app">Optimising your app</a>
+  covers the settings.
+</p>
+
+<h2>Anti-aliasing</h2>
+
+<p>
+  Anti-aliasing smooths the jagged edges that appear when curves are drawn on a
+  rectangular grid of pixels. It costs GPU time on every frame, and in a stream
+  it competes with the encoder for the same GPU.
+</p>
+
+<p>
+  At a streamed resolution the difference is smaller than it is on a desktop
+  monitor, because video compression softens edges anyway. If you are short of
+  frame rate, this is a cheaper thing to reduce than most.
+</p>
+
+<div class="next">
+  <a href="/wiki/optimise-your-app">Optimise your app &rarr;</a>
+  <p>The full set of rendering and load-time changes that matter for streaming.</p>
+</div>
