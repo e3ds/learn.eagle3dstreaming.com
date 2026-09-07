@@ -1,0 +1,164 @@
+<p class="standfirst">
+  Quality, resolution, fullscreen, mouse behaviour, sound and screenshots &mdash;
+  driven from your own interface rather than ours. Each is shown for both the
+  SDK and the iframe.
+</p>
+
+<p>
+  The pattern is the same throughout. With the <strong>SDK</strong> you call a
+  function on <code>e3ds_controller</code>. With an <strong>iframe</strong> you
+  post a JSON message carrying a <code>cmd</code> key to the frame:
+</p>
+
+<pre><code class="language-javascript">document.getElementById("iframe_1")
+  .contentWindow
+  .postMessage(JSON.stringify({ cmd: "…", /* … */ }), "*");</code></pre>
+
+<h2>Quality</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Call</th></tr></thead>
+    <tbody>
+      <tr><td>SDK</td><td><code>e3ds_controller.setQualityPoint(n)</code></td></tr>
+      <tr><td>iframe</td><td><code>{ cmd: "setQualityPoint", value: n }</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  There is also <code>setAdaptiveQualityPoint</code> in the SDK, which lets the
+  stream move within a range rather than holding one setting. Use a fixed point
+  when you want predictability, adaptive when you want the best picture the
+  connection can carry at that moment.
+</p>
+
+<h2>Resolution</h2>
+
+<p>
+  <strong>By default the stream follows the size of the frame or window.</strong>
+  That is usually right, and on phones it has a consequence worth knowing: a
+  smaller screen means a smaller frame, which means a lower stream resolution.
+  The picture is correctly sized and looks softer than the same app on a desktop.
+</p>
+
+<p>To hold a fixed resolution instead:</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Pin it</th><th>Release it</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>SDK</td>
+        <td><code>e3ds_controller.setResolution(1920, 1080)</code></td>
+        <td><code>e3ds_controller.useViewportResolution()</code></td>
+      </tr>
+      <tr>
+        <td>iframe</td>
+        <td><code>{ cmd: "freezeResolutionAt", x: 1920, y: 1080 }</code></td>
+        <td>&mdash;</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Do not send a raw resolution command instead.</strong> Telling
+    Unreal a size directly changes the picture for a few seconds, and then the
+    viewport watcher sends the window size again and your change is gone.
+    Pinning a resolution means switching that watcher off as well, which is what
+    the calls above do and a raw command does not.
+  </p>
+</aside>
+
+<h2>Fullscreen</h2>
+
+<p>Three places this can be driven from, and they are not equivalent.</p>
+
+<div class="choices">
+  <div class="choice pick">
+    <span class="tag">SDK</span>
+    <h3><code>toggleFullscreen()</code></h3>
+    <p>One call, and it handles the platform differences &mdash; including iOS,
+      where only the video element can go fullscreen.</p>
+  </div>
+  <div class="choice">
+    <h3>iframe</h3>
+    <p>
+      Use the browser's own Fullscreen API on <em>your</em> page, not a message
+      to the frame &mdash; <code>requestFullscreen()</code> on the element you
+      want enlarged. Give the iframe the <code>allowfullscreen</code> attribute
+      or nothing will happen.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>Blueprint</h3>
+    <p>From inside the Unreal app, when the trigger belongs to your scene rather than your page.</p>
+  </div>
+</div>
+
+<h2>Mouse behaviour</h2>
+
+<pre><code class="language-javascript">e3ds_controller.switchMouseControlSchemeTo(scheme);</code></pre>
+
+<p>
+  Two schemes. <strong>Hovering</strong> leaves the cursor free, which suits
+  configurators and anything with an interface to click. <strong>Locked</strong>
+  captures the pointer for camera control, which suits first-person movement and
+  is what most games expect. Choose per app, or offer both.
+</p>
+
+<h2>Sound, touch and screenshots</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What</th><th>SDK call</th></tr></thead>
+    <tbody>
+      <tr><td>Volume</td><td><code>setVolume(level)</code></td></tr>
+      <tr><td>Touch input on or off</td><td><code>setTouchInputEnabled(enabled)</code></td></tr>
+      <tr><td>Capture a frame</td><td><code>captureScreenShot()</code></td></tr>
+      <tr><td>End the session</td><td><code>terminate()</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Knowing what the stream is doing</h2>
+
+<p>
+  The SDK reports progress and events by calling functions you assign. Every one
+  is optional; the ones you do not define are never called.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Callback</th><th>When it fires</th></tr></thead>
+    <tbody>
+      <tr><td><code>onDataChannelOpen</code></td><td>The stream is live and ready for your commands.</td></tr>
+      <tr><td><code>onResponseFromUnreal</code></td><td>Your app sent something back to the page.</td></tr>
+      <tr><td><code>onRedirectingWithMessage</code></td><td><strong>Any</strong> reason the session is ending, with a line of text for the viewer.</td></tr>
+      <tr><td><code>onSessionExpired</code></td><td>The session's time limit was reached.</td></tr>
+      <tr><td><code>onStreamerDisconnected</code></td><td>The app itself stopped or crashed.</td></tr>
+      <tr><td><code>onReceivingApp…Progress</code></td><td>Acquiring, preparing and starting, for your own loading screen.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout note">
+  <p>
+    <strong><code>onRedirectingWithMessage</code> is the dependable one.</strong>
+    It fires for every way a session ends &mdash; crash, idle timeout, expired
+    link, wrong password. <code>onSessionExpired</code> covers only the time
+    limit, and <code>onStreamerDisconnected</code> only a genuine crash. If you
+    are showing one "session over" screen, build it on the first.
+  </p>
+  <p>
+    The stream ending cannot be cancelled from your page, so design that screen
+    around "this is happening regardless".
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/sending-and-receiving-data">Sending and receiving data &rarr;</a>
+  <p>Two-way communication between your page and your Unreal application.</p>
+</div>

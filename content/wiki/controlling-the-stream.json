@@ -1,0 +1,25 @@
+{
+ "title": "Controlling the stream",
+ "slug": "controlling-the-stream",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/stream-controls-using-sdk",
+ "rewritten": true,
+ "replaces": [
+  "stream-controls-using-iframe",
+  "stream-controls-using-sdk",
+  "set-the-resolution-in-iframe",
+  "set-stream-quality-in-iframe",
+  "toggle-fullscreen-in-iframe",
+  "send-keyboard-input-to-a-ue-app-from-iframe",
+  "switch-between-hover-and-locked-mouse-in-iframe",
+  "control-video-quality-using-sdk",
+  "toggle-fullscreen-using-sdk",
+  "capture-screenshot-using-sdk",
+  "runtime-events-utility-functions",
+  "advanced-features-sdk-behavior",
+  "toggle-between-hover-and-locked-mouse-using-sdk"
+ ]
+}
