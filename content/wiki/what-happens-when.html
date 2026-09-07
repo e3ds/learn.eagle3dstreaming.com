@@ -1,0 +1,117 @@
+<p class="standfirst">
+  The stages an upload and a streaming session pass through, what each one is
+  doing, and what it means when one of them stalls. This is the page to open
+  when something is taking too long.
+</p>
+
+<h2>Uploading an app: six phases</h2>
+
+<p>
+  The Control Panel colours each phase: <strong>green</strong> passed,
+  <strong>yellow</strong> a warning you can proceed past,
+  <strong>red</strong> an error you cannot.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Phase</th><th>What it does</th><th>If it stops here</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1. Application review</td>
+        <td>Checks the ZIP holds a packaged Unreal app with an executable, and that Pixel Streaming is enabled. Also scans for viruses.</td>
+        <td><strong>Yellow:</strong> plugin not detected &mdash; you may continue, and it will not stream. <strong>Red:</strong> no Unreal app in the ZIP.</td>
+      </tr>
+      <tr>
+        <td>2. Upload</td>
+        <td>Transfers the file.</td>
+        <td>A slow or interrupted connection. Press <strong>Retry</strong>, which restarts from phase 1.</td>
+      </tr>
+      <tr>
+        <td>3. Acquiring</td>
+        <td>Begins at 50% uploaded; stores the ZIP on a machine.</td>
+        <td>Usually a ZIP missing files, or the connection dropping. Server problems here are rare.</td>
+      </tr>
+      <tr>
+        <td>4. Preparing</td>
+        <td>Extracts and installs the build.</td>
+        <td>Same causes as phase 3 &mdash; an incomplete ZIP is the usual one.</td>
+      </tr>
+      <tr>
+        <td>5. In queue</td>
+        <td>Waiting, if several apps are being processed at once.</td>
+        <td>Nothing is wrong. A long queue simply takes longer.</td>
+      </tr>
+      <tr>
+        <td>6. Testing</td>
+        <td>Runs your app on a machine to confirm it streams.</td>
+        <td>The app itself &mdash; a crash on start, or resources beyond <a href="/wiki/system-requirements">the hardware budget</a>.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Do not enable Pixel Streaming Plugin 2.</strong> Keep using the
+    previous version. Plugin 2 causes upload failures and interrupted streaming,
+    and the error it produces does not name it as the cause.
+  </p>
+</aside>
+
+<aside class="callout note">
+  <p>
+    <strong>A yellow warning at phase 1 is the one worth stopping for.</strong>
+    You are allowed past it, and an app uploaded without Pixel Streaming enabled
+    will never stream. If you see that warning, go back and enable the plugin
+    rather than continuing.
+  </p>
+</aside>
+
+<h2>Starting a session: eight phases</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Phase</th><th>What is happening</th><th>If it stops here</th></tr></thead>
+    <tbody>
+      <tr><td>1. Opening the URL</td><td>The page loads.</td><td>&mdash;</td></tr>
+      <tr><td>2. Requesting a slot</td><td>Asking for capacity.</td><td>See "stuck in the queue" below.</td></tr>
+      <tr><td>3. Waiting for a machine</td><td>A GPU machine is being allocated.</td><td>For a Linux app, <a href="/wiki/linux-upload-and-stream">check the platform setting</a> &mdash; a config set to Windows waits here forever.</td></tr>
+      <tr><td>4. Acquiring</td><td>Downloading your app to that machine. <strong>Skipped if it is already there.</strong></td><td>Large builds take longer the first time.</td></tr>
+      <tr><td>5. Preparing</td><td>Extracting and setting up. <strong>Also skipped if already present.</strong></td><td>&mdash;</td></tr>
+      <tr><td>6. Launching</td><td>Your app starting.</td><td>The app's own start-up time &mdash; usually the largest share.</td></tr>
+      <tr><td>7. Press play</td><td>Waiting for the viewer's click.</td><td>Not a fault. Browsers require one interaction before video.</td></tr>
+      <tr><td>8. Streaming</td><td>Video is flowing.</td><td>&mdash;</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  <strong>Phases 4 and 5 disappear once a machine already holds your app</strong>,
+  which is why the same app can take 25 seconds one time and 12 the next with
+  nothing changed. It is also what
+  <a href="/wiki/preallocated-apps">preallocation</a> removes permanently.
+</p>
+
+<h2>Stuck in the queue</h2>
+
+<p>
+  A short queue when many people start at once is normal and resolves itself.
+  <strong>Consistently</strong> queuing is not: it means no machine matching
+  your configuration is free.
+</p>
+
+<div class="outcome">
+  <strong>Check these, in this order</strong>
+  <p>
+    The <a href="/wiki/linux-upload-and-stream">platform setting</a> if it is a
+    Linux build; then your plan's
+    <a href="/wiki/capacity-and-regions">concurrent-user limit</a>, since every
+    active session holds a slot; then whether sessions are being left open,
+    which an <a href="/wiki/session-and-access">idle timeout</a> fixes.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/load-time">Load time &rarr;</a>
+  <p>What the wait is made of, and how to shorten the part that is yours.</p>
+</div>

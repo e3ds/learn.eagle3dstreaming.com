@@ -12,11 +12,22 @@
  "replaces": [
   "2d-image-asset",
   "2d-video-asset",
-  "logo",
+  "accessing-the-customization-section",
+  "customize-loading-background",
+  "customize-loading-image",
+  "customize-logo",
+  "customize-play-button",
+  "customize-queue-background",
+  "customize-title-bar-icon",
+  "customize-ui-elements",
+  "customize-ui-elements-using-e3ds-control-panel",
   "loading-background",
   "loading-image",
+  "logo",
   "play-button",
   "queue-background",
-  "title-bar-icon"
+  "summary-of-customize-ui-elements",
+  "title-bar-icon",
+  "upload-2d-assets-from-the-control-panel"
  ]
 }
