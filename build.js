@@ -199,16 +199,76 @@ function navHtml(tree, current) {
     + '<a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a>'
     + "<ul class=\"e3dsNavRoot\">" + out + "</ul>"
     + "</nav></aside>"
-    + '<button id="e3dsNavToggle" aria-label="Show the contents" '
-    + "onclick=\"document.body.classList.toggle('e3dsNavOpen')\">Contents</button>";
+    + '<button id="e3dsNavToggle" aria-expanded="false" '
+    + "onclick=\"document.body.classList.toggle('e3dsNavOpen');"
+    + "this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))\">"
+    + "All documentation</button>";
+}
+
+/* [E3DS-CRUMBS] The FULL ancestor chain, not just the immediate parent.
+ *
+ * Each page's JSON records only its direct parent, so reading `parents` gave a
+ * two-rung trail - "Docs / Features plugin nodes" for a page whose real path is
+ * Docs / Developer guides / Features plugin nodes / Screenshots. The middle
+ * rungs were the useful ones: they are what a reader clicks to go UP a level,
+ * and without them the trail cannot be navigated at all.
+ *
+ * So walk up through bySlug until there is no parent left. The `seen` guard is
+ * not paranoia - a JSON edit that makes two pages each other's parent would
+ * otherwise hang the build with no clue why.
+ */
+function ancestorChain(p, bySlug) {
+  const chain = [];
+  const seen = new Set([p.slug]);
+  let cur = (p.parents || []).filter((x) => bySlug[x])[0];
+  while (cur && !seen.has(cur)) {
+    seen.add(cur);
+    chain.unshift(cur);
+    const nxt = bySlug[cur];
+    cur = ((nxt && nxt.parents) || []).filter((x) => bySlug[x])[0];
+  }
+  return chain;
 }
 
 function crumbsHtml(p, bySlug) {
-  const chain = (p.parents || []).filter((s) => bySlug[s]);
-  if (!chain.length) return "";
-  return '<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a>'
-    + chain.map((s) => '<span>/</span><a href="/wiki/' + s + '">'
-      + esc(bySlug[s].title) + "</a>").join("")
+  const chain = ancestorChain(p, bySlug);
+  const links = [{ href: "/", title: "Docs" }].concat(
+    chain.map((s) => ({ href: "/wiki/" + s, title: bySlug[s].title })));
+
+  /* The current page is the last rung and is NOT a link - it is where you are.
+   * Shown because a trail that stops at the parent leaves the reader unsure
+   * whether they are on that parent or below it. */
+  const out = [];
+  const KEEP_HEAD = 1;   /* always "Docs" */
+  const KEEP_TAIL = 1;   /* always the immediate parent */
+  /* 4 rungs already wraps to three lines on a 380px phone, so collapse from
+   * there rather than waiting for a depth this tree does not currently reach. */
+  const hide = links.length >= (KEEP_HEAD + KEEP_TAIL + 1);
+
+  links.forEach((l, i) => {
+    /* [E3DS-CRUMBS-ELLIPSIS] Collapse the MIDDLE, like Explorer's address bar.
+     * The two ends carry the most meaning - where the tree starts and which
+     * page is directly above you - so the middle is what gives way on a narrow
+     * screen. Nothing is thrown away: the hidden rungs are in the HTML and the
+     * button reveals them, so the trail stays navigable rather than becoming
+     * decoration. */
+    const mid = hide && i >= KEEP_HEAD && i < links.length - KEEP_TAIL;
+    if (mid && i === KEEP_HEAD) {
+      /* Its own separator, so the collapsed trail reads "Docs / ... / Parent"
+       * rather than "Docs ... / Parent". This one is never a mid, or it would
+       * disappear along with what it separates. */
+      out.push('<span class="sep crumbMoreSep">/</span>');
+      out.push('<button type="button" class="crumbMore" aria-label="Show the levels in between" '
+        + "onclick=\"this.closest('.crumbs').classList.add('crumbsOpen')\">&hellip;</button>");
+    }
+    if (i > 0) out.push('<span class="sep' + (mid ? " mid" : "") + '">/</span>');
+    out.push("<a" + (mid ? ' class="mid"' : "") + ' href="' + l.href + '">'
+      + esc(l.title) + "</a>");
+  });
+
+  return '<nav class="crumbs" aria-label="Breadcrumb">'
+    + out.join("")
+    + '<span class="sep">/</span><span class="here">' + esc(p.title) + "</span>"
     + "</nav>";
 }
 
