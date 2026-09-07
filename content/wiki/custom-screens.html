@@ -1,0 +1,133 @@
+<p class="standfirst">
+  Replace our loading, session-expired and crash screens with your own, so a
+  wait or a failure looks like your product rather than ours.
+</p>
+
+<p>
+  All three work the same way: the platform tells your page what is happening,
+  and you decide what to show. With the SDK that is a callback; with an iframe
+  it is a <code>postMessage</code> event.
+</p>
+
+<h2>A loading screen</h2>
+
+<p>Two events bracket the wait, and the pattern is just show-then-hide:</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Event</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td><code>onConfigAcquire</code></td><td>Show your loading screen &mdash; the session is preparing.</td></tr>
+      <tr><td><code>onDataChannelOpen</code></td><td>Hide it &mdash; the stream is live.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onConfigAcquire = function () {
+  document.getElementById("myLoadingScreen").style.display = "flex";
+};
+
+e3ds_controller.callbacks.onDataChannelOpen = function () {
+  document.getElementById("myLoadingScreen").style.display = "none";
+};</code></pre>
+
+<p>
+  For a progress bar rather than a static image, the three
+  <code>onReceivingApp…Progress</code> callbacks report acquiring, preparing and
+  starting as they happen.
+</p>
+
+<aside class="callout tip">
+  <p>
+    <strong>If you use a hosted image, use the direct image URL</strong> &mdash;
+    the one ending in <code>.png</code> or <code>.jpg</code>, not the page the
+    host shows you. A share page will not load as an image, and the failure is
+    silent: an empty loading screen rather than an error.
+  </p>
+</aside>
+
+<h2>A session-expired screen</h2>
+
+<p>
+  By default the platform shows its own "session expired" page. To show yours
+  instead:
+</p>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onSessionExpired = function () {
+  document.getElementById("mySessionEnded").style.display = "flex";
+};</code></pre>
+
+<p>
+  With an iframe, keep a full-screen overlay hidden in your page and reveal it
+  when the frame reports the session has ended. Since the overlay is yours, you
+  can put a "start a new session" button on it &mdash; which the default screen
+  does not offer.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong><code>onSessionExpired</code> only covers the time limit.</strong>
+    It does not fire for a crash, an idle timeout, a wrong password or an
+    expired link. If you want one screen for every way a session can end, build
+    it on <code>onRedirectingWithMessage</code> instead &mdash; that one fires
+    for all of them and carries a line of text explaining which.
+  </p>
+</aside>
+
+<h2>A crash-only message</h2>
+
+<p>
+  Showing "something went wrong" when a session simply timed out is worse than
+  showing nothing. To react to a genuine crash and nothing else, you need two
+  events together, because neither is sufficient alone:
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Event</th><th>Fires for</th><th>Carries</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>handleStreamerDisconnected</code><br>(<code>onStreamerDisconnected</code> in the SDK)</td>
+        <td><strong>Only</strong> the app process stopping &mdash; crash, unexpected close, machine down.</td>
+        <td>No text.</td>
+      </tr>
+      <tr>
+        <td><code>redirectingWithMessage</code><br>(<code>onRedirectingWithMessage</code>)</td>
+        <td><strong>Every</strong> session end, for any reason.</td>
+        <td>A readable message.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  So: the crash-specific event tells you it <em>was</em> a crash but gives you
+  nothing to say; the reliable event gives you something to say but fires for
+  everything. Combine them &mdash; set a flag when the crash event arrives, and
+  when the session-ended event follows, show your crash message only if that
+  flag is set.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>Do not read the message text to work out what happened.</strong> It
+    is written for a person and the wording can change. Use the events to decide
+    what occurred, and the text only to show someone.
+  </p>
+</aside>
+
+<h2>One thing that applies to all three</h2>
+
+<div class="outcome">
+  <strong>The session ends regardless</strong>
+  <p>
+    None of these callbacks can cancel or delay it. Whatever you show, design it
+    around the session already being over &mdash; offer a way to start a new
+    one, rather than anything that implies the old one might come back.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/controlling-the-stream">Controlling the stream &rarr;</a>
+  <p>The full list of callbacks, and what each one actually fires for.</p>
+</div>
