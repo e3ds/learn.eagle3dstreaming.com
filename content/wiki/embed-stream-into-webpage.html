@@ -1,21 +1,97 @@
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p><strong>Upon completing this tutorial, you will learn:</strong></p>
-<ul>
-<li>
-<p>How to embed your Unreal Engine app into a webpage</p>
-</li>
-<li>
-<p>How to communicate between a webpage and Unreal app</p>
-</li>
-<li>
-<p>How to apply <strong>Whitelisting</strong> (custom branding)</p>
-</li>
-<li>
-<p>How to host your website for free</p>
-</li>
-</ul>
+<p class="standfirst">
+  Put your streamed application inside your own website, and let your page and
+  your app talk to each other. There are two ways to do it, and the choice
+  matters more than anything else on this page.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>The old SDK no longer works.</strong> Our streaming infrastructure
+    was upgraded and the previous SDK is not compatible with it &mdash;
+    integrations still using it have stopped streaming, not degraded. If you
+    have one, moving to the current SDK is not optional and not a
+    modernisation; it is the difference between working and not.
+  </p>
+  <p>
+    Nothing changes in your Unreal application. The work is entirely on the web
+    side.
+  </p>
 </aside>
+
+<h2>Choose how to embed</h2>
+
+<div class="choices">
+  <div class="choice pick">
+    <span class="tag">Most integrations</span>
+    <h3>The Frontend SDK</h3>
+    <p>
+      Your page controls the stream directly. The SDK handles token generation,
+      authentication, the connection and stream setup, so you are not writing
+      low-level streaming code. Use this unless you have a reason not to.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>An iframe</h3>
+    <p>
+      The stream runs in its own frame and you talk to it with messages. Simpler
+      to drop in, and isolated from your page's own JavaScript &mdash; which is
+      an advantage when the host page is a CMS or something you do not fully
+      control.
+    </p>
+  </div>
 </div>
 
-<p>Follow the guidelines below:</p>
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>SDK</th><th>iframe</th></tr></thead>
+    <tbody>
+      <tr><td>Where the stream lives</td><td>In your page</td><td>In a frame</td></tr>
+      <tr><td>How you control it</td><td>Direct function calls</td><td>Messages to the frame</td></tr>
+      <tr><td>Token and authentication</td><td>Handled for you</td><td>Handled by the frame</td></tr>
+      <tr><td>Isolation from your page's code</td><td>None &mdash; same context</td><td>Complete</td></tr>
+      <tr><td>Best when</td><td>You are building the page</td><td>You are embedding into someone else's</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  Both support the same things: sending data to your app, receiving data from
+  it, controlling quality and resolution, fullscreen, and custom screens for
+  loading and session-end. The pages that follow cover each task <em>both
+  ways</em>, so you do not need to have chosen before reading them.
+</p>
+
+<h2>What you can do once it is embedded</h2>
+
+<ul>
+  <li><strong>Send data to your Unreal app</strong> from the page &mdash; a
+    button that changes a material, a form that positions a camera.</li>
+  <li><strong>Receive data from the app</strong> in the page &mdash; a click
+    inside the 3D scene updating your own interface.</li>
+  <li><strong>Control the stream</strong>: quality, resolution, fullscreen,
+    mouse behaviour, screenshots.</li>
+  <li><strong>Replace our screens with yours</strong> for loading, session
+    expiry and crashes, so a failure looks like your product rather than ours.</li>
+  <li><strong>Whitelist your domain</strong>, which removes our branding and
+    restricts where the stream may be embedded.</li>
+</ul>
+
+<h2>Try one first</h2>
+
+<p>
+  Both approaches have a working example you can open before writing anything:
+</p>
+
+<ul>
+  <li><strong>iframe:</strong>
+    <a href="https://iframe.eagle3dstreaming.com/" rel="noreferrer" target="_blank">live demo</a>
+    and its
+    <a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">source</a>.</li>
+  <li><strong>SDK:</strong>
+    <a href="https://e3ds.github.io/pixelstreaming-sdk/" rel="noreferrer" target="_blank">live demo</a>.</li>
+</ul>
+
+<div class="next">
+  <a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK &rarr;</a>
+  <p>Or <a href="/wiki/embed-stream-using-iframe">embed with an iframe</a> if that suits your page better.</p>
+</div>
