@@ -1,0 +1,13 @@
+{
+ "title": "Preallocated apps",
+ "slug": "preallocated-apps",
+ "section": "System Requirements",
+ "parents": [
+  "streaming-agent"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/preallocated-app",
+ "rewritten": true,
+ "replaces": [
+  "preallocated-app"
+ ]
+}

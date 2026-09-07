@@ -1,0 +1,111 @@
+<p class="standfirst">
+  Keep an application running continuously on your streamer machine, so viewers
+  connect to something already started instead of waiting for it to boot.
+</p>
+
+<p>
+  Normally a session starts your app when someone opens the link, and they wait
+  through the launch. With preallocation the app is already running, and the
+  first thing they wait for is the connection &mdash; a few seconds rather than
+  the whole cold start.
+</p>
+
+<h2>Whether you want this</h2>
+
+<p>
+  It is a trade, not an improvement. You are buying the wait time back by paying
+  for a machine that runs whether or not anybody is watching.
+</p>
+
+<div class="choices">
+  <div class="choice pick">
+    <span class="tag">Worth it</span>
+    <h3>Turn it on when</h3>
+    <p>
+      A live demo or event where the first impression is the point; a
+      public-facing experience people arrive at unprompted; anything used often
+      enough that the machine is rarely idle anyway.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>Leave it off when</h3>
+    <p>
+      Usage is occasional or bursty, or the app is one of several sharing a
+      machine. You would be paying continuously for a wait that happens a few
+      times a day.
+    </p>
+  </div>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>The machine works even when nobody is connected.</strong> The GPU
+    and CPU are occupied continuously, the cost is continuous, and the machine
+    must be sized for a sustained load rather than an occasional one. Turn
+    preallocation off when you no longer need it &mdash; an app left preallocated
+    after an event goes on costing exactly as much as it did during it.
+  </p>
+</aside>
+
+<h2>Configure it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Add the preallocation settings to <code>config_EL.json</code></h3>
+    <p>
+      Five keys, naming which app to keep running and whose account it belongs
+      to:
+    </p>
+<pre><code class="language-json">{
+  "preAllocateApp_configurationName": "default",
+  "preAllocateApp_name": "E3DSFeaturesTemplate",
+  "preAllocateApp_owner": "demo",
+  "preAllocateApps": true,
+  "apiKey": "your_api_key_here"
+}</code></pre>
+    <p>
+      <code>preAllocateApp_name</code> is the application, and
+      <code>preAllocateApp_configurationName</code> is which of its
+      configurations to run &mdash; both as they appear in the Control Panel.
+      Save the file.
+    </p>
+  </li>
+  <li>
+    <h3>Launch <code>EL.exe</code></h3>
+    <p>
+      The agent starts the application immediately rather than waiting for a
+      viewer, and keeps it running.
+    </p>
+    <figure>
+      <img src="/images/image-20260218-044023-34e58e.png" loading="lazy" decoding="async"
+           alt="The streaming agent running a preallocated application">
+      <figcaption>The app running before anyone has connected.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>
+    Opening the streaming URL connects in a few seconds, with no launch phase.
+    If you still see the app starting, the agent did not pick up the
+    configuration &mdash; check the app and owner names match the Control Panel
+    exactly.
+  </p>
+</div>
+
+<h2>While it is running</h2>
+
+<ul>
+  <li><strong>Watch GPU and memory.</strong> A continuously running app shows
+    leaks that a short session never would.</li>
+  <li><strong>Size the machine for sustained load</strong>, not for a peak it
+    touches occasionally.</li>
+  <li><strong>Turn it off when the event ends.</strong> This is the step people
+    forget, and it is the one with a monthly bill attached.</li>
+</ul>
+
+<div class="next">
+  <a href="/wiki/streaming-agent">Back to the streaming agent &rarr;</a>
+  <p>Installation, disk space and starting it automatically with Windows.</p>
+</div>
