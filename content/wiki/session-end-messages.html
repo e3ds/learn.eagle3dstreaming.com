@@ -105,7 +105,50 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">3</span><span class="t">Your application crashed</span><span class="s">App Crashed</span></summary>
+  <summary><span class="n">3</span><span class="t">The viewer went idle</span><span class="s">You have been disconnected due to inactivity.</span></summary>
+  <div class="body">
+    <p>
+      AFK &mdash; away from keyboard. The session watches for input, and when
+      none arrives for long enough it warns the viewer with a countdown. If they
+      still do nothing, it ends and this message is delivered.
+    </p>
+    <p>
+      Enable it and set the two timings under <strong>Logout after
+      inactivity</strong> in your application configuration &mdash; see
+      <a href="/wiki/session-and-access">sessions and access</a>. There are two
+      values, and they do different jobs:
+    </p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Setting</th><th>What it controls</th></tr></thead>
+        <tbody>
+          <tr><td>Warning timeout</td><td>How long without input before the viewer is warned. The countdown appears; any input cancels it and nothing ends.</td></tr>
+          <tr><td>Close timeout</td><td>How long the countdown runs. Reach the end of it and the session closes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="outcome">
+      <strong>This is the setting that stops idle sessions costing you money</strong>
+      <p>
+        A forgotten tab consumes <a href="/wiki/plans-and-billing">minutes</a>
+        and holds a <a href="/wiki/capacity-and-regions">concurrent slot</a> at
+        exactly the same rate as somebody using it. Of everything in this list,
+        this is the one ending you should <em>want</em> to happen.
+      </p>
+    </div>
+    <aside class="callout note">
+      <p>
+        <strong>It is a disconnect, not a crash</strong>, and the wording says so
+        &mdash; "disconnected due to inactivity" is safe to show a viewer as it
+        stands, unlike most of the entries below it. Offering a "start again"
+        button beside it is usually all this case needs.
+      </p>
+    </aside>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">4</span><span class="t">Your application crashed</span><span class="s">App Crashed</span></summary>
   <div class="body">
     <p>
       The Unreal application stopped unexpectedly. The session ends because there
@@ -129,7 +172,7 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">4</span><span class="t">A meeting host closed the meeting</span><span class="s">Host's Streaming Closed</span></summary>
+  <summary><span class="n">5</span><span class="t">A meeting host closed the meeting</span><span class="s">Host's Streaming Closed</span></summary>
   <div class="body">
     <p>
       In a <a href="/wiki/meeting-links">meeting</a> the host's session is the
@@ -140,7 +183,7 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">5</span><span class="t">The link expired</span><span class="s">Url Expired</span></summary>
+  <summary><span class="n">6</span><span class="t">The link expired</span><span class="s">Url Expired</span></summary>
   <div class="body">
     <p>
       The streaming link itself carried a lifetime and it has passed. See
@@ -151,7 +194,7 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">6</span><span class="t">The machine is not online</span><span class="s">The machine "&lt;name&gt;" is not currently online…</span></summary>
+  <summary><span class="n">7</span><span class="t">The machine is not online</span><span class="s">The machine "&lt;name&gt;" is not currently online…</span></summary>
   <div class="body">
     <p>
       A specific machine was requested and it is switched off, or the name does
@@ -163,7 +206,7 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">7</span><span class="t">No machine is free</span><span class="s">The requested exe launcher is currently busy…</span></summary>
+  <summary><span class="n">8</span><span class="t">No machine is free</span><span class="s">The requested exe launcher is currently busy…</span></summary>
   <div class="body">
     <p>
       Every machine that could run your app is occupied. Nothing is broken and
@@ -179,7 +222,7 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">8</span><span class="t">The account cannot stream</span><span class="s">User &lt;name&gt; not found · no subscription · expired · maxUserLimit</span></summary>
+  <summary><span class="n">9</span><span class="t">The account cannot stream</span><span class="s">User &lt;name&gt; not found · no subscription · expired · maxUserLimit</span></summary>
   <div class="body">
     <p>Four messages, one cause: the account rather than the viewer.</p>
     <div class="scroll">
@@ -206,7 +249,7 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">9</span><span class="t">The password was wrong</span><span class="s">You did not enter the correct password…</span></summary>
+  <summary><span class="n">10</span><span class="t">The password was wrong</span><span class="s">You did not enter the correct password…</span></summary>
   <div class="body">
     <p>
       A password-protected link, answered incorrectly. See
@@ -216,7 +259,7 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">10</span><span class="t">The token did not verify</span><span class="s">Token verification: &lt;reason&gt;</span></summary>
+  <summary><span class="n">11</span><span class="t">The token did not verify</span><span class="s">Token verification: &lt;reason&gt;</span></summary>
   <div class="body">
     <p>
       The session token was rejected &mdash; expired before it was used,
@@ -232,7 +275,7 @@
 </details>
 
 <details class="msg">
-  <summary><span class="n">11</span><span class="t">The Unreal version is not supported</span><span class="s">Your application is running on UE4.27…</span></summary>
+  <summary><span class="n">12</span><span class="t">The Unreal version is not supported</span><span class="s">Your application is running on UE4.27…</span></summary>
   <div class="body">
     <p>
       The build is on Unreal 4.27, which the platform no longer supports.
