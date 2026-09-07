@@ -1,0 +1,71 @@
+<p class="standfirst">
+  A Ready Player Me integration that works locally can fail when streamed, with
+  the error <em>"Failed to download a list of avatar templates."</em> This is
+  the fix.
+</p>
+
+<h2>What is happening</h2>
+
+<p>
+  Ready Player Me fetches avatar templates over HTTPS at runtime. Unreal's
+  default network settings verify the peer certificate on that request, and in
+  the streaming environment that verification fails &mdash; so the request is
+  refused and the app reports that it could not download the list.
+</p>
+
+<p>
+  Nothing is wrong with your integration or with Ready Player Me. It is a
+  setting in your project that has to be changed before packaging.
+</p>
+
+<h2>The fix</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Open <code>Config/DefaultEngine.ini</code> in your project</h3>
+  </li>
+  <li>
+    <h3>Add these two lines</h3>
+<pre><code class="language-ini">[/Script/Engine.NetworkSettings]
+n.VerifyPeer=false</code></pre>
+  </li>
+  <li>
+    <h3>Rebuild and repackage</h3>
+    <p>
+      The setting is compiled into the build, so an existing package is not
+      affected by editing the file &mdash; you need a new one.
+    </p>
+  </li>
+  <li>
+    <h3>Upload the new build and test the integration</h3>
+    <p>
+      Through the <a href="/wiki/upload-from-the-control-panel">Control
+      Panel</a>, or <a href="/wiki/upload-from-unreal">from Unreal</a>.
+    </p>
+  </li>
+</ol>
+
+<aside class="callout warning">
+  <p>
+    <strong>Understand what you are turning off.</strong>
+    <code>n.VerifyPeer=false</code> stops your app checking the certificate of
+    the servers it talks to &mdash; for <em>all</em> its network requests, not
+    only Ready Player Me's. That is acceptable for a build whose network traffic
+    you control and know. It is not something to leave on by habit in an app
+    that talks to other services, or that handles anything sensitive.
+  </p>
+</aside>
+
+<div class="outcome">
+  <strong>This is a workaround, not a resolution</strong>
+  <p>
+    It has to be applied per project, by hand, and repeated for each app. If you
+    maintain several, it belongs in whatever you use to set up a new project
+    rather than being remembered each time.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/unreal-notes">Unreal notes &rarr;</a>
+  <p>Build configurations, logs, paths and the plugin choices that matter for streaming.</p>
+</div>
