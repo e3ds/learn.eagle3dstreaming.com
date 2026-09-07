@@ -1,0 +1,81 @@
+<p class="standfirst">
+  DLSS renders your app at a lower resolution and upscales it with NVIDIA's
+  model. You get frame rate back on a GPU you cannot make faster.
+</p>
+
+<h2>Why it matters more here than on a desktop</h2>
+
+<p>
+  On a streamed app the GPU is fixed &mdash; it is
+  <a href="/wiki/system-requirements">the machine we allocate</a>, not one the
+  viewer can upgrade. If your project is short of frame rate, you cannot ask for
+  better hardware; you have to render more cheaply. DLSS does exactly that:
+  fewer pixels rendered, the missing ones reconstructed.
+</p>
+
+<div class="outcome">
+  <strong>And frame rate is what the viewer sees</strong>
+  <p>
+    Every frame your app fails to produce is a frame the encoder cannot send.
+    Rendering headroom shows up directly as smoothness in the stream, which is
+    not true of a desktop build where the display is local.
+  </p>
+</div>
+
+<p>
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/demo_DLSS/default">Running demo</a>.
+</p>
+
+<h2>Adding it to your project</h2>
+
+<ol class="steps">
+  <li>
+    <p><strong>Download the DLSS plugin from NVIDIA</strong>, matching your Unreal version.</p>
+    <figure><img src="/images/att_2_for_1327988739-7ebed2.png" alt="Downloading the DLSS plugin for a specific Unreal version" loading="lazy"></figure>
+  </li>
+  <li>
+    <p><strong>Copy the DLSS folder</strong> into your project's <code>Plugins</code> directory.</p>
+    <figure><img src="/images/att_20_for_1327988739-067278.png" alt="Copying the DLSS plugin files into the project" loading="lazy"></figure>
+  </li>
+  <li>
+    <p><strong>Copy the widget plugin too</strong>, from <code>plugin &rarr; samples &rarr; Plugins</code>. This is the on-screen overlay that lets you see and change DLSS settings while running.</p>
+    <figure><img src="/images/att_11_for_1327988739-af4018.png" alt="Copying the DLSS widget plugin" loading="lazy"></figure>
+  </li>
+  <li>
+    <p><strong>Clone the Blueprint folder</strong> from the sample content into your project.</p>
+    <figure><img src="/images/att_22_for_1327988739-57764a.png" alt="Cloning the sample Blueprint folder" loading="lazy"></figure>
+  </li>
+  <li>
+    <p><strong>Enable Pixel Streaming and DLSS (NVIDIA)</strong> under <strong>Edit &rarr; Plugins</strong>, then restart the editor.</p>
+    <figure><img src="/images/att_5_for_1327988739-25ab4d.png" alt="Enabling the DLSS and Pixel Streaming plugins" loading="lazy"></figure>
+  </li>
+  <li>
+    <p><strong>Show the widget from your Level Blueprint</strong>, so you can toggle DLSS modes at runtime.</p>
+    <figure><img src="/images/att_21_for_1327988739-bcc604.png" alt="Level Blueprint logic to display the DLSS widget" loading="lazy"></figure>
+  </li>
+</ol>
+
+<h2>Testing it</h2>
+
+<p>
+  Launch in <strong>Standalone Game</strong> mode and confirm the widget appears
+  and responds. Press <strong>H</strong> to hide the overlay once you have what
+  you need.
+</p>
+
+<figure><img src="/images/att_6_for_1327988739-cafa56.png" alt="The DLSS widget running in standalone game mode" loading="lazy"></figure>
+
+<aside class="callout tip">
+  <p>
+    <strong>Compare frame rates with the overlay, not by eye.</strong> DLSS
+    trades a small amount of image reconstruction for a large amount of GPU time,
+    and the point is to find the quality mode where the trade is worth it for
+    your content. Set that mode as your default before packaging &mdash; the
+    widget is a development tool, not something to ship to viewers.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/optimise-your-app">Optimise your app &rarr;</a>
+  <p>The rest of the frame budget: what to cut before reaching for upscaling.</p>
+</div>

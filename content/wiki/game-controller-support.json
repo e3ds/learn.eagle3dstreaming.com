@@ -1,10 +1,12 @@
 {
- "title": "Game Controller Support",
+ "title": "Game controllers",
  "slug": "game-controller-support",
  "section": "Developer Guides",
  "parents": [
-  "development-guides",
   "performance-optimization"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/game-controller-support"
+ "source": "https://docs.eagle3dstreaming.com/wiki/game-controller-support",
+ "rewritten": true,
+ "replaces": [],
+ "order": 1
 }

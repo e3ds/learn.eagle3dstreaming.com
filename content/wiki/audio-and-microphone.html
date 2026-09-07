@@ -1,0 +1,99 @@
+<p class="standfirst">
+  Two audio behaviours surprise people: every stream starts muted, and turning on
+  the microphone can stop a stream from starting at all. Both come from the
+  browser, not from your app.
+</p>
+
+<h2>Why the stream starts muted</h2>
+
+<p>
+  Chrome, Edge, Firefox and Safari all refuse to play sound on a page the visitor
+  has not interacted with. Video may start on its own; audio may not. Pixel
+  Streaming runs in a browser, so it lives under that rule like any other page.
+</p>
+
+<div class="outcome">
+  <strong>It fixes itself on the first click</strong>
+  <p>
+    Any genuine interaction unmutes it &mdash; the play button, a click inside
+    the streaming area, or a control in your own interface. Nothing to configure,
+    and no change to your Unreal project. This is also why the
+    <a href="/wiki/streaming-interface">play button</a> exists rather than being
+    something we could remove.
+  </p>
+</div>
+
+<aside class="callout note">
+  <p>
+    <strong>The audio was never missing.</strong> Your app has been producing it
+    all along; the browser was simply not letting it out. Anyone reporting "no
+    sound" who has not yet clicked anything is seeing this and nothing else.
+  </p>
+</aside>
+
+<h2>When the microphone stops the stream</h2>
+
+<p>
+  If <strong>Microphone</strong> is enabled in your
+  <a href="/wiki/app-configuration">app configuration</a>, the browser asks the
+  viewer for permission when the page loads. Until that is answered, there is no
+  microphone to attach &mdash; and the session waits.
+</p>
+
+<figure>
+  <img src="/images/Screenshot%202026-05-19%20214856-c643a9.png" alt="A stream that failed to start" loading="lazy">
+  <figcaption>What the viewer sees: the stream hangs during start-up, then fails after a few minutes.</figcaption>
+</figure>
+
+<p>Four situations produce that, and only the first is a deliberate choice:</p>
+
+<ul>
+  <li>The viewer clicked <strong>Block</strong> on the permission prompt.</li>
+  <li>The viewer ignored the prompt and carried on waiting.</li>
+  <li>The browser is set to block permission pop-ups, so no prompt ever appeared.</li>
+  <li>Microphone access is disabled in the browser's settings for that site.</li>
+</ul>
+
+<figure>
+  <img src="/images/image-20260519-160928-656d17.png" alt="The browser microphone permission prompt" loading="lazy">
+  <figcaption>The prompt that has to be answered.</figcaption>
+</figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>The failure does not name the microphone.</strong> The viewer sees a
+    stream that would not start, several minutes after the fact, with nothing
+    pointing at a permission they dismissed. If a stream hangs at start-up and
+    the microphone is enabled, check this before anything else.
+  </p>
+</aside>
+
+<h3>Fixing it in the browser</h3>
+
+<ol class="steps">
+  <li><p>On the streaming page, click the lock or settings icon beside the address bar.</p></li>
+  <li>
+    <p>Open <strong>Site settings</strong>.</p>
+    <figure><img src="/images/image-20260520-055639-f505a8.png" alt="Opening site settings from the address bar" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Set <strong>Microphone</strong> to <strong>Allow</strong>, and make sure pop-ups and redirects are not blocked &mdash; that is what suppresses the prompt in the first place.</p>
+    <figure><img src="/images/image-20260520-060346-b1a872.png" alt="Allowing microphone access for the site" loading="lazy"></figure>
+  </li>
+  <li><p>Reload the stream.</p></li>
+</ol>
+
+<div class="outcome">
+  <strong>If your app does not use the microphone, turn the setting off</strong>
+  <p>
+    An app with the microphone enabled that never listens to it gains nothing and
+    inherits a whole class of start-up failure &mdash; one that depends on the
+    viewer's browser settings, which you cannot see or control. Leave it off
+    unless something in your app actually reads audio input.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/microphone-settings.html">Microphone settings &rarr;</a>
+  <p>The configuration side: enabling it, and what your app receives.</p>
+</div>

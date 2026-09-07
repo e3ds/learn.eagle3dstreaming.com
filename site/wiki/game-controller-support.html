@@ -1,10 +1,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Game Controller Support — Eagle 3D Streaming</title>
+<title>Game controllers — Eagle 3D Streaming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="Our platform supports all major controller types (PlayStation, Xbox, and other standard gamepads) without requiring any additional configuration. Once the controller is connected to the user’s device, it can be used immediately within the streamed application.">
+<meta name="description" content="PlayStation, Xbox and standard gamepads work in a streamed app with no setup on our side. Connect the controller, open the stream, play. The browser detects the controller and forwards its input to your app the same way it forwards mouse and keyboard.">
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
      AT LAUNCH: remove the robots meta and point canonical back here. -->
@@ -257,291 +257,70 @@
   /* NAV-CSS:END */
 </style>
 
-<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API Reference</a></summary><ul><li><a href="/wiki/use-the-eagle-pixel-streaming-analytics-api">Eagle Pixel Streaming Analytics API</a></li><li><a href="/wiki/service-health-check-api">Service Health Check API</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/app-upload-automation">App Upload Automation</a></summary><ul><li><a href="/wiki/upload-unreal-app-using-e3ds-automation-kit">Upload Unreal App Using E3DS Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos and Tutorials</a></summary><ul><li><a href="/wiki/change-maps-in-an-unreal-app-from-an-iframe">Change Maps in an Unreal App from an Iframe</a></li><li><a href="/wiki/react-iframe-demo">React iFrame demo</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li></ul></details></li><li><a href="/wiki/integration-of-mic-in-a-project-using-convai">Integration of Mic in a project using Convai</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patch-creation-testing-guide-for-unreal-engine-app">Patch Creation &amp; Testing Guide for Unreal Engine Applications</a></summary><ul><li><a href="/wiki/creating-custom-launch-profiles-in-project-launche">Creating Custom Launch Profiles in Project Launcher</a></li><li><a href="/wiki/modify-project-and-create-your-own-patch-file">Modify Project and Create Your Own Patch File</a></li><li><a href="/wiki/upload-demo-app-and-apply-pre-made-patch">Upload Demo App and Apply Pre-Made Patch</a></li></ul></details></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/performance-optimization">Performance &amp; Optimization</a></summary><ul><li><a href="/wiki/game-controller-support" class="on" aria-current="page">Game Controller Support</a></li><li><a href="/wiki/integrating-nvidia-dlss-into-unreal-engine-project">Integrating NVIDIA DLSS into Unreal Engine</a></li><li><a href="/wiki/on-screen-keyboard">On-Screen Keyboard</a></li><li><a href="/wiki/streaming-failure-due-to-browser-mic-permission">Streaming Failure Due to Browser Mic Permission</a></li><li><a href="/wiki/why-pixel-streaming-starts-muted">Why Pixel Streaming Starts Muted</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/testing-app-locally-with-epic-s-signaling-server">Testing App Locally with Epic's Signaling Server</a></summary><ul><li><a href="/wiki/test-your-application-remotely-same-network">Test Your Application Remotely (Same Network)</a></li><li><a href="/wiki/testing-app-from-computer-browser">Testing App from Computer Browser</a></li><li><a href="/wiki/testing-dedicated-server-locally">Testing Dedicated Server Locally</a></li><li><a href="/wiki/testing-linux-app-locally-using-epics-signaling-se">Testing Linux App Locally Using Epic’s Signaling Server</a></li><li><a href="/wiki/testing-unreal-vr-app-using-epics-signaling-server">Testing Unreal VR App Using Epic’s Signaling Server with a VR Headset</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/automatic-server-join-multiplayer-server-scaling-p">Automatic Server Join (Multiplayer Server Scaling Plugin)</a></summary><ul><li><a href="/wiki/configure-e3ds-multiplayer-class">Configure E3DS Multiplayer Class</a></li><li><a href="/wiki/enable-necessary-plugin">Enable Necessary Plugin</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/packaging-the-multiplayer-project">Packaging the Multiplayer Project</a></summary><ul><li><a href="/wiki/packaging-the-game-build">Packaging the Game Build</a></li><li><a href="/wiki/packaging-the-server-build">Packaging the Server Build</a></li></ul></details></li><li><a href="/wiki/start-sever-automatically-and-play-the-game">Start Server Automatically and Play the Game</a></li><li><a href="/wiki/summary-of-automatically-joining-the-server">Summary of Upload the Multiplayer Project and Join the Server Automatically</a></li><li><a href="/wiki/uploading-the-game-build">Uploading the Game Build</a></li><li><a href="/wiki/uploading-the-server-build">Uploading the Server Build</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/create-a-multiplayer-desktop-game-application">Create a Multiplayer Desktop Game Application</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/add-multiplayer-functionality-in-single-player-gam">Add Multiplayer Functionality in Single Player Game</a></summary><ul><li><a href="/wiki/add-a-server-module-in-the-project">Add a Server Module in the Project</a></li><li><a href="/wiki/convert-the-project-into-a-c-project">Convert the Project into a C++ Project</a></li></ul></details></li><li><a href="/wiki/make-a-single-player-game">Make a Single Player Game</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/packaging-multiplayer-project">Packaging Multiplayer Project</a></summary><ul><li><a href="/wiki/packaging-game-build">Packaging Game Build</a></li><li><a href="/wiki/packaging-server-build">Packaging Server Build</a></li></ul></details></li><li><a href="/wiki/running-the-multiplayer-game-app-in-your-pc">Running the Multiplayer Game App in Your PC</a></li><li><a href="/wiki/summary-of-create-a-multiplayer-desktop-game-appli">Summary of Create a Multiplayer Desktop Game Application</a></li><li><a href="/wiki/uploading-the-server">Uploading the Server</a></li></ul></details></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse Pixel Streaming</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-and-play-join-server-manually">Upload and Play (Join Server Manually)</a></summary><ul><li><a href="/wiki/enable-pixel-streaming-plugin">Enable Pixel Streaming Plugin</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/package-the-multiplayer-project">Package the Multiplayer Project</a></summary><ul><li><a href="/wiki/package-the-game-build">Package the Game Build</a></li><li><a href="/wiki/package-the-server-build">Package the Server Build</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/play-the-multiplayer-game">Play the Multiplayer Game</a></summary><ul><li><a href="/wiki/play-the-game">Play the Game</a></li><li><a href="/wiki/start-the-server">Start the Server</a></li></ul></details></li><li><a href="/wiki/summary-of-upload-the-multiplayer-project-and-join">Summary of Upload the Multiplayer Project and Join a server Manually</a></li><li><a href="/wiki/upload-the-game">Upload the Game</a></li><li><a href="/wiki/upload-the-server">Upload the Server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-from-ue-editor-e3ds-automation-tools-plugin">Upload from UE Editor (E3DS Automation Tools Plugin)</a></summary><ul><li><a href="/wiki/configure-the-project-settings">Configure the Project Settings</a></li><li><a href="/wiki/enable-e3ds-automation-tools-plugin">Enable E3DS Automation Tools Plugin</a></li><li><a href="/wiki/package-and-upload-the-project">Package and Upload the Project</a></li><li><a href="/wiki/playing-the-multiplayer-game">Playing the Multiplayer Game</a></li><li><a href="/wiki/summary-of-automatically-upload-the-multiplayer-pr">Summary of Upload the Multiplayer Project from Unreal Editor Using E3DS Automation Tools Plugin</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API Reference</a></summary><ul><li><a href="/wiki/use-the-eagle-pixel-streaming-analytics-api">Eagle Pixel Streaming Analytics API</a></li><li><a href="/wiki/service-health-check-api">Service Health Check API</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/app-upload-automation">App Upload Automation</a></summary><ul><li><a href="/wiki/upload-unreal-app-using-e3ds-automation-kit">Upload Unreal App Using E3DS Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos and Tutorials</a></summary><ul><li><a href="/wiki/change-maps-in-an-unreal-app-from-an-iframe">Change Maps in an Unreal App from an Iframe</a></li><li><a href="/wiki/react-iframe-demo">React iFrame demo</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li></ul></details></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li><li><a href="/wiki/game-controller-support" class="on" aria-current="page">Game controllers</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li></ul></details></li><li><a href="/wiki/integration-of-mic-in-a-project-using-convai">Integration of Mic in a project using Convai</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patch-creation-testing-guide-for-unreal-engine-app">Patch Creation &amp; Testing Guide for Unreal Engine Applications</a></summary><ul><li><a href="/wiki/creating-custom-launch-profiles-in-project-launche">Creating Custom Launch Profiles in Project Launcher</a></li><li><a href="/wiki/modify-project-and-create-your-own-patch-file">Modify Project and Create Your Own Patch File</a></li><li><a href="/wiki/upload-demo-app-and-apply-pre-made-patch">Upload Demo App and Apply Pre-Made Patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/testing-app-locally-with-epic-s-signaling-server">Testing App Locally with Epic's Signaling Server</a></summary><ul><li><a href="/wiki/test-your-application-remotely-same-network">Test Your Application Remotely (Same Network)</a></li><li><a href="/wiki/testing-app-from-computer-browser">Testing App from Computer Browser</a></li><li><a href="/wiki/testing-dedicated-server-locally">Testing Dedicated Server Locally</a></li><li><a href="/wiki/testing-linux-app-locally-using-epics-signaling-se">Testing Linux App Locally Using Epic’s Signaling Server</a></li><li><a href="/wiki/testing-unreal-vr-app-using-epics-signaling-server">Testing Unreal VR App Using Epic’s Signaling Server with a VR Headset</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/automatic-server-join-multiplayer-server-scaling-p">Automatic Server Join (Multiplayer Server Scaling Plugin)</a></summary><ul><li><a href="/wiki/configure-e3ds-multiplayer-class">Configure E3DS Multiplayer Class</a></li><li><a href="/wiki/enable-necessary-plugin">Enable Necessary Plugin</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/packaging-the-multiplayer-project">Packaging the Multiplayer Project</a></summary><ul><li><a href="/wiki/packaging-the-game-build">Packaging the Game Build</a></li><li><a href="/wiki/packaging-the-server-build">Packaging the Server Build</a></li></ul></details></li><li><a href="/wiki/start-sever-automatically-and-play-the-game">Start Server Automatically and Play the Game</a></li><li><a href="/wiki/summary-of-automatically-joining-the-server">Summary of Upload the Multiplayer Project and Join the Server Automatically</a></li><li><a href="/wiki/uploading-the-game-build">Uploading the Game Build</a></li><li><a href="/wiki/uploading-the-server-build">Uploading the Server Build</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/create-a-multiplayer-desktop-game-application">Create a Multiplayer Desktop Game Application</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/add-multiplayer-functionality-in-single-player-gam">Add Multiplayer Functionality in Single Player Game</a></summary><ul><li><a href="/wiki/add-a-server-module-in-the-project">Add a Server Module in the Project</a></li><li><a href="/wiki/convert-the-project-into-a-c-project">Convert the Project into a C++ Project</a></li></ul></details></li><li><a href="/wiki/make-a-single-player-game">Make a Single Player Game</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/packaging-multiplayer-project">Packaging Multiplayer Project</a></summary><ul><li><a href="/wiki/packaging-game-build">Packaging Game Build</a></li><li><a href="/wiki/packaging-server-build">Packaging Server Build</a></li></ul></details></li><li><a href="/wiki/running-the-multiplayer-game-app-in-your-pc">Running the Multiplayer Game App in Your PC</a></li><li><a href="/wiki/summary-of-create-a-multiplayer-desktop-game-appli">Summary of Create a Multiplayer Desktop Game Application</a></li><li><a href="/wiki/uploading-the-server">Uploading the Server</a></li></ul></details></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse Pixel Streaming</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-and-play-join-server-manually">Upload and Play (Join Server Manually)</a></summary><ul><li><a href="/wiki/enable-pixel-streaming-plugin">Enable Pixel Streaming Plugin</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/package-the-multiplayer-project">Package the Multiplayer Project</a></summary><ul><li><a href="/wiki/package-the-game-build">Package the Game Build</a></li><li><a href="/wiki/package-the-server-build">Package the Server Build</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/play-the-multiplayer-game">Play the Multiplayer Game</a></summary><ul><li><a href="/wiki/play-the-game">Play the Game</a></li><li><a href="/wiki/start-the-server">Start the Server</a></li></ul></details></li><li><a href="/wiki/summary-of-upload-the-multiplayer-project-and-join">Summary of Upload the Multiplayer Project and Join a server Manually</a></li><li><a href="/wiki/upload-the-game">Upload the Game</a></li><li><a href="/wiki/upload-the-server">Upload the Server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-from-ue-editor-e3ds-automation-tools-plugin">Upload from UE Editor (E3DS Automation Tools Plugin)</a></summary><ul><li><a href="/wiki/configure-the-project-settings">Configure the Project Settings</a></li><li><a href="/wiki/enable-e3ds-automation-tools-plugin">Enable E3DS Automation Tools Plugin</a></li><li><a href="/wiki/package-and-upload-the-project">Package and Upload the Project</a></li><li><a href="/wiki/playing-the-multiplayer-game">Playing the Multiplayer Game</a></li><li><a href="/wiki/summary-of-automatically-upload-the-multiplayer-pr">Summary of Upload the Multiplayer Project from Unreal Editor Using E3DS Automation Tools Plugin</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
 
 <div class="wrap">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span>/</span><a href="/wiki/development-guides">Developer Guides</a><span>/</span><a href="/wiki/performance-optimization">Performance &amp; Optimization</a></nav>
-  <p class="ported"><strong>Not yet rewritten.</strong> This page is the original wiki text in the new template. It is accurate but has not been through the rewrite.</p>
-  <h1>Game Controller Support</h1>
-  <p>Our platform supports <strong>all major controller types</strong> (PlayStation, Xbox, and other standard gamepads) without requiring any additional configuration. Once the controller is connected to the user’s device, it can be used immediately within the streamed application.</p>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span>/</span><a href="/wiki/performance-optimization">Input and performance</a></nav>
+  
+  <h1>Game controllers</h1>
+  <p class="standfirst">
+  PlayStation, Xbox and standard gamepads work in a streamed app with no setup
+  on our side. Connect the controller, open the stream, play.
+</p>
 
-<h2 id="Key-Highlights" style=""><span id="GameControllerSupport-KeyHighlights"></span>Key Highlights
- </h2>
-<ul>
-<li>
-<p>Supports <strong>all standard game controllers</strong></p>
-</li>
-<li>
-<p>No extra setup required</p>
-</li>
-<li>
-<p>Plug-and-play experience</p>
-</li>
-<li>
-<p>Compatible with browser-based Pixel Streaming</p>
-</li>
-<li>
-<p>Works across different controller models</p>
-</li>
-</ul>
+<p>
+  The browser detects the controller and forwards its input to your app the same
+  way it forwards mouse and keyboard. Nothing needs enabling in your app
+  configuration, and nothing needs a plugin.
+</p>
 
-<h2 id="Controller-Setup" style=""><span id="GameControllerSupport-ControllerSetup"></span>Controller Setup
- </h2>
-<p>No special configuration is needed on Eagle 3D Streaming.</p>
-<p><strong>Steps:</strong></p>
-<ol>
-<li>
-<p>Connect your controller to your device (USB or Bluetooth).</p>
-</li>
-<li>
-<p>Open the Eagle 3D Streaming application URL.</p>
-</li>
-<li>
-<p>Start using the controller instantly.</p>
-</li>
-</ol>
-<p>The browser automatically detects the controller and maps the inputs to the streamed application.</p>
-
-<h2 id="Unreal-Engine-Template-Requirement-(Important)" style=""><span id="GameControllerSupport-UnrealEngineTemplateRequirement(Important)"></span>Unreal Engine Template Requirement (Important)
- </h2>
-<p>All testing videos were created using the <strong>Unreal Engine Third Person Template</strong>, <strong>without any modifications</strong>.</p>
-<blockquote>
-<p><strong>All Epic Games Unreal Engine templates come with controller support enabled out of the box.</strong></p>
-</blockquote>
-<h4 id="No-Additional-Setup-Required-—-When" style=""><span id="GameControllerSupport-NoAdditionalSetupRequired—When"></span>No Additional Setup Required — When
- </h4>
-<ul>
-<li>
-<p>You are using an <strong>Epic Games Unreal Engine template</strong> (e.g., Third Person Template).</p>
-</li>
-<li>
-<p>Default controller input mappings have <strong>not been removed or modified</strong>.</p>
-</li>
-<li>
-<p>The project is packaged and uploaded as-is.</p>
-</li>
-</ul>
-<p>In this case, you can simply <strong>package the project, upload it to the platform, and start testing</strong>—controller input will work automatically.</p>
-<h4 id="Additional-Setup-Required-—-When" style=""><span id="GameControllerSupport-AdditionalSetupRequired—When"></span>Additional Setup Required — When
- </h4>
-<p>Controller input <strong>may not work automatically</strong> if:</p>
-<ul>
-<li>
-<p>A <strong>custom project</strong> or <strong>third-party project kit</strong> is used.</p>
-</li>
-<li>
-<p>Controller-related input mappings were <strong>removed or altered</strong>.</p>
-</li>
-<li>
-<p>The project was built from a <strong>custom source template</strong> without controller bindings.</p>
-</li>
-</ul>
-<p>In such cases, the original controller input mappings must be <strong>restored or reconfigured</strong> in Unreal Engine to enable controller support in the streamed application.</p>
-
-<h3 id="Test-Environment" style=""><span id="GameControllerSupport-TestEnvironment"></span>Test Environment
- </h3>
-<p>For demonstration purposes, PlayStation controller support was tested using the following Pixel Streaming application URL:
- <br/>
-<a href="https://connector.eagle3dstreaming.com/v5/demo/E3DS_StarterApp/default" rel="external noreferrer">https://connector.eagle3dstreaming.com/v5/demo/E3DS_StarterApp/default</a></p>
-
-<h2 id="Validation-&amp;-Testing-Tools" style=""><span id="GameControllerSupport-Validation&amp;amp;TestingTools"></span>Validation &amp; Testing Tools
- </h2>
-<p>Controller detection and input mapping were validated using external testing platforms. The same tools were used for both tests, with the only difference being the controller itself.</p>
-<p><strong>Tool Used:</strong>
-<br/>
-<a href="https://gpadtester.com/" rel="noreferrer" target="_blank">https://gpadtester.com/</a></p>
-<p><a href="https://hardwaretester.com/gamepad" rel="noreferrer" target="_blank">https://hardwaretester.com/gamepad</a></p>
-
-<h3 id="Preview-Video-(XBOX-Controller)" style=""><span id="GameControllerSupport-PreviewVideo(XBOXController)"></span>Preview Video (XBOX Controller)
- </h3>
-<div data-autoscale="" data-ratio="16:9" data-service="external_content">
-<div data-placeholder="">
-<template>
- <a href="https://youtu.be/gS4rtAhQ10E" rel="noreferrer" target="_blank">
-
-</a> 
-</template>
-</div>
+<div class="outcome">
+  <strong>The whole procedure</strong>
+  <p>
+    Connect the controller to your device by USB or Bluetooth, open the streaming
+    URL, and use it. That is all &mdash; there is no pairing step, no permission
+    prompt, and no configuration.
+  </p>
 </div>
 
-<p>In this video:</p>
-<ul>
-<li>
-<p>The connected controller is displayed in real time.</p>
-</li>
-<li>
-<p>Button presses, joystick movement, and trigger inputs are visible.</p>
-</li>
-<li>
-<p>This confirms that the browser correctly detects the controller while the Pixel Streaming session is active.</p>
-</li>
-</ul>
+<h2>The one thing that breaks it</h2>
 
-<p><strong>Used Controller</strong></p>
-<div class="theme-block-image">
+<p>
+  Controller support comes from your Unreal project's input mappings, not from
+  the platform. Every Epic template &mdash; Third Person included &mdash; ships
+  with those mappings already set up, so a template-based project works
+  immediately.
+</p>
 
-<figure>
+<aside class="callout warning">
+  <p>
+    <strong>If controller input does nothing, the mappings are missing from the
+    project.</strong> That happens with custom projects, third-party kits, and
+    projects built from a non-Epic template, or when gamepad bindings were
+    removed at some point. The fix is in Unreal's input settings, not on the
+    platform: restore the gamepad bindings and repackage.
+  </p>
+</aside>
 
-<img alt="Figure 1. XBOX Controller – Front View" decoding="async" loading="lazy" src="/images/photo_2026-01-23_09-18-11-77ef2c.jpg"/>
+<h2>Checking a controller</h2>
 
-<figcaption>Figure 1. XBOX Controller – Front View</figcaption>
-</figure>
+<p>
+  If you are unsure whether the controller itself is being seen, test it in the
+  browser before blaming the stream. Any browser gamepad tester will show which
+  buttons and axes register &mdash; if they do not appear there, the problem is
+  between the controller and the browser, and your app is not involved.
+</p>
 
+<p>
+  A working reference to compare against:
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DS_StarterApp/default">the starter app demo</a>,
+  an unmodified Epic template.
+</p>
+
+<div class="next">
+  <a href="/wiki/on-screen-keyboard">On-screen keyboard &rarr;</a>
+  <p>Text entry when there is no physical keyboard.</p>
 </div>
-
-<div class="theme-block-image">
-
-<figure>
-
-<img alt="Figure 2. XBOX Controller – Rear View" decoding="async" loading="lazy" src="/images/photo_2026-01-23_09-18-16-e0e1e0.jpg"/>
-
-<figcaption>Figure 2. XBOX Controller – Rear View</figcaption>
-</figure>
-
-</div>
-
-<h3 id="Preview-Video-(Play-Station)" style=""><span id="GameControllerSupport-PreviewVideo(PlayStation)"></span>Preview Video (Play Station)
- </h3>
-<div data-autoscale="" data-ratio="16:9" data-service="external_content">
-<div data-placeholder="">
-<template>
- <a href="https://youtu.be/z8Atg9W5Rqs" rel="noreferrer" target="_blank">
-
-</a> 
-</template>
-</div>
-</div>
-
-<p>In this second video:</p>
-<ul>
-<li>
-<p>Controller inputs are verified using an alternative testing platform.</p>
-</li>
-<li>
-<p>This ensures consistent detection and input handling across different tools and environments.</p>
-</li>
-</ul>
-
-<p><strong>Used Controller</strong></p>
-<div class="theme-block-image">
-
-<figure>
-
-<img alt="Figure 3. Play Station – Front View" decoding="async" loading="lazy" src="/images/photo_2026-01-23_09-17-56-e1a841.jpg"/>
-
-<figcaption>Figure 3. Play Station – Front View</figcaption>
-</figure>
-
-</div>
-
-<div class="theme-block-image">
-
-<figure>
-
-<img alt="Figure 4. Play Station – Rear View" decoding="async" loading="lazy" src="/images/photo_2026-01-23_09-18-02-59a9f5.jpg"/>
-
-<figcaption>Figure 4. Play Station – Rear View</figcaption>
-</figure>
-
-</div>
-
-<h2 id="Multiple-Controller-Testing" style=""><span id="GameControllerSupport-MultipleControllerTesting"></span>Multiple Controller Testing
- </h2>
-<p>We performed tests using <strong>two separate controllers in two independent test sessions</strong> to validate consistency and reliability.</p>
-<ul>
-<li>
-<p>Each controller was detected correctly</p>
-</li>
-<li>
-<p>Inputs were mapped accurately</p>
-</li>
-<li>
-<p>No conflicts or connection issues were observed</p>
-</li>
-</ul>
-<p>This confirms stable controller support across multiple devices.</p>
-
-<h2 id="Troubleshooting" style=""><span id="GameControllerSupport-Troubleshooting"></span>Troubleshooting
- </h2>
-<div class="theme-table" style="--width: 760px;">
-
-<div class="scroll"><table><thead><tr>
-<th>
-<p>Issue</p>
-</th>
-<th>
-<p>Possible Cause</p>
-</th>
-<th>
-<p>Solution</p>
-</th>
-</tr></thead>
-<tbody>
-
-<tr>
-<td>
-<p>Controller not detected</p>
-</td>
-<td>
-<p>Controller not connected properly</p>
-</td>
-<td>
-<p>Ensure the controller is connected via USB or paired via Bluetooth. Check that it is recognized by the operating system.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Buttons or joysticks not responding</p>
-</td>
-<td>
-<p>Browser or Pixel Streaming session not detecting controller</p>
-</td>
-<td>
-<p>Refresh the browser tab and reconnect the controller. Ensure the browser supports the Gamepad API (Chrome or Edge recommended).</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Controller inputs are inconsistent</p>
-</td>
-<td>
-<p>Multiple controllers connected or interference</p>
-</td>
-<td>
-<p>Disconnect other controllers and try using a single controller. Verify inputs in a controller testing tool (e.g., <a href="http://gpadtester.com/" rel="noreferrer" target="_blank">http://gpadtester.com</a> ).</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Controller works in OS but not in game</p>
-</td>
-<td>
-<p>Game input mapping issue</p>
-</td>
-<td>
-<p>Verify that the Pixel Streaming application correctly maps controller inputs. Check Unreal Engine input settings if applicable.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Lag or delayed response</p>
-</td>
-<td>
-<p>Network latency</p>
-</td>
-<td>
-<p>Ensure stable internet connection. Close background apps that may consume bandwidth.</p>
-</td>
-</tr>
-</tbody>
-</table></div>
-
-</div>
-
-<h2 id="Summary" style=""><span id="GameControllerSupport-Summary"></span>Summary
- </h2>
-<p>Game controllers provide a <strong>seamless input experience</strong> for Pixel Streaming applications when standard Unreal Engine controller mappings are present. Epic Games templates, including the <strong>Third Person Template</strong>, support controllers out of the box and require <strong>no additional setup</strong> when packaged and uploaded without modification.</p>
-<p>For custom projects or modified templates, controller support depends on correctly configured Unreal Engine input settings.</p>
 
   
   <!-- Every source page carried its own copy of this. Once, here, instead:
