@@ -1,7 +1,15 @@
 {
- "title": "App Configuration",
+ "title": "App configuration",
  "slug": "app-configuration",
  "section": "(top level)",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/app-configuration"
+ "source": "https://docs.eagle3dstreaming.com/wiki/app-configuration",
+ "rewritten": true,
+ "replaces": [
+  "create-a-config-for-each-streaming-link",
+  "edit-your-config",
+  "delete-your-selected-config",
+  "edit-the-common-config-features",
+  "edit-the-advanced-options-features-of-your-config"
+ ]
 }

@@ -1,4 +1,89 @@
-<p>App Configurations allow you to manage the settings used when launching and streaming your applications. You can create multiple configurations with different streaming options and switch between them as needed.</p>
-<p>Follow the guides below to manage your configurations:</p>
+<p class="standfirst">
+  A configuration is a named set of settings attached to a stream link. It
+  decides how your app behaves when someone opens that link &mdash; who can get
+  in, how long they stay, what the interface offers, and what the stream looks
+  like while it loads.
+</p>
 
-<p><strong>Note:</strong> Changes made to a configuration will only apply to new streaming sessions. Existing sessions will continue using the configuration that was active when they were launched.</p>
+<h2>How the pieces fit</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Thing</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Application</strong></td><td>The build you uploaded.</td></tr>
+      <tr><td><strong>Stream link</strong></td><td>A shareable URL that opens that app.</td></tr>
+      <tr><td><strong>Configuration</strong></td><td>The settings that link uses.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  <strong>One app can have several links, each with its own configuration.</strong>
+  That is the point of the arrangement, and it is what most people miss: you do
+  not have to choose one set of settings for an app. A locked-down link for a
+  client &mdash; password, expiry date, no developer tools &mdash; and an open
+  one for your own testing, both pointing at the same build.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>A change applies to new sessions only.</strong> Anyone already
+    streaming keeps the configuration that was active when they started. If you
+    change a setting and it appears to do nothing, check whether you are looking
+    at a session that began before the change.
+  </p>
+</aside>
+
+<h2>Creating, editing and deleting</h2>
+
+<p>
+  All three live in the same place. Select your app, generate or open a stream
+  link, and use the configuration dropdown beside it:
+</p>
+
+<ul>
+  <li><strong>Add New Config</strong> in the dropdown, then name it. The name is
+    how you will recognise it later &mdash; <code>client-demo</code> beats
+    <code>config2</code>.</li>
+  <li><strong>Edit Config</strong> opens the settings, split into
+    <em>common</em> options and <em>advanced</em> ones.</li>
+  <li><strong>The trash icon</strong> beside a configuration deletes it.</li>
+</ul>
+
+<h2>What you can configure</h2>
+
+<div class="cards" style="display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:26px 0">
+  <div class="choice">
+    <h3><a href="/wiki/session-and-access">Session and access</a></h3>
+    <p>Password, link expiry, session length, idle timeout, anonymised URLs.</p>
+  </div>
+  <div class="choice">
+    <h3><a href="/wiki/microphone-settings">Microphone</a></h3>
+    <p>Whether viewers can speak to your app, and how their audio is captured.</p>
+  </div>
+  <div class="choice">
+    <h3><a href="/wiki/fullscreen-button">Fullscreen button</a></h3>
+    <p>Whether the control appears, and how it behaves on each device.</p>
+  </div>
+</div>
+
+<p>
+  The remaining groups &mdash; the streaming interface, the loading screen, and
+  the developer options &mdash; are being rewritten and are listed in the
+  navigation on the left.
+</p>
+
+<aside class="callout tip">
+  <p>
+    <strong>Advanced options are hidden until you enable them.</strong> Several
+    settings, including the platform choice a Linux build needs, are not visible
+    until <strong>Advanced Options</strong> is switched on in the configuration
+    editor. If a setting you have read about is not there, that is usually why.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/session-and-access">Session and access &rarr;</a>
+  <p>The settings that decide who can open your stream, and when it stops.</p>
+</div>

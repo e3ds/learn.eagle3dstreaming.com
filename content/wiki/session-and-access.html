@@ -1,0 +1,111 @@
+<p class="standfirst">
+  Who can open your stream, and when it stops. Five settings, three of which are
+  time limits that sound alike and do different things.
+</p>
+
+<p>
+  All of them live in <strong>Edit Config</strong> for a stream link, so they
+  apply per configuration rather than per app &mdash; one app can have a
+  locked-down link for customers and an open one for your own testing.
+</p>
+
+<h2>The three time limits</h2>
+
+<div class="scroll">
+  <table>
+    <thead>
+      <tr><th>Setting</th><th>Limits</th><th>Ends a session that is</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Link expiration</strong></td>
+        <td>How long the <em>link</em> works</td>
+        <td>Not running &mdash; it stops new sessions starting</td>
+      </tr>
+      <tr>
+        <td><strong>Max session time</strong></td>
+        <td>How long <em>one session</em> may run</td>
+        <td>Running, however busy the viewer is</td>
+      </tr>
+      <tr>
+        <td><strong>Logout after inactivity</strong></td>
+        <td>How long a session may sit <em>idle</em></td>
+        <td>Running but untouched</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  A link that has expired cannot start anything. A session at its maximum ends
+  even if someone is actively using it. An idle timeout ends a session nobody is
+  touching &mdash; which is the one that catches the tab left open over lunch.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>With all three disabled, a session runs until something stops it.</strong>
+    There is no platform-imposed maximum &mdash; ten hours, fifty hours, longer,
+    as long as your subscription has minutes and the connection holds. On a
+    prepaid-minute plan that is a bill for time nobody was watching.
+  </p>
+  <p>
+    <strong>Set at least the idle timeout.</strong> It costs a real viewer
+    nothing, and it is the only one that distinguishes "still being used" from
+    "still open".
+  </p>
+</aside>
+
+<aside class="callout note">
+  <p>
+    <strong>If a stream ends unexpectedly, check these before assuming a
+    fault.</strong> A session hitting its maximum and an application crashing
+    look identical from the viewer's side. Rule out the setting you configured
+    before investigating the app.
+  </p>
+</aside>
+
+<h2>Password protection</h2>
+
+<p>
+  With <strong>Password Protect Stream</strong> enabled, a viewer must enter the
+  password before the application will load. The link alone is not enough.
+</p>
+
+<p>
+  Set it on the configuration behind the link you share. Anyone with the link
+  and the password gets in, so it protects against a link being forwarded, not
+  against a password being forwarded &mdash; for per-person access, put
+  <a href="/wiki/login-integration">a login in front of it</a> instead.
+</p>
+
+<h2>Anonymising the URL</h2>
+
+<p>
+  By default a streaming URL contains your username, the app name and the
+  configuration name. <strong>Anonymize URL</strong> replaces that structure
+  with an opaque one.
+</p>
+
+<p>
+  Worth doing when the URL would otherwise tell a customer things you would
+  rather it did not &mdash; an internal project name, how many configurations
+  you keep, or simply that the app is called
+  <code>ClientName_Pitch_v3</code>. It does not restrict access; it stops the
+  address itself being informative.
+</p>
+
+<div class="outcome">
+  <strong>Choosing between them</strong>
+  <p>
+    <strong>Anonymise</strong> to hide what the link says. <strong>Password</strong>
+    to stop a forwarded link working. <strong>Expiry</strong> to stop it working
+    after a date. They are independent, and a shared demo link usually wants all
+    three.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/app-configuration">All configuration options &rarr;</a>
+  <p>Interface, loading screen, developer settings and the rest.</p>
+</div>
