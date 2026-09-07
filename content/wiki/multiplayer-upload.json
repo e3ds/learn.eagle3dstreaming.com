@@ -1,0 +1,20 @@
+{
+ "title": "Upload both builds",
+ "slug": "multiplayer-upload",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/upload-the-server",
+ "rewritten": true,
+ "replaces": [
+  "summary-of-upload-the-multiplayer-project-and-join",
+  "upload-and-play-join-server-manually",
+  "upload-the-game",
+  "upload-the-server",
+  "uploading-the-game-build",
+  "uploading-the-server",
+  "uploading-the-server-build"
+ ],
+ "order": 3
+}

@@ -1,9 +1,12 @@
 {
- "title": "Metaverse Pixel Streaming",
+ "title": "Metaverse",
  "slug": "metaverse-pixel-streaming",
  "section": "Multiplayer Pixel Streaming",
  "parents": [
   "multiplayer-pixel-streaming"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/metaverse-pixel-streaming"
+ "source": "https://docs.eagle3dstreaming.com/wiki/metaverse-pixel-streaming",
+ "rewritten": true,
+ "replaces": [],
+ "order": 7
 }

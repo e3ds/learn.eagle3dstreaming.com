@@ -1,21 +1,55 @@
-<p>In the previous chapter, we showcased single-player streaming. In this chapter, we will demonstrate how to set up multiplayer streaming.</p>
+<p class="standfirst">
+  Several people in one shared world, each watching from their own browser. That
+  needs a second build &mdash; a dedicated server &mdash; alongside the game
+  itself.
+</p>
 
-<p>A simple multiplayer demo application streamed from two different browser windows is shown below.</p>
-<div data-autoscale="" data-ratio="16:9" data-service="external_content">
-<div data-placeholder="">
-<template>
- <a href="https://youtu.be/gty6MUIs0J4" rel="noreferrer" target="_blank">
+<h2>What makes it different</h2>
 
-</a> 
-</template>
+<p>
+  An ordinary streamed app gives every viewer their own private session. Two
+  people opening the same link are in two separate copies of the world and cannot
+  see each other. A multiplayer app adds a server that all the clients connect
+  to, and that server is what makes them share a world.
+</p>
+
+<div class="outcome">
+  <strong>You end up with two builds, not one</strong>
+  <p>
+    A <strong>server build</strong> that hosts the session and has no graphics,
+    and a <strong>game build</strong> that players stream. Both come from the same
+    project, both are uploaded, and they must stay in step &mdash; changing one
+    and not the other is the most common way a working multiplayer app stops
+    working.
+  </p>
 </div>
-</div>
 
-<div data-appearance="info" role="note">
+<h2>The path</h2>
+
+<ol>
+  <li><a href="/wiki/multiplayer-build-a-project"><strong>Build the project</strong></a> &mdash; convert to C++, add a server module, configure maps and modes.</li>
+  <li><a href="/wiki/multiplayer-package"><strong>Package both builds</strong></a> &mdash; server and game.</li>
+  <li><a href="/wiki/multiplayer-upload"><strong>Upload them</strong></a> &mdash; server first.</li>
+  <li><a href="/wiki/multiplayer-play"><strong>Start the server and play</strong></a>.</li>
+</ol>
+
+<p>Then, once that works, two things that make it practical:</p>
+
+<ul>
+  <li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a> &mdash; so players do not type an IP address.</li>
+  <li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a> &mdash; so packaging and uploading both builds is one click.</li>
+</ul>
+
 <aside class="callout note">
-<p><strong>You can view our streaming multiplayer demo app at the following URL:</strong></p>
-<p><a href="https://connector.eagle3dstreaming.com/v5/demo/e3ds_multiplayer_demo/default" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/e3ds_multiplayer_demo/default</strong></a><strong> </strong></p>
+  <p>
+    <strong>This section covers dedicated servers.</strong> Unreal also supports
+    listen servers, where one player's game acts as the host. Dedicated servers
+    are what suits streaming, because no player's session has to stay open for
+    everyone else's.
+  </p>
 </aside>
-</div>
 
-<p>Follow the guidelines below sequentially to get started with a multiplayer game:</p>
+<div class="next">
+  <a href="/wiki/multiplayer-build-a-project">Build the project &rarr;</a>
+  <p>Turning a single-player project into one that can host.</p>
+</div>

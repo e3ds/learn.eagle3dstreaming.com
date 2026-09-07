@@ -1,0 +1,85 @@
+<p class="standfirst">
+  Start a server, then bring players to it &mdash; from a browser, or from the
+  desktop build while you are still testing.
+</p>
+
+<h2>Start the server</h2>
+
+<ol class="steps">
+  <li><p>In the Control Panel, go to <strong>Multiplayer Server Apps</strong> and open your uploaded server.</p></li>
+  <li>
+    <p>Click <strong>START A SERVER</strong>.</p>
+    <figure><img src="/images/image-20241217-132755-1c0b02.png" alt="A running multiplayer server with its address and port" loading="lazy"></figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>Note the IP address and port</strong>
+  <p>
+    Starting a server allocates it an address, and that is what clients connect
+    to. It is assigned at start time, so it is not something you can hard-code
+    once &mdash; which is exactly the problem
+    <a href="/wiki/multiplayer-automatic-join">automatic join</a> exists to
+    remove.
+  </p>
+</div>
+
+<h2>Play from the browser</h2>
+
+<ol class="steps">
+  <li><p>Open your uploaded game app and create a streaming URL for it.</p></li>
+  <li><p>Open that URL on two devices, or in two browser windows.</p></li>
+  <li><p>Press play on each, then <strong>Join To Server</strong>.</p></li>
+</ol>
+
+<figure>
+  <img src="/images/image-20250101-161409-6b8138.png" alt="Two players in the same multiplayer session" loading="lazy">
+  <figcaption>Both players in one world, each streaming from their own browser.</figcaption>
+</figure>
+
+<p>
+  This works from a mobile browser too &mdash; there is nothing desktop-specific
+  about a streamed multiplayer client.
+</p>
+
+<h2>Play from the desktop build, while testing</h2>
+
+<p>
+  Before uploading the game, you can point the local build at the running server
+  and check the multiplayer behaviour itself.
+</p>
+
+<ol class="steps">
+  <li><p>Start a server in the Control Panel, as above, and note its address and port.</p></li>
+  <li><p>Run the packaged game application on your machine.</p></li>
+  <li>
+    <p>Press <strong>`</strong> (backtick) to open the console and connect:</p>
+<pre><code>open 172.7.191.81:28889</code></pre>
+  </li>
+  <li><p>Do the same in a second instance, so there are two players.</p></li>
+</ol>
+
+<figure><img src="/images/image-20241223-033729-38b56b.png" alt="Two desktop clients connected to the same server" loading="lazy"></figure>
+
+<div class="outcome">
+  <strong>What you should see, either way</strong>
+  <p>
+    Two avatars in one world, each moving when its own player moves. If each
+    window shows only one player, they are in separate sessions &mdash; the join
+    did not happen, whatever the connection appeared to do.
+  </p>
+</div>
+
+<aside class="callout tip">
+  <p>
+    <strong>Test against a local server before a hosted one.</strong>
+    <a href="/wiki/test-dedicated-server-locally">Running both on your own
+    machine</a> removes the upload, the platform and the network from the
+    picture, so a failure there is unambiguously in the project.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/multiplayer-automatic-join">Automatic server join &rarr;</a>
+  <p>Removing the typed address, which no real player will ever do.</p>
+</div>

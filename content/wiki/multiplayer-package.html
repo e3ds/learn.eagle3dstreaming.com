@@ -1,0 +1,112 @@
+<p class="standfirst">
+  Two packages from one project: a server build with no graphics, and the game
+  build players stream. The server build is the one with a catch.
+</p>
+
+<h2>First: the engine you package with matters</h2>
+
+<div class="outcome">
+  <strong>The binary Unreal Engine from the Epic Launcher cannot package a
+  dedicated server</strong>
+  <p>
+    It fails, and it fails with "Unknown Error" &mdash; which tells you nothing
+    about the actual cause. If you have already hit that wall, this is why. You
+    need a <em>source</em> build of the engine.
+  </p>
+</div>
+
+<figure>
+  <img src="/images/image-20241226-140700-24a15a.png" alt="Packaging failing with an unknown error on a binary engine build" loading="lazy">
+  <figcaption>The failure the Launcher build produces. Nothing in it points at the cause.</figcaption>
+</figure>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Epic binary (Launcher)</th><th>Epic source (GitHub)</th><th>E3DS source build</th></tr></thead>
+    <tbody>
+      <tr><td>Packages a dedicated server</td><td><strong>No</strong></td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>You have to build the engine</td><td>&mdash;</td><td>Yes &mdash; around 50&nbsp;GB to download and 350&nbsp;GB of disk for UE 5.5</td><td><strong>No &mdash; it is pre-built</strong></td></tr>
+      <tr><td>Hardware needed</td><td>&mdash;</td><td>16&nbsp;GB RAM and an 8-core CPU, or the build takes a very long time</td><td>Nothing special</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout tip">
+  <p>
+    <strong>Use the E3DS build unless you have a reason not to.</strong> Building
+    Epic's source yourself is a legitimate route and gets the same result, but it
+    is most of a day and several hundred gigabytes. The E3DS build is the same
+    capability, already compiled:
+    <a href="https://drive.google.com/drive/u/0/folders/1PqluGYbkIBe6XsMvQJ3N3NpLGc1bmz8V">download it here</a>.
+  </p>
+</aside>
+
+<h3>Switching your project to it</h3>
+
+<ol class="steps">
+  <li><p>Extract the ZIP.</p></li>
+  <li>
+    <p>Under <code>Engine\Binaries\Win64</code>, make a desktop shortcut to the Unreal Editor executable so you can launch this engine directly.</p>
+    <figure><img src="/images/image-20241208-032701-847a41.png" alt="Creating a shortcut to the source-build Unreal Editor" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Right-click your <code>.uproject</code>, choose <strong>Switch Unreal Engine version</strong>, and point it at the extracted folder.</p>
+    <figure><img src="/images/image-20241218-155551-cf2771.png" alt="Switching the project to the extracted engine build" loading="lazy"></figure>
+  </li>
+  <li><p>Open the project and let it regenerate.</p></li>
+</ol>
+
+<h2>Package the server build</h2>
+
+<ol class="steps">
+  <li>
+    <p><strong>Edit &rarr; Project Settings &rarr; Packaging</strong>, search for <strong>list of maps</strong>, and add your map &mdash; <code>ThirdPersonMap</code> for the template.</p>
+    <figure><img src="/images/image-20241218-154930-2c97bb.png" alt="The map added to the packaging list of maps" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Set the build target to <strong>YourProjectNameServer</strong>.</p>
+    <figure><img src="/images/image-20241226-140217-1ac5e8.png" alt="Selecting the server build target" loading="lazy"></figure>
+  </li>
+  <li>
+    <p><strong>Platforms &rarr; Windows &rarr; Package Project</strong>, into an empty folder.</p>
+    <figure><img src="/images/image-20241226-140546-351b38.png" alt="The server build packaging successfully" loading="lazy"></figure>
+  </li>
+</ol>
+
+<aside class="callout warning">
+  <p>
+    <strong>Package into an empty folder each time.</strong> Server and game
+    builds go to separate folders, and packaging over an existing build leaves
+    files from the previous one behind &mdash; which produces a package that
+    looks complete and behaves strangely.
+  </p>
+</aside>
+
+<h2>Package the game build</h2>
+
+<p>
+  The same operation with the ordinary target. Make sure the
+  <a href="/wiki/plugin-compatibility">Pixel Streaming plugin</a> is enabled first
+  &mdash; the game build is the one that streams, so it needs it; the server does
+  not.
+</p>
+
+<ol class="steps">
+  <li><p>Set the build target to <strong>YourProjectName</strong>.</p></li>
+  <li><p><strong>Platforms &rarr; Windows &rarr; Package Project</strong>, into a different empty folder.</p></li>
+</ol>
+
+<div class="outcome">
+  <strong>You now have two packages</strong>
+  <p>
+    A server that runs headless and a game that streams. Before uploading either,
+    it is worth <a href="/wiki/test-dedicated-server-locally">running them
+    together on your own machine</a> &mdash; two clients connecting to one server
+    proves the pair works while both are still in front of you.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/multiplayer-upload">Upload both builds &rarr;</a>
+  <p>Server first, and why the order matters.</p>
+</div>

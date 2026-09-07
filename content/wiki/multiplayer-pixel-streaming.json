@@ -1,7 +1,9 @@
 {
  "title": "Multiplayer Pixel Streaming",
  "slug": "multiplayer-pixel-streaming",
- "section": "(top level)",
+ "section": "Multiplayer Pixel Streaming",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/multiplayer-pixel-streaming"
+ "source": "https://docs.eagle3dstreaming.com/wiki/multiplayer-pixel-streaming",
+ "rewritten": true,
+ "replaces": []
 }

@@ -1,0 +1,130 @@
+<p class="standfirst">
+  Starting from an ordinary Third Person project: convert it to C++, add a server
+  target, and point the server at a map.
+</p>
+
+<div class="prereq">
+  <strong>Start from</strong>
+  <p>
+    A project made from the <strong>Third Person Template</strong>, packaged and
+    working &mdash; see <a href="/wiki/prepare-your-app">prepare your app</a>. If
+    you stream that as it stands, two viewers get two separate worlds and cannot
+    see each other. That is what the rest of this fixes.
+  </p>
+</div>
+
+<h2>Step 1. Convert the project to C++</h2>
+
+<div class="outcome">
+  <strong>Why this is necessary</strong>
+  <p>
+    A server build is declared by a <code>.Target.cs</code> file, which lives in
+    the project's <code>Source</code> folder. A Blueprint-only project has no
+    <code>Source</code> folder, and adding a C++ class is what creates one. That
+    is the entire reason for this step &mdash; you do not have to write any C++.
+  </p>
+</div>
+
+<ol class="steps">
+  <li>
+    <p><strong>Tools &rarr; New C++ Class</strong>, choose <strong>Actor</strong>, and create it. Then close the editor.</p>
+    <figure><img src="/images/image-20241202-172930-4aefec.png" alt="Choosing Actor when adding a new C++ class" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Right-click the <code>.uproject</code> and choose <strong>Generate Visual Studio project files</strong>.</p>
+    <figure><img src="/images/image-20241218-152249-13561a.png" alt="Generating Visual Studio project files" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Open the <code>.sln</code>, select your project under <strong>Games</strong>, set the configuration to <strong>Development Editor</strong>, and build with <strong>Ctrl+B</strong>.</p>
+    <figure><img src="/images/image-20241202-173611-d8fb22.png" alt="Building as Development Editor in Visual Studio" loading="lazy"></figure>
+  </li>
+</ol>
+
+<h2>Step 2. Add the server module</h2>
+
+<p>
+  In the project's <code>Source</code> folder, create a file named
+  <code>YourProjectNameServer.Target.cs</code> &mdash; with your real project name
+  &mdash; and put this in it:
+</p>
+
+<pre><code class="language-csharp">// Fill out your copyright notice in the Description page of Project Settings.
+
+using UnrealBuildTool;
+using System.Collections.Generic;
+
+public class YourProjectNameServerTarget : TargetRules
+{
+	public YourProjectNameServerTarget(TargetInfo Target) : base(Target)
+	{
+		Type = TargetType.Server;
+		DefaultBuildSettings = BuildSettingsVersion.V2;
+
+		ExtraModuleNames.AddRange( new string[] { "YourProjectName" } );
+	}
+}</code></pre>
+
+<aside class="callout warning">
+  <p>
+    <strong>The project name appears three times and must match every
+    time</strong> &mdash; in the filename, in the class name, and in
+    <code>ExtraModuleNames</code>. A mismatch produces a build error that names
+    the module rather than the typo, which sends people looking in the wrong
+    place.
+  </p>
+</aside>
+
+<h2>Step 3. Build both targets</h2>
+
+<ol class="steps">
+  <li><p>Regenerate the Visual Studio project files, so the new target is picked up.</p></li>
+  <li>
+    <p>Open the <code>.sln</code>, set the configuration to <strong>Development Server</strong>, and build with <strong>Ctrl+B</strong>.</p>
+    <figure><img src="/images/image-20241202-175126-484d01.png" alt="Building the Development Server configuration" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Switch to <strong>Development Editor</strong>, build again, then press <strong>F5</strong> &mdash; which opens the project in Unreal.</p>
+    <figure><img src="/images/image-20241202-175217-253c83.png" alt="Building the Development Editor configuration" loading="lazy"></figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You should now see a Development Server configuration</strong>
+  <p>
+    If it is not in the list, the <code>.Target.cs</code> file was not picked up
+    &mdash; check the filename and regenerate the project files again before
+    going further.
+  </p>
+</div>
+
+<h2>Step 4. Tell the server which map to open</h2>
+
+<p>
+  In <strong>Project Settings &rarr; Maps &amp; Modes</strong>:
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Global Default Server Game Mode</td><td>The same game mode as your Default Game Mode</td></tr>
+      <tr><td>Server Default Map</td><td><code>ThirdPersonMap</code> &mdash; or <code>VRTemplateMap</code> for a VR project</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<figure><img src="/images/image-20241218-154130-882efc.png" alt="Configuring Maps and Modes for the server" loading="lazy"></figure>
+
+<aside class="callout note">
+  <p>
+    <strong>The server has its own default map and game mode.</strong> They are
+    separate settings from the client's, and leaving them unset means the server
+    starts up hosting nothing &mdash; clients connect successfully and find an
+    empty world.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/multiplayer-package">Package both builds &rarr;</a>
+  <p>One server build, one game build, from the same project.</p>
+</div>

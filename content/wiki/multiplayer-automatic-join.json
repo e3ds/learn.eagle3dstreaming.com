@@ -1,0 +1,16 @@
+{
+ "title": "Automatic server join",
+ "slug": "multiplayer-automatic-join",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/automatic-server-join-multiplayer-server-scaling-p",
+ "rewritten": true,
+ "replaces": [
+  "automatic-server-join-multiplayer-server-scaling-p",
+  "configure-e3ds-multiplayer-class",
+  "enable-necessary-plugin"
+ ],
+ "order": 5
+}

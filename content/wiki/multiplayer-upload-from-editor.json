@@ -1,0 +1,18 @@
+{
+ "title": "Upload from the editor",
+ "slug": "multiplayer-upload-from-editor",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/upload-from-ue-editor-e3ds-automation-tools-plugin",
+ "rewritten": true,
+ "replaces": [
+  "configure-the-project-settings",
+  "enable-e3ds-automation-tools-plugin",
+  "package-and-upload-the-project",
+  "summary-of-automatically-upload-the-multiplayer-pr",
+  "upload-from-ue-editor-e3ds-automation-tools-plugin"
+ ],
+ "order": 6
+}
