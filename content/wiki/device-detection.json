@@ -1,0 +1,14 @@
+{
+ "title": "Detect the viewer's device",
+ "slug": "device-detection",
+ "section": "Developer Guides",
+ "parents": [
+  "features-plugin"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/detecting-user-s-device-in-pixel-streaming",
+ "rewritten": true,
+ "replaces": [
+  "detecting-user-s-device-in-pixel-streaming"
+ ],
+ "order": 5
+}

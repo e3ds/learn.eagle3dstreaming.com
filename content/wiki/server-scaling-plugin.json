@@ -1,0 +1,14 @@
+{
+ "title": "Multiplayer Server Scaling plugin",
+ "slug": "server-scaling-plugin",
+ "section": "Developer Guides",
+ "parents": [
+  "plugins"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/multiplayer-server-scaling-system-plugin",
+ "rewritten": true,
+ "replaces": [
+  "multiplayer-server-scaling-system-plugin"
+ ],
+ "order": 4
+}

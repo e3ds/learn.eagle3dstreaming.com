@@ -1,0 +1,15 @@
+{
+ "title": "File transfer",
+ "slug": "file-transfer",
+ "section": "Developer Guides",
+ "parents": [
+  "features-plugin"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/download-a-file-from-the-server",
+ "rewritten": true,
+ "replaces": [
+  "download-a-file-from-the-server",
+  "transferring-file-from-user-s-device-to-pixel-stre"
+ ],
+ "order": 4
+}

@@ -1,0 +1,120 @@
+<p class="standfirst">
+  Move files in both directions: hand the viewer a file your app produced, or
+  let them upload one into the app's own directory.
+</p>
+
+<h2>Sending a file to the viewer</h2>
+
+<p>
+  Any file that exists in your project's directory on the streaming machine can
+  be downloaded by the viewer &mdash; a generated PDF, an exported model, a saved
+  configuration.
+</p>
+
+<ol class="steps">
+  <li><p>Place an <strong>E3DS_PS_actor</strong> in the level.</p></li>
+  <li><p>In the Level Blueprint, add your trigger (the demo uses the <strong>H</strong> key).</p></li>
+  <li>
+    <p>
+      Add a <strong>Get Project File Path</strong> node with the path to the
+      file, feed it into <strong>Construct PS Message To Download A File from
+      Unreal App Directory To User's Device</strong>, and feed that into
+      <strong>Download A File From Unreal App Directory To User's Device</strong>.
+      Compile and save.
+    </p>
+    <figure><img src="/images/image-20250729-044542-95575b.png" alt="Blueprint wiring for downloading a file to the viewer" loading="lazy"></figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>What you should see</strong>
+  <p>
+    Press the key with the viewport focused and the browser downloads the file.
+    Nothing happening almost always means the path is wrong &mdash; the file
+    must exist on the machine running your app, not on yours.
+  </p>
+</div>
+
+<h2>Receiving a file from the viewer</h2>
+
+<p>
+  The platform opens the browser's file picker, takes what the viewer chooses,
+  and writes it into your project directory. Your app then reads it as an
+  ordinary file.
+</p>
+
+<ol class="steps">
+  <li>
+    <p>
+      Call <strong>Transfer File from User Browser to Unreal</strong> and give it
+      a destination inside the project &mdash; for example
+      <code>ProjectDirectory/Saved/</code>.
+    </p>
+    <figure><img src="/images/image-20250805-074549-28f77d.png" alt="The Transfer File from User Browser to Unreal node" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>The viewer picks a file in the dialog the platform opens.</p>
+    <figure><img src="/images/image-20250805-073725-2eae2b.png" alt="The browser file selection dialog during upload" loading="lazy"></figure>
+  </li>
+</ol>
+
+<aside class="callout warning">
+  <p>
+    <strong>The destination must be inside the project directory.</strong>
+    Absolute paths such as <code>C:\</code> and any folder outside the project
+    are not supported. Uploaded files are also virus-scanned, and anything
+    flagged is rejected rather than delivered.
+  </p>
+</aside>
+
+<h3>Knowing when the upload is done</h3>
+
+<p>
+  Uploading is not instant, so the platform reports progress as messages your app
+  can listen for.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Message</th><th>Means</th></tr></thead>
+    <tbody>
+      <tr><td><code>onUserSideFileSelected</code></td><td>The viewer picked a file. The upload has started.</td></tr>
+      <tr><td><code>onUserSideFileProcessingFinished</code></td><td>The browser has finished sending it.</td></tr>
+      <tr><td><code>onUploadedFileAvailable</code></td><td>The file is now in your project directory. This is the one that means success.</td></tr>
+      <tr><td><code>onUserSideFileSelectionCanceled</code></td><td>The viewer opened the dialog and closed it without choosing.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  Each carries the filename, except the cancellation. Together they give you the
+  three states worth tracking: in progress, finished, abandoned.
+</p>
+
+<div class="outcome">
+  <strong>Handle the cancellation, not just the success</strong>
+  <p>
+    A common pattern is a timer that polls for the file with
+    <strong>File Exists</strong> until it appears. That works &mdash; until
+    somebody closes the dialog, and the timer waits forever for a file that will
+    never arrive. <code>onUserSideFileSelectionCanceled</code> is what stops it.
+  </p>
+</div>
+
+<figure>
+  <img src="/images/image-20250804-134626-d99498.png" alt="Using File Exists to check whether an upload has completed" loading="lazy">
+  <figcaption>Polling with <strong>File Exists</strong>: "No" until the upload lands, then "Yes".</figcaption>
+</figure>
+
+<h2>Without the plugin</h2>
+
+<p>Send this with <strong>Send Pixel Streaming Response</strong>:</p>
+
+<pre><code class="language-json">{"cmd": "sendLocalFileToUE4", "pathToSaveFile": "%AnyPathInsideProjectDirectory%"}</code></pre>
+
+<figure><img src="/images/image-20250805-074150-426206.png" alt="Sending the upload command manually" loading="lazy"></figure>
+
+<div class="next">
+  <a href="/wiki/device-detection">Device detection &rarr;</a>
+  <p>Knowing whether the viewer is on a phone before you show them a mouse control.</p>
+</div>

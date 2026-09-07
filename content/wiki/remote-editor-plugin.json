@@ -1,0 +1,15 @@
+{
+ "title": "Remote Unreal Editor plugin",
+ "slug": "remote-editor-plugin",
+ "section": "Developer Guides",
+ "parents": [
+  "plugins"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/remote-control-unreal-editor-plugin",
+ "rewritten": true,
+ "replaces": [
+  "blueprint-debugging",
+  "remote-control-unreal-editor-plugin"
+ ],
+ "order": 3
+}

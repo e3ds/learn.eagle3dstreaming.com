@@ -1,0 +1,14 @@
+{
+ "title": "Install the Features plugin",
+ "slug": "features-plugin-setup",
+ "section": "Developer Guides",
+ "parents": [
+  "plugins"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/download-and-install-the-e3ds-features-plugin",
+ "rewritten": true,
+ "replaces": [
+  "download-and-install-the-e3ds-features-plugin"
+ ],
+ "order": 1
+}

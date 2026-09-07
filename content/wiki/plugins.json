@@ -5,5 +5,8 @@
  "parents": [
   "development-guides"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/plugins"
+ "source": "https://docs.eagle3dstreaming.com/wiki/plugins",
+ "rewritten": true,
+ "replaces": [],
+ "order": 30
 }

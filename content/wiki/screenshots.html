@@ -1,0 +1,72 @@
+<p class="standfirst">
+  Capture a frame at Unreal's quality rather than the stream's, and hand it to
+  the viewer as a download.
+</p>
+
+<h2>Why not just screenshot the page</h2>
+
+<p>
+  What the viewer sees is compressed video, sized to their window and degraded by
+  their connection. Grabbing that gives you a picture of a video stream. This
+  node instead captures <strong>Unreal's own output</strong>, before it is
+  encoded &mdash; so the result does not depend on the viewer's bandwidth,
+  resolution or connection quality at all.
+</p>
+
+<div class="outcome">
+  <strong>The difference is not subtle</strong>
+  <p>
+    On a poor connection a browser-side capture is visibly blurry and a
+    plugin-side capture is not. If the image is going into a quote, a
+    configuration sheet or anything a customer keeps, this is the one to use.
+  </p>
+</div>
+
+<h2>The Blueprint</h2>
+
+<ol class="steps">
+  <li><p>Put an <strong>E3DS_PS_Actor</strong> in the level you are streaming.</p></li>
+  <li><p>Call <strong>CaptureScreenshot</strong> from wherever the capture should happen &mdash; a Level Blueprint key press, a button in your UI, the end of an animation.</p>
+    <figure><img src="/images/image-20250806-084258-f93a15.png" alt="The CaptureScreenshot node wired into a Level Blueprint" loading="lazy"></figure>
+  </li>
+</ol>
+
+<p>
+  That is the whole of it. The plugin sends the request, the platform captures
+  the frame, and the image downloads in the viewer's browser.
+</p>
+
+<h2>Without the plugin</h2>
+
+<p>
+  The node is a wrapper around a message, so you can send that message yourself.
+  Add a <strong>PixelStreamingInput</strong> component to an actor in the level
+  and send this with <strong>Send Pixel Streaming Response</strong>:
+</p>
+
+<pre><code class="language-json">{"cmd":"captureScreenShot"}</code></pre>
+
+<figure><img src="/images/image-20250806-083943-204554.png" alt="Sending the screenshot command manually with Send Pixel Streaming Response" loading="lazy"></figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>Only do it this way if you have a reason to.</strong> The manual
+    route has the same effect and several more places to get it wrong &mdash;
+    a mistyped key, the component on an actor that is not in the level, the
+    response node on the wrong graph. The node exists to remove exactly those
+    mistakes.
+  </p>
+</aside>
+
+<h2>Other ways to trigger it</h2>
+
+<p>
+  A screenshot can also be requested from the page rather than the app, which is
+  what you want when the button lives in your own interface rather than in
+  Unreal. See <a href="/wiki/controlling-the-stream">controlling the stream</a>.
+</p>
+
+<div class="next">
+  <a href="/wiki/file-transfer">File transfer &rarr;</a>
+  <p>Sending other files to the viewer, and receiving files from them.</p>
+</div>

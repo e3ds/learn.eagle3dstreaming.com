@@ -1,0 +1,83 @@
+<p class="standfirst">
+  Two different endings, two different nodes: stop the stream, or close the
+  viewer's browser tab. Both are triggered from inside your app.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Node</th><th>What happens to the viewer</th><th>Use it for</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Force End Session</strong></td>
+        <td>The stream stops. The page stays open, showing that the session ended.</td>
+        <td>A natural finish &mdash; the end of a tour, a completed configuration, a signed-off review.</td>
+      </tr>
+      <tr>
+        <td><strong>Force End Tab</strong></td>
+        <td>The browser tab itself closes.</td>
+        <td>A kiosk or a full-screen experience where a dead page left on screen would look broken.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="outcome">
+  <strong>Either one frees the machine immediately</strong>
+  <p>
+    Which is the real reason to wire one up. A session that ends when your app
+    knows it is finished stops consuming
+    <a href="/wiki/plans-and-billing">minutes</a> and releases a
+    <a href="/wiki/capacity-and-regions">concurrent slot</a> straight away
+    &mdash; rather than waiting out an
+    <a href="/wiki/session-and-access">idle timeout</a> because someone walked
+    away from the tab.
+  </p>
+</div>
+
+<h2>Ending the session</h2>
+
+<ol class="steps">
+  <li><p>Drop an <strong>E3DS_PS_actor</strong> into the level.</p></li>
+  <li><p>In the Level Blueprint, add whatever should trigger the end &mdash; the demo uses the <strong>6</strong> key.</p></li>
+  <li><p>Add a <strong>Construct PS Message To Force End Session</strong> node, and a <strong>Send Message To E3ds PS System</strong> node.</p></li>
+  <li>
+    <p>Wire the trigger's <em>Pressed</em> pin into <strong>Send Message</strong>, and the Construct node's output into its <strong>Descriptor</strong> pin. Compile and save.</p>
+    <figure><img src="/images/image-20250728-172112-4d78c6.png" alt="Blueprint wiring for Force End Session" loading="lazy"></figure>
+  </li>
+</ol>
+
+<h2>Closing the tab</h2>
+
+<p>
+  Simpler &mdash; one node, no message to construct. Drag from your trigger's
+  <em>Pressed</em> pin and add <strong>Force End Tab</strong>.
+</p>
+
+<figure><img src="/images/image-20250728-172304-6919b2.png" alt="Blueprint wiring for Force End Tab" loading="lazy"></figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>A browser may refuse to close the tab.</strong> Closing a tab the
+    user opened themselves is restricted, and the rules differ between browsers.
+    Force End Session is the reliable one; treat tab closing as a nicety that
+    may not happen, and make sure your app has already ended the session so
+    nothing is left running either way.
+  </p>
+</aside>
+
+<h2>Checking it works</h2>
+
+<div class="outcome">
+  <strong>What you should see</strong>
+  <p>
+    In a <a href="/wiki/remote-editor-plugin">remote editor session</a>, click
+    the viewport to give it focus and press your key. Force End Session leaves
+    the page showing an ended session; Force End Tab closes the tab. If neither
+    happens, the E3DS_PS_actor is almost certainly missing from the level.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/open-and-redirect-urls">Open and redirect URLs &rarr;</a>
+  <p>Sending the viewer somewhere else &mdash; in a new tab or in this one.</p>
+</div>

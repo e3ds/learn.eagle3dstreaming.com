@@ -1,0 +1,15 @@
+{
+ "title": "End a session from the app",
+ "slug": "ending-sessions",
+ "section": "Developer Guides",
+ "parents": [
+  "features-plugin"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/end-the-streaming-session",
+ "rewritten": true,
+ "replaces": [
+  "end-a-client-s-session",
+  "end-the-streaming-session"
+ ],
+ "order": 3
+}

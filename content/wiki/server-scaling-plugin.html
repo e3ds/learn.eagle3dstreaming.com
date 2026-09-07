@@ -1,0 +1,51 @@
+<p class="standfirst">
+  Connects a multiplayer client to its dedicated server automatically, so nobody
+  has to be told an IP address and a port.
+</p>
+
+<h2>The problem it solves</h2>
+
+<p>
+  A dedicated-server multiplayer app has to know where its server is. Without
+  help, that means the player types an address &mdash; which is awkward on a
+  desktop, close to impossible in a mobile browser, and simply wrong when servers
+  are created on demand and the address is not known until one exists.
+</p>
+
+<p>With the plugin, the client is handed its server's connection details and joins on launch. Nothing is typed.</p>
+
+<div class="outcome">
+  <strong>What this makes possible</strong>
+  <p>
+    Servers that scale with demand &mdash; the address changes every time and the
+    client does not care &mdash; and multiplayer that works from a phone
+    browser, where there is nowhere sensible to enter an IP anyway.
+  </p>
+</div>
+
+<div class="prereq">
+  <strong>Requires</strong>
+  <p>Unreal Engine 5.3 to 5.8, and a dedicated server build of your project.</p>
+</div>
+
+<h2>Install</h2>
+
+<p>
+  Download from
+  <a href="https://www.fab.com/listings/a66b7bdb-6a36-4f19-be9f-e96c6b143aa9">Fab</a>
+  or <a href="https://github.com/e3ds-ue4/MpServerScaling">GitHub</a> and install
+  it into your project before configuring anything.
+</p>
+
+<h2>Configure</h2>
+
+<p>
+  The client-side setup &mdash; where the connection details arrive and what to
+  do with them &mdash; is covered in the multiplayer section under
+  <a href="/wiki/multiplayer-pixel-streaming">automatic server join</a>.
+</p>
+
+<div class="next">
+  <a href="/wiki/multiplayer-pixel-streaming">Multiplayer Pixel Streaming &rarr;</a>
+  <p>Building, packaging and running a client and server pair.</p>
+</div>

@@ -1,0 +1,111 @@
+<p class="standfirst">
+  How the pointer behaves in a streamed app, why one setting matters more than
+  the rest, and how to go fullscreen from Blueprint.
+</p>
+
+<h2>Two cursors, and only one of them should be visible</h2>
+
+<p>
+  A streamed app has two possible mouse cursors. Unreal can draw one into the
+  frame it renders, and the browser has one of its own. Which you use is the
+  single largest input decision in a Pixel Streaming project.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Setup</th><th>What it feels like</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>Unreal cursor only</td><td>The cursor lags the hand. It is drawn into the video, so it arrives a round trip late.</td><td><strong>Avoid</strong></td></tr>
+      <tr><td>Browser cursor only</td><td>Immediate. The browser draws it locally and Unreal just receives the input.</td><td><strong>Use this</strong></td></tr>
+      <tr><td>Both</td><td>Two cursors on screen, fighting each other.</td><td><strong>Avoid</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="outcome">
+  <strong>Why the difference is so large</strong>
+  <p>
+    An Unreal-drawn cursor has to travel to the server, be rendered into a frame,
+    be encoded, and come back before it moves &mdash; so every millisecond of
+    network delay is visible in the pointer itself. A browser cursor never leaves
+    the viewer's machine. On a UI-heavy app &mdash; a configurator, a menu-driven
+    tool &mdash; this is the difference between sluggish and instant.
+  </p>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>If you called <code>Show Mouse Cursor</code> in your Player
+    Controller, you have the slow one.</strong> That is the usual way a project
+    ends up with an Unreal-rendered cursor, and it is also the usual reason a
+    stream that is otherwise fast still feels laggy. Turn it off and enable the
+    browser cursor in your
+    <a href="/wiki/streaming-interface">app configuration</a> instead.
+  </p>
+</aside>
+
+<h2>Hovering and locked mouse</h2>
+
+<p>
+  Separately from which cursor is drawn, there are two schemes for how the
+  pointer behaves:
+</p>
+
+<ul>
+  <li><strong>Hovering</strong> &mdash; the pointer moves freely over the view,
+    as on a web page. Right for menus, buttons and anything you click on.</li>
+  <li><strong>Locked</strong> &mdash; the pointer is captured and movement drives
+    the camera, as in a first-person game. Right for looking around.</li>
+</ul>
+
+<p>
+  Apps that do both usually switch as the viewer moves between them. Place
+  <strong>BP_E3DS_PS_Actor</strong> in the level and call <strong>Change Mouse
+  Control Scheme</strong>, choosing <strong>HoveringMouse</strong> or
+  <strong>LockedMouse</strong> from the dropdown.
+</p>
+
+<figure><img src="/images/image-20250828-014030-54ac65.png" alt="The Change Mouse Control Scheme node with its dropdown" loading="lazy"></figure>
+
+<p>
+  Without the plugin: add a <strong>PixelStreamingInput</strong> component to an
+  actor, and send <code>HoveringMouse</code> or <code>LockedMouse</code> as a
+  string with <strong>Send Pixel Streaming Response</strong>.
+</p>
+
+<figure><img src="/images/image-20250828-013620-382ef6.png" alt="Sending the mouse scheme message manually" loading="lazy"></figure>
+
+<p>
+  The same switch can be made from the page instead of from the app &mdash; see
+  <a href="/wiki/controlling-the-stream">controlling the stream</a>.
+</p>
+
+<h2>Fullscreen</h2>
+
+<p>
+  With an <strong>E3DS_PS_Actor</strong> in the level, drag from your trigger's
+  <em>Pressed</em> pin and add the <strong>Toggle Fullscreen</strong> node. That
+  is the whole Blueprint.
+</p>
+
+<figure><img src="/images/image-20250728-171241-3acc82.png" alt="The Toggle Fullscreen node wired to a key press" loading="lazy"></figure>
+
+<div class="outcome">
+  <strong>What you should see</strong>
+  <p>
+    Pressing the key once puts the browser window into fullscreen; pressing it
+    again leaves. If nothing happens, the viewport did not have focus &mdash;
+    click into it first.
+  </p>
+</div>
+
+<p>
+  Fullscreen can also be driven from your own page, which is what you want when
+  the button belongs to your interface rather than to the app:
+  <a href="/fullscreen-button.html">fullscreen from the page</a>.
+</p>
+
+<div class="next">
+  <a href="/wiki/performance-optimization">Input and performance &rarr;</a>
+  <p>Controllers, on-screen keyboards, DLSS, and why audio starts muted.</p>
+</div>
