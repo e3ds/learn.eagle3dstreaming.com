@@ -1,0 +1,11 @@
+{
+ "title": "Keeping your API key off the browser",
+ "slug": "sdk-secure-the-key",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-using-e3ds-sdk"
+ ],
+ "source": "split out of embed-stream-using-e3ds-sdk, 2026-09-07",
+ "rewritten": true,
+ "replaces": []
+}

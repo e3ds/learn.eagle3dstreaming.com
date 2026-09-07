@@ -1,0 +1,138 @@
+<p class="standfirst">
+  For the SDK on a page the public can reach. The demo puts your API key in the
+  browser, which is fine while you are building and not fine once anyone can
+  visit. This is the one change that fixes it.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>You do not need this to try the SDK.</strong>
+    <a href="/wiki/embed-stream-using-e3ds-sdk">Set it up first</a>, get your app
+    streaming, and come back when you are ready to put it somewhere public. This
+    page changes one function; everything else you built stays exactly as it is.
+  </p>
+</aside>
+
+<h2>What the problem actually is</h2>
+
+<p>
+  Anything in a web page can be read by anyone who visits it. Your API key sits
+  in <code>scripts/config.js</code>, so it is one click of View Source away
+  &mdash; and it does not expire.
+</p>
+
+<div class="outcome">
+  <strong>What someone can do with it</strong>
+  <p>
+    Start streaming sessions billed to your account, from their own page, for as
+    long as the key exists. They do not need your app, your Control Panel login
+    or anything else. The first sign is usually the bill, or your
+    <a href="/wiki/capacity-and-regions">concurrent-user limit</a> being used up
+    by people you cannot identify.
+  </p>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Putting the demo on a real site as-is is the mistake to avoid.</strong>
+    Dropping it into WordPress, a marketing page or anywhere else the public can
+    reach publishes the key along with it. If that has already happened, treat
+    the key as compromised and issue a new one from the Control Panel.
+  </p>
+</aside>
+
+<h2>The fix, in one sentence</h2>
+
+<p>
+  Your server holds the key and asks us for a token; the browser only ever
+  receives the token.
+</p>
+
+<pre><code>Browser                Your server              Eagle 3D Streaming
+   │  "I'd like to stream" │                            │
+   ├──────────────────────▶│  API key + app details     │
+   │                       ├───────────────────────────▶│
+   │                       │        short-lived token   │
+   │   just the token      │◀───────────────────────────┤
+   │◀──────────────────────┤                            │
+   │  start the session with that token                 │
+   ├───────────────────────────────────────────────────▶│</code></pre>
+
+<div class="outcome">
+  <strong>Why the token is safe to send and the key is not</strong>
+  <p>
+    A token expires in about a minute and covers a single session. Someone who
+    copies one gets, at most, the session you were already going to give them.
+    A key has no expiry and no limit.
+  </p>
+</div>
+
+<h2>What you change</h2>
+
+<p>
+  One function. <code>requestSessionToken()</code> in
+  <code>scripts/session-token.js</code> currently calls our token endpoint
+  directly, with your key in the header. Point it at your own endpoint instead:
+</p>
+
+<pre><code class="language-javascript">async function requestSessionToken() {
+    // Your server. It knows the key; this page never does.
+    const response = await fetch("/api/streaming-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ /* whatever your server needs to decide */ })
+    });
+    if (!response.ok) return null;
+    return await response.json();
+}</code></pre>
+
+<p>
+  Nothing else moves. <code>main()</code>, your callbacks, your controls and
+  your markup are untouched &mdash; they receive the same token they always did,
+  from a different place.
+</p>
+
+<h2>What your server does</h2>
+
+<p>
+  It makes the request the browser used to make, with the key it holds
+  privately, and returns the answer:
+</p>
+
+<pre><code class="language-javascript">// POST https://token.eagle3dstreaming.com/api/v2/token/create
+//   Authorization: Auth &lt;your streaming API key&gt;
+{
+  "object": {
+    "core": { domain, userName, appName, configurationName, version },
+    "configurationToOverride": {}
+  },
+  "expiry": 60000,
+  "client": "the id of your logged-in user"
+}</code></pre>
+
+<aside class="callout tip">
+  <p>
+    <strong>This is also where access control belongs.</strong> Your server
+    decides <em>whether</em> to issue a token at all &mdash; so you can require
+    a login, check a subscription, enforce your own limits, or refuse. That
+    is a thing an API key in the browser can never do, and it is the better
+    half of this change.
+  </p>
+</aside>
+
+<h2>Checking you have actually done it</h2>
+
+<div class="outcome">
+  <strong>Open your page and search the source for your key</strong>
+  <p>
+    View Source, then the Network tab. Your key must appear in neither. If it is
+    still in <code>config.js</code> because the file was copied across, the page
+    will work perfectly and still be leaking it &mdash; working is not the test
+    here, absence is.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/api-keys-and-tokens">API keys and tokens &rarr;</a>
+  <p>Where the key comes from, and how to replace one you think is exposed.</p>
+</div>
