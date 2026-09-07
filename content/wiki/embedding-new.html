@@ -127,6 +127,7 @@
       <button type="button" data-t="shot"       aria-pressed="false"><span class="nm-step">10</span>Screenshots</button>
       <button type="button" data-t="session"    aria-pressed="false"><span class="nm-step">11</span>Start &amp; restart</button>
       <button type="button" data-t="access"     aria-pressed="false"><span class="nm-step">12</span>Who may stream</button>
+      <button type="button" data-t="login"      aria-pressed="false"><span class="nm-step">13</span>Login in front</button>
     </div>
 
     <div class="nm-body">
@@ -385,6 +386,44 @@ e3ds_controller.setTouchInputEnabled(true);</code></pre>
         <p>This is the real reason to choose the SDK. The session starts from a short-lived token, so <em>your</em> backend decides who gets one, when, and for which app. Keep the API key there and the browser never holds anything reusable.</p>
       </section>
 
+
+      <!-- 13. LOGIN -->
+      <section class="nm-cell" data-t="login" data-m="url">
+        <h3>Putting your own login in front of the stream</h3><p class="nm-sub">Streaming URL</p>
+        <span class="nm-flag na">Not applicable</span>
+        <p>There is no page of yours to put a login on. The link goes straight to our player, so the only gate available is the one the platform provides: a <a href="/wiki/session-and-access">password on the link</a>, the same password for everyone.</p>
+        <p>That tells you nothing about <em>who</em> is watching, and it cannot be revoked for one person. If you need to know your viewer, that is the reason to move to a hosted method.</p>
+      </section>
+      <section class="nm-cell" data-t="login" data-m="iframe">
+        <h3>Putting your own login in front of the stream</h3><p class="nm-sub">iframe</p>
+        <span class="nm-flag yes">Available</span>
+        <p>Your page, your login. Authenticate however you already do, and render the <code>&lt;iframe&gt;</code> only for a signed-in visitor &mdash; see <a href="/wiki/login-integration">login integration</a>.</p>
+        <aside class="callout warning">
+          <p>
+            <strong>This gates your page, not the stream.</strong> The streaming
+            URL sits in the frame's <code>src</code>, so anyone who signs in once
+            and reads the page source has a working link they can use later,
+            share, and keep using after you remove their account. Right for
+            "members only" on a site you control; not right for anything where
+            the link itself must stay secret.
+          </p>
+        </aside>
+      </section>
+      <section class="nm-cell" data-t="login" data-m="sdk">
+        <h3>Putting your own login in front of the stream</h3><p class="nm-sub">SDK</p>
+        <span class="nm-flag yes">Available</span>
+        <p>The same login on your page, and this time it actually holds. The session starts from a short-lived token your own server issues, so being signed in is not just what reveals the player &mdash; it is what gets you a token at all.</p>
+        <div class="outcome">
+          <strong>Your server can refuse</strong>
+          <p>
+            Check the session, the subscription, a seat limit, anything you like,
+            and decline. A copied token is worth one session and expires in about
+            a minute, so there is nothing durable to leak. This is the difference
+            the iframe cannot close &mdash; see
+            <a href="/wiki/sdk-secure-the-key">keeping your API key off the browser</a>.
+          </p>
+        </div>
+      </section>
     </div>
   </div>
 
