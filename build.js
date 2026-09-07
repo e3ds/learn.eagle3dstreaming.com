@@ -59,6 +59,26 @@ const EXTRA_PAGES = [
 ];
 
 /* The pages that are not generated from a fragment, but still carry the tree. */
+/* [E3DS-NAV-GROUPS] The shape of the top level.
+ *
+ * Without this the tree is whatever came out of the tree builder, sorted
+ * alphabetically - so a section of eighteen pages sat between two individual
+ * settings pages, at the same level, as if all three were the same kind of
+ * thing. A reader cannot tell a section from a page that way.
+ *
+ * A group is a LABEL, not a link: it has no page of its own, it just holds
+ * pages. Anything not named here still appears, after the groups, so adding a
+ * batch of pages never makes them vanish from the tree - it only means they are
+ * not sorted into a group yet.
+ *
+ * ORDER IS DECLARED, not alphabetical. "Getting started" belongs first because
+ * it is where a new reader starts, and no sort order produces that by accident.
+ */
+const NAV_GROUPS = [
+  { title: "Getting started", slugs: ["getting-started"] },
+  { title: "Streaming settings", slugs: ["microphone-settings", "fullscreen-button"] },
+];
+
 const LEGACY_FILES = ["index.html", "microphone-settings.html", "fullscreen-button.html"];
 const NAV_BEGIN = "<!-- E3DS-NAV:BEGIN generated from nav.json by build-nav.js - do not edit by hand -->";
 const NAV_END = "<!-- E3DS-NAV:END -->";
@@ -116,9 +136,26 @@ function navHtml(tree, current) {
       + children.map((c) => node(c, depth + 1)).join("") + "</ul></details></li>";
   };
 
+  /* A group holds whichever of its pages exist. One that names nothing present
+   * is skipped entirely rather than rendered empty - an empty heading tells a
+   * reader nothing and looks like a fault. */
+  const grouped = new Set();
+  let out = "";
+  for (const g of NAV_GROUPS) {
+    const mine = g.slugs.map((sl) => roots.find((r) => r.slug === sl)).filter(Boolean);
+    if (!mine.length) continue;
+    mine.forEach((p) => grouped.add(p.slug));
+    const holdsCurrent = mine.some((p) => holds(p));
+    out += '<li><details class="e3dsNavSec e3dsNavGroup"' + (holdsCurrent ? " open" : "")
+      + "><summary><span>" + esc(g.title) + "</span></summary><ul>"
+      + mine.map((p) => node(p, 1)).join("") + "</ul></details></li>";
+  }
+  /* Anything no group claimed, so a new batch is visible the day it lands. */
+  out += roots.filter((r) => !grouped.has(r.slug)).map((r) => node(r, 0)).join("");
+
   return '<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation">'
     + '<a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a>'
-    + "<ul class=\"e3dsNavRoot\">" + roots.map((r) => node(r, 0)).join("") + "</ul>"
+    + "<ul class=\"e3dsNavRoot\">" + out + "</ul>"
     + "</nav></aside>"
     + '<button id="e3dsNavToggle" aria-label="Show the contents" '
     + "onclick=\"document.body.classList.toggle('e3dsNavOpen')\">Contents</button>";
