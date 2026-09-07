@@ -10,5 +10,6 @@
  "replaces": [
   "whitelisting",
   "hosting-your-website"
- ]
+ ],
+ "order": 6
 }

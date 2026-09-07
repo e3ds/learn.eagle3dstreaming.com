@@ -1,0 +1,12 @@
+{
+ "title": "Why a session ended",
+ "slug": "session-end-messages",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-using-e3ds-sdk"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/streaming-app-monitor",
+ "rewritten": true,
+ "replaces": [],
+ "order": 3
+}

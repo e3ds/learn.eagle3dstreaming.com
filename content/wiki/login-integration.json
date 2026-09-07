@@ -11,5 +11,6 @@
   "customize-ui-elements-and-embed-the-app-with-user-",
   "login-integration-in-iframe",
   "login-integration-with-e3ds-sdk"
- ]
+ ],
+ "order": 5
 }
