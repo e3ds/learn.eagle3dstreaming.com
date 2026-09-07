@@ -1,0 +1,15 @@
+{
+ "title": "Shared and dedicated sessions",
+ "slug": "shared-and-dedicated-sessions",
+ "section": "Foundational knowledge",
+ "parents": [
+  "blogs-and-articles"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/the-dedicated-and-shared-game-views-and-controls",
+ "rewritten": true,
+ "replaces": [
+  "the-dedicated-and-shared-game-views-and-controls",
+  "how-users-get-a-dedicated-game-views-and-controls",
+  "how-guests-share-game-views-and-controls-during-th"
+ ]
+}

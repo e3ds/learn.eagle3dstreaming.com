@@ -1,0 +1,121 @@
+<p class="standfirst">
+  How long a viewer waits before they can use your app, what that time is spent
+  on, and what actually shortens it.
+</p>
+
+<h2>What to expect</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Situation</th><th>Typical wait</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/wiki/preallocated-apps">Preallocated</a> &mdash; already running</td><td>Under 10 seconds</td></tr>
+      <tr><td>Streamed often, so the app is warm on our machines</td><td>10&ndash;20 seconds</td></tr>
+      <tr><td>First time it has been streamed</td><td>20&ndash;30 seconds</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  <strong>These are ranges, not guarantees, and the variable is your app.</strong>
+  Two applications on identical hardware load at different speeds because of
+  what is in them &mdash; how much content, how it is structured, how much has
+  to exist before the first frame. The platform's share of the wait is roughly
+  fixed; yours is not.
+</p>
+
+<h2>What the wait is spent on</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Acquiring</h3>
+    <p>Finding a machine for the session.</p>
+  </li>
+  <li>
+    <h3>Preparing</h3>
+    <p>Getting your application onto that machine.</p>
+  </li>
+  <li>
+    <h3>Starting</h3>
+    <p>
+      Your app launching &mdash; the part you control, and usually the largest
+      part for anything substantial.
+    </p>
+  </li>
+</ol>
+
+<p>
+  A preallocated app skips the first two entirely, because the app is already
+  running when the viewer arrives. That is why it is the largest single
+  improvement available and why it costs what it does.
+</p>
+
+<h2>Measuring it</h2>
+
+<p>Two ways, and the second is the one worth using.</p>
+
+<ul>
+  <li>
+    <strong>By hand.</strong> Time from opening the URL to the app responding.
+    Fine for a rough number.
+  </li>
+  <li>
+    <strong>In the browser's developer tools.</strong> Open them with
+    <code>F12</code>, use the Network tab while the stream starts, and you get
+    the phases separately rather than one total &mdash; which is the difference
+    between knowing it is slow and knowing which part is slow.
+  </li>
+</ul>
+
+<aside class="callout tip">
+  <p>
+    <strong>Measure the packaged app on your own machine first.</strong> That is
+    the floor. Streaming adds to it and cannot subtract from it, so if the
+    native build takes forty seconds to reach its menu, no amount of platform
+    tuning will produce a ten-second stream.
+  </p>
+</aside>
+
+<h2>Shortening it</h2>
+
+<p>In rough order of effect:</p>
+
+<ol class="steps">
+  <li>
+    <h3>Load less before the first frame</h3>
+    <p>
+      Start with a smaller map and bring in the rest afterwards. Unreal's level
+      streaming loads only the parts of the world that are needed, which cuts
+      both the wait and the memory the app holds.
+    </p>
+  </li>
+  <li>
+    <h3>Load in the background</h3>
+    <p>
+      Asynchronous loading lets the app become usable while the remaining assets
+      arrive, rather than making the viewer wait for all of it.
+    </p>
+  </li>
+  <li>
+    <h3>Preallocate, if the wait genuinely matters</h3>
+    <p>
+      For a live demo or a public-facing experience, this removes the platform's
+      share of the wait entirely. It costs a machine running continuously, so it
+      is a trade rather than an improvement &mdash;
+      <a href="/wiki/preallocated-apps">both sides of it here</a>.
+    </p>
+  </li>
+  <li>
+    <h3>Show something while they wait</h3>
+    <p>
+      This does not shorten the wait, and it changes how long it feels. A
+      <a href="/wiki/loading-screen">loading screen</a> with your branding beats
+      a blank frame, which reads as a broken stream.
+    </p>
+  </li>
+</ol>
+
+<div class="next">
+  <a href="/wiki/optimise-your-app">Optimise your app &rarr;</a>
+  <p>The wider set of changes, including what matters on phones.</p>
+</div>

@@ -1,0 +1,15 @@
+{
+ "title": "Capacity and regions",
+ "slug": "capacity-and-regions",
+ "section": "Foundational knowledge",
+ "parents": [
+  "blogs-and-articles"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/understanding-ccu",
+ "rewritten": true,
+ "replaces": [
+  "understanding-ccu",
+  "datacenter-routing",
+  "upload-speed-overview-by-region"
+ ]
+}
