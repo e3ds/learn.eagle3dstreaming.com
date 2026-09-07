@@ -40,6 +40,29 @@ const OUT = path.join(ROOT, "site", "wiki");
  * them if we ever point somewhere else. */
 const IMAGE_BASE = "/images/";
 
+/* [E3DS-ONE-TREE] The hand-written pages that predate the migration. They are
+ * listed here so they appear in the SAME tree as everything else.
+ *
+ * There used to be a second generator - build-nav.js reading nav.json - which
+ * stamped its own tree into these pages. The result was two navigations that
+ * knew nothing about each other: the wiki pages listed 18 real pages, and these
+ * pages listed placeholders for pages that were never written, including a
+ * greyed-out "Getting started" that had in fact existed for hours.
+ *
+ * They become content fragments when they are rewritten; until then this keeps
+ * them in one tree instead of two. */
+const EXTRA_PAGES = [
+  { slug: "microphone-settings", title: "Microphone settings",
+    url: "/microphone-settings.html", parents: [] },
+  { slug: "fullscreen-button", title: "Fullscreen button",
+    url: "/fullscreen-button.html", parents: [] },
+];
+
+/* The pages that are not generated from a fragment, but still carry the tree. */
+const LEGACY_FILES = ["index.html", "microphone-settings.html", "fullscreen-button.html"];
+const NAV_BEGIN = "<!-- E3DS-NAV:BEGIN generated from nav.json by build-nav.js - do not edit by hand -->";
+const NAV_END = "<!-- E3DS-NAV:END -->";
+
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
   .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -84,7 +107,8 @@ function navHtml(tree, current) {
   const node = (p, depth) => {
     const children = kids[p.slug] || [];
     const on = p.slug === current;
-    const link = '<a href="/wiki/' + p.slug + '"' + (on ? ' class="on" aria-current="page"' : "")
+    const link = '<a href="' + (p.url || ("/wiki/" + p.slug)) + '"'
+      + (on ? ' class="on" aria-current="page"' : "")
       + ">" + esc(p.title) + "</a>";
     if (!children.length) return "<li>" + link + "</li>";
     return '<li><details class="e3dsNavSec"' + (holds(p) ? " open" : "") + "><summary>"
@@ -143,7 +167,7 @@ function main() {
     console.log("  no content in content/wiki - nothing to build");
     return;
   }
-  const tree = buildTree(pages);
+  const tree = buildTree(pages.concat(EXTRA_PAGES));
   fs.mkdirSync(OUT, { recursive: true });
 
   let written = 0;
@@ -166,6 +190,27 @@ function main() {
     written++;
   }
 
+  /* The hand-written pages get the SAME tree, stamped between the markers they
+   * already carry. Their CSS is lifted out of template.html rather than copied,
+   * so the rules cannot drift between the two kinds of page. */
+  const navCss = template.slice(
+    template.indexOf("/* NAV-CSS:BEGIN"),
+    template.indexOf("/* NAV-CSS:END */") + "/* NAV-CSS:END */".length);
+  for (const f of LEGACY_FILES) {
+    const file = path.join(ROOT, "site", f);
+    if (!fs.existsSync(file)) continue;
+    let html = fs.readFileSync(file, "utf8");
+    const b = html.indexOf(NAV_BEGIN), e = html.indexOf(NAV_END);
+    if (b === -1 || e === -1) { console.log("  SKIPPED " + f + " - no nav markers"); continue; }
+    const slug = f.replace(/\.html$/, "");
+    const block = NAV_BEGIN + "\n"
+      + '<meta name="robots" content="noindex,nofollow">\n'
+      + "<style>" + navCss + "</style>" + "\n"
+      + navHtml(tree, slug) + "\n" + NAV_END;
+    fs.writeFileSync(file, html.slice(0, b) + block + html.slice(e + NAV_END.length), "utf8");
+    written++;
+  }
+
   /* An index of what exists, for the language models that look for one, and
    * cheap enough to regenerate every build rather than let it go stale. */
   const llms = ["# Eagle 3D Streaming documentation", ""]
@@ -180,7 +225,8 @@ function main() {
   if (LAUNCHED) fs.writeFileSync(llmsPath, llms.join("\n") + "\n", "utf8");
   else if (fs.existsSync(llmsPath)) fs.unlinkSync(llmsPath);
 
-  console.log("  " + written + " pages written to site/wiki/");
+  console.log("  " + written + " pages written (" + pages.length + " from fragments, "
+    + LEGACY_FILES.length + " hand-written)");
   console.log("  " + tree.roots.length + " top-level, deepest branch "
     + Math.max(...pages.map((p) => (p.parents || []).length)) + " levels");
 }
