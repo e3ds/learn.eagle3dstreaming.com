@@ -1,0 +1,284 @@
+<p>In this guide, we will demonstrate the SDK integration using a sample demo project available on GitHub. We strongly recommend starting with this demo project to validate your configuration before integrating the SDK into your own production application.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>SDK Reference:</strong></p>
+<p><a href="https://github.com/e3ds/pixelstreaming-sdk/blob/main/scripts/dist/e3dsCore.min_ns.js" rel="noreferrer" target="_blank"><strong>https://github.com/e3ds/pixelstreaming-sdk/blob/main/scripts/dist/e3dsCore.min_ns.js</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Live Streaming URL:</strong></p>
+<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank"><strong>https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Download-the-Demo-Project-with-SDK" style=""><span id="SDKIntegrationGuide-Step1.DownloadtheDemoProjectwithSDK"></span>Step 1. Download the Demo Project with SDK
+ </h2>
+<p>Download the demo project that includes the E3DS Frontend SDK from GitHub: <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank"><strong>Get the Sample Project with SDK from GitHub</strong></a><strong> </strong></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Downloading the demo project" decoding="async" loading="lazy" src="/images/image-20260122-050840-afe1f4.png"/>
+
+<figcaption>Figure 1. Downloading the demo project</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-2.-Extract-the-Downloaded-Project" style=""><span id="SDKIntegrationGuide-Step2.ExtracttheDownloadedProject"></span>Step 2. Extract the Downloaded Project
+ </h2>
+<p>Extract the downloaded ZIP file to a local directory on your machine.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Extracted demo project folder" decoding="async" loading="lazy" src="/images/image-20251205-041801-12ef6e.png"/>
+
+<figcaption>Figure 2. Extracted demo project folder</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-3.-Open-the-extracted-project-folder-using-your-preferred-code-editor" style=""><span id="SDKIntegrationGuide-Step3.Opentheextractedprojectfolderusingyourpreferredcodeeditor"></span>Step 3. Open the extracted project folder using your preferred code editor
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Opening the Project Folder in Editor" decoding="async" loading="lazy" src="/images/image-20251205-041852-c0e8a7.png"/>
+
+<figcaption>Figure 3. Opening the Project Folder in Editor</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-4.-Open-tokenManager.js" style=""><span id="SDKIntegrationGuide-Step4.OpentokenManager.js"></span>Step 4. Open <code>tokenManager.js</code>
+</h2>
+<p>Locate and open the file:</p>
+<pre><code>/tokenManager.js
+</code></pre>
+<p>This file is responsible for generating and managing authentication tokens required to access the Pixel Streaming session.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Opening tokenManager.js" decoding="async" loading="lazy" src="/images/image-20251205-042309-565390.png"/>
+
+<figcaption>
+    Figure 4. Opening <code>tokenManager.js</code>
+</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-5.-Configure-Authentication-Details" style=""><span id="SDKIntegrationGuide-Step5.ConfigureAuthenticationDetails"></span>Step 5. Configure Authentication Details
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Update the following values in <code>tokenManager.js</code>:</p>
+<ul>
+<li>
+<p><strong>streamingApiKey</strong> → Your Streaming API Key (refers to <a href="https://docs.eagle3dstreaming.com/wiki/streaming-api-key" rel="external noreferrer">Streaming API Key</a> doc)</p>
+</li>
+<li>
+<p><strong>clientUserName</strong> → Your Username on the <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer">Eagle 3D Streaming Platform</a></p>
+</li>
+<li>
+<p><strong>tokenExpiryDuration</strong> → Define the token validity duration</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p><strong>Note:</strong> There are two types of API keys. Ensure you are using the <strong>Streaming API Key</strong>.</p>
+</aside>
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 5. Updating API Key and Username" decoding="async" loading="lazy" src="/images/image-20251205-042426-fed4a2.png"/>
+
+<figcaption>Figure 5. Updating API Key and Username</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-6.-Update-Required-Streaming-Information" style=""><span id="SDKIntegrationGuide-Step6.UpdateRequiredStreamingInformation"></span>Step 6. Update Required Streaming Information
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Inside the configuration file, update the following fields:</p>
+<ul>
+<li>
+<p><strong>domain</strong> → <code>connector.eagle3dstreaming.com</code>
+<br/>
+<strong>Note:</strong> If you are using <strong>Enterprise Plan</strong>, please replace this with your custom domain provied by Eagle 3D Streaming. If you are unsure which domain to use, please contact <a href="mailto:support@eagle3dstreaming.com" rel="external noreferrer"><strong>support@eagle3dstreaming.com</strong></a></p>
+</li>
+<li>
+<p><strong>appName</strong> → Name of the app you want to embed</p>
+</li>
+<li>
+<p><strong>configurationName</strong> → Configuration name for the app</p>
+</li>
+<li>
+<p><strong>version</strong> → <code>latest</code> (recommended to use the latest build)</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 6. Updating Stream Configuration" decoding="async" loading="lazy" src="/images/b3285808-2f2e-47b4-9c40-74f9764daf17-873566.png"/>
+
+<figcaption>Figure 6. Updating Stream Configuration</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-7.-Run-the-Demo-HTML-Locally" style=""><span id="SDKIntegrationGuide-Step7.RuntheDemoHTMLLocally"></span>Step 7. Run the Demo HTML Locally
+ </h2>
+<p>Open the following file:</p>
+<pre><code>e3ds_streaming_FE.html
+</code></pre>
+<p>Run it via a <strong>live server</strong> (VS Code Live Server, or any local web server).</p>
+<p>Once running, the page will load the hosted Pixel Streaming experience using your configured settings.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 7. Running the Demo HTML Locally" decoding="async" loading="lazy" src="/images/image-20251205-043024-bed566.png"/>
+
+<figcaption>Figure 7. Running the Demo HTML Locally</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 8. Running the Frontend Locally" decoding="async" loading="lazy" src="/images/image-20251205-043627-7f5ae3.png"/>
+
+<figcaption>Figure 8. Running the Frontend Locally</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Notes-&amp;-Best-Practices" style=""><span id="SDKIntegrationGuide-Notes&amp;amp;BestPractices"></span>Notes &amp; Best Practices
+ </h2>
+<p>This guide demonstrates the simplest and fastest way to set up the E3DS Frontend SDK. After validating the demo project, you can:</p>
+<ul>
+<li>
+<p>Integrate the SDK into your existing web application</p>
+</li>
+<li>
+<p>Customize UI and layout</p>
+</li>
+<li>
+<p>Deploy your webpage on any hosting environment (company servers, cloud hosting, or modern static hosting platforms)</p>
+</li>
+</ul>
+
+<hr/>
+<h2 id="Troubleshooting" style="--text-align: center"><span id="SDKIntegrationGuide-Troubleshooting"></span>Troubleshooting
+ </h2>
+
+<hr/>
+
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Issue</p>
+</th>
+<th>
+<p>Possible Cause</p>
+</th>
+<th>
+<p>Solution</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><strong>Token not generated / Authentication fails</strong></p>
+</td>
+<td>
+<p>Wrong API key, wrong username, or invalid token duration</p>
+</td>
+<td>
+<p>Use <strong>Streaming API Key</strong>, verify username, check tokenExpiryDuration, remove extra spaces/quotes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>Stream not loading</strong></p>
+</td>
+<td>
+<p>Incorrect domain/app/config names</p>
+</td>
+<td>
+<p>Set domain to <code>connector.eagle3dstreaming.com</code>, verify <strong>appName</strong> and <strong>configurationName</strong> exactly as shown in the <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer"><strong>Control Panel</strong></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>Black screen / Stuck on connecting</strong></p>
+</td>
+<td>
+<p>Network or browser blocking WebRTC</p>
+</td>
+<td>
+<p>Try another network, disable VPN, use Chrome/Edge/Firefox</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>Local page not working</strong></p>
+</td>
+<td>
+<p>Opened using file path (<code>file://</code>) instead of a server</p>
+</td>
+<td>
+<p>Run using <strong>Live Server</strong> or any local server tool</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>Console errors</strong></p>
+</td>
+<td>
+<p>CORS issues, missing values, wrong API key, incorrect version</p>
+</td>
+<td>
+<p>Open DevTools → Console; fix the specific error shown</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>App not responding or inactive</strong></p>
+</td>
+<td>
+<p>App not deployed or not ready in the <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer"><strong>Control Panel</strong></a></p>
+</td>
+<td>
+<p>Confirm the app is uploaded &amp; shown in the <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer"><strong>Control Panel</strong></a></p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

@@ -1,0 +1,10 @@
+{
+ "title": "Starting EL automatically upon every Windows startup",
+ "slug": "starting-the-el-automatically-upon-every-windows-s",
+ "section": "System Requirements",
+ "parents": [
+  "system-requirements",
+  "e3ds-streaming-agent-setup-configuration"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/starting-the-el-automatically-upon-every-windows-s"
+}

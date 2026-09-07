@@ -1,0 +1,246 @@
+<p>This document explains how to customize the <strong>loading screens, UI behavior, and communication flow</strong> when embedding an Unreal Engine Pixel Streaming application using the <strong>Eagle 3D Streaming (E3DS) iframe integration</strong>.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>By following this guide, you will understand:</p>
+<ul>
+<li>
+<p>How to customize loading screens at different connection stages</p>
+</li>
+<li>
+<p>The purpose of each iframe connection stage</p>
+</li>
+<li>
+<p>Which UI elements can be customized per stage</p>
+</li>
+<li>
+<p>When webpage-to-Unreal Engine communication becomes available</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Source: </strong><a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">https://github.com/e3ds/E3DS-Iframe-Demo</a> <strong> </strong></p>
+<p><strong>Demo: </strong><a href="https://iframe.eagle3dstreaming.com/" rel="external noreferrer">https://iframe.eagle3dstreaming.com/</a> <strong> </strong></p>
+</aside>
+</div>
+
+<p>Follow the guide below:</p>
+<h2 id="Stage-1.-In-Queue-(stage1_inqueued)" style=""><span id="IframeLifecycleStages-Stage1.InQueue(stage1_inqueued)"></span><strong>Stage 1. In Queue (</strong><code>stage1_inqueued</code><strong>)</strong>
+</h2>
+<p>Triggered when the user enters the queue to connect to the app.</p>
+<pre><code>case "stage1_inqueued":
+    //add your code here
+    break;
+</code></pre>
+
+<p><strong>Purpose:</strong> Show the first loading screen.</p>
+<p><strong>You can customize:</strong> Queue waiting screen (spinner, estimated wait time, branding).</p>
+
+<h2 id="Stage-2.-De-Queued-(stage2_deQueued)" style=""><span id="IframeLifecycleStages-Stage2.De-Queued(stage2_deQueued)"></span><strong>Stage 2. De-Queued (</strong><code>stage2_deQueued</code><strong>)</strong>
+</h2>
+<p>Triggered when the user leaves the queue and is about to start app preparation.</p>
+<pre><code>case "stage2_deQueued":
+    // loading screen 1 hides
+    break;
+</code></pre>
+
+<p><strong>Purpose:</strong> End the queue loading UI.</p>
+<p><strong>You can customize:</strong> Transition animation from queue to loading phase.</p>
+
+<h2 id="Stage-3.-Slot-Occupied-(stage3_slotOccupied)" style=""><span id="IframeLifecycleStages-Stage3.SlotOccupied(stage3_slotOccupied)"></span><strong>Stage 3. Slot Occupied (</strong><code>stage3_slotOccupied</code><strong>)</strong>
+</h2>
+<p>Triggered when the server has reserved a slot for the user’s app session.</p>
+<pre><code>case "stage3_slotOccupied":
+    // add your code here
+    break;
+</code></pre>
+
+<p><strong>Purpose:</strong> Hide queue UI and show app loading UI.</p>
+<p><strong>You can customize:</strong> Loading animation, progress bar, status messages.</p>
+
+<h2 id="Stage-4.-Play-Button-Showed-Up-(stage4_playBtnShowedUp)" style=""><span id="IframeLifecycleStages-Stage4.PlayButtonShowedUp(stage4_playBtnShowedUp)"></span>Stage 4. Play Button Showed Up (<code>stage4_playBtnShowedUp</code>)
+ </h2>
+<p>Triggered when the play button is available to start the Pixel Streaming session.</p>
+<pre><code>case "stage4_playBtnShowedUp":
+    loaderStep2.style.visibility = "hidden";
+    iframeElem.style.visibility = "visible";
+    let playButton = document.getElementById("playButtonParent");
+    playButton.click();
+    onPlayBtnPressed();
+    break;
+</code></pre>
+
+<p><strong>Purpose:</strong> Hide loading, show iframe, automatically click play.</p>
+<p><strong>You can customize:</strong> Play screen, confirmation message before starting.</p>
+
+<h2 id="Stage-5.-Play-Button-Pressed-(stage5_playBtnPressed)" style=""><span id="IframeLifecycleStages-Stage5.PlayButtonPressed(stage5_playBtnPressed)"></span>Stage 5. Play Button Pressed (<code>stage5_playBtnPressed</code>)
+ </h2>
+<p>Triggered after the play button is pressed — the app is now running and interactive.</p>
+<pre><code>case "stage5_playBtnPressed":
+    sidebar.style.visibility = "visible";
+    loaderStep2.style.display = "none";
+    iframeElem.style.visibility = "visible";
+    $('#iframe_1').focus();
+    break;
+</code></pre>
+
+<p><strong>Purpose:</strong> Show sidebar and make iframe interactive.
+ <br/></p>
+<div data-appearance="success" role="note">
+<aside class="callout warning">
+<p><strong>Important:</strong> Only after this stage, you can start sending data from the webpage to the Unreal Engine app.</p>
+</aside>
+</div>
+
+<h2 id="Session-Timeout-(sessionExpired)" style=""><span id="IframeLifecycleStages-SessionTimeout(sessionExpired)"></span>Session Timeout (sessionExpired)
+ </h2>
+<p>Triggered when the streaming session expires (timeout)</p>
+<p><strong>Recommended behavior:</strong></p>
+<ul>
+<li>
+<p>Hide default UI</p>
+</li>
+<li>
+<p>Show custom UI</p>
+</li>
+<li>
+<p>Reload the iframe to restart the connection flow (or show a “Session expired” screen with a Retry button)</p>
+</li>
+</ul>
+<p>Example handling:</p>
+<pre><code class="language-javascript">case "sessionExpired":
+  sidebar.style.visibility = "hidden";
+  iframeElem.style.visibility = "hidden";
+  document.getElementById("iframe_1").focus();
+  document.getElementById("iframe_1").src = document.getElementById("iframe_1").src;
+  break;
+</code></pre>
+
+<h4 id="Other-Events" style=""><span id="IframeLifecycleStages-OtherEvents"></span><strong>Other Events</strong>
+</h4>
+<ul>
+<li>
+<p><code>ResponseFromUE4</code> → Receives messages from Unreal Engine. <em>(Triggered whenever UE app sends data to webpage.)</em>
+<br/></p>
+</li>
+<li>
+<p><code>QueueNumberUpdated</code> →Shows updated queue position. <em>(E.g., from position 4 → 3 → 2 → 1.)</em>
+<br/></p>
+</li>
+<li>
+<p><code>stage3_1_AppAcquiringProgress</code> → Shows download progress <em>(only triggered if the app is not yet downloaded on the streamer machine).</em>
+<br/></p>
+</li>
+<li>
+<p><code>stage3_2_AppPreparationProgress</code> → Shows preparation progress <em>(only triggered if the app is being extracted on the streamer machine).</em>
+<br/></p>
+</li>
+<li>
+<p><code>isIframe</code> → Sends confirmation that this is inside an iframe.
+   <br/></p>
+</li>
+<li>
+<p><code>shortCuts</code> → Logs key press shortcuts.
+   <br/></p>
+</li>
+<li>
+<p><code>Error_Redirect</code> → Handles errors and focuses iframe.</p>
+</li>
+</ul>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Check the complete <code>message.js</code> implementation for a full working example here: <a href="https://github.com/e3ds/E3DS-Iframe-Demo/blob/main/js/message.js" rel="noreferrer" target="_blank">https://github.com/e3ds/E3DS-Iframe-Demo/blob/main/js/message.js</a></p>
+</aside>
+</div>
+<h2 id="Full-Code-Example" style=""><span id="IframeLifecycleStages-FullCodeExample"></span>Full Code Example
+ </h2>
+<p>Expand to view the complete<strong> </strong>example.</p>
+<details class="expand">
+<summary class="expand-control"> message.js </summary>
+<div class="expand-body">
+<pre><code class="language-javascript">const messageHandler = (event) =&gt; {
+    const loaderStep1 = document.getElementById("loaderStep1");
+    const loaderStep2 = document.getElementById("loaderStep2");
+    const loaderStep3 = document.getElementById("loaderStep3");
+    const iframeElem = document.getElementById("iframe_1");
+    const sidebar = document.getElementById("sidebar");
+
+    console.log("received data event type " + event.data.type);
+    switch (event.data.type) {
+        case "ResponseFromUE4":
+            console.log("UE4-&gt;iframe: " + event.data.descriptor);
+            myHandleResponseFunction(event.data.descriptor);
+            break;
+
+        case "stage1_inqueued":
+            loaderStep1.style.visibility = "visible";
+            break;
+
+        case "stage2_deQueued":
+            // loading screen 1 hides
+            break;
+
+        case "stage3_slotOccupied":
+            loaderStep1.style.display = "none";
+            loaderStep2.style.visibility = "visible";
+            break;
+
+        case "stage4_playBtnShowedUp":
+            loaderStep2.style.visibility = "hidden";
+            iframeElem.style.visibility = "visible";
+            let playButton = document.getElementById("playButtonParent");
+            playButton.click();
+            onPlayBtnPressed();
+            break;
+
+        case "stage5_playBtnPressed":
+            sidebar.style.visibility = "visible";
+            loaderStep2.style.display = "none";
+            iframeElem.style.visibility = "visible";
+            $('#iframe_1').focus();
+            break;
+
+        case "_focus":
+            document.getElementById("iframe_1").focus();
+            break;
+
+        case "isIframe":
+            let obj = { cmd: 'isIframe', value: true };
+            document.getElementById("iframe_1").focus();
+            document.getElementById("iframe_1").contentWindow.postMessage(JSON.stringify(obj), "*");
+            break;
+
+        case "QueueNumberUpdated":
+            console.log("QueueNumberUpdated. New queuePosition: " + event.data.queuePosition);
+            break;
+
+        case "stage3_1_AppAcquiringProgress":
+            console.log("stage3_1_AppAcquiringProgress percent: " + JSON.stringify(event.data.percent));
+            break;
+
+        case "stage3_2_AppPreparationProgress":
+            console.log("stage3_2_AppPreparationProgress percent: " + JSON.stringify(event.data.percent));
+            break;
+
+        case "shortCuts":
+            console.log("Key pressed");
+            break;
+
+        case "Error_Redirect":
+            loaderStep2.style.display = "none";
+            iframeElem.style.visibility = "visible";
+            $('#iframe_1').focus();
+            break;
+
+        default:
+            console.error("Unhandled message data type");
+            break;
+    }
+};
+</code></pre>
+</div>
+</details>

@@ -1,0 +1,12 @@
+{
+ "title": "Email to Send Log to Upon App Crash",
+ "slug": "email-to-send-log-to-upon-crash",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration",
+  "edit-your-config",
+  "edit-the-advanced-options-features-of-your-config",
+  "developer"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/email-to-send-log-to-upon-crash"
+}

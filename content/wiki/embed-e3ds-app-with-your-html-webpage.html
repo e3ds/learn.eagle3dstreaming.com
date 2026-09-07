@@ -1,0 +1,236 @@
+<p>In this tutorial we will guide you on how you can embed streaming within your HTML webpage using iframe script.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo Project GitHub Repository: </strong><a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank"><strong>https://github.com/e3ds/E3DS-Iframe-Demo</strong></a><strong> </strong></p>
+<p><strong>Live Demo: </strong><a href="https://iframe.eagle3dstreaming.com/" rel="external noreferrer"><strong>https://iframe.eagle3dstreaming.com/</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Select-the-app-which-you-want-to-embed-with-your-webpage." style=""><span id="EmbedStreamingwithinHTMLWebpage-Step1.Selecttheappwhichyouwanttoembedwithyourwebpage."></span>Step 1. Select the app which you want to embed with your webpage.
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Select the App" decoding="async" loading="lazy" src="/images/image-20250722-172507-f4d28b.png"/>
+
+<figcaption>Figure 1. Select the App</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-2.-Select-a-config." style=""><span id="EmbedStreamingwithinHTMLWebpage-Step2.Selectaconfig."></span>Step 2. Select a config.
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Select a Config" decoding="async" loading="lazy" src="/images/image-20250722-172540-a482d4.png"/>
+
+<figcaption>Figure 2. Select a Config</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-3.-Copy-Streaming-iFrame-Script." style=""><span id="EmbedStreamingwithinHTMLWebpage-Step3.CopyStreamingiFrameScript."></span>Step 3. Copy Streaming iFrame Script.
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Copy iFrame Script" decoding="async" loading="lazy" src="/images/image-20250722-172558-b8a360.png"/>
+
+<figcaption>Figure 3. Copy iFrame Script</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-4.-Now-open-any-html-editor-and-create-a-folder." style=""><span id="EmbedStreamingwithinHTMLWebpage-Step4.Nowopenanyhtmleditorandcreateafolder."></span>Step 4. Now open any html editor and create a folder.
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Create a Folder" decoding="async" loading="lazy" src="/images/image-20241031-044540-e55169.png"/>
+
+<figcaption>Figure 4. Create a Folder</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-5.-Create-“index.html”-file-inside-the-folder." style=""><span id="EmbedStreamingwithinHTMLWebpage-Step5.Create“index.html”fileinsidethefolder."></span>Step 5. Create “index.html” file inside the folder.
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 5. Create index.html File" decoding="async" loading="lazy" src="/images/image-20241031-044645-6be2d6.png"/>
+
+<figcaption>Figure 5. Create index.html File</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-6.-Copy-the-code-below-and-paste-it-inside-index.html." style=""><span id="EmbedStreamingwithinHTMLWebpage-Step6.Copythecodebelowandpasteitinsideindex.html."></span>Step 6. Copy the code below and paste it inside index.html.
+ </h2>
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Demo&lt;/title&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div&gt;
+           //paste the copied iFrame Script here
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 6. index.html File" decoding="async" loading="lazy" src="/images/image-20241031-052411-58a341.png"/>
+
+<figcaption>Figure 6. index.html File</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-7.-Now-paste-the-copied-iFrame-script-inside-the-&lt;div&gt;-below." style=""><span id="EmbedStreamingwithinHTMLWebpage-Step7.NowpastethecopiediFramescriptinsidethe&amp;lt;div&amp;gt;below."></span>Step 7. Now paste the copied iFrame script inside the <code>&lt;div&gt;</code> below.
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 7. Paste the iFrame Script" decoding="async" loading="lazy" src="/images/image-20250722-172910-b1fb64.png"/>
+
+<figcaption>Figure 7. Paste the iFrame Script</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-8.-Enable-Keyboard-Controls-(W,-A,-S,-D)" style=""><span id="EmbedStreamingwithinHTMLWebpage-Step8.EnableKeyboardControls(W,A,S,D)"></span>Step 8. Enable Keyboard Controls (W, A, S, D)
+ </h2>
+<p>Add the following script to your HTML file (you can place it either inside the <code>&lt;head&gt;</code> section or just before the closing <code>&lt;/body&gt;</code> tag):</p>
+<pre><code>&lt;script&gt;
+  window.onload = function() {
+      var iframe = document.getElementById('iframe_1');
+      iframe.focus();
+  };
+&lt;/script&gt;
+</code></pre>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Note:</strong>
+<br/>
+   Ensure your <code>&lt;iframe&gt;</code> element has the ID <code>iframe_1</code> in your HTML.
+   <br/>
+   This script ensures the iframe automatically receives focus when the page loads, allowing <strong>W, A, S, D</strong> keyboard controls to function properly.</p>
+</aside>
+</div>
+
+<h2 id="Step-9.-Run-the-page-locally" style=""><span id="EmbedStreamingwithinHTMLWebpage-Step9.Runthepagelocally"></span>Step 9. Run the page locally
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 8. Run the page locally" decoding="async" loading="lazy" src="/images/image-20250722-173056-6512f8.png"/>
+
+<figcaption>Figure 8. Run the page locally</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>To learn how to communicate between Unreal app and the iFrame, follow this documentation:</p>
+<p><a href="/wiki/communication"><strong>Communication Between Unreal App and iFrame</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>To learn how to embed streaming within a React Webpage, follow this documentation:</p>
+<p><a href="/wiki/embed-streaming-within-react-webpage-using-iframe">Embed Streaming within React Webpage</a></p>
+</aside>
+</div>
+
+<h2 id="Troubleshooting" style=""><span id="EmbedStreamingwithinHTMLWebpage-Troubleshooting"></span>Troubleshooting
+ </h2>
+
+<h4 id="1.-Mobile-Autoplay" style=""><span id="EmbedStreamingwithinHTMLWebpage-1.MobileAutoplay"></span>1. Mobile Autoplay
+ </h4>
+<p>Enabling autoplay in iframe embedded system may create an issue in mobile. If you face such issues then first disable autoplay and see if that solves the issue or not.</p>
+
+<h4 id="2.-Unresponsive-Keyboard" style=""><span id="EmbedStreamingwithinHTMLWebpage-2.UnresponsiveKeyboard"></span>2. Unresponsive Keyboard
+ </h4>
+<p>If the keyboard does not work then it could be a focus issue. Please append the <strong>script </strong>from below and see if that helps or not.</p>
+<pre><code>&lt;div id="content"   style="position: absolute;left: 0;right: 0;bottom: 0;top: 0px;" &gt;
+	&lt;iframe id="iframe_1"                                               
+		src="YOURURL_from_"
+		width="100%" height="100%" allowfullscreen&gt;
+	&lt;/iframe&gt;
+&lt;/div&gt;
+           
+           
+&lt;script&gt;
+    setInterval(function () {
+        $('#iframe_1').focus();
+    }, 1000);
+&lt;/script&gt;
+</code></pre>
+
+<h4 id="3.-Quality-of-the-stream-in-iFrame" style=""><span id="EmbedStreamingwithinHTMLWebpage-3.QualityofthestreaminiFrame"></span>3. Quality of the stream in iFrame
+ </h4>
+<p>The Quality of the stream drops after embedding the App URL in iFrame.</p>
+<p>You can set a custom resolution by increasing the width and the height from iFrame. <a href="/wiki/set-the-resolution-in-iframe"><strong>See this document. </strong></a></p>
+
+<h4 id="4.-XR-Session-Permission" style=""><span id="EmbedStreamingwithinHTMLWebpage-4.XRSessionPermission"></span>4. XR Session Permission
+ </h4>
+<p>If xr permission is not exclusively added in the iframe tag you might get this error:
+ <br/>
+<span style="--color: var(--red, #ff5630);">SecurityError: Failed to execute 'isSessionSupported' on 'XRSystem': Access to the feature "xr" is disallowed by permissions policy.</span>
+<br/>
+ If your app requires uses XR or you would like to get rid of this error message add the required permission in your html page like this:</p>
+<pre><code>&lt;iframe
+  allow="xr-spatial-tracking *; camera *; microphone *"
+  style="visibility: visible;"
+  id="iframe_1"
+  src="Pixel Streaming URL"
+  width="100%"
+  height="100%"
+  allowfullscreen
+&gt;
+&lt;/iframe&gt;
+</code></pre>
+
+<h4 id="5.-Full-Screen-Permission-Error" style=""><span id="EmbedStreamingwithinHTMLWebpage-5.FullScreenPermissionError"></span>5. Full Screen Permission Error
+ </h4>
+<p>When attempting to enable fullscreen mode, you may encounter the following error message:</p>
+<blockquote>
+<p><strong>“Permissions Error: Ensure your iframe has allow='fullscreen' enabled”</strong></p>
+</blockquote>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 9. Full Screen Permission Error" decoding="async" loading="lazy" src="/images/image-20260409-044656-53952c.png"/>
+
+<figcaption>Figure 9. Full Screen Permission Error</figcaption>
+</figure>
+
+</div>
+<p>This issue occurs when the <strong>iframe does not have fullscreen permission enabled</strong>. To resolve this issue, you need to enable fullscreen permission in your iframe by adding the <code>allow="fullscreen"</code> attribute.
+ <br/></p>
+<p>Example:</p>
+<pre><code class="language-html">&lt;iframe
+      id="iframe_1"
+      src="Pixel Streaming URL"
+      allow="fullscreen"
+ &gt;&lt;/iframe&gt;
+</code></pre>

@@ -1,0 +1,231 @@
+<p>In this guide, we’ll show you how to <strong>receive data</strong> from an <strong>Unreal Engine (UE) application (sender)</strong> into your <strong>webpage (receiver)</strong> using the <strong>Eagle 3D Streaming SDK.</strong></p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Live Streaming URL</strong></p>
+<p>You can test this workflow using the live streaming URL below:</p>
+<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank"><strong>https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</strong></a><strong> </strong>
+<br/></p>
+<p><strong>Demo Project GitHub Repository: </strong><a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank"><strong>https://github.com/e3ds/pixelstreaming-sdk</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Add-Callback-Function-in-scripts_demo.js" style=""><span id="ReceiveDatainWebpagefromUnrealApp-Step1.AddCallbackFunctioninscripts_demo.js"></span>Step 1. Add Callback Function in <code>scripts_demo.js</code>
+</h2>
+<p>Open your <code>scripts_demo.js</code> file and add this callback function:</p>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onResponseFromUnreal = function(descriptor) {
+    console.log("Message sent from Unreal:", descriptor);
+};
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1: Add onResponseFromUnreal callback in scripts_demo.js" decoding="async" loading="lazy" src="/images/image-20260604-061807-d51bd9.png"/>
+
+<figcaption>
+<strong>Figure 1:</strong> Add <code>onResponseFromUnreal</code> callback in <code>scripts_demo.js</code>
+</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Explanation</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Code</p>
+</th>
+<th>
+<p>Meaning</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>e3ds_controller.callbacks.onResponseFromUnreal</code></p>
+</td>
+<td>
+<p>This callback is triggered when the webpage receives data from the Unreal app.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>function(descriptor)</code></p>
+</td>
+<td>
+<p><code>descriptor</code> contains the message or data sent from Unreal.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>console.log("UnrealResponse:", descriptor);</code></p>
+</td>
+<td>
+<p>Prints the received Unreal message in the browser console for testing/debugging.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<p>For testing, we added <code>console.log()</code> to print the message sent from Unreal in the browser console.</p>
+<p>You can later use this received message as per your requirements, for example:</p>
+<ul>
+<li>
+<p>Show it on the webpage</p>
+</li>
+<li>
+<p>Trigger a frontend action</p>
+</li>
+<li>
+<p>Update UI</p>
+</li>
+<li>
+<p>Open a modal</p>
+</li>
+<li>
+<p>Store the data</p>
+</li>
+<li>
+<p>Process commands from Unreal</p>
+</li>
+</ul>
+
+<h2 id="Step-2.-Send-Message-from-Unreal" style=""><span id="ReceiveDatainWebpagefromUnrealApp-Step2.SendMessagefromUnreal"></span>Step 2. Send Message from Unreal
+ </h2>
+<p>Now send a message from the Unreal app.</p>
+<p>In our demo app, we have an <strong>Open URL</strong> button inside the Unreal application.</p>
+<p>Click the <strong>Open URL</strong> button in the Unreal app.</p>
+<p>When the button is clicked, Unreal sends a message to the webpage.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2: Click the button inside the Unreal app to send a message to the webpage" decoding="async" loading="lazy" src="/images/image-20260604-061905-4cec25.png"/>
+
+<figcaption>
+<strong>Figure 2:</strong> Click the button inside the Unreal app to send a message to the webpage
+   </figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-3.-Check-Browser-Console-Log" style=""><span id="ReceiveDatainWebpagefromUnrealApp-Step3.CheckBrowserConsoleLog"></span>Step 3. Check Browser Console Log
+ </h2>
+<p>Open the browser Developer Tools.</p>
+<p>You can open Developer Tools by pressing:</p>
+<pre><code>F12
+</code></pre>
+<p>or:</p>
+<pre><code>Right click on webpage → Inspect → Console
+</code></pre>
+<p>Now check the <strong>Console</strong> tab.</p>
+<p>If the message is received successfully from Unreal, you should see a log like this:</p>
+<pre><code>UnrealResponse: &lt;message from Unreal&gt;
+</code></pre>
+<p>This confirms that the webpage successfully received data from the Unreal application.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3: Browser console showing the message received from Unreal" decoding="async" loading="lazy" src="/images/image-20260604-062055-b61f45.png"/>
+
+<figcaption>
+<strong>Figure 3:</strong> Browser console showing the message received from Unreal
+   </figcaption>
+</figure>
+
+</div>
+
+<h2 id="Expected-Result" style=""><span id="ReceiveDatainWebpagefromUnrealApp-ExpectedResult"></span>Expected Result
+ </h2>
+<p>After completing the steps:</p>
+<ol>
+<li>
+<p>Unreal sends a message.</p>
+</li>
+<li>
+<p>The webpage receives the message.</p>
+</li>
+<li>
+<p>The message prints in the browser console.</p>
+</li>
+</ol>
+<p>Example console output:</p>
+<pre><code>Message sent from Unreal: {"cmd":"openUrl","value":"https://eagle3dstreaming.com"}
+</code></pre>
+
+<h2 id="Demo-Video" style=""><span id="ReceiveDatainWebpagefromUnrealApp-DemoVideo"></span>Demo Video
+ </h2>
+<p>You can watch the demo video below to see the final result:</p>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/imqx9bJ71j8" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<h2 id="Troubleshooting" style=""><span id="ReceiveDatainWebpagefromUnrealApp-Troubleshooting"></span>Troubleshooting
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table>
+<tbody>
+<tr>
+<td>
+<p>Issue</p>
+</td>
+<td>
+<p>Possible Cause</p>
+</td>
+<td>
+<p>Solution</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>No message appears in browser console</p>
+</td>
+<td>
+<p>Callback function is not added or not loaded</p>
+</td>
+<td>
+<p>Make sure <code>onResponseFromUnreal</code> is added in <code>scripts_demo.js</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>e3ds_controller is not defined</code></p>
+</td>
+<td>
+<p>SDK is not loaded yet</p>
+</td>
+<td>
+<p>Make sure the SDK script is loaded before using <code>e3ds_controller.callbacks</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Unreal button clicked but no browser response</p>
+</td>
+<td>
+<p>Unreal may not be sending the message correctly</p>
+</td>
+<td>
+<p>Check the Unreal Blueprint/message-sending setup.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

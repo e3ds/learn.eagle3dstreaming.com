@@ -1,0 +1,156 @@
+<p>In this document we will explain how to set up <strong>Blueprint nodes</strong> in Unreal Engine to allow a user to download a file from a specific path on the server via the <strong>Eagle 3D Streaming (E3DS)</strong> platform.</p>
+
+<h2 id="Video-Preview" style=""><span id="DownloadaFilefromtheServer-VideoPreview"></span>Video Preview
+ </h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/dZm_SRZtrPk" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo URL:</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Pixel Streaming Demos (click a version to launch):</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE53/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.3 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE54/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.4 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE55/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.5 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE56/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.6 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE57/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.7 Demo</strong></a>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE58/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.8 Demo</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Prerequisite:</strong></p>
+<p>Before proceeding, ensure you have <strong>downloaded and installed the E3DS Features Plugin</strong> in your Unreal Engine project. For detailed instructions, refer to:
+   <br/>
+<a href="/wiki/download-and-install-the-e3ds-features-plugin"><u><strong>Download and Install the E3DS Features Plugin</strong></u></a></p>
+</aside>
+</div>
+
+<p>Follow the guidelines below:</p>
+<h2 id="Part-1.-Blueprint-Logic-for-Downloading-a-File" style=""><span id="DownloadaFilefromtheServer-Part1.BlueprintLogicforDownloadingaFile"></span><strong>Part 1. Blueprint Logic for Downloading a File</strong>
+</h2>
+<ol>
+<li>
+<p><strong>Open your level</strong> that you intend to stream.
+   <br/></p>
+</li>
+<li>
+<p><strong>Add the E3DS_PS_actor</strong> to your level if it’s not already present.
+   <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Drag and Drop E3DS_PS_actor into Your Level" decoding="async" loading="lazy" src="/images/image-20250729-044523-503092.png"/>
+
+<figcaption>Figure 1. Drag and Drop E3DS_PS_actor into Your Level</figcaption>
+</figure>
+
+</div>
+
+</li>
+<li>
+<p>Open the <strong>Level Blueprint</strong>.
+   <br/></p>
+</li>
+<li>
+<p>In the Event Graph, right-click and search for the <strong>Keyboard H</strong> event to add it to the graph.
+   <br/></p>
+</li>
+<li>
+<p>Drag from the <code>Pressed</code> execution pin of the <strong>H</strong> key event and search for the <strong>Download A File From Unreal App Directory To User's Device</strong> node.
+   <br/></p>
+</li>
+<li>
+<p>Right-click on the graph and add a <strong>Get Project File Path</strong> node. You will need to provide the path to the file you want to make downloadable.
+   <br/></p>
+</li>
+<li>
+<p>Right-click again and add the <strong>Construct PS Message To Download A File from Unreal App Directory To User's Device</strong> node.
+   <br/></p>
+</li>
+<li>
+<p>Connect the <code>Return Value</code> of the <strong>Get Project File Path</strong> node to the <code>Relative Path Of The File In Unreal Path Directory</code> input pin of the <code>Construct PS Message...</code> node.
+   <br/></p>
+</li>
+<li>
+<p>Connect the <code>Message To Send To E3DS</code> output pin from the <code>Construct</code> node to the <code>Relative Path Of The File In Unreal Path Directory</code> input pin on the <code>Download A File...</code> node.
+   <br/></p>
+</li>
+<li>
+<p>Connect the nodes as shown below.
+   <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Connect the Nodes" decoding="async" loading="lazy" src="/images/image-20250729-044542-95575b.png"/>
+
+<figcaption>Figure 2. Connect the Nodes</figcaption>
+</figure>
+
+</div>
+
+</li>
+<li>
+<p>Compile and <strong>Save</strong> the Blueprint.</p>
+</li>
+</ol>
+
+<h2 id="Part-2.-Verification" style=""><span id="DownloadaFilefromtheServer-Part2.Verification"></span><strong>Part 2. Verification</strong>
+</h2>
+<p>To verify that the file download functionality works:</p>
+<ol>
+<li>
+<p>Connect to your <strong>remote editor session</strong> in your web browser. Refer to:
+   <br/>
+<a href="/wiki/remote-control-unreal-editor-plugin">How to test in remote editor streaming</a>
+<br/></p>
+</li>
+<li>
+<p>Click inside the editor viewport to ensure it has focus.
+   <br/></p>
+</li>
+<li>
+<p>Press the <strong>H key</strong> on your keyboard.</p>
+</li>
+</ol>
+
+<p><strong>Expected Result:</strong></p>
+<ul>
+<li>
+<p>Your browser should automatically download the file specified in the <strong>Get Project File Path</strong> node from the server.</p>
+</li>
+<li>
+<p>This confirms that the Blueprint is successfully triggering the file download command on the client’s browser.</p>
+</li>
+</ul>
+
+<h2 id="Related-Guides" style=""><span id="DownloadaFilefromtheServer-RelatedGuides"></span>Related Guides
+ </h2>
+<ul>
+<li>
+<p><a href="/wiki/blueprint-debugging">How to do blueprint debugging incase something in not working</a></p>
+</li>
+</ul>

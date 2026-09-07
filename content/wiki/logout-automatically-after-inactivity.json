@@ -1,0 +1,11 @@
+{
+ "title": "Logout automatically after Inactivity",
+ "slug": "logout-automatically-after-inactivity",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration",
+  "edit-your-config",
+  "edit-the-common-config-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/logout-automatically-after-inactivity"
+}

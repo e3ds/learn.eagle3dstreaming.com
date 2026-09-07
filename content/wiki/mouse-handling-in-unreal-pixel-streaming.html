@@ -1,0 +1,167 @@
+<p>In Unreal Engine Pixel Streaming applications, mouse input can be managed at two distinct layers:</p>
+<ol>
+<li>
+<p>Inside the Unreal application (Unreal mouse cursor)</p>
+</li>
+<li>
+<p>In the web browser (Browser mouse cursor)</p>
+</li>
+</ol>
+<p>Understanding how these two interact is important for achieving smooth and responsive Pixel Streaming experience.</p>
+
+<h2 id="Option-1.-Enable-Mouse-Cursor-Inside-the-Unreal-Game" style=""><span id="MouseHandlinginUnrealPixelStreaming-Option1.EnableMouseCursorInsidetheUnrealGame"></span>Option 1. Enable Mouse Cursor Inside the Unreal Game
+ </h2>
+<p>In this approach, the mouse cursor is enabled directly inside the Unreal Engine project (for example using <code>Show Mouse Cursor</code> in the Player Controller).</p>
+
+<h4 id="Behavior" style=""><span id="MouseHandlinginUnrealPixelStreaming-Behavior"></span>Behavior
+ </h4>
+<ul>
+<li>
+<p>The cursor is rendered inside the the streamed video output</p>
+</li>
+<li>
+<p>Mouse movement is sent from the browser to Unreal and then rendered back as video</p>
+</li>
+</ul>
+
+<h4 id="Drawbacks" style=""><span id="MouseHandlinginUnrealPixelStreaming-Drawbacks"></span>Drawbacks
+ </h4>
+<ul>
+<li>
+<p>The cursor becomes part of the video stream</p>
+</li>
+<li>
+<p>This introduces <strong>visible latency</strong> between mouse movement and cursor position</p>
+</li>
+<li>
+<p>The cursor may feel slow or slightly delayed, especially on higher-latency networks</p>
+</li>
+</ul>
+
+<h4 id="Recommendation" style=""><span id="MouseHandlinginUnrealPixelStreaming-Recommendation"></span>Recommendation
+ </h4>
+<p>❌ Not recommended for Pixel Streaming</p>
+<p>Because the cursor is rendered inside the video stream, any network delay directly affects cursor responsiveness. This can result in a poor user experience, especially for UI-heavy applications.</p>
+
+<h2 id="Option-2.-Enable-Browser-Mouse-Cursor-(Recommended)" style=""><span id="MouseHandlinginUnrealPixelStreaming-Option2.EnableBrowserMouseCursor(Recommended)"></span>Option 2. Enable Browser Mouse Cursor (Recommended)
+ </h2>
+<p>In this approach, the mouse cursor is handled entirely by the browser while Unreal receives only the input events.</p>
+
+<h4 id="Behavior.1" style=""><span id="MouseHandlinginUnrealPixelStreaming-Behavior"></span>Behavior
+ </h4>
+<ul>
+<li>
+<p>The browser displays the mouse cursor locally</p>
+</li>
+<li>
+<p>Unreal receives mouse input instantly without rendering the cursor</p>
+</li>
+<li>
+<p>Cursor movement feels immediate and smooth</p>
+</li>
+</ul>
+
+<h4 id="Advantages" style=""><span id="MouseHandlinginUnrealPixelStreaming-Advantages"></span>Advantages
+ </h4>
+<ul>
+<li>
+<p>No visible cursor latency</p>
+</li>
+<li>
+<p>Much smoother UI interaction</p>
+</li>
+<li>
+<p>Ideal for menus, UI panels, configurators, and interactive tools</p>
+</li>
+</ul>
+
+<h4 id="Recommendation.1" style=""><span id="MouseHandlinginUnrealPixelStreaming-Recommendation"></span>Recommendation
+ </h4>
+<p>✅ Strongly recommended for Pixel Streaming</p>
+<p>Using the browser mouse provides the best user experience and avoids the latency issues associated with rendering the cursor inside the streamed video.</p>
+
+<h4 id="How-to-Enable-Browser-Mouse" style=""><span id="MouseHandlinginUnrealPixelStreaming-HowtoEnableBrowserMouse"></span>How to Enable Browser Mouse
+ </h4>
+<p>To enable and configure the browser mouse for Pixel Streaming, please follow the official Eagle 3D Streaming guide:</p>
+<p><a href="https://docs.eagle3dstreaming.com/wiki/show-your-browser-mouse" rel="external noreferrer"><strong>Enable Browser Mouse</strong></a></p>
+
+<h2 id="Option-3.-Enable-Both-Unreal-Mouse-and-Browser-Mouse" style=""><span id="MouseHandlinginUnrealPixelStreaming-Option3.EnableBothUnrealMouseandBrowserMouse"></span>Option 3. Enable Both Unreal Mouse and Browser Mouse
+ </h2>
+<p>Enabling both cursor systems at the same time can cause conflicts and unpredictable behavior.</p>
+
+<h4 id="Issues-You-May-Encounter" style=""><span id="MouseHandlinginUnrealPixelStreaming-IssuesYouMayEncounter"></span>Issues You May Encounter
+ </h4>
+<ul>
+<li>
+<p>Two visible cursors (one from the browser, one from Unreal)</p>
+</li>
+<li>
+<p>Cursor misalignment</p>
+</li>
+<li>
+<p>Inconsistent click behavior</p>
+</li>
+<li>
+<p>Increased user confusion</p>
+</li>
+</ul>
+
+<h4 id="Recommendation.2" style=""><span id="MouseHandlinginUnrealPixelStreaming-Recommendation"></span>Recommendation
+ </h4>
+<p>❌ Do not enable both at the same time</p>
+<p>This setup leads to a degraded experience and should be avoided in production environments.</p>
+
+<h2 id="Summary" style=""><span id="MouseHandlinginUnrealPixelStreaming-Summary"></span>Summary
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Setup</p>
+</th>
+<th>
+<p>Experience</p>
+</th>
+<th>
+<p>Recommendation</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Unreal mouse only</p>
+</td>
+<td>
+<p>Cursor latency, delayed movement</p>
+</td>
+<td>
+<p>❌ Not recommended</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Browser mouse only</p>
+</td>
+<td>
+<p>Smooth, responsive interaction</p>
+</td>
+<td>
+<p>✅ Recommended</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Both enabled</p>
+</td>
+<td>
+<p>Double cursor, input conflicts</p>
+</td>
+<td>
+<p>❌ Not recommended</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

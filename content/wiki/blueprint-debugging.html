@@ -1,0 +1,94 @@
+<p>This guide explains how to use breakpoints to debug Blueprint logic inside a <strong>remote Unreal Editor session</strong> running with Pixel Streaming.</p>
+
+<h2 id="Video-Preview" style=""><span id="DebuggingandTestingPixelStreamingCode-VideoPreview"></span><strong>Video Preview</strong>
+</h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/6VwY0OrQ9Ek" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<p>(Check timestamp: 2:39–3:25)</p>
+
+<h2 id="Debugging-with-a-Breakpoint" style=""><span id="DebuggingandTestingPixelStreamingCode-DebuggingwithaBreakpoint"></span><strong>Debugging with a Breakpoint</strong>
+</h2>
+<p>If your Blueprint logic is not executing as expected, you can use the <strong>Blueprint Debugger</strong> to trace execution flow directly on the server.</p>
+<p>Follow the steps below:</p>
+<ol>
+<li>
+<p>In the remote editor session streaming in your browser, open the <strong>Level Blueprint</strong> (or the Blueprint you wish to debug).
+   <br/></p>
+</li>
+<li>
+<p>Locate the node where you suspect the issue might be. For this example, we'll use the <strong>Print String</strong> node.
+   <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Locate the Node" decoding="async" loading="lazy" src="/images/image-20250729-045103-351863.png"/>
+
+<figcaption>Figure 1. Locate the Node</figcaption>
+</figure>
+
+</div>
+
+</li>
+<li>
+<p>If you press 1 it’ll print “<strong>Hello</strong>” on the screen
+   <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Press 1" decoding="async" loading="lazy" src="/images/image-20250729-045130-fa6664.png"/>
+
+<figcaption>
+<em>Figure 2. Press 1</em>
+</figcaption>
+</figure>
+
+</div>
+
+</li>
+<li>
+<p>Right-click on the <strong>Print String</strong> node and select <strong>Add Breakpoint</strong> from the context menu. A solid red octagon icon will appear on the node, indicating that the breakpoint is active.
+   <br/></p>
+</li>
+<li>
+<p>Return to the main editor viewport and trigger the event. In this case, press the <strong>1</strong> key.
+   <br/></p>
+</li>
+<li>
+<p><strong>Expected Result:</strong> The remote editor session will pause, and the view will automatically switch to the Blueprint's Event Graph. A large red arrow will point to the node with the breakpoint, showing that the program's execution has paused at that exact point.
+   <br/>
+<br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Remote Editor Session Paused" decoding="async" loading="lazy" src="/images/image-20250729-045208-aeddb4.png"/>
+
+<figcaption>Figure 3. Remote Editor Session Paused</figcaption>
+</figure>
+
+</div>
+
+</li>
+<li>
+<p>This confirms that the keypress is being detected and the Blueprint logic is running up to that point. You can now hover your mouse over the node's input and output pins to inspect the data values at that moment in time, helping you identify the source of the problem.</p>
+
+</li>
+</ol>
+
+<h2 id="Related-Guides" style=""><span id="DebuggingandTestingPixelStreamingCode-RelatedGuides"></span>Related Guides
+ </h2>
+<ul>
+<li>
+<p><a href="/wiki/blueprint-debugging">How to do blueprint debugging incase something in not working</a></p>
+</li>
+</ul>

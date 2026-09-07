@@ -1,0 +1,12 @@
+{
+ "title": "Draggable Settings Button",
+ "slug": "draggable-settings-button",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration",
+  "edit-your-config",
+  "edit-the-advanced-options-features-of-your-config",
+  "streaming-ui"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/draggable-settings-button"
+}

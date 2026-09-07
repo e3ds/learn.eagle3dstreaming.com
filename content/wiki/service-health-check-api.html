@@ -1,0 +1,211 @@
+<p>The<strong> </strong>Service Health Check API allows you to verify whether the Eagle 3D Streaming Pixel Streaming service is currently operational.</p>
+
+<h2 id="Endpoint"><span id="ServiceHealthCheckAPI-Endpoint"></span>Endpoint
+ </h2>
+<pre><code>POST https://agw.eagle3dstreaming.com/api/v4/health-check
+</code></pre>
+
+<h2 id="Request"><span id="ServiceHealthCheckAPI-Request"></span>Request
+ </h2>
+<h3 id="Headers"><span id="ServiceHealthCheckAPI-Headers"></span>Headers
+ </h3>
+<pre><code>Content-Type: application/json
+</code></pre>
+
+<h3 id="Body"><span id="ServiceHealthCheckAPI-Body"></span>Body
+ </h3>
+<pre><code>{
+  "apiKey": "Insert Your Eagle 3D Streaming API Key"
+}
+</code></pre>
+
+<p>To get API Key follow <a href="https://docs.eagle3dstreaming.com/wiki/api-key" rel="external noreferrer">this doc</a>.</p>
+
+<h2 id="Response"><span id="ServiceHealthCheckAPI-Response"></span>Response
+ </h2>
+<h3 id="Success-Response-(Service-Operational)"><span id="ServiceHealthCheckAPI-SuccessResponse(ServiceOperational)"></span>Success Response (Service Operational)
+ </h3>
+<p>Returned when the service is healthy and the API key is valid:</p>
+<pre><code>{
+  "status": "ok",
+  "checks": {
+    "connector": "healthy"
+  },
+  "timestamp": "2026-04-24T04:32:40.168Z",
+  "version": "1.0.0"
+}
+</code></pre>
+
+<h3 id="Service-Not-Operational"><span id="ServiceHealthCheckAPI-ServiceNotOperational"></span><strong>Service Not Operational</strong>
+</h3>
+<p>Returned when one or more system components are not functioning correctly:</p>
+<pre><code>{
+  "status": "unhealthy",
+  "checks": {
+    "connector": "unhealthy"
+  },
+  "timestamp": "2026-04-24T06:44:20.479Z",
+  "message": "One or more health checks failed"
+}
+</code></pre>
+
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Field</p>
+</th>
+<th>
+<p>Type</p>
+</th>
+<th>
+<p>Description</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>status</code></p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Overall service status (<code>ok</code>, <code>unhealthy</code>, or <code>error</code>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>checks.connector</code></p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Status of the streaming connector (<code>healthy</code> / <code>unhealthy</code>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>timestamp</code></p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Response timestamp (UTC)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>version</code></p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>API version (only in success response)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>message</code></p>
+</td>
+<td>
+<p>string</p>
+</td>
+<td>
+<p>Additional details (present when unhealthy)</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h3 id="Failure-Responses"><span id="ServiceHealthCheckAPI-FailureResponses"></span>Failure Responses
+ </h3>
+<h4 id="Invalid-API-Key"><span id="ServiceHealthCheckAPI-InvalidAPIKey"></span>Invalid API Key
+ </h4>
+<pre><code>{
+  "error": "Invalid API Key",
+  "status": 401,
+  "meta": {
+    "error": {
+      "message": "illegal argument"
+    },
+    "status": 403
+  }
+}
+</code></pre>
+
+<h4 id="Missing-API-Key"><span id="ServiceHealthCheckAPI-MissingAPIKey"></span>Missing API Key
+ </h4>
+<pre><code>{
+  "status": "error",
+  "code": "MISSING_API_KEY",
+  "message": "API key is required and must be non-empty",
+  "timestamp": "2026-04-24T04:38:06.038Z"
+}
+</code></pre>
+
+<h2 id="Status-Interpretation"><span id="ServiceHealthCheckAPI-StatusInterpretation"></span>Status Interpretation
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Status</p>
+</th>
+<th>
+<p>Meaning</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>ok</code></p>
+</td>
+<td>
+<p>Service is operational</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>unhealthy</code></p>
+</td>
+<td>
+<p>Service is partially or fully unavailable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>error</code></p>
+</td>
+<td>
+<p>Request failed (authentication or validation issue)</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Use-Cases"><span id="ServiceHealthCheckAPI-UseCases"></span>Use Cases
+ </h2>
+<ul>
+<li>
+<p>Display real-time service status in your application</p>
+</li>
+<li>
+<p>Monitor platform health programmatically</p>
+</li>
+<li>
+<p>Notify users if streaming services are unavailable</p>
+</li>
+<li>
+<p>Integrate into dashboards or uptime monitoring tools</p>
+</li>
+</ul>

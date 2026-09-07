@@ -1,0 +1,12 @@
+{
+ "title": "Runtime Notifications",
+ "slug": "runtime-notifications",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration",
+  "edit-your-config",
+  "edit-the-advanced-options-features-of-your-config",
+  "streaming-ui"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/runtime-notifications"
+}

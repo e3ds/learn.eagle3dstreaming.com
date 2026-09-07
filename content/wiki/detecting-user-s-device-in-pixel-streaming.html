@@ -1,0 +1,232 @@
+<p>Eagle 3D Streaming allows your Unreal Engine app to <strong>detect the end user’s device</strong> (OS, platform type, input capabilities, etc.) by leveraging the browser's native information. This enables you to <strong>dynamically adjust controls and UI</strong> — for example, enabling touch-based interaction for mobile users and mouse-based navigation for desktops.</p>
+
+<h2 id="Video-Preview" style=""><span id="DetectingUser&amp;#39;sDeviceinpixelstreaming-VideoPreview"></span>Video Preview
+ </h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/NshaEJa1_w4?si=SlsfyaZ2DCis_k0u" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo URL:</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo" rel="external noreferrer">https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo</a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Pixel Streaming Demos (click a version to launch):</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE53/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.3 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE54/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.4 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE55/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.5 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE56/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.6 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE57/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.7 Demo</strong></a>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE58/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.8 Demo</strong></a></p>
+</aside>
+</div>
+
+<p>You can do this in one of two ways:</p>
+<h2 id="Method-1.-Use-E3DS-Features-Plugin-(Recommended)" style=""><span id="DetectingUser&amp;#39;sDeviceinpixelstreaming-Method1.UseE3DSFeaturesPlugin(Recommended)"></span>Method 1. Use E3DS Features Plugin (<strong>Recommended</strong>)
+ </h2>
+
+<ol>
+<li>
+<p>Add an instance of <code>E3DS_PS_actor</code> (from the plugin) to your level.</p>
+</li>
+<li>
+<p>Call the built-in function:
+   <br/>
+<code>Request User Device Info</code></p>
+</li>
+</ol>
+<p>💡 Bonus: The plugin also includes a helper node
+ <br/>
+<code>Detect User Device</code>
+<br/>
+ which automatically parses the response and returns key values like:</p>
+<ul>
+<li>
+<p>OS Name</p>
+</li>
+<li>
+<p>Is Touch Device (✅ / ❌)</p>
+</li>
+</ul>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Using E3DS Feature Plugin" decoding="async" loading="lazy" src="/images/image-20250805-084524-e4d84d.png"/>
+
+<figcaption>Figure 1. Using E3DS Feature Plugin</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>For calling any function E3DS features plugin you need to have one instance of E3DS_PS_actor in your level you can find this actor in the plugin’s content</p>
+</aside>
+</div>
+
+<p>Once the <strong>E3DS platform</strong> receives your request for user device information, it will respond with a JSON message similar to the example below:</p>
+<pre><code>{
+  "type": "takeUserDeviceInfo",
+  "userDeviceInfo": {
+    "os": {
+      "name": "Windows",
+      "short_name": "WIN",
+      "version": "10",
+      "platform": "x64",
+      "family": "Windows"
+    },
+    // ... additional device information
+  }
+}
+
+</code></pre>
+
+<p>You will receive other device-related data as well (such as browser info, engine, etc.), but in most cases, you’ll only need the <code>os.name</code> and <code>os.short_name</code> fields.</p>
+
+<p>Here are the possible values you might receive in the <code>os.name</code> and <code>os.short_name</code> fields:</p>
+<div class="theme-table" style="--width: 218px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p style="--text-align: center"><strong>name</strong></p>
+</th>
+<th>
+<p style="--text-align: center"><strong>short_name</strong></p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 107px"/>
+<col style="width: 111px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p style="--text-align: center">Windows</p>
+</td>
+<td>
+<p style="--text-align: center">WIN</p>
+</td>
+</tr>
+<tr>
+<td>
+<p style="--text-align: center">macOS</p>
+</td>
+<td>
+<p style="--text-align: center">MAC</p>
+</td>
+</tr>
+<tr>
+<td>
+<p style="--text-align: center">Linux</p>
+</td>
+<td>
+<p style="--text-align: center">LIN</p>
+</td>
+</tr>
+<tr>
+<td>
+<p style="--text-align: center">ChromeOS</p>
+</td>
+<td>
+<p style="--text-align: center">CHR</p>
+</td>
+</tr>
+<tr>
+<td>
+<p style="--text-align: center">Android</p>
+</td>
+<td>
+<p style="--text-align: center">AND</p>
+</td>
+</tr>
+<tr>
+<td>
+<p style="--text-align: center">iOS</p>
+</td>
+<td>
+<p style="--text-align: center">IOS</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<p>You can parse the message and extract the field you need, using your own custom functions, installing plugins (e.g. Json Utilities, VaRest,…) or use E3DS Feature Template function <code>Detect User Device</code> simply connect the function to your <code>On Input Event</code> and this function will extract user’s device and also tell you whether it is a touch device or not</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Collect Device Info" decoding="async" loading="lazy" src="/images/image-20250805-113521-6646f3.png"/>
+
+<figcaption>Figure 2. Collect Device Info</figcaption>
+</figure>
+
+</div>
+
+<p>as an example the blueprint graph above will print the following on an android device.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Showing Device Info" decoding="async" loading="lazy" src="/images/image-20250805-113628-abcfdc.png"/>
+
+<figcaption>Figure 3. Showing Device Info</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Method-2.-Send-Message-Directly-(Not-Recommended)" style=""><span id="DetectingUser&amp;#39;sDeviceinpixelstreaming-Method2.SendMessageDirectly(NotRecommended)"></span>Method 2. Send Message Directly (Not <strong>Recommended</strong>)
+ </h2>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>If you’re not experienced with Blueprint development, do <strong>not</strong> use Method 2. Please use <strong>Method 1</strong> instead — Method 2 is more error-prone and increases the chance of implementation mistakes.</p>
+</aside>
+</div>
+
+<ol>
+<li>
+<p>Add a <strong>Pixel Streaming Input</strong> component in your Blueprint.</p>
+</li>
+<li>
+<p>Use the <code>Send Pixel Streaming Response</code> node to send the following JSON:</p>
+<pre><code>{"cmd":"sendDeviceInfo"}
+</code></pre>
+</li>
+</ol>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Send Message Directly" decoding="async" loading="lazy" src="/images/image-20250805-084427-54687d.png"/>
+
+<figcaption>Figure 4. Send Message Directly</figcaption>
+</figure>
+
+</div>
+<p>This instructs the browser to return the user’s device info.</p>
+
+<p><strong>Use Case:</strong> For developers building custom communication pipelines.</p>

@@ -1,0 +1,571 @@
+<p>Before uploading your Linux-packaged Unreal app to the Eagle 3D Streaming platform, it's important to verify that it runs smoothly in a Pixel Streaming environment. This guide will walk you through testing your app locally using Epic’s Pixel Streaming Signaling Server.</p>
+
+<div data-appearance="warning" role="note">
+<aside class="callout warning">
+<h4 id="Important-Note" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-ImportantNote"></span><strong>Important Note</strong>
+</h4>
+<ul>
+<li>
+<p>All steps must be performed on a <strong>Linux machine.</strong></p>
+</li>
+<li>
+<p>Ensure your <strong>Unreal project has the Pixel Streaming plugin enabled</strong>.</p>
+</li>
+<li>
+<p>The app should already be <strong>packaged for Linux</strong>.</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+
+<h2 id="Step-1.-Run-the-.sh-file-as-Desktop-App" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step1.Runthe.shfileasDesktopApp"></span>Step 1. Run the .sh file as Desktop App
+ </h2>
+<p>Run the packaged <code>.sh</code> file directly:</p>
+<pre><code>chmod +x YourProjectName.sh
+./YourProjectName.sh
+</code></pre>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Run the .sh File" decoding="async" loading="lazy" src="/images/image-20251124-030154-bf909d.png"/>
+
+<figcaption>Figure 1. Run the .sh File</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. App is Running" decoding="async" loading="lazy" src="/images/image-20251124-030734-933549.png"/>
+
+<figcaption>Figure 2. App is Running</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="error" role="note">
+<aside class="callout note">
+<p>If the application does <strong>not</strong> launch as a standard desktop app, the packaged build is invalid. In that case, it will <strong>not</strong> work with Pixel Streaming.
+   <br/></p>
+</aside>
+</div>
+
+<h2 id="Step-2.-Navigate-to-the-WebServers-Folder" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step2.NavigatetotheWebServersFolder"></span>Step 2. Navigate to the WebServers Folder
+ </h2>
+<p data-indentation-level="1">Navigate To: [Your App Folder] → Samples → PixelStreaming → WebServers
+ <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Navigate to WebServers Folder" decoding="async" loading="lazy" src="/images/image-20250806-041340-53f59a.png"/>
+
+<figcaption>Figure 3. Navigate to WebServers Folder</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-3.-Open-Terminal-in-the-WebServers-Directory" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step3.OpenTerminalintheWebServersDirectory"></span>Step 3. Open Terminal in the WebServers Directory
+ </h2>
+
+<h2 id="Step-4.-Make-the-Script-Executable" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step4.MaketheScriptExecutable"></span>Step 4. Make the Script Executable
+ </h2>
+
+<p>Run the following command:</p>
+<pre><code class="language-bash">chmod a+x get_ps_servers.sh
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Running chmod" decoding="async" loading="lazy" src="/images/image-20250806-041722-99b797.png"/>
+
+<figcaption>Figure 4. Running chmod</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-5.-Run-the-shell-command-:" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step5.Runtheshellcommand:"></span>Step 5. Run the shell command :
+ </h2>
+<pre><code>./get_ps_servers.sh
+</code></pre>
+<p>If you see an error like “No such file or directory,” proceed to Step 5. Else go to Step 10.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 5. No Such Directory" decoding="async" loading="lazy" src="/images/image-20250806-042035-ffcc91.png"/>
+
+<figcaption>Figure 5. No Such Directory</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-6.-Check-if-curl-is-Installed" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step6.CheckifcurlisInstalled"></span>Step 6. Check if <code>curl</code> is Installed
+ </h2>
+<p>Run:</p>
+<pre><code>which curl 
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 6. Checking curl" decoding="async" loading="lazy" src="/images/image-20250806-042448-76d429.png"/>
+
+<figcaption>Figure 6. Checking curl</figcaption>
+</figure>
+
+</div>
+
+<p>If there’s no output, install curl in the next step.</p>
+
+<h2 id="Step-7.-Install-curl" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step7.Installcurl"></span>Step 7. Install <code>curl</code>
+</h2>
+<p>Run:</p>
+<pre><code>sudo apt-get install --reinstall curl 
+</code></pre>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>You may be prompted for your password.</p>
+</aside>
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 7. Installing curl" decoding="async" loading="lazy" src="/images/image-20250806-042648-e1bd35.png"/>
+
+<figcaption>Figure 7. Installing curl</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 8. curl Installed" decoding="async" loading="lazy" src="/images/image-20250806-042836-b16854.png"/>
+
+<figcaption>Figure 8. curl Installed</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-8.-Retry-the-command" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step8.Retrythecommand"></span>Step 8. Retry the command
+ </h2>
+<p>Re-run the following:</p>
+<pre><code>chmod a+x get_ps_servers.sh
+</code></pre>
+<pre><code>./get_ps_servers.sh
+</code></pre>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>If it still fails, proceed to Step 8.</p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 9. No Such File or Directory" decoding="async" loading="lazy" src="/images/image-20250806-043206-0c34da.png"/>
+
+<figcaption>Figure 9. No Such File or Directory</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-9.-Convert-command-to-UNIX-Format" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step9.ConvertcommandtoUNIXFormat"></span>Step 9. Convert command to UNIX Format
+ </h2>
+<p>Run:</p>
+<pre><code>dos2unix get_ps_servers.sh
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 10. Converting to UNIX Format" decoding="async" loading="lazy" src="/images/image-20250806-043425-f2324d.png"/>
+
+<figcaption>Figure 10. Converting to UNIX Format</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-10.-Run-the-command-Again[hardBreak]" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step10.RunthecommandAgain"></span>Step 10. Run the command Again
+ <br/>
+</h2>
+<pre><code>chmod a+x get_ps_servers.sh
+</code></pre>
+<pre><code>./get_ps_servers.sh
+</code></pre>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>You should now see folders like <code>SignalingWebServer</code>, <code>SFU</code>, etc.</p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 11. Some Files &amp; Folders are Downloaded" decoding="async" loading="lazy" src="/images/image-20250806-043837-b6f4dc.png"/>
+
+<figcaption>Figure 11. Some Files &amp; Folders are Downloaded</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-11.-Navigate-to-bash-folder" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step11.Navigatetobashfolder"></span>Step 11. Navigate to bash folder
+ </h2>
+<p>Go to:</p>
+<p>SignalingWebServer → platform_scripts → bash</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 12. Navigate to bash Folder" decoding="async" loading="lazy" src="/images/image-20250806-044214-cce4cd.png"/>
+
+<figcaption>Figure 12. Navigate to bash Folder</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Start-12.-Open-Terminal-in-Bash-Folder" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Start12.OpenTerminalinBashFolder"></span>Start 12. Open Terminal in Bash Folder
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 13. Open in Terminal" decoding="async" loading="lazy" src="/images/image-20250806-044353-4577bf.png"/>
+
+<figcaption>Figure 13. Open in Terminal</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-13.-Start-the-Signaling-Server" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step13.StarttheSignalingServer"></span>Step 13. Start the Signaling Server
+ </h2>
+<p>In the terminal, run:</p>
+<pre><code>./run_local.sh
+</code></pre>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>You may be prompted for your password again.</p>
+</aside>
+</div>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>Leave this terminal window open. Do not close it while testing your app.</p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 14. Start the Signaling Server" decoding="async" loading="lazy" src="/images/image-20250806-044706-c9c32c.png"/>
+
+<figcaption>Figure 14. Start the Signaling Server</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 15. Signaling Server Running" decoding="async" loading="lazy" src="/images/image-20250806-044932-75ebc7.png"/>
+
+<figcaption>Figure 15. Signaling Server Running</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-14.-Open-App-Root-Folder-in-Terminal" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step14.OpenAppRootFolderinTerminal"></span>Step 14. Open App Root Folder in Terminal
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Root folder is the folder containing your <code>Engine</code> folder and <code>.sh</code> app script.</p>
+</aside>
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 16. Open Root Folder in a Terminal" decoding="async" loading="lazy" src="/images/image-20250806-045319-164baf.png"/>
+
+<figcaption>Figure 16. Open Root Folder in a Terminal</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-15.-Create-a-new-.sh-file" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step15.Createanew.shfile"></span>Step 15. Create a new .sh file
+ </h2>
+
+<p>Create a new file using the command below. (Use any name you want. Here we used <code>HojatLinxPrjct2.sh</code>)</p>
+<p>Run:</p>
+<pre><code>vim GiveNewFileName.sh
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 17. Create a New .sh File" decoding="async" loading="lazy" src="/images/image-20250806-045822-65abdc.png"/>
+
+<figcaption>Figure 17. Create a New .sh File</figcaption>
+</figure>
+
+</div>
+
+<p>A new blank file will open in the terminal where you can paste the script.
+ <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 18. Created New File" decoding="async" loading="lazy" src="/images/image-20250806-045929-fe2698.png"/>
+
+<figcaption>Figure 18. Created New File</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-16.-Build-the-script" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step16.Buildthescript"></span>Step 16. Build the script
+ </h2>
+
+<p>Below is the script. You’ll need to modify the red-highlighted paths to match your actual app folder structure:</p>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>#!/bin/sh
+   <br/>
+   UE_TRUE_SCRIPT_NAME=$(echo "$0" | xargs readlink -f)
+   <br/>
+   UE_PROJECT_ROOT=$(dirname "$UE_TRUE_SCRIPT_NAME")
+   <br/>
+   chmod +x "$UE_PROJECT_ROOT/<span style="--color: var(--red, #ff5630);"><strong>HojatLinxPrjct/Binaries/Linux/HojatLinxPrjct</strong></span>"</p>
+<p>"$UE_PROJECT_ROOT/<span style="--color: var(--red, #ff5630);"><strong>HojatLinxPrjct/Binaries/Linux/HojatLinxPrjct</strong></span><span style="--color: var(--red, #ff5630);">" </span><span style="--color: var(--red, #ff5630);"><strong>HojatLinxPrjct </strong></span>\
+   <br/>
+   -log -AudioMixer -PixelStreamingIP=localhost -PixelStreamingPort=8888 -RenderOffScreen "$@"</p>
+</aside>
+</div>
+
+<p>In our case the file location is showing here</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 19. Create Script Based on Linux File Location" decoding="async" loading="lazy" src="/images/image-20250806-051207-b9d750.png"/>
+
+<figcaption>Figure 19. Create Script Based on Linux File Location</figcaption>
+</figure>
+
+</div>
+
+<p>We’ve included the script again below so you can copy it easily.</p>
+<pre><code>#!/bin/sh
+UE_TRUE_SCRIPT_NAME=$(echo "$0" | xargs readlink -f)
+UE_PROJECT_ROOT=$(dirname "$UE_TRUE_SCRIPT_NAME")
+chmod +x "$UE_PROJECT_ROOT/HojatLinxPrjct/Binaries/Linux/HojatLinxPrjct"
+
+"$UE_PROJECT_ROOT/HojatLinxPrjct/Binaries/Linux/HojatLinxPrjct" HojatLinxPrjct \
+-log -AudioMixer -PixelStreamingIP=localhost -PixelStreamingPort=8888 -RenderOffScreen "$@"
+</code></pre>
+
+<h2 id="Step-17.-Pass-the-script-in-the-terminal-of-new-file-that-you-have-created-on-step-14" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step17.Passthescriptintheterminalofnewfilethatyouhavecreatedonstep14"></span>Step 17. Pass the script in the terminal of new file that you have created on step 14
+ </h2>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>Add a warning not to press enter</p>
+</aside>
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 20. Passing the Script" decoding="async" loading="lazy" src="/images/image-20250806-050158-070296.png"/>
+
+<figcaption>Figure 20. Passing the Script</figcaption>
+</figure>
+
+</div>
+
+<h2 id="[hardBreak]Step-18.-After-pasting-the-script,-press-:-then-type-wq-and-press-Enter." style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step18.Afterpastingthescript,press:thentypewqandpressEnter."></span>
+<br/>
+ Step 18. After pasting the script, press <code>:</code> then type <code>wq</code> and press <code>Enter</code>.
+ </h2>
+<pre><code>:wq
+</code></pre>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 21. Type :wq and Press Enter Key" decoding="async" loading="lazy" src="/images/image-20250806-052452-543f6e.png"/>
+
+<figcaption>Figure 21. Type :wq and Press Enter Key</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-19.-Check-newly-created-file" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step19.Checknewlycreatedfile"></span>Step 19. Check newly created file
+ </h2>
+<p>Run:</p>
+<pre><code>dir 
+</code></pre>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 22. Newly Created File" decoding="async" loading="lazy" src="/images/image-20250806-052951-2fa841.png"/>
+
+<figcaption>Figure 22. Newly Created File</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-20.--Make-the-Script-Executable" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step20.MaketheScriptExecutable"></span>Step 20. Make the Script Executable
+ </h2>
+<p>Run:</p>
+<pre><code>chmod a+x YourNewlyCreatedFile.sh
+</code></pre>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>You should use your newly created file name instead of YourNewlyCreatedFile.sh.</p>
+<p>In our case the newly created file name is HojatLinxPrjc2.sh. So we used this name</p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 23. Make the Script Executable" decoding="async" loading="lazy" src="/images/image-20250806-053433-4efe64.png"/>
+
+<figcaption>Figure 23. Make the Script Executable</figcaption>
+</figure>
+
+</div>
+
+<h2 id="[hardBreak]Step-21.-Start-the-App" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step21.StarttheApp"></span>
+<br/>
+ Step 21. Start the App
+ </h2>
+<p>Run:</p>
+<pre><code>./YourNewlyCreatedFile.sh.
+</code></pre>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>You should use your newly created file name instead of YourNewlyCreatedFile.sh.</p>
+<p>In our case the newly created file name is HojatLinxPrjc2.sh. So we used this name.</p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 24. Run the App" decoding="async" loading="lazy" src="/images/image-20250806-053811-575c0f.png"/>
+
+<figcaption>Figure 24. Run the App</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>You may need to give password. Give it.</p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 25. App is Started" decoding="async" loading="lazy" src="/images/image-20250806-053933-e87a8c.png"/>
+
+<figcaption>Figure 25. App is Started</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-22.-Launch-the-App-in-Browser" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-Step22.LaunchtheAppinBrowser"></span>Step 22. Launch the App in Browser
+ </h2>
+
+<ol>
+<li>
+<p>On the <strong>same Linux computer</strong>, go to your browser and visit:</p>
+</li>
+</ol>
+<pre><code>localhost
+</code></pre>
+
+<ol start="2">
+<li>
+<p>Click on <strong>“CLICK TO START”</strong> to launch the app.</p>
+</li>
+</ol>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 26. Click to Start" decoding="async" loading="lazy" src="/images/image-20250806-054103-ff1a2c.png"/>
+
+<figcaption>Figure 26. Click to Start</figcaption>
+</figure>
+
+</div>
+
+<p>You should see your app streaming locally.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 27. App is Running" decoding="async" loading="lazy" src="/images/image-20250806-054256-b5b838.png"/>
+
+<figcaption>Figure 27. App is Running</figcaption>
+</figure>
+
+</div>
+
+<h4 id="🌐-Remote-Testing-Option" style=""><span id="TestingLinuxAppLocallyUsingEpic’sSignalingServer-🌐RemoteTestingOption"></span>🌐 <strong>Remote Testing Option</strong>
+</h4>
+<p>You can also test remotely under the <strong>same network</strong> by:</p>
+<ol>
+<li>
+<p>Getting the <strong>PC’s IP Address</strong>:</p>
+</li>
+</ol>
+<pre><code>hostname -I 
+</code></pre>
+
+<ol start="2">
+<li>
+<p>Enter that IP in a browser from another device:</p>
+</li>
+</ol>
+<pre><code>http://&lt;your-ip-address&gt;
+</code></pre>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Note:</strong> For testing outside the network (different Wi-Fi), a <strong>static IP</strong> is required.
+   <br/>
+   (A full remote setup guide is coming soon.)</p>
+</aside>
+</div>

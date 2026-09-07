@@ -1,0 +1,11 @@
+{
+ "title": "Convert the Project into a C++ Project",
+ "slug": "convert-the-project-into-a-c-project",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming",
+  "create-a-multiplayer-desktop-game-application",
+  "add-multiplayer-functionality-in-single-player-gam"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/convert-the-project-into-a-c-project"
+}

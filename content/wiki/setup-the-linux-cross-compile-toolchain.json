@@ -1,0 +1,10 @@
+{
+ "title": "Setup the Linux Cross-Compile Toolchain",
+ "slug": "setup-the-linux-cross-compile-toolchain",
+ "section": "Linux Pixel Streaming",
+ "parents": [
+  "linux-pixel-streaming",
+  "create-a-linux-build"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/setup-the-linux-cross-compile-toolchain"
+}

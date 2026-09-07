@@ -1,0 +1,96 @@
+<p>A common issue in VR applications is the player getting stuck in the ground at the start of the game or after teleportation.</p>
+<p>This happens because the teleportation function moves the <strong>center of the player</strong> to the target location without accounting for the <strong>collision capsule</strong>, causing part of the capsule to intersect the ground.</p>
+<p>For demonstration, we’ll use the <strong>VR Template bundled with Unreal Engine</strong>.</p>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Fix-the-Player-Start-Location" style=""><span id="FixingGroundStuckIssueinVR-Step1.FixthePlayerStartLocation"></span>Step 1. Fix the Player Start Location
+ </h2>
+<ol>
+<li>
+<p>In your level, locate the <strong>Player Start</strong> actor and take note of its original location.</p>
+</li>
+</ol>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Taking Note of Original Location" decoding="async" loading="lazy" src="/images/image-20250803-090357-83ac3d.png"/>
+
+<figcaption>Figure 1. Taking Note of Original Location</figcaption>
+</figure>
+
+</div>
+<ol start="2">
+<li>
+<p>Move the Player Start <strong>upward along the Z-axis</strong> until the player's collision capsule no longer intersects with the ground.</p>
+</li>
+<li>
+<p>in this case an offset of about <strong>+110 units</strong> in the Z direction is enough.</p>
+</li>
+</ol>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Location" decoding="async" loading="lazy" src="/images/image-20250803-090435-753f2e.png"/>
+
+<figcaption>Figure 2. Location</figcaption>
+</figure>
+
+</div>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>ideally you should adjust the player start to a location where it is perfectly standing on the ground and not submerged or floating.</p>
+</aside>
+</div>
+<ol start="4">
+<li>
+<p>When correctly adjusted, the red "Bad Size" warning text on the Player Start actor will disappear.</p>
+</li>
+</ol>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Bad Size" decoding="async" loading="lazy" src="/images/image-20250803-091624-bc4138.png"/>
+
+<figcaption>Figure 3. Bad Size</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Player start actor uses the “default pawn class” specified in your game mode to show and detect collision. make sure the correct class for your pawn is selected.</p>
+</aside>
+</div>
+
+<h2 id="Step-2.-Adjust-the-Teleportation-Function" style=""><span id="FixingGroundStuckIssueinVR-Step2.AdjusttheTeleportationFunction"></span>Step 2. Adjust the Teleportation Function
+ </h2>
+<ol>
+<li>
+<p>Open the <strong>VRPawn</strong> Blueprint.</p>
+</li>
+<li>
+<p>Locate the function named <code>TryTeleport</code>.</p>
+</li>
+<li>
+<p>Inside this function, modify the <strong>Destination</strong> variable to add the same vertical offset (<strong>+110 units on the Z axis</strong>) used in the Player Start.</p>
+<ul>
+<li>
+<p>This ensures the teleport location is also adjusted to keep the capsule above the ground.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>In the screenshot below, a red comment box labeled <strong>"Collision Adjustment"</strong> highlights where this change is applied in the Blueprint.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Adjust the Teleportation Function" decoding="async" loading="lazy" src="/images/image-20250803-090714-6b2bfd.png"/>
+
+<figcaption>Figure 4. Adjust the Teleportation Function</figcaption>
+</figure>
+
+</div>

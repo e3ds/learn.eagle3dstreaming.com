@@ -1,0 +1,10 @@
+{
+ "title": "Packaging Multiplayer Project",
+ "slug": "packaging-multiplayer-project",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming",
+  "create-a-multiplayer-desktop-game-application"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/packaging-multiplayer-project"
+}

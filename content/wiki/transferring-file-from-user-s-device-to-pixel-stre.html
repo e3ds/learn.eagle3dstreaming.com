@@ -1,0 +1,259 @@
+<p>In this document we will explain how to enable users to upload files directly from their browser to an Unreal Engine application running on the <strong>Eagle 3D Streaming (E3DS)</strong> platform.</p>
+<p>The E3DS platform automatically handles the file selection dialog and stores the uploaded file in your project’s directory.</p>
+
+<h2 id="Video-Preview" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-VideoPreview"></span>Video Preview
+ </h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/ZfyeAaCrp2Y" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo URL:</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Pixel Streaming Demos (click a version to launch):</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE53/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.3 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE54/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.4 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE55/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.5 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE56/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.6 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE57/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.7 Demo</strong></a>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE58/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.8 Demo</strong></a></p>
+</aside>
+</div>
+
+<p>You can initiate the file transfer using <strong>either of the following two methods</strong>:</p>
+<h2 id="Method-1.-Using-the-E3DS-Features-Plugin-(Recommended)" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-Method1.UsingtheE3DSFeaturesPlugin(Recommended)"></span>Method 1. Using the E3DS Features Plugin (Recommended)
+ </h2>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Prerequisite:</strong></p>
+<p>Before proceeding, ensure you have <strong>downloaded and installed the E3DS Features Plugin</strong> in your Unreal Engine project. For detailed instructions, refer to:
+   <br/>
+<a href="/wiki/download-and-install-the-e3ds-features-plugin"><u><strong>Download and Install the E3DS Features Plugin</strong></u></a></p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<p>(i) Use the Blueprint function <strong>Transfer File from User Browser to Unreal</strong>, and specify the destination path (for example: <code>ProjectDirectory/Saved/</code>).</p>
+
+<p>(ii) The plugin will automatically handle the upload process.
+ <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Using the E3DS Features Plugin" decoding="async" loading="lazy" src="/images/image-20250805-074549-28f77d.png"/>
+
+<figcaption>Figure 1. Using the E3DS Features Plugin</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Method-2.-Sending-a-Message-Directly-(Not-Recommended)" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-Method2.SendingaMessageDirectly(NotRecommended)"></span>Method 2. Sending a Message Directly (Not <strong>Recommended</strong>)
+ </h2>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>If you’re not experienced with Blueprint development, do <strong>not</strong> use Method 2. Please use <strong>Method 1</strong> instead — Method 2 is more error-prone and increases the chance of implementation mistakes.</p>
+</aside>
+</div>
+
+<p>(i) Use the <strong>Send Pixel Streaming Response</strong> node in Blueprints to send the following JSON object:</p>
+<pre><code>{"cmd": "sendLocalFileToUE4","pathToSaveFile": "%AnyPathInsideProjectDirectory%"}
+</code></pre>
+
+<p>(ii) Replace <code>%AnyPathInsideProjectDirectory%</code> with the relative path inside your project directory where you want to store the file.</p>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>Paths <strong>must</strong> be relative to the Project Directory (absolute paths like <code>C:\</code> are not supported).</p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Sending a message directly" decoding="async" loading="lazy" src="/images/image-20250805-074150-426206.png"/>
+
+<figcaption>Figure 2. Sending a message directly</figcaption>
+</figure>
+
+</div>
+
+<h2 id="File-Selection-and-Upload-Process" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-FileSelectionandUploadProcess"></span>File Selection and Upload Process
+ </h2>
+
+<p>Regardless of the method you choose, once the upload request is sent, the Eagle 3D Streaming platform will open a <strong>file selection dialog</strong> in the browser, allowing the user to choose the file to upload.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Uploading a file" decoding="async" loading="lazy" src="/images/image-20250805-073725-2eae2b.png"/>
+
+<figcaption>Figure 3. Uploading a file</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Handling-Upload-Status-and-Notifications" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-HandlingUploadStatusandNotifications"></span>Handling Upload Status and Notifications
+ </h2>
+<p>When transferring files from the browser to a Pixel-Streamed Unreal Application, the Eagle 3D Streaming platform provides multiple callbacks to help you track the <strong>status of the file selection and upload process</strong>.</p>
+<p>These events can be used to determine whether the user started uploading, completed uploading, or canceled the file selection.</p>
+<h4 id="Available-Events" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-AvailableEvents"></span><strong>Available Events</strong>
+</h4>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Event</p>
+</th>
+<th>
+<p>Description</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>{"cmd":"onUserSideFileSelected","filename":"&lt;filename&gt;"}</code></p>
+</td>
+<td>
+<p>Triggered when the user selects a file in the browser’s file selection dialog. This indicates that the upload process has started.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>{"cmd":"onUserSideFileProcessingFinished","filename":"&lt;filename&gt;"}</code></p>
+</td>
+<td>
+<p>Triggered when the file has been completely uploaded and processed on the browser side.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>{"cmd":"onUploadedFileAvailable","filename":"&lt;filename&gt;"}</code></p>
+</td>
+<td>
+<p>Sent from the application side when the uploaded file becomes available inside the Unreal project directory. This confirms a successful upload.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>{"cmd":"onUserSideFileSelectionCanceled"}</code></p>
+</td>
+<td>
+<p>Triggered when the user opens the file selection window but <strong>does not select a file</strong> and closes the dialog instead. This allows you to handle user cancellation gracefully.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+<h4 id="Example-Use-Case" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-ExampleUseCase"></span><strong>Example Use Case</strong>
+</h4>
+<p>If your Unreal application checks for uploaded files using a timer, you can use these events to manage file state transitions more efficiently:</p>
+<ol>
+<li>
+<p>When <code>onUserSideFileSelected</code> is received → mark upload as <strong>in progress</strong>.</p>
+</li>
+<li>
+<p>When <code>onUserSideFileProcessingFinished</code> or <code>onUploadedFileAvailable</code> is received → mark upload as <strong>completed</strong>.</p>
+</li>
+<li>
+<p>When <code>onUserSideFileSelectionCanceled</code> is received → mark upload as <strong>canceled</strong>, so the timer does not keep waiting.</p>
+</li>
+</ol>
+
+<h2 id="Verifying-the-Upload" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-VerifyingtheUpload"></span>Verifying the Upload
+ </h2>
+
+<p>To confirm the file upload has completed, use the <strong>File Exists</strong> node.</p>
+<ul>
+<li>
+<p>This node takes a full file path and returns whether the file exists.</p>
+</li>
+<li>
+<p>For example, if you expect <code>test.jpg</code> to be located in <code>ProjectDirectory/Saved/test.jpg</code>, you can check for its presence and print <code>"Yes"</code> or <code>"No"</code> accordingly.</p>
+</li>
+</ul>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Verifying whether the file upload is completed" decoding="async" loading="lazy" src="/images/image-20250804-134626-d99498.png"/>
+
+<figcaption>Figure 4. Verifying whether the file upload is completed</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Example Behavior:</strong></p>
+<ul>
+<li>
+<p>Initially, <code>"No"</code> is printed because the file does not exist.</p>
+</li>
+<li>
+<p>As soon as the upload is complete, the output changes to <code>"Yes"</code>.</p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 5. Verify whether the File Upload is Completed or Not" decoding="async" loading="lazy" src="/images/image-20250804-134528-824ae5.png"/>
+
+<figcaption>Figure 5. Verify whether the File Upload is Completed or Not</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Troubleshooting" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-Troubleshooting"></span>Troubleshooting
+ </h2>
+
+<h5 id="File-selection-dialog-does-not-appear" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-Fileselectiondialogdoesnotappear"></span><strong>File selection dialog does not appear</strong>
+</h5>
+<ul>
+<li>
+<p>Ensure the in-game event or function that triggers the upload is actually called.</p>
+</li>
+<li>
+<p>Double-check the JSON message format (if using the manual method).</p>
+</li>
+<li>
+<p>If unsure, try using the E3DS Features Plugin method.</p>
+</li>
+</ul>
+
+<h5 id="File-is-uploaded-but-Unreal-cannot-find-it" style=""><span id="Transferringfilefromuser&amp;#39;sdevicetoPixel-StreamedUnrealApplications-FileisuploadedbutUnrealcannotfindit"></span><strong>File is uploaded but Unreal cannot find it</strong>
+</h5>
+<ul>
+<li>
+<p>Ensure the file is saved inside your <strong>Project Directory</strong> only.</p>
+</li>
+<li>
+<p>Saving files outside the project directory (e.g., <code>C:\</code> root or custom folders outside the project) is not supported.</p>
+</li>
+<li>
+<p>All uploaded files are virus scanned — any potentially harmful files will be rejected.</p>
+</li>
+</ul>

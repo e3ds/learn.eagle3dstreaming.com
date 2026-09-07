@@ -1,0 +1,10 @@
+{
+ "title": "E3DS Automation Tools Plugin",
+ "slug": "e3ds-automation-tools-plugin",
+ "section": "Developer Guides",
+ "parents": [
+  "development-guides",
+  "plugins"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/e3ds-automation-tools-plugin"
+}

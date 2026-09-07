@@ -1,0 +1,125 @@
+<p>This guide explains how to pass custom parameters to your Unreal application via <strong>Eagle 3D Streaming</strong> and how to parse them inside Unreal Engine.
+ <br/>
+<br/>
+<br/>
+<br/>
+<br/></p>
+
+<p>Follow the guides below:</p>
+<h2 id="1.-Parsing-Passed-Parameters-in-Unreal" style=""><span id="PassingandParsingCommandLineParametersinUnrealwithEagle3DStreaming-1.ParsingPassedParametersinUnreal"></span>1. Parsing Passed Parameters in Unreal
+ </h2>
+<p>Any parameters passed to your app can be retrieved in Unreal by calling the global function <code>Get Command Line</code>.</p>
+<ul>
+<li>
+<p>This function can be called in <strong>any Blueprint</strong> and will return the full command-line string used to launch the application.</p>
+</li>
+<li>
+<p>You can then parse the string using Unreal’s built-in <code>Parse Command Line</code> function, or create your own custom parsing logic.</p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Get Command Line Parameter(s)" decoding="async" loading="lazy" src="/images/image-20250731-223854-af1ef7.png"/>
+
+<figcaption>Figure 1. Get Command Line Parameter(s)</figcaption>
+</figure>
+
+</div>
+
+<h2 id="2.-Defining-the-parameters-which-will-be-passed-to-your-app" style=""><span id="PassingandParsingCommandLineParametersinUnrealwithEagle3DStreaming-2.Definingtheparameterswhichwillbepassedtoyourapp"></span>2. Defining the parameters which will be passed to your app
+ </h2>
+<p>To configure the parameters sent to your application:</p>
+<ol>
+<li>
+<p>Open the <strong>Eagle 3D Streaming Control Panel</strong>.</p>
+</li>
+<li>
+<p>Select one of your uploaded applications.</p>
+</li>
+<li>
+<p>Create a new config (or edit an existing one).</p>
+<ul>
+<li>
+<p>To learn more about creating/editing configs, <a href="/wiki/edit-your-config"><strong>follow this guides</strong></a></p>
+</li>
+</ul>
+</li>
+</ol>
+
+<p>Once the <strong>config page</strong> opens:</p>
+<ul>
+<li>
+<p>Enable <strong>Advanced Options</strong>.</p>
+</li>
+<li>
+<p>Go to the <strong>Developer</strong> tab.</p>
+</li>
+<li>
+<p>Enable <strong>Parameters To Pass To App</strong>.</p>
+</li>
+<li>
+<p>Add your parameters separated by spaces.</p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Parameters to Pass to App" decoding="async" loading="lazy" src="/images/image-20250731-223626-f619f5.png"/>
+
+<figcaption>Figure 2. Parameters to Pass to App</figcaption>
+</figure>
+
+</div>
+
+<ul>
+<li>
+<p>Save your config and play the app using its associated link.</p>
+</li>
+<li>
+<p>When the app starts, you should see the command-line parameters printed on screen.
+   <br/></p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Printing Parameters on Screen" decoding="async" loading="lazy" src="/images/image-20250731-234602-c8e40d.png"/>
+
+<figcaption>Figure 3. Printing Parameters on Screen</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Additional-Notes" style=""><span id="PassingandParsingCommandLineParametersinUnrealwithEagle3DStreaming-AdditionalNotes"></span>Additional Notes
+ </h2>
+<ul>
+<li>
+<p>Besides the parameters you define, <strong>Eagle 3D Streaming automatically adds extra parameters</strong> related to Pixel Streaming.</p>
+</li>
+<li>
+<p>By default, <strong>screen messages are disabled</strong>. To re-enable them, run the following console command:</p>
+<pre><code>EnableAllScreenMessages
+</code></pre>
+</li>
+</ul>
+<ul>
+<li>
+<p>Alternatively, instead of using <strong>Print String</strong>, display the results in a <strong>UI Widget</strong> for better control.</p>
+</li>
+</ul>
+
+<h2 id="Video-Tutorial" style=""><span id="PassingandParsingCommandLineParametersinUnrealwithEagle3DStreaming-VideoTutorial"></span>Video Tutorial
+ </h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://www.youtube.com/watch?v=j34h5tVUhdk" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>

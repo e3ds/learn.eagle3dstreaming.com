@@ -1,0 +1,277 @@
+<p>This guide explains how to capture a screenshot from your Pixel Streaming session using the Eagle 3D Streaming SDK.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>There are three ways to Capture Screenshot:</p>
+<ul>
+<li>
+<p><strong>Inside the Unreal App (Blueprint)</strong>: Refers to <a href="/wiki/capture-and-download-a-screenshot"><u><strong>Capture Screenshot Using SDK</strong></u></a> guide.</p>
+</li>
+<li>
+<p><strong>Capture Screenshot using iFrame: </strong>Coming Soon….</p>
+</li>
+<li>
+<p><strong>Capture Screenshot Using SDK: </strong>Covered in this guide.</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Live Streaming URL:</strong></p>
+<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank"><u><strong>https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</strong></u></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo Project GitHub Repository:</strong></p>
+<p><a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank"><u><strong>https://github.com/e3ds/pixelstreaming-sdk</strong></u></a></p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Add-the-Screenshot-Function" style=""><span id="CaptureScreenshotUsingSDK-Step1.AddtheScreenshotFunction"></span>Step 1. Add the Screenshot Function
+ </h2>
+<p>Add the following function inside your <code>scripts_demo.js</code> file:</p>
+<pre><code class="language-javascript">function captureStreamScreenshot() {
+    console.log("Capturing screenshot");
+    e3ds_controller.captureScreenShot();
+}
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Capture Screenshot Function" decoding="async" loading="lazy" src="/images/image-20260608-151125-c9eb65.png"/>
+
+<figcaption>Figure 1. Capture Screenshot Function</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Explanation</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Code</p>
+</th>
+<th>
+<p>Meaning</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>function captureStreamScreenshot()</code></p>
+</td>
+<td>
+<p>Creates a function to capture a screenshot from the stream.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>console.log("Capturing screenshot");</code></p>
+</td>
+<td>
+<p>Prints a message in the browser console for testing.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>e3ds_controller.captureScreenShot();</code></p>
+</td>
+<td>
+<p>Calls the SDK function to capture the screenshot from the Pixel Streaming session.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Step-2.-Add-a-Screenshot-Button-in-the-HTML-Page" style=""><span id="CaptureScreenshotUsingSDK-Step2.AddaScreenshotButtonintheHTMLPage"></span>Step 2. Add a Screenshot Button in the HTML Page
+ </h2>
+<p>Add the following button in your HTML page:</p>
+<pre><code class="language-html">&lt;button onclick="captureStreamScreenshot()"&gt;Capture Screenshot&lt;/button&gt;
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Capture Screenshot Button" decoding="async" loading="lazy" src="/images/image-20260608-151223-975c4f.png"/>
+
+<figcaption>Figure 2. Capture Screenshot Button</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Explanation</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Code</p>
+</th>
+<th>
+<p>Meaning</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>&lt;button&gt;</code></p>
+</td>
+<td>
+<p>Creates a clickable button on the webpage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>onclick="captureStreamScreenshot()"</code></p>
+</td>
+<td>
+<p>Calls the screenshot function when the button is clicked.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>Capture Screenshot</code></p>
+</td>
+<td>
+<p>Text shown on the button.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Step-3.-Test-the-Screenshot-Button" style=""><span id="CaptureScreenshotUsingSDK-Step3.TesttheScreenshotButton"></span>Step 3. Test the Screenshot Button
+ </h2>
+<p>After adding the function and button:</p>
+<ol>
+<li>
+<p>Run your SDK webpage.</p>
+</li>
+<li>
+<p>Wait until the stream is fully connected.</p>
+</li>
+<li>
+<p>Click the <strong>Capture Screenshot</strong> button.</p>
+</li>
+<li>
+<p>The SDK will capture a screenshot from the current stream view.</p>
+</li>
+</ol>
+<p>You can also open the browser console and check the log:</p>
+<pre><code>Capturing screenshot
+</code></pre>
+<p>This confirms that the screenshot function is being triggered from the frontend.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Live Streaming URL:</strong></p>
+<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank"><u><strong>https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</strong></u></a></p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Testing the capture screenshot button" decoding="async" loading="lazy" src="/images/image-20260608-151352-c9b38a.png"/>
+
+<figcaption>Figure 3. Testing the capture screenshot button</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Important" style=""><span id="CaptureScreenshotUsingSDK-Important"></span>Important
+ </h2>
+<p>The screenshot should be captured only after the stream is fully connected.</p>
+<p>If the stream is not loaded yet, the screenshot may not capture properly.</p>
+<p>Make sure the user clicks the button after the video stream is visible.</p>
+
+<h2 id="Troubleshooting" style=""><span id="CaptureScreenshotUsingSDK-Troubleshooting"></span>Troubleshooting
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Issue</p>
+</th>
+<th>
+<p>Possible Cause</p>
+</th>
+<th>
+<p>Solution</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Screenshot button does nothing</p>
+</td>
+<td>
+<p>Function name mismatch</p>
+</td>
+<td>
+<p>Make sure the button calls the correct function name: <code>captureStreamScreenshot()</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>captureStreamScreenshot is not defined</code></p>
+</td>
+<td>
+<p>Function is not added or not loaded properly</p>
+</td>
+<td>
+<p>Add the function in <code>scripts_demo.js</code> and make sure the file is linked correctly</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>e3ds_controller is not defined</code></p>
+</td>
+<td>
+<p>SDK is not loaded yet</p>
+</td>
+<td>
+<p>Make sure the SDK is loaded before calling <code>e3ds_controller.captureScreenShot()</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Screenshot is blank or not correct</p>
+</td>
+<td>
+<p>Stream is not fully loaded</p>
+</td>
+<td>
+<p>Wait until the stream is fully connected and visible before capturing</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Screenshot does not download/show</p>
+</td>
+<td>
+<p>Browser or SDK behavior may depend on implementation</p>
+</td>
+<td>
+<p>Check browser console for errors and test again after stream is connected</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

@@ -1,0 +1,124 @@
+<p>This document provides additional technical details and advanced usage patterns for developers integrating the E3DS Frontend SDK. These features are not required for basic setup but are useful for building customized or complex streaming experiences.</p>
+
+<h2 id="1.-Error-Handling-&amp;-Custom-Error-Processing" style=""><span id="AdvancedFeatures&amp;amp;SDKBehavior-1.ErrorHandling&amp;amp;CustomErrorProcessing"></span>1. Error Handling &amp; Custom Error Processing
+ </h2>
+<p>The new E3DS Frontend SDK does <strong>not perform automatic redirects</strong> when an error occurs.
+ <br/>
+ Instead, it provides a dedicated callback for handling all error messages programmatically:</p>
+
+<pre><code class="language-javascript">e3ds_controller.onError = (errorMessage) =&gt; {
+    console.error("Streaming Error:", errorMessage);
+
+    // You can display an alert, show a custom banner, or redirect:
+    // showErrorBanner(errorMessage);
+    // window.location.href = "/error-page";
+};
+</code></pre>
+
+<p>This approach gives full control over how your application.</p>
+
+<h2 id="2.-Video-Element-ID" style=""><span id="AdvancedFeatures&amp;amp;SDKBehavior-2.VideoElementID"></span><strong>2. Video Element ID</strong>
+</h2>
+<p>The SDK currently uses a <strong>fixed video element ID</strong>:</p>
+<pre><code class="language-nginx">streamingVideo
+</code></pre>
+
+<p>Custom video element IDs are <strong>not supported</strong> in the current release.
+ <br/>
+ Future updates may include support for user-defined IDs.</p>
+<p>If your UI requires a custom layout, you can manage it using a container (see Section 4).</p>
+
+<h2 id="3.-Programmatic-Access-to-the-Active-Stream" style=""><span id="AdvancedFeatures&amp;amp;SDKBehavior-3.ProgrammaticAccesstotheActiveStream"></span>3. Programmatic Access to the Active Stream
+ </h2>
+<p>You may need direct access to the WebRTC media stream—for example:</p>
+<ul>
+<li>
+<p>Mirroring the stream on another video element</p>
+</li>
+<li>
+<p>Recording the stream</p>
+</li>
+<li>
+<p>Analyzing video frames</p>
+</li>
+<li>
+<p>Applying filters</p>
+</li>
+</ul>
+<p>You can retrieve the active stream from the SDK-managed video element:</p>
+<pre><code class="language-javascript">const streamingVideo = document.getElementById("streamingVideo");
+let stream = streamingVideo.srcObject;
+</code></pre>
+
+<p>Once stored in a variable, you can reuse the stream elsewhere.
+ <br/>
+ For example, copying it:</p>
+<pre><code class="language-javascript">const newVideo = document.createElement("video");
+newVideo.autoplay = true;
+newVideo.srcObject = stream;
+document.body.appendChild(newVideo);
+</code></pre>
+<p>You may also refer to <a href="https://github.com/e3ds/pixelstreaming-sdk/blob/main/copyStream.html" rel="noreferrer" target="_blank"><strong>copyStream.html</strong></a> in the SDK package for a full example.</p>
+
+<h2 id="4.-Player-Sizing-Relative-to-a-Container" style=""><span id="AdvancedFeatures&amp;amp;SDKBehavior-4.PlayerSizingRelativetoaContainer"></span>4. Player Sizing Relative to a Container
+ </h2>
+<p>The SDK allows you to control the player’s size and layout using a parent container.</p>
+<ol>
+<li>
+<p>Add a container div inside your HTML:
+   <br/></p>
+<pre><code class="language-html">&lt;div id="playerUI"&gt;&lt;/div&gt;
+</code></pre>
+</li>
+</ol>
+
+<ol start="2">
+<li>
+<p>The SDK will inject the video element inside this container.
+   <br/>
+<br/></p>
+</li>
+<li>
+<p>Use CSS to control layout and responsiveness. Example:</p>
+<pre><code class="language-css">#playerUI {
+    width: 100%;
+    height: 600px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+</code></pre>
+</li>
+</ol>
+<p>The player will automatically scale to match the container’s dimensions.</p>
+
+<h2 id="5.-Resetting-the-Controller-Without-Refreshing-the-Page" style=""><span id="AdvancedFeatures&amp;amp;SDKBehavior-5.ResettingtheControllerWithoutRefreshingthePage"></span>5. Resetting the Controller Without Refreshing the Page
+ </h2>
+<p>To restart a streaming session <strong>without refreshing the entire webpage</strong>, follow these steps:</p>
+<ol>
+<li>
+<p>Generate a new token</p>
+</li>
+<li>
+<p>Pass it to the controller’s main() function again</p>
+</li>
+</ol>
+<p>Example:</p>
+<pre><code class="language-javascript">const tokenData = await GenerateStreamingSessionToken();
+e3ds_controller.main(tokenData);
+</code></pre>
+<p>Use cases include:</p>
+<ul>
+<li>
+<p>Restarting the stream after connection loss</p>
+</li>
+<li>
+<p>Switching to a different configuration</p>
+</li>
+<li>
+<p>Reconnecting the user after inactivity</p>
+</li>
+<li>
+<p>Resetting the experience while staying on the same page</p>
+</li>
+</ul>
+<p>This provides a smoother UX compared to full page reloads.</p>

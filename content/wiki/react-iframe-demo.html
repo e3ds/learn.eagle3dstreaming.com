@@ -1,0 +1,413 @@
+<div data-appearance="success" role="note">
+<aside class="callout note">
+<p>Live demo:
+   <br/>
+<a href="https://iframe_react.eagle3dstreaming.com/" rel="external noreferrer">https://iframe_react.eagle3dstreaming.com/</a></p>
+</aside>
+</div>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Source code available here:
+   <br/>
+<a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">https://github.com/e3ds/E3DS-Iframe-Demo</a></p>
+</aside>
+</div>
+<h4 id="Detailed-explanation:" style=""><span id="ReactiFramedemo-Detailedexplanation:"></span>Detailed explanation:
+ </h4>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>To run the project locally in your machine you can use this guide - <a href="https://github.com/e3ds/E3DS-Iframe-Demo/blob/main/ReadMe.MD" rel="noreferrer" target="_blank">https://github.com/e3ds/E3DS-Iframe-Demo/blob/main/ReadMe.MD</a></p>
+</aside>
+</div>
+<p>You’ll see this screen [see img] when the app is loaded.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 1. Iframe-Demo: The first-time app is loaded" decoding="async" loading="lazy" src="/images/image-20221017-101348-da5a55.png"/>
+
+<figcaption>
+<em>Image 1. Iframe-Demo: The first-time app is loaded</em>
+</figcaption>
+</figure>
+
+</div>
+<h4 id="1.-Open-URL." style=""><span id="ReactiFramedemo-1.OpenURL."></span>1. Open URL.
+ </h4>
+<p>If you click the <strong>Open URL</strong> on the left side of the screen it’ll take you to the front of that button(opening URL link on the user’s browser). [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 2. Iframe-Demo: Open URL" decoding="async" loading="lazy" src="/images/image-20221019-100505-ede5af.png"/>
+
+<figcaption>
+<em>Image 2. Iframe-Demo: Open URL</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The ‘<strong>open URL</strong>’ button got clicked and then the avatar got in front of the <strong>open URL</strong> button(1st position).</p>
+<p>What happens when we clicked on the<strong> ‘open URL' </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:1
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the ‘open call’ button and it’ll perform the call action.</p>
+<h4 id="2.-Open-Mail-App." style=""><span id="ReactiFramedemo-2.OpenMailApp."></span>2. Open Mail App.
+ </h4>
+<p>If you click the <strong>Open Mail App</strong> on the left side of the screen it’ll take you to the front of that button( opening Mail App on the user’s end). [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 3. Iframe-Demo: Open Mail App" decoding="async" loading="lazy" src="/images/image-20221019-100741-8f2ebf.png"/>
+
+<figcaption>
+<em>Image 3. Iframe-Demo: Open Mail App</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Open Mail app</strong> button got clicked and then the avatar got in front of the <strong>Open Mail app</strong> button(2nd position).</p>
+<p>What happens when we clicked on the<strong> Open Mail App </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:2
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Open Mail App</strong> button and it’ll perform the call action.</p>
+<h4 id="3.-Open-call." style=""><span id="ReactiFramedemo-3.Opencall."></span>3. Open call.
+ </h4>
+<p>If you click the <strong>Open call</strong> on the left side of the screen it’ll take you to the front of that button(in our it says 3 opening calling app on the user’s end.). [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 4. Iframe-Demo: Open call" decoding="async" loading="lazy" src="/images/image-20221017-101906-cd17e4.png"/>
+
+<figcaption>
+<em>Image 4. Iframe-Demo: Open call</em>
+</figcaption>
+</figure>
+
+</div>
+<p>What happens when we clicked on the<strong> ‘open call’ </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:3
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the ‘open call’ button and it’ll perform the call action.</p>
+<h4 id="4.-Open-Keyboard." style=""><span id="ReactiFramedemo-4.OpenKeyboard."></span>4. Open Keyboard.
+ </h4>
+<p>If you click the <strong>Open Keyboard</strong> on the left side of the screen it’ll take you to the front of that button( opening keyboard on the user’s device). [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 5. Iframe-Demo: Open Keyboard" decoding="async" loading="lazy" src="/images/image-20221019-101441-c55ecb.png"/>
+
+<figcaption>
+<em>Image 5. Iframe-Demo: Open Keyboard</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Open Keyboard</strong> button got clicked and then the avatar got in front of the <strong>Open Keyboard </strong>button(4th position).</p>
+<p>What happens when we clicked on the<strong> Open Keyboard </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:4
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Open Keyboard</strong> button and it’ll perform the call action.</p>
+<h4 id="5.-Toggle-Browser-Mouse." style=""><span id="ReactiFramedemo-5.ToggleBrowserMouse."></span>5. Toggle Browser Mouse.
+ </h4>
+<p>If you click the <strong>Toggle Browser Mouse</strong> on the left side of the screen it’ll take you to the front of that button( toggling browser mouse on/off). [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 6. Iframe-Demo: Toggle Browser Mouse" decoding="async" loading="lazy" src="/images/image-20221019-135849-12e1d3.png"/>
+
+<figcaption>
+<em>Image 6. Iframe-Demo: Toggle Browser Mouse</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Toggle Browser Mouse</strong> button got clicked and then the avatar got in front of the <strong>Toggle Browser Mouse </strong>button(5th position).</p>
+<p>What happens when we clicked on the<strong> Toggle Browser Mouse </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:5
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Toggle Browser Mouse</strong> button and it’ll perform the call action.</p>
+<h4 id="6.-Increase-Session-Timer." style=""><span id="ReactiFramedemo-6.IncreaseSessionTimer."></span>6. Increase Session Timer.
+ </h4>
+<p>If you click the <strong>Increase Session Timer</strong> on the left side of the screen it’ll take you to the front of that button(increasing the pixel streaming sesssion timer). [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 7. Iframe-Demo: Increase Session Timer" decoding="async" loading="lazy" src="/images/image-20221019-135915-766b34.png"/>
+
+<figcaption>
+<em>Image 7. Iframe-Demo: Increase Session Timer</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Increase Session Timer</strong> button got clicked and then the avatar got in front of the <strong>Increase Session Timer </strong>button(6th position).</p>
+<p>What happens when we clicked on the<strong> Increase Session Timer </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:6
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Increase Session Timer</strong> button and it’ll perform the call action.</p>
+<h4 id="7.-Get-User-Info." style=""><span id="ReactiFramedemo-7.GetUserInfo."></span>7. Get User Info.
+ </h4>
+<p>If you click the <strong>Get User Info</strong> on the left side of the screen it’ll take you to the front of that button(increasing the pixel streaming sesssion timer). [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 8. Iframe-Demo: Get User Info" decoding="async" loading="lazy" src="/images/image-20221019-135939-49d372.png"/>
+
+<figcaption>
+<em>Image 8. Iframe-Demo: Get User Info</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Get User Info</strong> button got clicked and then the avatar got in front of the <strong>Get User Info </strong>button(7th position).</p>
+<p>What happens when we clicked on the<strong> Get User Info </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:7
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Get User Info</strong> button and it’ll perform the call action.</p>
+<h4 id="8.-Get-User-Device-Info." style=""><span id="ReactiFramedemo-8.GetUserDeviceInfo."></span>8. Get User Device Info.
+ </h4>
+<p>If you click the <strong>Get User Device Info</strong> on the left side of the screen it’ll take you to the front of that button(Show information about User’s Device). [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 9. Iframe-Demo: Get User Info" decoding="async" loading="lazy" src="/images/image-20221019-103419-d93709.png"/>
+
+<figcaption>
+<em>Image 9. Iframe-Demo: Get User Info</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Get User Device Info</strong> button got clicked and then the avatar got in front of the <strong>Get User Device Info </strong>button(8th position).</p>
+<p>What happens when we clicked on the<strong> Get User Device Info </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:8
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Get User Device Info</strong> button and it’ll perform the call action.</p>
+<h4 id="9.-Video-Player." style=""><span id="ReactiFramedemo-9.VideoPlayer."></span>9. Video Player.
+ </h4>
+<p>If you click the <strong>Video Player</strong> on the left side of the screen it’ll take you to the front of that video player button [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 10. Iframe-Demo: Video Player" decoding="async" loading="lazy" src="/images/image-20221019-103344-f64877.png"/>
+
+<figcaption>
+<em>Image 10. Iframe-Demo: Video Player</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Video Player</strong> button got clicked and then the avatar got in front of the <strong>Video Player </strong>button(9th position).</p>
+<p>What happens when we clicked on the<strong> Video Player </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:9
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Video Player</strong> button and it’ll perform the call action.</p>
+<h4 id="10.-Audio-Player." style=""><span id="ReactiFramedemo-10.AudioPlayer."></span>10. Audio Player.
+ </h4>
+<p>If you click the <strong>Audio Player</strong> on the left side of the screen it’ll take you to the front of that audio player button. [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 11. Iframe-Demo: Video Player" decoding="async" loading="lazy" src="/images/image-20221019-103324-b992fe.png"/>
+
+<figcaption>
+<em>Image 11. Iframe-Demo: Video Player</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Audio Player</strong> button got clicked and then the avatar got in front of the <strong>Audio Player </strong>button(10th position).</p>
+<p>What happens when we clicked on the<strong> Audio Player </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:10
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Audio Player</strong> button and it’ll perform the call action.</p>
+<h4 id="11.-Override-Command-Line-Argument." style=""><span id="ReactiFramedemo-11.OverrideCommandLineArgument."></span>11. Override Command Line Argument.
+ </h4>
+<p>If you click the <strong>Command Line Argument </strong>on the left side of the screen it’ll take you to the front of that button(command line argument received). [see img].</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 12. Iframe-Demo: Override Command Line Argument" decoding="async" loading="lazy" src="/images/image-20221019-103131-2b2700.png"/>
+
+<figcaption>
+<em>Image 12. Iframe-Demo: Override Command Line Argument</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Command Line Argument</strong> button got clicked and then the avatar got in front of the <strong>Command Line Argument </strong>button(11th position).</p>
+<p>What happens when we clicked on the<strong> Command Line Argument </strong>button - By doing this it's trying o check if any <strong>override </strong>value available in the URL of the webpage. if there is one then based on that value it does some actions in Unreal world.</p>
+<h4 id="12.-Redirect-URL." style=""><span id="ReactiFramedemo-12.RedirectURL."></span>12. Redirect URL.
+ </h4>
+<p>If you click the <strong>Redirect URL </strong>on the left side of the screen it’ll take you to the front of that redirect URL button. [see img]</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 13. Iframe-Demo: Redirect URL" decoding="async" loading="lazy" src="/images/image-20221019-103059-904f66.png"/>
+
+<figcaption>
+<em>Image 13. Iframe-Demo: Redirect URL</em>
+</figcaption>
+</figure>
+
+</div>
+<p>The <strong>Redirect URL</strong> button got clicked and then the avatar got in front of the <strong>Redirect URL </strong>button(12th position).</p>
+<p>What happens when we clicked on the<strong> Redirect URL </strong>button - By doing this we are sending a command from the iframe to the unreal engine.</p>
+<p>It’ll send a message to the UE app, the message will contain a JSON string.</p>
+<p>The content of the message is:</p>
+<pre><code>{
+      cmd:'ueapp04',
+         value: {
+          Teleport:12
+          }
+}
+
+</code></pre>
+<p>Then use the mouse to move the avatar to stand on the <strong>Redirect URL</strong> button and it’ll perform the call action.</p>
+<h4 id="We-will-start-with-the-App.js-file." style=""><span id="ReactiFramedemo-WewillstartwiththeApp.jsfile."></span>We will start with the <strong>App.js </strong>file.
+ </h4>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="At the top of the file, we can see the import - App.css is where all CSS code is located. All the command names and values are imported from the utils folder." decoding="async" loading="lazy" src="/images/image-20221021-052506-ccb63e.png"/>
+
+<figcaption>
+    At the top of the file, we can see the import - App.css is where all CSS code is located. All the command names and values are imported from the <strong>utils folder.</strong>
+</figcaption>
+</figure>
+
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="To send the command from iframe to unreal engine, we have to call this function." decoding="async" loading="lazy" src="/images/image-20221021-052220-440a59.png"/>
+
+<figcaption>To send the command from iframe to unreal engine, we have to call this function.</figcaption>
+</figure>
+
+</div>
+<ul>
+<li>
+<p>Here <strong>‘val’ </strong>is the value of the command we are sending to UE.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Command button, onclick of the button we are sending the value" decoding="async" loading="lazy" src="/images/image-20221021-051818-584e75.png"/>
+
+<figcaption>Command button, onclick of the button we are sending the value</figcaption>
+</figure>
+
+</div>
+</li>
+<li>
+<p>then we will create an object called obj which will have cmd and value keys.</p>
+</li>
+<li>
+<p>Before posting the message using iframe, we have to check that iframe does exist, which you can see in the ‘if condition’.</p>
+</li>
+<li>
+<p>Once we send the message from iframe to unreal, instantly we can see the changes in the live screen the Open call button got clicked and the avatar is in front of the open call button.
+   <br/>
+<br/></p>
+</li>
+</ul>
+<h2 id="Need-help?-Contact-Support" style=""><span id="ReactiFramedemo-Needhelp?ContactSupport"></span>Need help? Contact <a href="https://eagle3dstreaming.atlassian.net/servicedesk/customer/portal/2" rel="noreferrer" target="_blank">Support</a>
+</h2>
+<p>If you still need help, contact support to get your issue resolved quickly.</p>
+<p>Submit a new request at <a href="https://eagle3dstreaming.atlassian.net/servicedesk/customer/portals" rel="noreferrer" target="_blank">E3DS support portal</a> or send an Email at <a href="mailto:support@eagle3dstreaming.com" rel="external noreferrer">support@eagle3dstreaming.com</a>.</p>
+<p>Seek advice. Connect with others. Share your experiences. Join our lively <a href="https://community.eagle3dstreaming.com/" rel="external noreferrer">Community Forum</a> today.</p>

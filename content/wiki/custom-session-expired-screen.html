@@ -1,0 +1,419 @@
+<p>This guide explains how to replace the default Eagle 3D Streaming <strong>Session Expired</strong> screen with your own custom fullscreen image and optionally allow users to start a new streaming session.</p>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Embed-the-Streaming-Session-in-Your-Webpage" style=""><span id="CustomSessionExpiredScreen-Step1.EmbedtheStreamingSessioninYourWebpage"></span>Step 1. Embed the Streaming Session in Your Webpage
+ </h2>
+<p>Add the Eagle 3D Streaming iframe to your HTML page.</p>
+<p>For detailed instructions, refer to <a href="/wiki/embed-e3ds-app-with-your-html-webpage">Embed Streaming within HTML Webpage Guide</a></p>
+<pre><code class="language-html">&lt;iframe
+      id="iframe_1"
+      src="YOUR_PIXEL_STREAMING_URL_HERE"
+      //src="https://connector.eagle3dstreaming.com/v5/demo/DemoAppTP/default"
+      allowfullscreen
+      title="streaming"
+    &gt;
+&lt;/iframe&gt;
+</code></pre>
+
+<h2 id="Step-2.-Add-a-Custom-Session-Expired-Overlay" style=""><span id="CustomSessionExpiredScreen-Step2.AddaCustomSessionExpiredOverlay"></span>Step 2. Add a Custom Session Expired Overlay
+ </h2>
+<p>Create a fullscreen overlay that will remain hidden while the streaming session is active.</p>
+<p>When the session expires, this overlay will appear and replace the streaming iframe.</p>
+<p>The overlay contains:</p>
+<ul>
+<li>
+<p><strong>Custom Image</strong>: Displays your own Session Expired artwork or branding.</p>
+</li>
+<li>
+<p><strong>Start New Session Button</strong> <em>(Optional)</em>: Reloads the page so a new streaming session can be created automatically.</p>
+</li>
+</ul>
+<pre><code class="language-html">&lt;div
+      id="sessionExpiredOverlay"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #000;
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      "
+    &gt;
+      &lt;img
+        src= "YOUR_SESSION_EXPIRED_IMAGE_URL"
+        //src="https://i.ibb.co.com/WW5c1hKg/session-sesh.png"
+        alt="Session Expired"
+        style="max-width: 80%; max-height: 80%"
+      /&gt;
+      &lt;!-- optional: add a reload button below the image --&gt;
+      &lt;button
+        onclick="location.reload()"
+        style="
+          margin-top: 20px;
+          padding: 10px 30px;
+          font-size: 16px;
+          cursor: pointer;
+        "
+      &gt;
+        Start New Session
+      &lt;/button&gt;
+    &lt;/div&gt;
+</code></pre>
+
+<h2 id="Step-3.-Create-the-JavaScript-File" style=""><span id="CustomSessionExpiredScreen-Step3.CreatetheJavaScriptFile"></span>Step 3. Create the JavaScript File
+ </h2>
+<p>Create a folder named <strong>js</strong> in your project's root directory.</p>
+<p>Inside the folder, create a file named:</p>
+<pre><code>message.js
+</code></pre>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. message.js File" decoding="async" loading="lazy" src="/images/image-20260703-145802-bd4827.png"/>
+
+<figcaption>Figure 1. message.js File</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-4.-Include-the-JavaScript-File" style=""><span id="CustomSessionExpiredScreen-Step4.IncludetheJavaScriptFile"></span>Step 4. Include the JavaScript File
+ </h2>
+<p>Link the newly created <strong>message.js</strong> file in your webpage.</p>
+<p>This script listens for events coming from the streaming iframe and detects when the session has expired.</p>
+<pre><code class="language-html">&lt;script type="text/javascript" src="./js/message.js" defer&gt;&lt;/script&gt;
+</code></pre>
+
+<h2 id="Step-5.-Add-the-Session-Expired-Handler" style=""><span id="CustomSessionExpiredScreen-Step5.AddtheSessionExpiredHandler"></span>Step 5. Add the Session Expired Handler
+ </h2>
+<p>Copy the following code into <strong>message.js</strong>.</p>
+<p>This script performs the following tasks:</p>
+<ul>
+<li>
+<p>Listens for messages sent by the streaming iframe.</p>
+</li>
+<li>
+<p>Detects the <strong>sessionExpired</strong> event.</p>
+</li>
+<li>
+<p>Hides the streaming iframe.</p>
+</li>
+<li>
+<p>Displays your custom Session Expired overlay.</p>
+</li>
+<li>
+<p>Automatically focuses the iframe when the page loads.</p>
+</li>
+</ul>
+<pre><code class="language-javascript">const messageHandler = (event) =&gt; {
+    const iframeElem = document.getElementById("iframe_1"); // fixed from "content"
+
+    console.log("received data event type " + event.data.type)
+
+    switch (event.data.type) {
+
+        case "sessionExpired": {
+            iframeElem.style.visibility = "hidden";
+            const expiredOverlay = document.getElementById("sessionExpiredOverlay");
+            expiredOverlay.style.display = "flex";
+            break;
+        }
+        default:
+            console.error("Unhandled message data type: " + event.data.type);
+            break;
+    }
+}
+
+window.addEventListener("message", messageHandler);
+
+// focus iframe on load
+window.addEventListener("load", () =&gt; {
+    document.getElementById("iframe_1").focus();
+});
+</code></pre>
+
+<h2 id="Step-6.-Run-Your-Webpage" style=""><span id="CustomSessionExpiredScreen-Step6.RunYourWebpage"></span>Step 6. Run Your Webpage
+ </h2>
+<p>Open your webpage in a browser and start a streaming session.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Run the Webpage" decoding="async" loading="lazy" src="/images/image-20260703-150739-7ce618.png"/>
+
+<figcaption>Figure 2. Run the Webpage</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-7.-Wait-for-the-Session-to-Expire" style=""><span id="CustomSessionExpiredScreen-Step7.WaitfortheSessiontoExpire"></span>Step 7. Wait for the Session to Expire
+ </h2>
+<p>Use the application normally until the configured streaming session reaches its maximum session time.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Streaming Session Running" decoding="async" loading="lazy" src="/images/image-20260703-150843-b8e3da.png"/>
+
+<figcaption>Figure 3. Streaming Session Running</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-8.-Display-the-Custom-Session-Expired-Page" style=""><span id="CustomSessionExpiredScreen-Step8.DisplaytheCustomSessionExpiredPage"></span>Step 8. Display the Custom Session Expired Page
+ </h2>
+<p>When the session expires:</p>
+<ul>
+<li>
+<p>The streaming iframe is hidden.</p>
+</li>
+<li>
+<p>Your custom fullscreen image is displayed.</p>
+</li>
+<li>
+<p>The <strong>Start New Session</strong> button becomes available.</p>
+</li>
+</ul>
+<p>Clicking <strong>Start New Session</strong> reloads the page, allowing a new streaming session to begin.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Custom Session Expired Screen" decoding="async" loading="lazy" src="/images/image-20260703-150948-e00154.png"/>
+
+<figcaption>Figure 4. Custom Session Expired Screen</figcaption>
+</figure>
+
+</div>
+
+<p>To increase the maximum session time, refer to <a href="/wiki/max-session-time">Increase Max Session Time Guide</a></p>
+
+<h2 id="Full-Code-Example" style=""><span id="CustomSessionExpiredScreen-FullCodeExample"></span>Full Code Example
+ </h2>
+<p>Expand to view the complete<strong> </strong><code>index.html</code><strong> </strong>example.</p>
+<details class="expand">
+<summary class="expand-control"> index.html </summary>
+<div class="expand-body">
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;Pixel Streaming&lt;/title&gt;
+
+    &lt;style&gt;
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #iframe_1 {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
+    &lt;/style&gt;
+    &lt;script&gt;
+      window.onload = function () {
+        var iframe = document.getElementById("iframe_1");
+        iframe.focus();
+      };
+    &lt;/script&gt;
+    &lt;script type="text/javascript" src="./js/message.js" defer&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div
+      id="sessionExpiredOverlay"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #000;
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      "
+    &gt;
+      &lt;img
+        src= "YOUR_SESSION_EXPIRED_IMAGE_URL"
+        //src="https://i.ibb.co.com/WW5c1hKg/session-sesh.png"
+        alt="Session Expired"
+        style="max-width: 80%; max-height: 80%"
+      /&gt;
+      &lt;!-- optional: add a reload button below the image --&gt;
+      &lt;button
+        onclick="location.reload()"
+        style="
+          margin-top: 20px;
+          padding: 10px 30px;
+          font-size: 16px;
+          cursor: pointer;
+        "
+      &gt;
+        Start New Session
+      &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;iframe
+      id="iframe_1"
+      src="YOUR_PIXEL_STREAMING_URL_HERE"
+      //src="https://connector.eagle3dstreaming.com/v5/Fakhrul/DemoAppTP/autoplay"
+      allowfullscreen
+      title="streaming"
+    &gt;
+    &lt;/iframe&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div>
+</details>
+
+<p>Expand to view the complete <code>message.js</code> example.</p>
+<details class="expand">
+<summary class="expand-control"> message.js </summary>
+<div class="expand-body">
+<pre><code class="language-javascript">const messageHandler = (event) =&gt; {
+    const iframeElem = document.getElementById("iframe_1"); // fixed from "content"
+
+    console.log("received data event type " + event.data.type)
+
+    switch (event.data.type) {
+
+        case "sessionExpired": {
+            iframeElem.style.visibility = "hidden";
+            const expiredOverlay = document.getElementById("sessionExpiredOverlay");
+            expiredOverlay.style.display = "flex";
+            break;
+        }
+        default:
+            console.error("Unhandled message data type: " + event.data.type);
+            break;
+    }
+}
+
+window.addEventListener("message", messageHandler);
+
+// focus iframe on load
+window.addEventListener("load", () =&gt; {
+    document.getElementById("iframe_1").focus();
+});
+</code></pre>
+</div>
+</details>
+
+<h2 id="Troubleshooting" style=""><span id="CustomSessionExpiredScreen-Troubleshooting"></span>Troubleshooting
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Issue</p>
+</th>
+<th>
+<p>Possible Cause</p>
+</th>
+<th>
+<p>Solution</p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 220px"/>
+<col style="width: 221px"/>
+<col style="width: 316px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p>Custom Session Expired page does not appear</p>
+</td>
+<td>
+<p><code>message.js</code> is not loaded</p>
+</td>
+<td>
+<p>Verify that the <code>&lt;script src="./js/message.js"&gt;</code> path is correct.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Nothing happens after the session expires</p>
+</td>
+<td>
+<p>Incorrect iframe ID</p>
+</td>
+<td>
+<p>Ensure the iframe ID matches the ID referenced inside <code>message.js</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Custom image is not displayed</p>
+</td>
+<td>
+<p>Invalid image path</p>
+</td>
+<td>
+<p>Verify the <code>src</code> attribute points to a valid image.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Start New Session button does not work</p>
+</td>
+<td>
+<p>Page cannot reload or custom logic was modified</p>
+</td>
+<td>
+<p>Verify the button uses <code>location.reload()</code> or replace it with your own logic to create a new session.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Overlay appears behind the iframe</p>
+</td>
+<td>
+<p>CSS stacking order issue</p>
+</td>
+<td>
+<p>Ensure the overlay uses a high <code>z-index</code> (for example, <code>9999</code>) and <code>position: fixed</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Overlay is visible immediately when the page loads</p>
+</td>
+<td>
+<p>Initial display property is incorrect</p>
+</td>
+<td>
+<p>Ensure <code>display: none</code> is set on the <code>sessionExpiredOverlay</code> element until the session expires.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Session expires but the iframe is still visible</p>
+</td>
+<td>
+<p>The <code>sessionExpired</code> event is not handled correctly</p>
+</td>
+<td>
+<p>Verify that <code>message.js</code> is listening for the <code>sessionExpired</code> event and hiding the iframe before displaying the overlay.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

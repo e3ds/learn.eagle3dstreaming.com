@@ -1,0 +1,10 @@
+{
+ "title": "Setting Up E3DS Streaming Agent",
+ "slug": "install-the-binary-el-on-your-own-hardware",
+ "section": "System Requirements",
+ "parents": [
+  "system-requirements",
+  "e3ds-streaming-agent-setup-configuration"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/install-the-binary-el-on-your-own-hardware"
+}

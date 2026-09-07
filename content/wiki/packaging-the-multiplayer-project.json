@@ -1,0 +1,10 @@
+{
+ "title": "Packaging the Multiplayer Project",
+ "slug": "packaging-the-multiplayer-project",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming",
+  "automatic-server-join-multiplayer-server-scaling-p"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/packaging-the-multiplayer-project"
+}

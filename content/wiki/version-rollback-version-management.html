@@ -1,0 +1,110 @@
+<p>During application updates or new deployments, there may be cases where you need to revert to a previous working version of your application. This document explains <strong>two rollback methods</strong>, their procedures, and important limitations to consider.</p>
+
+<h2 id="Rollback-Methods" style=""><span id="VersionRollback-RollbackMethods"></span>Rollback Methods
+ </h2>
+<h4 id="Option-1.-Re-upload-Previous-Build-(Recommended-for-All-Plans)" style=""><span id="VersionRollback-Option1.Re-uploadPreviousBuild(RecommendedforAllPlans)"></span><strong>Option 1. Re-upload Previous Build (Recommended for All Plans)</strong>
+</h4>
+<ol>
+<li>
+<p>Download the previous working build from:</p>
+<ul>
+<li>
+<p>Your S3 storage (Only for Enterprise Plan user)</p>
+</li>
+<li>
+<p>OR the Old Control Panel (For All Plans)
+     <br/>
+<a href="https://controlpanel-old.eagle3dstreaming.com/" rel="external noreferrer">https://controlpanel-old.eagle3dstreaming.com/</a></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Upload the previous build as a <strong>new version</strong>.</p>
+</li>
+<li>
+<p>This method ensures a clean deployment without directly modifying shared infrastructure.</p>
+</li>
+</ol>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>
+<p>Safe and supported on all plans</p>
+</li>
+<li>
+<p>Minimal risk of deployment issues</p>
+</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>
+<p>Time-consuming</p>
+</li>
+</ul>
+
+<h4 id="Option-2.-Manual-Shared-Drive-Rollback-(Only-for-Enterprise-Plan)" style=""><span id="VersionRollback-Option2.ManualShared-DriveRollback(OnlyforEnterprisePlan)"></span><strong>Option 2. Manual Shared-Drive Rollback (Only for Enterprise Plan)</strong>
+</h4>
+<p>Enterprise users can manually manage versions directly via the shared drive. This allows rolling back quickly without uploading the old build.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>
+<p><strong>Disable</strong> the “delete old version” feature on the shared drive.</p>
+</li>
+<li>
+<p>Access the shared drive on your VM.</p>
+</li>
+<li>
+<p>Delete the latest problematic version (e.g., v10).</p>
+</li>
+<li>
+<p>Rename the previous version (e.g., v9) to the latest version name (v10).</p>
+</li>
+</ol>
+<p><strong>Example:</strong></p>
+<ul>
+<li>
+<p>Version 10 is uploaded and has issues</p>
+</li>
+<li>
+<p>Version 9 is the last working build</p>
+</li>
+<li>
+<p>Delete v10 and rename v9 → v10</p>
+</li>
+<li>
+<p>Application now runs v9 as the active version</p>
+</li>
+</ul>
+<p><strong>Important Limitations:</strong></p>
+<ul>
+<li>
+<p><strong>Manual Handling:</strong> Any mistake during renaming or deletion can break the deployment.</p>
+</li>
+<li>
+<p><strong>Shared Drive Rebuilds:</strong> If the shared-drive machine is deleted or rebuilt, it will automatically pull the latest uploaded version. Older versions may be lost.</p>
+</li>
+<li>
+<p><strong>Storage Management:</strong> Disabling the delete-old-version feature keeps all previous builds on the shared drive. Over time, this can fill the drive and cause operational issues. Customers are responsible for cleaning up old versions.</p>
+</li>
+</ul>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>
+<p>Fast rollback without re-uploading builds</p>
+</li>
+<li>
+<p>Immediate effect for all running instances</p>
+</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>
+<p>Requires careful manual handling</p>
+</li>
+<li>
+<p>Risk of data mismatch or deployment failure</p>
+</li>
+</ul>
+
+<h2 id="Summary" style=""><span id="VersionRollback-Summary"></span>Summary
+ </h2>
+<p>Manual rollback via shared drive is a powerful tool for Enterprise users who require fast recovery, but it comes with operational risks. All users should consider their <strong>plan level</strong>, <strong>storage capacity</strong>, and <strong>team capability</strong> before using this feature.</p>

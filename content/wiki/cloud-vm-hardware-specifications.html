@@ -1,0 +1,349 @@
+<p>Choosing the right cloud VM and GPU is essential for smooth pixel streaming. This guide covers the cloud providers, VM types, and GPU specs we support, and how to pick the right one for your app and event.</p>
+
+<h2 id="Two-Ways-to-Set-Up-Your-Streaming-Infrastructure" style=""><span id="CloudVMHardwareSpecifications-TwoWaystoSetUpYourStreamingInfrastructure"></span>Two Ways to Set Up Your Streaming Infrastructure
+ </h2>
+<p>Before anything else, decide which setup path works best for you:</p>
+<h4 id="Option-1.-Bring-Your-Own-VM" style=""><span id="CloudVMHardwareSpecifications-Option1.BringYourOwnVM"></span>Option 1. Bring Your Own VM
+ </h4>
+<p>You already have (or want to set up) your own cloud VM on AWS, GCP, Azure, CoreWeave, or Oracle. In this case:</p>
+<ul>
+<li>
+<p>You provision the VM yourself under your own cloud account</p>
+</li>
+<li>
+<p>You share your VM details (provider, GPU, VRAM, CPU, memory) with us.</p>
+</li>
+<li>
+<p>We confirm whether your VM meets the hardware requirements for your app, and configure pixel streaming on top of it.</p>
+</li>
+</ul>
+
+<h4 id="Option-2.-Request-Our-VM" style=""><span id="CloudVMHardwareSpecifications-Option2.RequestOurVM"></span>Option 2. Request Our VM
+ </h4>
+<p>You’d rather not manage your own cloud infrastructure. In this case:</p>
+<ul>
+<li>
+<p>We provision and manage a VM on your behalf, on the cloud provider and VM type best suited to your app.</p>
+</li>
+<li>
+<p>You only need to give us your App URL so we can determine the right specs.</p>
+</li>
+<li>
+<p>We handle setup, hosting, and pixel streaming configuration for your event end to end.</p>
+</li>
+</ul>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Either way, the first step is the same: share your App URL with us so we can check the hardware specifications your app needs to stream properly.</p>
+</aside>
+</div>
+
+<h2 id="Getting-Started" style=""><span id="CloudVMHardwareSpecifications-GettingStarted"></span>Getting Started
+ </h2>
+<h4 id="Step-1.-Share-Your-App-URL" style=""><span id="CloudVMHardwareSpecifications-Step1.ShareYourAppURL"></span>Step 1. Share Your App URL
+ </h4>
+<p>If you’re hosting an event with us, please provide the App URL first (regardless of which option you choose above). We use this to check the hardware specifications your app actually requires to stream. This lets us:</p>
+<ul>
+<li>
+<p>Confirm whether your requested/existing hardware (Option 1) is sufficient for the event.</p>
+</li>
+<li>
+<p>Recommend or provision the right VM type and specs on your behalf (Option 2).</p>
+</li>
+<li>
+<p>Flag alternative VM types or specs if your current selection would lead to poor performance.</p>
+</li>
+</ul>
+
+<h4 id="Step-2.-Tell-Us-Your-Requirements" style=""><span id="CloudVMHardwareSpecifications-Step2.TellUsYourRequirements"></span>Step 2. Tell Us Your Requirements
+ </h4>
+<p>If you’re going with Option 1 (Bring Your Own VM), please provide:</p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p><strong>Requirement</strong></p>
+</th>
+<th>
+<p><strong>Description</strong></p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 180px"/>
+<col style="width: 579px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p><strong>Cloud Provider</strong></p>
+</td>
+<td>
+<p>Your preferred cloud provider (AWS, GCP, Azure, CoreWeave, or Oracle).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>GPU</strong></p>
+</td>
+<td>
+<p>The specific GPU model your application requires.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>VRAM</strong></p>
+</td>
+<td>
+<p>The minimum amount of GPU video memory (VRAM) required for your application to run smoothly.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>CPU</strong></p>
+</td>
+<td>
+<p>The required CPU core count or performance tier.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>Memory (RAM)</strong></p>
+</td>
+<td>
+<p>The amount of system memory required for your application and the Pixel Streaming pipeline.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+<p>If you’re going with Option 2 (Request Our VM), you don’t need to specify hardware yourself, just send us your App URL and preferred cloud provider (if you have one), and we’ll recommend and provision the matching VM type and specs from the options below.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout warning">
+<p><strong>Important</strong></p>
+<ul>
+<li>
+<p>Don’t undersize your VM to save money: Cheapest ≠ Best Fit.</p>
+</li>
+<li>
+<p>Underpowered hardware can cause lag, stutter, or stream failure during a live event.</p>
+</li>
+<li>
+<p>Choose your VM based on your app’s actual requirements (verified via the App URL check), not price alone.</p>
+</li>
+<li>
+<p>Not sure what you need? <a href="https://support.eagle3dstreaming.com/" rel="external noreferrer">Ask us</a> to confirm the minimum viable spec before picking a lower-cost option.</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<h2 id="Supported-Cloud-Service-Providers" style=""><span id="CloudVMHardwareSpecifications-SupportedCloudServiceProviders"></span><strong>Supported Cloud Service Providers</strong>
+</h2>
+<p>We support any cloud provider you’d like to use, we’re not limited to a fixed list. If you’re bringing your own VM (Option 1) or have a preferred provider, we’ll work with it.</p>
+<p>Below are the major providers with ready-made, pre-configured VM types and GPU options we commonly set up. If your preferred provider isn’t listed, just let us know along with your App URL and we’ll confirm compatible hardware for it.</p>
+<p>You should provide us with :</p>
+<ol>
+<li>
+<p>Your preferred cloud provider.</p>
+</li>
+<li>
+<p>The GPU required by your App.</p>
+</li>
+<li>
+<p>VRAM.</p>
+</li>
+<li>
+<p>CPU.</p>
+</li>
+<li>
+<p>Memory.</p>
+</li>
+</ol>
+
+<h3 id="1.-AWS" style=""><span id="CloudVMHardwareSpecifications-1.AWS"></span>1. AWS
+ </h3>
+<p>We offer <strong>g4dn</strong> and <strong>g5 </strong>type instances where <strong>g4dn </strong>has <strong>Nvidia T4</strong> GPU and <strong>g5</strong> has <strong>Nvidia A10</strong> GPU.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 1. AWS : g4dn type instances with NVIDIA T4 GPU" decoding="async" loading="lazy" src="/images/image-20240528-135957-5d6827.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 1. </span><span style="--color: var(--gray, #97a0af);"><strong>AWS</strong></span><span style="--color: var(--gray, #97a0af);"> : </span><span style="--color: var(--gray, #97a0af);"><strong>g4dn</strong></span><span style="--color: var(--gray, #97a0af);"> type instances with </span><span style="--color: var(--gray, #97a0af);"><strong>NVIDIA T4</strong></span><span style="--color: var(--gray, #97a0af);"> GPU</span>
+</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 2. AWS : g5 instances with NVIDIA A10 GPU" decoding="async" loading="lazy" src="/images/image-20240528-140033-cbe3f8.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 2. </span><span style="--color: var(--gray, #97a0af);"><strong>AWS</strong></span><span style="--color: var(--gray, #97a0af);"> : </span><span style="--color: var(--gray, #97a0af);"><strong>g5</strong></span><span style="--color: var(--gray, #97a0af);"> instances with </span><span style="--color: var(--gray, #97a0af);"><strong>NVIDIA A10</strong></span><span style="--color: var(--gray, #97a0af);"> GPU</span>
+</figcaption>
+</figure>
+
+</div>
+
+<h3 id="2.-GCP" style=""><span id="CloudVMHardwareSpecifications-2.GCP"></span>2. GCP
+ </h3>
+<p>We offer <strong>n1-standard </strong>VMs which has <strong>Nvidia T4 GPU</strong>. (<em>See image below</em>)</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 3. GCP : n1-standard VMs with NVIDIA T4 GPU" decoding="async" loading="lazy" src="/images/image-20240528-140116-3d11ad.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 3. </span><span style="--color: var(--gray, #97a0af);"><strong>GCP</strong></span><span style="--color: var(--gray, #97a0af);"> : </span><span style="--color: var(--gray, #97a0af);"><strong>n1-standard</strong></span><span style="--color: var(--gray, #97a0af);"> VMs with </span><span style="--color: var(--gray, #97a0af);"><strong>NVIDIA T4</strong></span><span style="--color: var(--gray, #97a0af);"> GPU</span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="3.-Azure" style=""><span id="CloudVMHardwareSpecifications-3.Azure"></span>3. Azure
+ </h3>
+<p>In Azure, We offer and support the below VM series :</p>
+
+<ol>
+<li>
+<p><strong>Standard_NCasT4_v3</strong> series VMs with <strong>Nvidia T4</strong> GPU.</p>
+</li>
+</ol>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 4. Azure : Standard_NC4as_T4_v3 series with NVIDIA T4 GPU" decoding="async" loading="lazy" src="/images/image-20240528-140204-03ddf4.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 4. </span><span style="--color: var(--gray, #97a0af);"><strong>Azure</strong></span><span style="--color: var(--gray, #97a0af);"> : </span><span style="--color: var(--gray, #97a0af);"><strong>Standard_NC4as_T4_v3 </strong></span><span style="--color: var(--gray, #97a0af);">series with </span><span style="--color: var(--gray, #97a0af);"><strong>NVIDIA T4</strong></span><span style="--color: var(--gray, #97a0af);"> GPU</span>
+</figcaption>
+</figure>
+
+</div>
+
+<ol start="2">
+<li>
+<p><strong>Standard_NVadsA10 v5</strong>-series with <strong>Nvidia A10 </strong>GPU.</p>
+</li>
+</ol>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 5. Azure : NVads_A10_v5 series with NVIDIA A10 GPU" decoding="async" loading="lazy" src="/images/image-20240528-140242-cf8b07.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 5.</span><span style="--color: var(--gray, #97a0af);"><strong> Azure</strong></span><span style="--color: var(--gray, #97a0af);"> : </span><span style="--color: var(--gray, #97a0af);"><strong>NVads_A10_v5</strong></span><span style="--color: var(--gray, #97a0af);"> series with </span><span style="--color: var(--gray, #97a0af);"><strong>NVIDIA A10</strong></span><span style="--color: var(--gray, #97a0af);"> GPU</span>
+</figcaption>
+</figure>
+
+</div>
+
+<ol start="3">
+<li>
+<p><strong>Standard_NC_v3-series </strong>with <strong>Nvidia Tesla V100</strong>.</p>
+</li>
+</ol>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 6. Azure : Standard_NC_v3 series with NVIDIA Tesla V100" decoding="async" loading="lazy" src="/images/image-20240528-140316-e249f2.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 6. </span><span style="--color: var(--gray, #97a0af);"><strong>Azure</strong></span><span style="--color: var(--gray, #97a0af);"> : </span><span style="--color: var(--gray, #97a0af);"><strong>Standard_NC_v3</strong></span><span style="--color: var(--gray, #97a0af);"> series with </span><span style="--color: var(--gray, #97a0af);"><strong>NVIDIA Tesla V100</strong></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="4.-Coreweave" style=""><span id="CloudVMHardwareSpecifications-4.Coreweave"></span>4. Coreweave
+ </h3>
+<p>We offer these GPU types :</p>
+
+<ol>
+<li>
+<p><strong>NVIDIA Quadro RTX 4000</strong>.</p>
+</li>
+<li>
+<p><strong>NVIDIA RTX 5000.</strong></p>
+</li>
+<li>
+<p><strong>NVIDIA RTX A6000.</strong></p>
+</li>
+<li>
+<p><strong>NVIDIA A10.</strong></p>
+</li>
+</ol>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Note : </strong>The <strong>Vcore</strong> and <strong>memory</strong> are <strong>adjustable</strong>.</p>
+</aside>
+</div>
+<h3 id="5.-Oracle" style=""><span id="CloudVMHardwareSpecifications-5.Oracle"></span>5. Oracle
+ </h3>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>To be filled soon.</p>
+</aside>
+</div>
+
+<h2 id="Choosing-the-Right-Spec-for-Your-App" style=""><span id="CloudVMHardwareSpecifications-ChoosingtheRightSpecforYourApp"></span>Choosing the Right Spec for Your App
+ </h2>
+<ul>
+<li>
+<p>Match GPU and VRAM to your app’s rendering/model requirements first, this is usually the biggest performance bottleneck for streaming.</p>
+</li>
+<li>
+<p>CPU and memory should comfortably cover your app’s baseline needs plus overhead for the streaming/encoding pipeline, not just the bare minimum to launch the app.</p>
+</li>
+<li>
+<p>If your app is borderline between two tiers, choose the higher tier for live events, a stable, well-performing stream matters more during an actual event than saving on hourly VM cost.</p>
+</li>
+<li>
+<p>When in doubt, submit your App URL so we can verify before the event, rather than discovering a shortfall during the live stream. This applies whether you’re managing your own VM or asking us to provision one.</p>
+</li>
+</ul>
+
+<h2 id="Network-&amp;-Region-Considerations" style=""><span id="CloudVMHardwareSpecifications-Network&amp;amp;RegionConsiderations"></span>Network &amp; Region Considerations
+ </h2>
+<ul>
+<li>
+<p><strong>Bandwidth:</strong> Pixel streaming is bandwidth-intensive. Make sure the streaming VM has sufficient upload bandwidth, and that your viewers have a stable, reasonably fast internet connection.</p>
+</li>
+<li>
+<p><strong>Region:</strong> Choose (or ask us to choose) a VM region geographically close to your audience, this reduces streaming latency and improves the viewing experience.</p>
+</li>
+<li>
+<p><strong>Latency-sensitive apps: </strong>If your app requires real-time interaction (e.g., live control, low-latency input), region selection matters even more, request the closest available region to your primary audience.</p>
+</li>
+</ul>
+
+<h2 id="Lead-Time-&amp;-Testing" style=""><span id="CloudVMHardwareSpecifications-LeadTime&amp;amp;Testing"></span>Lead Time &amp; Testing
+ </h2>
+<ul>
+<li>
+<p>Please share your App URL and setup preference (Option 1 or 2) at least a few business days before your event so we have time to verify specs, provision resources, and troubleshoot if needed.</p>
+</li>
+<li>
+<p>We recommend a short test/rehearsal stream before the live event to confirm everything performs as expected.</p>
+</li>
+</ul>
+
+<h2 id="Pricing" style=""><span id="CloudVMHardwareSpecifications-Pricing"></span>Pricing
+ </h2>
+<p>VM costs vary by provider, instance type, and usage duration (hourly vs. reserved). <a href="https://support.eagle3dstreaming.com/" rel="external noreferrer">Contact Our Support Team</a> for current rates so you can weigh cost against the performance your app needs.</p>

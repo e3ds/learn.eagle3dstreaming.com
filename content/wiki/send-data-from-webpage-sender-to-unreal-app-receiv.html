@@ -1,0 +1,131 @@
+<p>In this guide, we’ll show you how to <strong>send data from a webpage (sender) to an Unreal Engine application (receiver)</strong> using the Eagle 3D Streaming system.</p>
+
+<p>Follow the steps below:</p>
+
+<h2 id="Step-1.-Create-the-Json-Object" style=""><span id="SendDatafromWebpage(sender)toUnrealApp(receiver)-Step1.CreatetheJsonObject"></span>Step 1. Create the Json Object
+ </h2>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>To send data to the Unreal app via the <strong>iframe method</strong>, you must send a <strong>JSON object</strong>. If you need to send non-JSON data, you must use the <strong>no iframe solution </strong>(coming soon)<strong> </strong>instead.</p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>The <strong>parent webpage </strong>(your webpage) will <strong>only forward</strong> messages to the Unreal app <strong>if</strong> the <code>cmd</code> value is <code>"sendDataToUE"</code>.</p>
+<p>If you don’t include <code>cmd: "sendDataToUE"</code>, the parent webpage will still receive the message, but it <strong>will not forward</strong> it to the Unreal app.</p>
+</aside>
+</div>
+
+<p>Example:</p>
+<pre><code>let obj = {
+  cmd: "sendDataToUE", // Required command key
+  value: {
+    message: "Hello World!",
+  },
+};
+</code></pre>
+
+<h2 id="Step-2.-Send-the-Message-to-the-Unreal-App" style=""><span id="SendDatafromWebpage(sender)toUnrealApp(receiver)-Step2.SendtheMessagetotheUnrealApp"></span>Step 2. Send the Message to the Unreal App
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>What is </strong><code>postMessage()</code><strong>?</strong>
+<br/>
+<code>postMessage()</code> is a built-in function that sends messages from the<strong> parent webpage </strong>to the <strong>child webpage.</strong> Here</p>
+<ul>
+<li>
+<p>The parent webpage: your HTML page</p>
+</li>
+<li>
+<p>The child webpage: iframe that contains the Unreal app</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>If you don’t include <code>cmd: "sendDataToUE"</code>, the parent webpage will still receive the message, but it <strong>will not forward</strong> it to the Unreal app.</p>
+</aside>
+</div>
+
+<p>Since <code>postMessage()</code> only supports string data, you need to convert the object to a string using <code>JSON.stringify()</code>:</p>
+<pre><code>let jsonString = JSON.stringify(obj);
+</code></pre>
+
+<p>Use the <code>postMessage()</code> function to send the string to the Unreal app via the iframe:</p>
+<pre><code>document.getElementById("iframe_1").contentWindow.postMessage(jsonString, "*");
+</code></pre>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><code>iframe_1</code> is the ID of the iframe script embedding your Unreal application.</p>
+</aside>
+</div>
+
+<h2 id="Step-3.-Add-a-Button-to-Trigger-the-Message" style=""><span id="SendDatafromWebpage(sender)toUnrealApp(receiver)-Step3.AddaButtontoTriggertheMessage"></span>Step 3. Add a Button to Trigger the Message
+ </h2>
+
+<div data-appearance="warning" role="note">
+<aside class="callout warning">
+<p><strong>Important:</strong> You should <strong>only send messages after the stream has fully loaded. </strong>To know after which stage you can send message from webpage to unreal app follow the <a href="/wiki/iframe-stages"><strong>Iframe Stages Document.</strong></a></p>
+</aside>
+</div>
+
+<p>Here’s a simple test button that we’re adding <strong>just to demonstrate</strong> sending a message <strong>after the streaming has fully loaded</strong> in the demo:</p>
+<pre><code>&lt;button onclick="sendMessage('Hello World')"&gt;Send Message to Unreal&lt;/button&gt;
+</code></pre>
+<p>You can click this button once the stream is fully loaded to send a message to the Unreal application.</p>
+
+<h2 id="Full-Example-Code" style=""><span id="SendDatafromWebpage(sender)toUnrealApp(receiver)-FullExampleCode"></span>Full Example Code
+ </h2>
+<p>Expand to view the complete<strong> </strong>example.</p>
+<details class="expand">
+<summary class="expand-control"> index.html </summary>
+<div class="expand-body">
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Send to Unreal&lt;/title&gt;
+    &lt;script&gt;
+      //Create the JSON object and define the send function
+      function sendMessage(val) {
+        console.log("Sending value:", val);
+        let obj = {
+          cmd: "sendDataToUE", //Required command key
+          value: {
+            message: val,
+          }
+        };
+
+        let jsonString = JSON.stringify(obj); //Convert object to JSON string
+
+        //Send the message to the Unreal app via iframe
+        document
+          .getElementById("iframe_1")
+          .contentWindow.postMessage(jsonString, "*");
+      }
+    &lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;div&gt;
+      &lt;!-- Add a button to trigger the message --&gt;
+      &lt;button onclick="sendMessage('Hello World')"&gt;Send Message to Unreal&lt;/button&gt;
+    &lt;/div&gt;
+       &lt;!-- Embed the Unreal Engine app using Eagle 3D iframe --&gt;
+    &lt;div&gt;
+      &lt;iframe
+        id="iframe_1"
+        src="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/iframe"
+        height="100%"
+        width="100%"
+        allowfullscreen
+        title="Unreal Stream"
+      &gt;&lt;/iframe&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div>
+</details>

@@ -1,0 +1,300 @@
+<p>This guide explains how to let users enter and exit fullscreen mode from a webpage that uses an Eagle 3D Streaming iFrame embed.</p>
+<p>Instead of relying on the browser's default controls, you can add your own fullscreen button outside the iFrame using the browser's Fullscreen API.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>There are three ways to implement fullscreen toggling:</p>
+<ul>
+<li>
+<p><strong>Inside the Unreal App (Blueprint)</strong>: Refers to <a href="/wiki/toggle-fullscreen"><strong>Toggle Fullscreen Using Blueprint</strong></a> guide.</p>
+</li>
+<li>
+<p><strong>Toggle Fullscreen in iFrame: </strong>covered in this guide.</p>
+</li>
+<li>
+<p><strong>Toggle Fullscreen Using SDK: </strong>Refers to <a href="/wiki/toggle-fullscreen-using-sdk"><strong>Toggle Fullscreen Using Frontend SDK</strong></a> guide.</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Add-the-Eagle-3D-Streaming-iFrame" style=""><span id="ToggleFullscreeniniFrame-Step1.AddtheEagle3DStreamingiFrame"></span>Step 1. Add the Eagle 3D Streaming iFrame
+ </h2>
+<p>First, embed the stream in your webpage. <strong>Replace the </strong><code>src</code><strong> value with your Eagle 3D Streaming URL.</strong></p>
+<pre><code class="language-html">&lt;iframe
+  id="iframe_1"
+  src="YOUR_STREAMING_URL"
+  allowfullscreen
+  title="Unreal Stream"
+&gt;&lt;/iframe&gt;
+</code></pre>
+
+<h2 id="Step-2.-Create-a-fullscreen-function" style=""><span id="ToggleFullscreeniniFrame-Step2.Createafullscreenfunction"></span>Step 2. Create a fullscreen function
+ </h2>
+<p>Add a JavaScript function to toggle fullscreen mode.</p>
+<pre><code class="language-javascript">&lt;script&gt;
+  function goToFullScreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+&lt;/script&gt;
+</code></pre>
+
+<p>This function:</p>
+<ul>
+<li>
+<p>Enters fullscreen when the page is not in fullscreen mode.</p>
+</li>
+<li>
+<p>Exits fullscreen when the page is already in fullscreen mode.</p>
+</li>
+</ul>
+
+<h2 id="Step-3.-Add-a-Fullscreen-button" style=""><span id="ToggleFullscreeniniFrame-Step3.AddaFullscreenbutton"></span>Step 3. Add a Fullscreen button
+ </h2>
+<p>Create a button that calls the fullscreen function.</p>
+<pre><code class="language-html">&lt;button id="fullscreenBtn" onclick="goToFullScreen()"&gt;
+  Fullscreen
+&lt;/button&gt;
+</code></pre>
+<p>When the user clicks the button, the webpage enters or exits fullscreen mode.</p>
+
+<h2 id="Step-4.-Update-the-button-text-automatically" style=""><span id="ToggleFullscreeniniFrame-Step4.Updatethebuttontextautomatically"></span>Step 4. Update the button text automatically
+ </h2>
+<p>You can automatically change the button text depending on the fullscreen state.</p>
+<pre><code class="language-javascript">&lt;script&gt;
+  document.addEventListener("fullscreenchange", () =&gt; {
+    const btn = document.getElementById("fullscreenBtn");
+
+    if (document.fullscreenElement) {
+      btn.textContent = "Exit Fullscreen";
+    } else {
+      btn.textContent = "Fullscreen";
+    }
+  });
+&lt;/script&gt;
+</code></pre>
+
+<p>When fullscreen is enabled, the button displays:</p>
+<pre><code>Exit Fullscreen
+</code></pre>
+<p>When fullscreen is disabled, it changes back to:</p>
+<pre><code>Fullscreen
+</code></pre>
+
+<h2 id="Step-5.-Test-the-integration" style=""><span id="ToggleFullscreeniniFrame-Step5.Testtheintegration"></span>Step 5. Test the integration
+ </h2>
+<p>Open the webpage in your browser.</p>
+<ul>
+<li>
+<p>Click <strong>Fullscreen</strong> to enter fullscreen mode (Figure 1)</p>
+</li>
+<li>
+<p>Click <strong>Exit Fullscreen</strong> or press <strong>Esc</strong> to exit fullscreen mode (Figure 2)</p>
+</li>
+<li>
+<p>The button text will automatically update based on the current fullscreen state.</p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Click Fullscreen to enter fullscreen mode" decoding="async" loading="lazy" src="/images/image-20260709-150943-9412d6.png"/>
+
+<figcaption>
+    Figure 1. Click <strong>Fullscreen</strong> to enter fullscreen mode
+   </figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Click Exit Fullscreen or press Esc to exit fullscreen mode" decoding="async" loading="lazy" src="/images/image-20260709-151151-c7b687.png"/>
+
+<figcaption>
+    Figure 2. Click <strong>Exit Fullscreen</strong> or press <strong>Esc</strong> to exit fullscreen mode
+   </figcaption>
+</figure>
+
+</div>
+
+<h2 id="Full-Example-Code" style=""><span id="ToggleFullscreeniniFrame-FullExampleCode"></span>Full Example Code
+ </h2>
+<p>Expand to view the complete example.</p>
+<details class="expand">
+<summary class="expand-control"> index.html </summary>
+<div class="expand-body">
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;title&gt;E3DS Fullscreen&lt;/title&gt;
+
+    &lt;style&gt;
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #iframe_1 {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      #fullscreenBtn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 9999;
+        padding: 10px 16px;
+        cursor: pointer;
+      }
+    &lt;/style&gt;
+
+    &lt;script&gt;
+      function goToFullScreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      }
+
+      document.addEventListener("fullscreenchange", () =&gt; {
+        const btn = document.getElementById("fullscreenBtn");
+
+        if (document.fullscreenElement) {
+          btn.textContent = "Exit Fullscreen";
+        } else {
+          btn.textContent = "Fullscreen";
+        }
+      });
+    &lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;button id="fullscreenBtn" onclick="goToFullScreen()"&gt;Fullscreen&lt;/button&gt;
+
+    &lt;iframe
+      id="iframe_1"
+      src="https://connector.eagle3dstreaming.com/v5/demo/DemoAppTP/hideSettingButton"
+      allow="fullscreen"
+      allowfullscreen
+    &gt;
+    &lt;/iframe&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div>
+</details>
+
+<h2 id="Notes" style=""><span id="ToggleFullscreeniniFrame-Notes"></span>Notes
+ </h2>
+<ul>
+<li>
+<p>Fullscreen is triggered using the browser's native <strong>Fullscreen API</strong>.</p>
+</li>
+<li>
+<p>Users can also exit fullscreen by pressing the <strong>Esc</strong> key.</p>
+</li>
+<li>
+<p>The <code>allowfullscreen</code> attribute must be present on the <code>&lt;iframe&gt;</code> element.</p>
+</li>
+<li>
+<p>If you are using the <a href="/wiki/embed-stream-using-e3ds-sdk"><strong>E3DS SDK</strong></a> to embed your stream, refer to the <a href="/wiki/toggle-fullscreen-using-sdk">Toggle Fullscreen Using SDK</a> guide.</p>
+</li>
+<li>
+<p>If you want to implement fullscreen functionality from within your Unreal application, refer to the <a href="/wiki/toggle-fullscreen">Toggle Fullscreen from Unreal</a> guide.</p>
+</li>
+</ul>
+
+<h2 id="Troubleshooting" style=""><span id="ToggleFullscreeniniFrame-Troubleshooting"></span>Troubleshooting
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Issue</p>
+</th>
+<th>
+<p>Possible Cause</p>
+</th>
+<th>
+<p>Solution</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Clicking the <strong>Fullscreen</strong> button does nothing.</p>
+</td>
+<td>
+<p>The browser requires fullscreen requests to be triggered by a user interaction.</p>
+</td>
+<td>
+<p>Ensure <code>goToFullScreen()</code> is called directly from a button click or another user action.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>The <strong>Fullscreen</strong> button is hidden behind the stream.</p>
+</td>
+<td>
+<p>The button has a lower <code>z-index</code> than the iFrame.</p>
+</td>
+<td>
+<p>Set the button to <code>position: fixed</code> and use a high <code>z-index</code> (for example, <code>9999</code>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>The button text does not change to <strong>Exit Fullscreen</strong>.</p>
+</td>
+<td>
+<p>The <code>fullscreenchange</code> event is not implemented.</p>
+</td>
+<td>
+<p>Add a <code>fullscreenchange</code> event listener to update the button text when entering or exiting fullscreen mode.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>The stream does not fill the entire screen in fullscreen mode.</p>
+</td>
+<td>
+<p>The iFrame or its container does not occupy the full viewport.</p>
+</td>
+<td>
+<p>Set the iFrame (or its parent container) to <code>width: 100%; height: 100%;</code> and use <code>position: fixed</code> if needed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>The browser exits fullscreen when pressing <strong>Esc</strong>, but the button still says <strong>Exit Fullscreen</strong>.</p>
+</td>
+<td>
+<p>The button text is not synchronized with the fullscreen state.</p>
+</td>
+<td>
+<p>Use the <code>fullscreenchange</code> event instead of manually updating the button text.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

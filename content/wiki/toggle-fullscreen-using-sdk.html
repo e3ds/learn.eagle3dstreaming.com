@@ -1,0 +1,279 @@
+<p>This guide explains how to toggle fullscreen mode for your Pixel Streaming session using the Eagle 3D Streaming SDK.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>There are three ways to implement fullscreen toggling:</p>
+<ul>
+<li>
+<p><strong>Inside the Unreal App (Blueprint)</strong>: Refers to <a href="/wiki/toggle-fullscreen"><strong>Toggle Fullscreen Using Blueprint</strong></a> guide.</p>
+</li>
+<li>
+<p><strong>Toggle Fullscreen in iFrame: </strong>Refers to <a href="/wiki/toggle-fullscreen-in-iframe"><u><strong>Toggle Fullscreen Using iFrame</strong></u></a> guide.</p>
+</li>
+<li>
+<p><strong>Toggle Fullscreen Using SDK: </strong>covered in this guide.</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Live Streaming URL:</strong></p>
+<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank"><strong>https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo Project GitHub Repository:</strong></p>
+<p><a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank"><strong>https://github.com/e3ds/pixelstreaming-sdk</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Add-the-Fullscreen-Function" style=""><span id="ToggleFullscreenUsingSDK-Step1.AddtheFullscreenFunction"></span>Step 1. Add the Fullscreen Function
+ </h2>
+<p>Add the following function inside your <code>scripts_demo.js</code> file:</p>
+<pre><code class="language-javascript">function toggleStreamFullscreen() {
+    console.log("Toggling fullscreen mode");
+
+    e3ds_controller.toggleFullscreen();
+}
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Toggle Fullscreen Function" decoding="async" loading="lazy" src="/images/image-20260608-145433-96be8b.png"/>
+
+<figcaption>Figure 1. Toggle Fullscreen Function</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Explanation</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Code</p>
+</th>
+<th>
+<p>Meaning</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>function toggleStreamFullscreen()</code></p>
+</td>
+<td>
+<p>Creates a function to toggle fullscreen mode.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>console.log("Toggling fullscreen mode");</code></p>
+</td>
+<td>
+<p>Prints a message in the browser console for testing.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>e3ds_controller.toggleFullscreen();</code></p>
+</td>
+<td>
+<p>Calls the SDK function to enter or exit fullscreen mode.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Step-2.-Add-a-Fullscreen-Button-in-the-HTML-Page" style=""><span id="ToggleFullscreenUsingSDK-Step2.AddaFullscreenButtonintheHTMLPage"></span>Step 2. Add a Fullscreen Button in the HTML Page
+ </h2>
+<p>Add the following button in your HTML page:</p>
+<pre><code class="language-html">&lt;button onclick="toggleStreamFullscreen()"&gt;Fullscreen&lt;/button&gt;
+</code></pre>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Fullscreen Button" decoding="async" loading="lazy" src="/images/image-20260608-144558-d7b8bf.png"/>
+
+<figcaption>Figure 2. Fullscreen Button</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Explanation</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table>
+<tbody>
+<tr>
+<td>
+<p>Code</p>
+</td>
+<td>
+<p>Meaning</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>&lt;button&gt;</code></p>
+</td>
+<td>
+<p>Creates a clickable button on the webpage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>onclick="toggleStreamFullscreen()"</code></p>
+</td>
+<td>
+<p>Calls the fullscreen function when the button is clicked.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>Fullscreen</code></p>
+</td>
+<td>
+<p>Text shown on the button.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Step-3.-Test-the-Fullscreen-Button" style=""><span id="ToggleFullscreenUsingSDK-Step3.TesttheFullscreenButton"></span>Step 3. Test the Fullscreen Button
+ </h2>
+<p>After adding the function and button:</p>
+<ol>
+<li>
+<p>Run your SDK webpage.</p>
+</li>
+<li>
+<p>Wait until the stream is fully connected.</p>
+</li>
+<li>
+<p>Click the <strong>Fullscreen</strong> button.</p>
+</li>
+<li>
+<p>The stream should enter fullscreen mode.</p>
+</li>
+<li>
+<p>Click the button again or press <code>Esc</code> to exit fullscreen mode.</p>
+</li>
+</ol>
+<p>You can also open the browser console and check the log:</p>
+<pre><code>Toggling fullscreen mode
+</code></pre>
+<p>This confirms that the fullscreen function is being triggered from the frontend.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Live Streaming URL:</strong></p>
+<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank"><strong>https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Testing the fullscreen toggle button" decoding="async" loading="lazy" src="/images/image-20260608-145538-bc9d57.png"/>
+
+<figcaption>Figure 3. Testing the fullscreen toggle button</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Important" style=""><span id="ToggleFullscreenUsingSDK-Important"></span>Important
+ </h2>
+<p>Fullscreen must be triggered by a user action, such as a button click.</p>
+<p>Some browsers may block fullscreen if the function is called automatically without user interaction.</p>
+
+<h2 id="Troubleshooting" style=""><span id="ToggleFullscreenUsingSDK-Troubleshooting"></span>Troubleshooting
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table>
+<tbody>
+<tr>
+<td>
+<p>Issue</p>
+</td>
+<td>
+<p>Possible Cause</p>
+</td>
+<td>
+<p>Solution</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Fullscreen button does nothing</p>
+</td>
+<td>
+<p>Function name mismatch</p>
+</td>
+<td>
+<p>Make sure the button calls the correct function name: <code>toggleStreamFullscreen()</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>toggleStreamFullscreen is not defined</code></p>
+</td>
+<td>
+<p>Function is not added or not loaded properly</p>
+</td>
+<td>
+<p>Add the function in <code>scripts_demo.js</code> and make sure the file is linked correctly</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>e3ds_controller is not defined</code></p>
+</td>
+<td>
+<p>SDK is not loaded yet</p>
+</td>
+<td>
+<p>Make sure the SDK is loaded before calling <code>e3ds_controller.toggleFullscreen()</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Fullscreen is blocked</p>
+</td>
+<td>
+<p>Browser requires user interaction</p>
+</td>
+<td>
+<p>Trigger fullscreen only from a button click</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Fullscreen exits immediately</p>
+</td>
+<td>
+<p>Browser or device fullscreen restriction</p>
+</td>
+<td>
+<p>Test in another browser or check browser fullscreen permissions</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

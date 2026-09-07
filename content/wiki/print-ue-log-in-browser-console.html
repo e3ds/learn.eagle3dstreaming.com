@@ -1,0 +1,188 @@
+<p>Steps to enable ‘Print UE Log in Browser Console’ from the new Control Panel.</p>
+<h2 id="Overview"><span id="PrintUELoginBrowserConsole-Overview"></span>Overview
+ </h2>
+<p>Get Logs from the Browser Console upon crash and save them on your device. Follow the instructions below.</p>
+<h2 id="Prerequisites"><span id="PrintUELoginBrowserConsole-Prerequisites"></span>Prerequisites
+ </h2>
+<ol>
+<li>
+<p>Access to the<strong> </strong><a href="https://newcontrolpanel.eagle3dstreaming.com/" rel="external noreferrer"><strong>New Control Panel</strong></a><strong>.</strong></p>
+</li>
+<li>
+<p><a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/ED/pages/294748170/Creating+an+Account" rel="noreferrer" target="_blank"><strong>Eagle 3D’s User Account.</strong></a></p>
+</li>
+</ol>
+<h2 id="Instructions"><span id="PrintUELoginBrowserConsole-Instructions"></span>Instructions
+ </h2>
+<h3 id="Step-1.-Preparing-the-setup"><span id="PrintUELoginBrowserConsole-Step1.Preparingthesetup"></span>Step 1. Preparing the setup
+ </h3>
+<p>If your app is already uploaded on the Control Panel as a Dev/Debug Build, with a streaming link and Config created, you can skip Step 1 and proceed directly to Step 2.</p>
+
+<ol>
+<li>
+<p><strong>Create a Development Build from Unreal Engine</strong></p>
+</li>
+</ol>
+<p><strong>Go to:</strong> UE editor &gt; File &gt; Package Project &gt; &gt; Development/Debug.</p>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Package your project as "Development" or "Debug" to generate logs and allow our system to capture them. See for build configuration details.</p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 1. Build Configuration: Development" decoding="async" loading="lazy" src="/images/image-20231108-134044-7c953d.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 1. Build Configuration: </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Development</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<ol start="2">
+<li>
+<p><strong>Package your App for Windows</strong></p>
+</li>
+</ol>
+<p>Refer to <a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/ED/pages/228065557/Package+the+Project" rel="noreferrer" target="_blank">this document</a>.</p>
+<ol start="3">
+<li>
+<p><strong>Upload your Build on the New Control Panel</strong></p>
+</li>
+</ol>
+<p>Refer to<a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/ED/pages/307068929/Part+1+Preparing+to+Upload" rel="noreferrer" target="_blank"> this document</a>.</p>
+<ol start="4">
+<li>
+<p><strong>Create a new Streaming Link</strong></p>
+</li>
+</ol>
+<p>Refer to <a href="/wiki/generate-a-streaming-link-for-your-app">this document</a>.</p>
+<ol start="5">
+<li>
+<p><strong>Create a new Config</strong></p>
+</li>
+</ol>
+<p>You can use an existing Config or create a new one to generate Logs. Refer to <a href="/wiki/create-a-config-for-each-streaming-link">this document</a>.</p>
+<h3 id="Step-2.-Enabling-‘Print-UE-Log-in-Browser-Console’-from-the-Control-Panel"><span id="PrintUELoginBrowserConsole-Step2.Enabling‘PrintUELoginBrowserConsole’fromtheControlPanel"></span>Step 2. Enabling ‘<strong>Print UE Log in Browser Console</strong>’ from the Control Panel
+ </h3>
+<ol>
+<li>
+<p><strong>Follow this path:</strong></p>
+</li>
+</ol>
+<p><strong>Go to:</strong> <a href="https://newcontrolpanel.eagle3dstreaming.com/" rel="external noreferrer">New Control Panel</a> &gt; {Your App} &gt; {Your Streaming Link} &gt; {Your Config} &gt; Edit Config &gt; Advanced Options &gt; Developer &gt; Print UE Log in Browser Console.<strong> </strong></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 2. Enable Print UE Log in Browser Console" decoding="async" loading="lazy" src="/images/image-20240708-050831-7380bc.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 2. Enable </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Print UE Log in Browser Console</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<p><strong>Warnings</strong> ⚠️</p>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p><strong>Displaying logs to a user located far from the server may cause:</strong></p>
+<ul>
+<li>
+<p>Connection issues due to poor network quality and the large volume of logs being transmitted.</p>
+</li>
+<li>
+<p>Latency issues if the user has a limited internet connection.</p>
+</li>
+</ul>
+<p>We recommend disabling the ‘<strong>Print UE Log in Browser Console</strong>’ feature in your config unless necessary.</p>
+</aside>
+</div>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p><strong>Excessive console logs can degrade performance, slow down the stream, and increase browser resource usage.</strong> Disable the ‘<strong>Print UE Log in Browser Console</strong>’ setting to optimize the streaming experience.</p>
+</aside>
+</div>
+
+<ol start="2">
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Disable<strong> ADBLOCK </strong>as it would<strong> </strong>will block the Logs<strong> </strong>from being generated to the browser.</p>
+</aside>
+</div>
+<h3 id="Step-3.-Launching-the-game-and-checking-‘Inspect-Elements’"><span id="PrintUELoginBrowserConsole-Step3.Launchingthegameandchecking‘InspectElements’"></span>Step 3. Launching the game and checking ‘Inspect Elements’
+ </h3>
+<ol>
+<li>
+<p><strong>To run the game, follow this path : </strong><a href="https://newcontrolpanel.eagle3dstreaming.com/" rel="external noreferrer">New Control Panel </a>&gt; Your App &gt; Streaming Link &gt; <a href="/wiki/play-your-app">Play App</a>.</p>
+</li>
+</ol>
+<p>Use the same Config in which you have enabled the Feature ‘<strong>Print UE Log In Browser Console</strong>’.</p>
+<ol start="2">
+<li>
+<p><strong>Open Inspect Element : </strong></p>
+</li>
+</ol>
+<p>Click <code>CTRL+ shift+ i or F12</code> or go to : <code>Developer tools &gt; Console &gt; Enable 'Preserve Log'</code>.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Preserve Log</strong> should be enabled in order to get Logs on the Browser Console.</p>
+</aside>
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 3. Console : Enable Preserve Logs" decoding="async" loading="lazy" src="/images/image-20240708-051115-6f4a50.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 3. </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Console</strong></em></span><span style="--color: var(--gray, #97a0af);"><em>: Enable </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Preserve Logs</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="Step-4.-Getting-the-errors-in-the-Logs-upon-Crash"><span id="PrintUELoginBrowserConsole-Step4.GettingtheerrorsintheLogsuponCrash"></span>Step 4. Getting the errors in the Logs upon Crash
+ </h3>
+<p>Whenever your App crashes, the same error on your App is displayed in the Log.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 4. Error message on the App and in the Console Log" decoding="async" loading="lazy" src="/images/image-20231113-070349-dcf921.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 4. Error message on the App and in the Console Log</em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="Step-5.-Saving-the-Log-on-your-device"><span id="PrintUELoginBrowserConsole-Step5.SavingtheLogonyourdevice"></span>Step 5. Saving the Log on your device
+ </h3>
+<p>Right-click on the error from the Log to save it on your device. (See image below).</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 5. Save the error" decoding="async" loading="lazy" src="/images/image-20231113-070541-2e8d80.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 5. Save the error</em></span>
+</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Now you are ready to get Logs from the Browser Console upon Crash!</strong></p>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>See how to Auto Download UE Crash Log. Refer to <a href="/wiki/auto-download-ue-crash-log">this document</a>.</p>
+</aside>
+</div>
