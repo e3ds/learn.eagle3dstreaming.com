@@ -1,0 +1,185 @@
+<p class="standfirst">
+  Three things turn an Unreal project into something the platform can stream:
+  the Pixel Streaming plugin, a Windows package, and a ZIP of the result. This
+  page does all three.
+</p>
+
+<p>
+  Most of the elapsed time here is Unreal packaging, which runs unattended. The
+  work you actually do takes a few minutes.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li><strong>Unreal Engine 5.1 or newer.</strong> Earlier versions are not
+      supported. Unreal's own
+      <a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/installing-unreal-engine"
+         rel="noreferrer" target="_blank">installation guide</a> covers getting it,
+      and its
+      <a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/setting-up-visual-studio-development-environment-for-cplusplus-projects-in-unreal-engine"
+         rel="noreferrer" target="_blank">Visual Studio setup</a> covers the rest.</li>
+    <li>A project to stream. Any project works &mdash; if you only want to try
+      this, a new <strong>Third Person</strong> template is enough.</li>
+    <li>Disk space for the package. A modest project produces a few gigabytes.</li>
+  </ul>
+</div>
+
+<h2>If you need a project to try with</h2>
+
+<p>
+  Skip this if you already have one. Otherwise, in Unreal Editor create a new
+  project, choose <strong>Third Person</strong> under <strong>Games</strong>,
+  name it, and press <strong>Create</strong>. You get a working scene you can
+  walk around in, which is all that is needed to see streaming work.
+</p>
+
+<figure>
+  <img src="/images/image-20241203-163816-4012e1.png" loading="lazy" decoding="async"
+       alt="Choosing the Third Person template in the Unreal project browser">
+  <figcaption>The Third Person template.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/image-20241203-164105-b2764c.png" loading="lazy" decoding="async"
+       alt="Naming the new Unreal project">
+  <figcaption>Naming the project.</figcaption>
+</figure>
+
+<h2>Enable Pixel Streaming</h2>
+
+<p>
+  This is the plugin that lets Unreal send video and receive input over a
+  network. Without it the packaged build runs perfectly well and cannot be
+  streamed at all &mdash; so it is worth confirming rather than assuming.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Open Edit &rsaquo; Plugins</h3>
+    <figure>
+      <img src="/images/image-20241203-164410-c88aed.png" loading="lazy" decoding="async"
+           alt="The Plugins entry in Unreal's Edit menu">
+      <figcaption>Edit &rsaquo; Plugins.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Search for "pixel streaming" and tick it</h3>
+    <figure>
+      <img src="/images/image-20241104-133339-2d1c23.png" loading="lazy" decoding="async"
+           alt="Enabling the Pixel Streaming plugin in Unreal's plugin browser">
+      <figcaption>Ticking the Pixel Streaming plugin.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Press Restart Now</h3>
+    <p>
+      The plugin is not active until the editor restarts. Packaging before the
+      restart produces a build without streaming in it, and nothing later will
+      say why.
+    </p>
+    <figure>
+      <img src="/images/external-6d08ad88d8-6d08ad.png" loading="lazy" decoding="async"
+           alt="Unreal prompting to restart after enabling a plugin">
+      <figcaption>Restart Now.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>Package for Windows</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Go to Platforms &rsaquo; Windows &rsaquo; Package Project</h3>
+    <figure>
+      <img src="/images/image-20241203-164738-63070e.png" loading="lazy" decoding="async"
+           alt="The Package Project option under Platforms, Windows">
+      <figcaption>Platforms &rsaquo; Windows.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Choose an output folder</h3>
+    <p>Pick or create an empty folder. Unreal writes the whole build into it.</p>
+    <figure>
+      <img src="/images/image-20241203-164920-67a818.png" loading="lazy" decoding="async"
+           alt="Choosing the output folder for packaging">
+      <figcaption>Choosing where the package goes.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Wait for packaging to finish</h3>
+    <p>
+      Unreal shows that packaging has started, and tells you when it completes.
+      How long depends on the size of your project and the speed of your
+      machine; the first package of a project is much slower than later ones,
+      because shaders are being compiled.
+    </p>
+    <figure>
+      <img src="/images/image-20241203-164956-c09f61.png" loading="lazy" decoding="async"
+           alt="Unreal reporting that packaging has completed">
+      <figcaption>Packaging complete.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>
+    The output folder contains a <strong>Windows</strong> folder holding your
+    application's <code>.exe</code> alongside its data folders.
+  </p>
+</div>
+
+<figure>
+  <img src="/images/image-20241203-165322-5028a4.png" loading="lazy" decoding="async"
+       alt="The packaged build's Windows folder, containing the executable">
+  <figcaption>Inside the Windows folder.</figcaption>
+</figure>
+
+<h2>Make the ZIP</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>Zip the contents, not the folder.</strong> Select everything
+    <em>inside</em> the Windows folder and compress that. Zipping the folder
+    itself buries the <code>.exe</code> one level deeper than the platform
+    expects, and the upload will not run.
+  </p>
+</aside>
+
+<ol class="steps">
+  <li>
+    <h3>Select everything inside the Windows folder</h3>
+    <figure>
+      <img src="/images/image-20241203-165616-e4d1b7.png" loading="lazy" decoding="async"
+           alt="Selecting all files inside the packaged Windows folder">
+      <figcaption>Everything inside the Windows folder.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Compress it to a ZIP</h3>
+    <p>
+      Right-click the selection and choose <strong>Send to &rsaquo; Compressed
+      (zipped) folder</strong>. ZIP is the only format the platform accepts.
+    </p>
+    <figure>
+      <img src="/images/image-20241203-165835-8b0d4f.png" loading="lazy" decoding="async"
+           alt="Creating a ZIP archive from the selected files">
+      <figcaption>Creating the ZIP.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You now have</strong>
+  <p>A single ZIP file with your application's <code>.exe</code> at its top level. That is what you upload.</p>
+</div>
+
+<div class="next">
+  <a href="/wiki/upload-from-the-control-panel">Upload it from the Control Panel &rarr;</a>
+  <p>
+    Or skip the packaging and zipping entirely next time with
+    <a href="/wiki/upload-from-unreal">the Unreal plugin</a>, which does all of
+    this in one action.
+  </p>
+</div>

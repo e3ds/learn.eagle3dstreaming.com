@@ -1,0 +1,14 @@
+{
+ "title": "Stream a sample app",
+ "slug": "stream-a-sample-app",
+ "section": "Getting Started",
+ "parents": [
+  "getting-started"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/upload-a-pre-packaged-sample-app",
+ "rewritten": true,
+ "replaces": [
+  "upload-a-pre-packaged-sample-app",
+  "delete-the-pre-packaged-sample-app"
+ ]
+}

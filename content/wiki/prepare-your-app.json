@@ -1,0 +1,16 @@
+{
+ "title": "Prepare your app in Unreal",
+ "slug": "prepare-your-app",
+ "section": "Getting Started",
+ "parents": [
+  "getting-started"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/packaging-the-project",
+ "rewritten": true,
+ "replaces": [
+  "install-unreal-engine-and-create-a-project",
+  "enabling-the-pixel-streaming-plugin",
+  "packaging-the-project",
+  "prepare-the-zip-file-for-uploading"
+ ]
+}
