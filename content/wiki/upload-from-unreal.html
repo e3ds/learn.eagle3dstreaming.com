@@ -1,0 +1,387 @@
+<p class="standfirst">
+  The E3DS Automation Tools plugin packages your project, compresses it and
+  uploads it in one action, without leaving the Unreal Editor. It replaces the
+  package&ndash;zip&ndash;browse&ndash;upload sequence you would otherwise repeat
+  every time.
+</p>
+
+<p>
+  It produces exactly the same result as
+  <a href="/wiki/upload-from-the-control-panel">uploading from the Control
+  Panel</a> &mdash; it does not unlock anything. What it saves is the repetition,
+  which is why it is worth setting up once you are uploading regularly rather
+  than on your very first attempt.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li>Unreal Engine 5.1 or newer, with your project open.</li>
+    <li><a href="https://www.7-zip.org/" rel="noreferrer" target="_blank">7-Zip</a>
+      installed. The plugin uses it to compress the build, and compresses harder
+      than a plain ZIP, which is most of the time saved on upload.</li>
+    <li>An Eagle 3D Streaming account, for the API key in step&nbsp;3.</li>
+  </ul>
+</div>
+
+<aside class="callout tip">
+  <p>
+    <strong>Package your project by hand once first.</strong> Packaging failures
+    are Unreal's, not ours, and they are far easier to read in Unreal's own
+    output than through an automated run. Once
+    <a href="/wiki/prepare-your-app">a manual package</a> succeeds, you know any
+    later failure belongs to the upload rather than to the build.
+  </p>
+</aside>
+
+<h2>1. Install the plugin</h2>
+
+<p>Three ways to get it. They install the same plugin.</p>
+
+<div class="choices">
+  <div class="choice pick">
+    <span class="tag">Recommended</span>
+    <h3>Fab Marketplace</h3>
+    <p>
+      Through the Epic Games Launcher. Updates arrive the way every other
+      marketplace plugin's do, and there is no folder to name correctly.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>Download from GitHub</h3>
+    <p>
+      A ZIP you extract into your project. Use it when you cannot install
+      through the Launcher.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>Clone from GitHub</h3>
+    <p>
+      Same files, kept under git, so you can pull updates. Use it if you track
+      the plugin's changes.
+    </p>
+  </div>
+</div>
+
+<h3>From the Fab Marketplace</h3>
+
+<p>
+  Open the Epic Games Launcher, go to <strong>Unreal Engine &rsaquo; Fab</strong>
+  and press <strong>Start exploring</strong>, which opens Fab in your browser.
+  Search for <strong>E3DS Automation Tools</strong> and press <strong>Add to My
+  Library</strong>. Back in the Launcher, go to <strong>Unreal Engine &rsaquo;
+  Library</strong>, refresh the Fab library, and install the plugin for your
+  engine version.
+</p>
+
+<figure>
+  <img src="/images/image-20250505-043519-86fa74.png" loading="lazy" decoding="async"
+       alt="Searching for E3DS Automation Tools on Fab">
+  <figcaption>Finding the plugin on Fab.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/image-20250505-045030-e41636.png" loading="lazy" decoding="async"
+       alt="Installing the plugin from the Epic Games Launcher library">
+  <figcaption>Installing it for your engine version.</figcaption>
+</figure>
+
+<h3>From GitHub, as a download or a clone</h3>
+
+<p>
+  Both routes put the plugin in the same place. In your Unreal project folder,
+  create a <strong>Plugins</strong> folder if there is not one already, then
+  either
+  <a href="https://github.com/e3ds-ue4/E3DSAutomationTools/archive/refs/heads/master.zip"
+     rel="noreferrer" target="_blank">download the ZIP</a> and extract it there,
+  or clone
+  <a href="https://github.com/e3ds-ue4/E3DSAutomationTools"
+     rel="noreferrer" target="_blank">the repository</a> into it.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>The folder must be named <code>E3DSAutomationTools</code>.</strong>
+    Both GitHub and a clone give it a different name &mdash; a ZIP extracts to
+    something like <code>E3DSAutomationTools-master</code>. Rename it. Unreal
+    finds plugins by folder name, so a folder named anything else is a plugin
+    that silently does not exist.
+  </p>
+</aside>
+
+<figure>
+  <img src="/images/image-20241025-093813-37db4b.png" loading="lazy" decoding="async"
+       alt="The expected contents of the E3DSAutomationTools plugin folder">
+  <figcaption>What the folder should contain once renamed.</figcaption>
+</figure>
+
+<h2>2. Enable Pixel Streaming</h2>
+
+<p>
+  Separate from the plugin above, and required either way: a build without it
+  cannot stream.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Open Edit &rsaquo; Plugins</h3>
+    <figure>
+      <img src="/images/image-20250423-033640-d63b1f.png" loading="lazy" decoding="async"
+           alt="The Plugins entry in Unreal's Edit menu">
+      <figcaption>Edit &rsaquo; Plugins.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Enable the Pixel Streaming plugin</h3>
+    <figure>
+      <img src="/images/image-20241029-155917-67a30f.png" loading="lazy" decoding="async"
+           alt="Enabling the Pixel Streaming plugin">
+      <figcaption>Ticking Pixel Streaming.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Restart the editor</h3>
+    <p>The plugin is not active until you do.</p>
+    <figure>
+      <img src="/images/image-20241029-160004-b888ec.png" loading="lazy" decoding="async"
+           alt="Restarting Unreal Editor after enabling a plugin">
+      <figcaption>Restart Now.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>3. Configure the plugin</h2>
+
+<p>
+  Go to <strong>Edit &rsaquo; Project Settings</strong>, and under
+  <strong>Plugins</strong> choose <strong>E3DS Automation Tools Settings</strong>.
+  Everything below lives on that one page, and you set it once per project.
+</p>
+
+<figure>
+  <img src="/images/image-20250423-023803-d63601.png" loading="lazy" decoding="async"
+       alt="E3DS Automation Tools Settings in Project Settings">
+  <figcaption>E3DS Automation Tools Settings.</figcaption>
+</figure>
+
+<ol class="steps">
+  <li>
+    <h3>Download the E3DS automation executable</h3>
+    <p>
+      Press <strong>Download E3DS Automation Tool Executable</strong>, then point
+      <strong>Path to E3DS Automation Executable</strong> at the
+      <code>EL_AT.exe</code> you just downloaded.
+    </p>
+    <figure>
+      <img src="/images/image-20250505-054212-3e1a39.png" loading="lazy" decoding="async"
+           alt="The download button for the E3DS automation executable">
+      <figcaption>Downloading the executable.</figcaption>
+    </figure>
+    <figure>
+      <img src="/images/image-20241021-160420-b8c038.png" loading="lazy" decoding="async"
+           alt="Setting the path to EL_AT.exe">
+      <figcaption>Pointing the setting at <code>EL_AT.exe</code>.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Point it at 7-Zip</h3>
+    <p>Set <strong>Path to 7z.exe</strong> to your 7-Zip installation.</p>
+    <figure>
+      <img src="/images/image-20241021-161437-26ef3c.png" loading="lazy" decoding="async"
+           alt="Setting the path to 7z.exe">
+      <figcaption>The path to <code>7z.exe</code>.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Get and paste your API key</h3>
+    <p>
+      Press <strong>Get E3DS API Key</strong>, which opens the Control Panel;
+      sign in if you are asked. Copy the generated key and paste it into the
+      <strong>API Key</strong> field. This is what ties the upload to your
+      account, so treat it like a password.
+    </p>
+    <figure>
+      <img src="/images/image-20250201-145145-00154a.png" loading="lazy" decoding="async"
+           alt="Copying the generated API key">
+      <figcaption>Copying the key.</figcaption>
+    </figure>
+    <figure>
+      <img src="/images/image-20250505-134033-271817.png" loading="lazy" decoding="async"
+           alt="Pasting the API key into the plugin settings">
+      <figcaption>Pasting it into the settings.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Name the streaming application</h3>
+    <p>
+      <strong>Letters and numbers only</strong> &mdash; no dots, no spaces.
+    </p>
+    <p>
+      <strong>Reusing a name is not a mistake, it is how you publish an
+      update.</strong> Uploading under a name you have used before creates a new
+      <em>version</em> of that application rather than a second application. Use
+      a new name only when you mean a genuinely separate app.
+    </p>
+    <figure>
+      <img src="/images/image-20250423-025256-52fc47.png" loading="lazy" decoding="async"
+           alt="Setting the streaming application name">
+      <figcaption>The application name.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Choose a packaging mode</h3>
+    <p>
+      <strong>Development</strong> packages more slowly and shows the output log
+      while it works. <strong>Shipping</strong> is faster and shows nothing.
+      Use Development until an upload has succeeded once &mdash; when something
+      fails, that log is the only thing that will tell you why.
+    </p>
+    <figure>
+      <img src="/images/image-20250423-025343-13f2cb.png" loading="lazy" decoding="async"
+           alt="Choosing between Development and Shipping packaging modes">
+      <figcaption>Packaging mode.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Leave "Build Dedicated Server App" unticked</h3>
+    <p>
+      It is for multiplayer projects with a dedicated server, and produces a
+      build that will not stream on its own.
+    </p>
+    <p>
+      <strong>Check it rather than assume it.</strong> It is off by default with
+      an engine installed from the Epic Games Launcher, but <em>on</em> by
+      default in the Epic GitHub build and in the E3DS custom engine &mdash; so
+      whether you need to change anything depends on where your Unreal came
+      from.
+    </p>
+    <figure>
+      <img src="/images/image-20250423-025540-4d2640.png" loading="lazy" decoding="async"
+           alt="The Build Dedicated Server App option">
+      <figcaption>Leave this off unless you are building a multiplayer server.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Optionally open the stream when the upload finishes</h3>
+    <p>
+      <strong>Launch Streaming App URL on Completion</strong> opens the stream in
+      your browser as soon as the upload completes, so you are not watching for
+      it.
+    </p>
+    <figure>
+      <img src="/images/image-20250505-053244-837c33.png" loading="lazy" decoding="async"
+           alt="The Launch Streaming App URL on Completion option">
+      <figcaption>Opening the stream automatically.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>4. Push it to the cloud</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>Save everything first.</strong> Unsaved maps, unsaved blueprints and
+    newly imported assets are not included in the package. With the Fab build of
+    the plugin you get a popup telling you so; save everything, then start again.
+  </p>
+</aside>
+
+<figure>
+  <img src="/images/image-20251103-174917-0e9525.png" loading="lazy" decoding="async"
+       alt="The popup warning about unsaved changes">
+  <figcaption>The unsaved-changes warning.</figcaption>
+</figure>
+
+<p>
+  Then press <strong>Launch E3DS Automation Tool</strong>. Packaging runs first,
+  then compression, then the upload.
+</p>
+
+<figure>
+  <img src="/images/image-20250423-025739-c6c34c.png" loading="lazy" decoding="async"
+       alt="Selecting Launch E3DS Automation Tool">
+  <figcaption>Launch E3DS Automation Tool.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/image-20250505-131047-956012.png" loading="lazy" decoding="async"
+       alt="The project packaging">
+  <figcaption>Packaging.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/image-20250505-131144-6e475e.png" loading="lazy" decoding="async"
+       alt="The upload beginning after packaging completes">
+  <figcaption>The upload starting.</figcaption>
+</figure>
+
+<aside class="callout note">
+  <p>
+    <strong>If your connection drops, the upload fails and must be run again.</strong>
+    It does not resume. On a slow or unreliable connection this is the step to
+    watch, because everything before it has to be redone.
+  </p>
+</aside>
+
+<figure>
+  <img src="/images/image-20250528-041832-8d95cf.png" loading="lazy" decoding="async"
+       alt="An upload that failed because the internet connection was interrupted">
+  <figcaption>What an interrupted upload looks like.</figcaption>
+</figure>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>
+    The tool reports the upload finished, and the application appears in your
+    Control Panel &mdash; as a new version, if you reused the name.
+  </p>
+</div>
+
+<figure>
+  <img src="/images/image-20250505-131603-31df6c.png" loading="lazy" decoding="async"
+       alt="The upload reporting that it finished">
+  <figcaption>Upload finished.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/image-20250423-040557-d35658.png" loading="lazy" decoding="async"
+       alt="The uploaded application in the Control Panel">
+  <figcaption>In the Control Panel.</figcaption>
+</figure>
+
+<h2>5. Stream it</h2>
+
+<p>
+  Identical to the Control Panel route from here: open the application, press
+  <strong>Create New Stream Link</strong>, then <strong>Play App</strong>, wait
+  for a machine, and press play.
+</p>
+
+<figure>
+  <img src="/images/image-20250423-040637-be5353.png" loading="lazy" decoding="async"
+       alt="Creating a new stream link">
+  <figcaption>Create New Stream Link.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/image-20250423-041057-0479c8.png" loading="lazy" decoding="async"
+       alt="The interface while waiting for a machine">
+  <figcaption>Waiting for a machine.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/image-20250423-040951-838e85.png" loading="lazy" decoding="async"
+       alt="The application streaming in a browser">
+  <figcaption>Streaming.</figcaption>
+</figure>
+
+<div class="next">
+  <a href="/wiki/microphone-settings">Configure how it streams &rarr;</a>
+  <p>Microphone, fullscreen and the rest of the per-app settings.</p>
+</div>

@@ -270,6 +270,52 @@ function main() {
     written++;
   }
 
+  /* [E3DS-REDIRECTS] A page that absorbed others keeps their URLs alive.
+   *
+   * The rewrite merges several pages into one, and every merged-away slug was a
+   * real URL somebody may have bookmarked, mailed to a customer, or had indexed.
+   * Each rewritten fragment lists what it replaces, and a stub is written for
+   * each of those slugs.
+   *
+   * A STATIC STUB, not a server rule: one small HTML file that works behind
+   * nginx alone, with no routing table to keep in step. It carries a canonical
+   * link so a search engine credits the surviving page, and a meta refresh so a
+   * person lands there. The visible line matters too - a redirect that flashes
+   * past unexplained leaves people unsure they arrived anywhere sensible.
+   */
+  let stubs = 0;
+  for (const p of pages) {
+    for (const old of p.replaces || []) {
+      const to = "/wiki/" + p.slug;
+      const stub = [
+        '<meta charset="utf-8">',
+        '<meta name="robots" content="noindex,nofollow">',
+        '<link rel="canonical" href="https://learn.eagle3dstreaming.com' + to + '">',
+        '<meta http-equiv="refresh" content="0; url=' + to + '">',
+        "<title>Moved &mdash; " + esc(p.title) + "</title>",
+        '<p style="font:16px/1.6 system-ui,sans-serif;padding:40px">This page is now part of '
+          + '<a href="' + to + '">' + esc(p.title) + "</a>.</p>",
+      ].join("\n");
+      fs.writeFileSync(path.join(OUT, old + ".html"), stub + "\n", "utf8");
+      stubs++;
+    }
+  }
+  if (stubs) console.log("  " + stubs + " redirect stubs for merged-away pages");
+
+  /* REMOVE PAGES WHOSE FRAGMENT IS GONE. Without this a page deleted from
+   * content/ keeps being served from site/ forever: the tree stops linking to
+   * it, so nobody notices, but the URL still works and still shows the old
+   * text. During a rewrite that means the version being replaced stays live
+   * alongside the one replacing it. */
+  const wanted = new Set(pages.flatMap((p) =>
+    [p.slug + ".html"].concat((p.replaces || []).map((o) => o + ".html"))));
+  for (const f of fs.readdirSync(OUT)) {
+    if (f.endsWith(".html") && !wanted.has(f)) {
+      fs.unlinkSync(path.join(OUT, f));
+      console.log("  removed " + f + " - its fragment is gone");
+    }
+  }
+
   /* An index of what exists, for the language models that look for one, and
    * cheap enough to regenerate every build rather than let it go stale. */
   const llms = ["# Eagle 3D Streaming documentation", ""]

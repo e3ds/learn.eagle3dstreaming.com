@@ -1,0 +1,169 @@
+<p class="standfirst">
+  Upload the ZIP you packaged, then create a link that streams it. Nothing to
+  install, and it works the same way for everyone on your team.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li>A ZIP of your packaged application, with the <code>.exe</code> at its
+      top level &mdash; see <a href="/wiki/prepare-your-app">Prepare your app in
+      Unreal</a>.</li>
+    <li>The Pixel Streaming plugin enabled <em>before</em> that package was
+      built. A build made without it uploads perfectly and then will not stream.</li>
+  </ul>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>On the Pay Per License plan, the application name must match the
+    <code>.exe</code>.</strong> If the ZIP contains <code>MyProject.exe</code>,
+    name the application <code>MyProject</code>. On that plan the name is how the
+    licence is matched to the executable, and a mismatch fails at start-up rather
+    than at upload &mdash; long after the point where it would be easy to
+    connect the two.
+  </p>
+</aside>
+
+<h2>Upload it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Sign in and press Add Application</h3>
+    <figure>
+      <img src="/images/image-20241203-174651-cc75c1.png" loading="lazy" decoding="async"
+           alt="The Add Application button in the Control Panel">
+      <figcaption>Add Application.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Choose your ZIP</h3>
+    <p>
+      Press <strong>Browse</strong>, or drag the file in. <strong>Only
+      <code>.zip</code> is accepted</strong> &mdash; anything else is rejected
+      with an <em>Invalid File Type</em> message rather than failing quietly
+      later.
+    </p>
+    <figure>
+      <img src="/images/external-a65d683c0c-a65d68.png" loading="lazy" decoding="async"
+           alt="Browsing for the ZIP file to upload">
+      <figcaption>Browse, or drag the file in.</figcaption>
+    </figure>
+    <figure>
+      <img src="/images/image-20250909-045113-1c8dd6.png" loading="lazy" decoding="async"
+           alt="The Invalid File Type message shown for a non-ZIP file">
+      <figcaption>What a non-ZIP file gets you.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Name it and press Upload</h3>
+    <p>
+      A thumbnail is optional. So is <strong>Send Updates On Email</strong>,
+      which mails you when the application is ready instead of making you watch
+      the page &mdash; worth switching on for a large build.
+    </p>
+    <figure>
+      <img src="/images/image-20250127-141137-dd6645.png" loading="lazy" decoding="async"
+           alt="Naming the application and pressing upload">
+      <figcaption>Naming the application.</figcaption>
+    </figure>
+    <figure>
+      <img src="/images/image-20250918-134733-50ba36.png" loading="lazy" decoding="async"
+           alt="An application name matching the executable name inside the ZIP">
+      <figcaption>On Pay Per License, this name must match the <code>.exe</code>.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Wait for it to be prepared</h3>
+    <p>
+      An estimate appears in the Control Panel. The upload is only the first
+      part: the platform then unpacks the build and gets it onto a machine, so
+      the wait continues after the file has finished transferring.
+    </p>
+    <figure>
+      <img src="/images/image-20241203-170725-389602.png" loading="lazy" decoding="async"
+           alt="The application uploading, with an estimated time">
+      <figcaption>Uploading.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>The application appears in your Control Panel and is no longer marked as preparing.</p>
+</div>
+
+<figure>
+  <img src="/images/image-20241203-173911-b348cf.png" loading="lazy" decoding="async"
+       alt="The uploaded application listed in the Control Panel">
+  <figcaption>Uploaded and ready.</figcaption>
+</figure>
+
+<h2>Stream it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Create a stream link</h3>
+    <p>
+      Open the application and press <strong>Create New Stream Link</strong>.
+      This link is what you send to other people &mdash; anyone who opens it
+      gets the stream, with no account of their own.
+    </p>
+    <figure>
+      <img src="/images/image-20241203-174009-a203e5.png" loading="lazy" decoding="async"
+           alt="Creating a new stream link">
+      <figcaption>Create New Stream Link.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Press Play App</h3>
+    <figure>
+      <img src="/images/image-20241203-174036-c96312.png" loading="lazy" decoding="async"
+           alt="The Play App button">
+      <figcaption>Play App.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Wait for a machine</h3>
+    <p>A GPU machine is starting for your session.</p>
+    <figure>
+      <img src="/images/image-20241203-174153-1ad521.png" loading="lazy" decoding="async"
+           alt="The interface shown while waiting for a machine">
+      <figcaption>Waiting for a machine.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Press Play</h3>
+    <p>
+      Browsers will not start audio and video on their own, so every stream
+      waits for one click. This is a browser rule rather than a setting.
+    </p>
+    <figure>
+      <img src="/images/image-20241203-174237-ea2bb6.png" loading="lazy" decoding="async"
+           alt="The play button before the stream starts">
+      <figcaption>The play button.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>Your application is running in the browser and responding to your input.</p>
+</div>
+
+<figure>
+  <img src="/images/image-20241203-174341-576ed7.png" loading="lazy" decoding="async"
+       alt="The application streaming in a browser">
+  <figcaption>Streaming.</figcaption>
+</figure>
+
+<div class="next">
+  <a href="/wiki/upload-from-unreal">Do all of this from inside Unreal &rarr;</a>
+  <p>
+    One action instead of package, zip, browse, upload &mdash; worth setting up
+    once you are uploading regularly.
+  </p>
+</div>

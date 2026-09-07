@@ -1,15 +1,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Getting Started — Eagle 3D Streaming</title>
+<title>Upload from the Control Panel — Eagle 3D Streaming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="This is the shortest path from a new account to your own Unreal application running in a browser. Following it end to end takes about half an hour, most of which is Unreal packaging your project while you wait.">
+<meta name="description" content="Upload the ZIP you packaged, then create a link that streams it. Nothing to install, and it works the same way for everyone on your team. Before you begin A ZIP of your packaged application, with the .exe at its top level &amp;mdash; see Prepare your app in Unreal .">
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
      AT LAUNCH: remove the robots meta and point canonical back here. -->
 <meta name="robots" content="noindex,nofollow">
-<link rel="canonical" href="https://docs.eagle3dstreaming.com/wiki/getting-started">
+<link rel="canonical" href="https://docs.eagle3dstreaming.com/wiki/upload-and-stream-your-app-from-control-panel">
 
 <style>
   :root{
@@ -249,113 +249,182 @@
   /* NAV-CSS:END */
 </style>
 
-<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/getting-started" class="on" aria-current="page">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel" class="on" aria-current="page">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
 
 <div class="wrap">
-  
-  <h1>Getting Started</h1>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span>/</span><a href="/wiki/getting-started">Getting Started</a></nav>
+  <h1>Upload from the Control Panel</h1>
   <p class="standfirst">
-  This is the shortest path from a new account to your own Unreal application
-  running in a browser. Following it end to end takes about half an hour, most
-  of which is Unreal packaging your project while you wait.
+  Upload the ZIP you packaged, then create a link that streams it. Nothing to
+  install, and it works the same way for everyone on your team.
 </p>
-
-<p>
-  Eagle 3D Streaming runs your application on a cloud machine with a real GPU
-  and sends the picture to a browser as video. Your users need no download, no
-  installation and no graphics card of their own &mdash; they open a link. What
-  you upload is a packaged Windows build of your project; everything after that
-  happens on Eagle 3D Streaming's GPU machines.
-</p>
-
-<h2>Start with something that already works</h2>
-
-<p>
-  Before packaging anything of your own, stream a sample app we provide. It
-  takes a few minutes, and it proves the whole chain &mdash; your account, the
-  platform, your network and your browser &mdash; before your own build is part
-  of the picture. If something is wrong at that point, it is wrong in a much
-  smaller place.
-</p>
-
-<div class="outcome">
-  <strong>Do this first</strong>
-  <p>
-    <a href="/wiki/create-your-account">Create your account</a>, then
-    <a href="/wiki/stream-a-sample-app">stream the sample app</a>. Once you have
-    seen a stream running, come back for your own application.
-  </p>
-</div>
-
-<p>
-  If you would rather see one before signing up, this is a live stream of that
-  same demo:
-  <a href="https://connector.eagle3dstreaming.com/v5/demo/DemoAppTP/default"
-     rel="noreferrer" target="_blank">open the demo app</a>.
-</p>
-
-<h2>Then bring your own application</h2>
-
-<p>
-  Getting your own project streaming has two halves. First you prepare it in
-  Unreal: enable the Pixel Streaming plugin, package it for Windows, and put the
-  result in a ZIP file. Then you upload that ZIP &mdash; and there are two ways
-  to do that.
-</p>
-
-<div class="choices">
-  <div class="choice pick">
-    <span class="tag">Start here</span>
-    <h3>Upload from the Control Panel</h3>
-    <p>
-      You package the project yourself and upload the ZIP through a web page.
-      Nothing to install, and it works the same way for everyone on your team.
-    </p>
-  </div>
-  <div class="choice">
-    <h3>Upload from Unreal</h3>
-    <p>
-      A plugin packages and uploads in one action, without leaving the editor.
-      Worth installing once you upload often enough that the manual steps become
-      tedious.
-    </p>
-  </div>
-</div>
-
-<p>
-  Both produce exactly the same result. The plugin saves time; it does not
-  unlock anything. Start with the Control Panel, and move to the plugin when the
-  repetition costs you more than the setup would.
-</p>
-
-<h2>What you need</h2>
 
 <div class="prereq">
   <h2>Before you begin</h2>
   <ul>
-    <li>An email address you can receive mail at &mdash; signing up sends a
-      one-time code.</li>
-    <li><strong>Unreal Engine 5.1 or newer</strong>, if you intend to stream
-      your own project. Earlier versions are not supported.</li>
-    <li>Visual Studio set up for Unreal development, which Unreal's own
-      installation guide covers.</li>
-    <li>Disk space for a packaged build. A modest project produces a few
-      gigabytes.</li>
+    <li>A ZIP of your packaged application, with the <code>.exe</code> at its
+      top level &mdash; see <a href="/wiki/prepare-your-app">Prepare your app in
+      Unreal</a>.</li>
+    <li>The Pixel Streaming plugin enabled <em>before</em> that package was
+      built. A build made without it uploads perfectly and then will not stream.</li>
   </ul>
 </div>
 
-<p>
-  You do not need a powerful computer to <em>stream</em> &mdash; the rendering
-  happens on Eagle 3D Streaming's GPU machines. You need one capable of running Unreal only because
-  that is where you build your project.
-</p>
+<aside class="callout warning">
+  <p>
+    <strong>On the Pay Per License plan, the application name must match the
+    <code>.exe</code>.</strong> If the ZIP contains <code>MyProject.exe</code>,
+    name the application <code>MyProject</code>. On that plan the name is how the
+    licence is matched to the executable, and a mismatch fails at start-up rather
+    than at upload &mdash; long after the point where it would be easy to
+    connect the two.
+  </p>
+</aside>
 
-<div class="next">
-  <a href="/wiki/create-your-account">Create your account &rarr;</a>
-  <p>Five steps, and you finish inside the Control Panel.</p>
+<h2>Upload it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Sign in and press Add Application</h3>
+    <figure>
+      <img src="/images/image-20241203-174651-cc75c1.png" loading="lazy" decoding="async"
+           alt="The Add Application button in the Control Panel">
+      <figcaption>Add Application.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Choose your ZIP</h3>
+    <p>
+      Press <strong>Browse</strong>, or drag the file in. <strong>Only
+      <code>.zip</code> is accepted</strong> &mdash; anything else is rejected
+      with an <em>Invalid File Type</em> message rather than failing quietly
+      later.
+    </p>
+    <figure>
+      <img src="/images/external-a65d683c0c-a65d68.png" loading="lazy" decoding="async"
+           alt="Browsing for the ZIP file to upload">
+      <figcaption>Browse, or drag the file in.</figcaption>
+    </figure>
+    <figure>
+      <img src="/images/image-20250909-045113-1c8dd6.png" loading="lazy" decoding="async"
+           alt="The Invalid File Type message shown for a non-ZIP file">
+      <figcaption>What a non-ZIP file gets you.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Name it and press Upload</h3>
+    <p>
+      A thumbnail is optional. So is <strong>Send Updates On Email</strong>,
+      which mails you when the application is ready instead of making you watch
+      the page &mdash; worth switching on for a large build.
+    </p>
+    <figure>
+      <img src="/images/image-20250127-141137-dd6645.png" loading="lazy" decoding="async"
+           alt="Naming the application and pressing upload">
+      <figcaption>Naming the application.</figcaption>
+    </figure>
+    <figure>
+      <img src="/images/image-20250918-134733-50ba36.png" loading="lazy" decoding="async"
+           alt="An application name matching the executable name inside the ZIP">
+      <figcaption>On Pay Per License, this name must match the <code>.exe</code>.</figcaption>
+    </figure>
+  </li>
+
+  <li>
+    <h3>Wait for it to be prepared</h3>
+    <p>
+      An estimate appears in the Control Panel. The upload is only the first
+      part: the platform then unpacks the build and gets it onto a machine, so
+      the wait continues after the file has finished transferring.
+    </p>
+    <figure>
+      <img src="/images/image-20241203-170725-389602.png" loading="lazy" decoding="async"
+           alt="The application uploading, with an estimated time">
+      <figcaption>Uploading.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>The application appears in your Control Panel and is no longer marked as preparing.</p>
 </div>
 
-  <h2 class="children-head">In this section</h2><ul class="children"><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul>
+<figure>
+  <img src="/images/image-20241203-173911-b348cf.png" loading="lazy" decoding="async"
+       alt="The uploaded application listed in the Control Panel">
+  <figcaption>Uploaded and ready.</figcaption>
+</figure>
+
+<h2>Stream it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Create a stream link</h3>
+    <p>
+      Open the application and press <strong>Create New Stream Link</strong>.
+      This link is what you send to other people &mdash; anyone who opens it
+      gets the stream, with no account of their own.
+    </p>
+    <figure>
+      <img src="/images/image-20241203-174009-a203e5.png" loading="lazy" decoding="async"
+           alt="Creating a new stream link">
+      <figcaption>Create New Stream Link.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Press Play App</h3>
+    <figure>
+      <img src="/images/image-20241203-174036-c96312.png" loading="lazy" decoding="async"
+           alt="The Play App button">
+      <figcaption>Play App.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Wait for a machine</h3>
+    <p>A GPU machine is starting for your session.</p>
+    <figure>
+      <img src="/images/image-20241203-174153-1ad521.png" loading="lazy" decoding="async"
+           alt="The interface shown while waiting for a machine">
+      <figcaption>Waiting for a machine.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Press Play</h3>
+    <p>
+      Browsers will not start audio and video on their own, so every stream
+      waits for one click. This is a browser rule rather than a setting.
+    </p>
+    <figure>
+      <img src="/images/image-20241203-174237-ea2bb6.png" loading="lazy" decoding="async"
+           alt="The play button before the stream starts">
+      <figcaption>The play button.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>Your application is running in the browser and responding to your input.</p>
+</div>
+
+<figure>
+  <img src="/images/image-20241203-174341-576ed7.png" loading="lazy" decoding="async"
+       alt="The application streaming in a browser">
+  <figcaption>Streaming.</figcaption>
+</figure>
+
+<div class="next">
+  <a href="/wiki/upload-from-unreal">Do all of this from inside Unreal &rarr;</a>
+  <p>
+    One action instead of package, zip, browse, upload &mdash; worth setting up
+    once you are uploading regularly.
+  </p>
+</div>
+
+  
   <!-- Every source page carried its own copy of this. Once, here, instead:
        sixteen copies is sixteen places to update a support link. -->
   <footer>

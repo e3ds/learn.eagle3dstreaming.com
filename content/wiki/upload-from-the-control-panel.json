@@ -1,0 +1,14 @@
+{
+ "title": "Upload from the Control Panel",
+ "slug": "upload-from-the-control-panel",
+ "section": "Getting Started",
+ "parents": [
+  "getting-started"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/upload-and-stream-your-app-from-control-panel",
+ "rewritten": true,
+ "replaces": [
+  "upload-app-from-the-control-panel",
+  "upload-and-stream-your-app-from-control-panel"
+ ]
+}

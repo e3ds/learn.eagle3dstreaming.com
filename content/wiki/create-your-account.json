@@ -6,5 +6,8 @@
   "getting-started"
  ],
  "source": "https://docs.eagle3dstreaming.com/wiki/create-an-account-on-eagle-3d-streaming-platform",
- "rewritten": true
+ "rewritten": true,
+ "replaces": [
+  "create-an-account-on-eagle-3d-streaming-platform"
+ ]
 }
