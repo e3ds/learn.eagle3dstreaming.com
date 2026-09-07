@@ -16,7 +16,7 @@
     --ground:#FAFBFA; --surface:#FFFFFF; --surface-2:#F1F4F3;
     --line:#DDE3E1; --ink:#141A19; --ink-2:#4A5654; --ink-3:#737F7D;
     --accent:#176B6B; --measure:68ch; --r:3px;
-    --note:#1E6A8D; --note-bg:#EDF5F9; --tip:#1F6B4A; --tip-bg:#ECF6F1;
+    --accent-soft:#ECF6F5; --note:#1E6A8D; --note-bg:#EDF5F9; --tip:#1F6B4A; --tip-bg:#ECF6F1;
     --warn:#8A5A00; --warn-bg:#FBF3E2;
   }
   @media (prefers-color-scheme:dark){
@@ -24,7 +24,7 @@
       --ground:#0F1413; --surface:#161C1B; --surface-2:#1D2524;
       --line:#2A3433; --ink:#E8EEEC; --ink-2:#A8B4B2; --ink-3:#7C8886;
       --accent:#5FC2BC;
-      --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
+      --accent-soft:#11211F; --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
       --warn:#DBA84E; --warn-bg:#231C0E;
     }
   }
@@ -32,7 +32,7 @@
     --ground:#0F1413; --surface:#161C1B; --surface-2:#1D2524;
     --line:#2A3433; --ink:#E8EEEC; --ink-2:#A8B4B2; --ink-3:#7C8886;
     --accent:#5FC2BC;
-    --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
+    --accent-soft:#11211F; --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
     --warn:#DBA84E; --warn-bg:#231C0E;
   }
   *{box-sizing:border-box}
@@ -112,6 +112,73 @@
   footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);
     font-family:Archivo,Arial,sans-serif;font-size:13px;color:var(--ink-3)}
   footer a{color:var(--ink-3)}
+  footer p{margin:0 0 6px}
+  footer .help strong{color:var(--ink-2);margin-right:4px}
+
+  /* ---- content components -------------------------------------------
+     The shapes every page is written into. A reader learns them once and can
+     then skim any page in the set, which is most of what "professional" means
+     in documentation - far more than typography does. Add a component here
+     rather than styling one page specially. */
+
+  /* The label above the title: where you are, in two or three words. */
+  .eyebrow{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11.5px;
+    font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 14px}
+  /* The one paragraph that says what this page gets you. Every page has one. */
+  .standfirst{font-size:19px;line-height:1.55;color:var(--ink-2);
+    max-width:var(--measure);margin:0 0 36px}
+
+  /* What must already be true. Stated up front so nobody discovers at step 6
+     that they needed something at step 1. */
+  .prereq{margin:0 0 34px;padding:16px 20px;border:1px solid var(--line);
+    border-radius:var(--r);background:var(--surface)}
+  .prereq h2{font-family:Archivo,Arial,sans-serif;font-size:12px;font-weight:600;
+    letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px}
+  .prereq ul{margin:0;padding-left:20px}
+  .prereq li{margin-bottom:5px}
+  .prereq li:last-child{margin-bottom:0}
+
+  /* Numbered steps. The number is drawn by CSS from the list itself, so steps
+     cannot end up mis-numbered when one is inserted or removed. */
+  ol.steps{list-style:none;counter-reset:step;padding:0;margin:32px 0}
+  ol.steps>li{counter-increment:step;position:relative;
+    padding:0 0 30px 52px;margin:0}
+  ol.steps>li::before{content:counter(step);position:absolute;left:0;top:1px;
+    width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+    background:var(--surface-2);border:1px solid var(--line);
+    font-family:"JetBrains Mono",monospace;font-size:14px;color:var(--accent)}
+  /* The rail joins the steps into one sequence instead of a stack of boxes. */
+  ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:16px;
+    top:38px;bottom:6px;width:1px;background:var(--line)}
+  ol.steps>li>h3{margin:4px 0 8px;font-size:17px}
+  ol.steps>li>p:last-child,ol.steps>li>figure:last-child{margin-bottom:0}
+
+  /* How you know it worked. A step people skip is a step they repeat. */
+  .outcome{margin:30px 0;padding:14px 18px;border-left:3px solid var(--accent);
+    background:var(--accent-soft,var(--surface-2));border-radius:0 var(--r) var(--r) 0}
+  .outcome strong{display:block;font-family:Archivo,Arial,sans-serif;font-size:12px;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .outcome p{margin:0}
+
+  /* Two or more ways to do one thing, with the recommendation stated. Readers
+     given three equal options pick none and ask support instead. */
+  .choices{display:grid;gap:14px;margin:28px 0;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .choice{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;
+    background:var(--surface)}
+  .choice.pick{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+  .choice h3{margin:0 0 6px;font-size:16px}
+  .choice .tag{display:inline-block;font-family:Archivo,Arial,sans-serif;font-size:10.5px;
+    font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:8px}
+  .choice p{margin:0;font-size:15.5px;color:var(--ink-2)}
+
+  /* Where to go next. A page that ends without one ends the reader's session. */
+  .next{margin:44px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+  .next a{font-family:Archivo,Arial,sans-serif;font-weight:600;font-size:17px;
+    text-decoration:none}
+  .next p{margin:4px 0 0;color:var(--ink-2);font-size:15.5px}
 
   /* NAV-CSS:BEGIN - extracted by build.js and stamped into the hand-written
      pages too, so there is exactly one copy of these rules. */
@@ -179,7 +246,7 @@
   /* NAV-CSS:END */
 </style>
 
-<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup" open><summary><span>Getting started</span></summary><ul><li><details class="e3dsNavSec" open><summary><a href="/wiki/getting-started">Getting Started</a></summary><ul><li><a href="/wiki/create-an-account-on-eagle-3d-streaming-platform">Create an Account on Eagle 3D Streaming Platform</a></li><li><a href="/wiki/summary">Summary</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-a-pre-packaged-sample-app">Upload a Pre-packaged Sample App</a></summary><ul><li><a href="/wiki/delete-the-pre-packaged-sample-app">Delete the Pre-packaged Sample App</a></li></ul></details></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/upload-your-own-app">Upload Your Own App</a></summary><ul><li><details class="e3dsNavSec" open><summary><a href="/wiki/upload-app-directly-from-unreal-editor-using-e3ds-" class="on" aria-current="page">Upload App Directly from Unreal Editor Using E3DS Automation Plugin</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/install-e3ds-automation-tools">Install E3DS Automation Tools</a></summary><ul><li><a href="/wiki/clone-the-repository-from-github">Clone the repository from GitHub</a></li><li><a href="/wiki/download-and-install-from-github">Download and install from GitHub</a></li><li><a href="/wiki/install-directly-from-the-epic-games-marketplace">Install directly from the Epic Games Marketplace</a></li></ul></details></li><li><a href="/wiki/upload-and-stream-the-app">Upload and Stream the App</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-app-from-the-control-panel">Upload App from the Control Panel</a></summary><ul><li><a href="/wiki/enabling-the-pixel-streaming-plugin">Enabling the Pixel Streaming Plugin</a></li><li><a href="/wiki/install-unreal-engine-and-create-a-project">Install Unreal Engine and Create a Project</a></li><li><a href="/wiki/packaging-the-project">Packaging the Project</a></li><li><a href="/wiki/prepare-the-zip-file-for-uploading">Prepare the ZIP File for Uploading</a></li><li><a href="/wiki/upload-and-stream-your-app-from-control-panel">Upload and Stream Your App From Control Panel</a></li></ul></details></li></ul></details></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup" open><summary><span>Getting started</span></summary><ul><li><details class="e3dsNavSec" open><summary><a href="/wiki/getting-started">Getting Started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/summary">Summary</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-a-pre-packaged-sample-app">Upload a Pre-packaged Sample App</a></summary><ul><li><a href="/wiki/delete-the-pre-packaged-sample-app">Delete the Pre-packaged Sample App</a></li></ul></details></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/upload-your-own-app">Upload Your Own App</a></summary><ul><li><details class="e3dsNavSec" open><summary><a href="/wiki/upload-app-directly-from-unreal-editor-using-e3ds-" class="on" aria-current="page">Upload App Directly from Unreal Editor Using E3DS Automation Plugin</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/install-e3ds-automation-tools">Install E3DS Automation Tools</a></summary><ul><li><a href="/wiki/clone-the-repository-from-github">Clone the repository from GitHub</a></li><li><a href="/wiki/download-and-install-from-github">Download and install from GitHub</a></li><li><a href="/wiki/install-directly-from-the-epic-games-marketplace">Install directly from the Epic Games Marketplace</a></li></ul></details></li><li><a href="/wiki/upload-and-stream-the-app">Upload and Stream the App</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-app-from-the-control-panel">Upload App from the Control Panel</a></summary><ul><li><a href="/wiki/enabling-the-pixel-streaming-plugin">Enabling the Pixel Streaming Plugin</a></li><li><a href="/wiki/install-unreal-engine-and-create-a-project">Install Unreal Engine and Create a Project</a></li><li><a href="/wiki/packaging-the-project">Packaging the Project</a></li><li><a href="/wiki/prepare-the-zip-file-for-uploading">Prepare the ZIP File for Uploading</a></li><li><a href="/wiki/upload-and-stream-your-app-from-control-panel">Upload and Stream Your App From Control Panel</a></li></ul></details></li></ul></details></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
 
 <div class="wrap">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span>/</span><a href="/wiki/getting-started">Getting Started</a><span>/</span><a href="/wiki/upload-your-own-app">Upload Your Own App</a></nav>
@@ -205,26 +272,16 @@
 
 <p>To upload and stream your app using Eagle E3DS Automations Tools you need to follow the steps below:</p>
 
-<hr/>
-<h3 id="Need-help?"><span id="UploadAppDirectlyfromUnrealEditorUsingE3DSAutomationPlugin-Needhelp?"></span>Need help?
- </h3>
-<p>If you need any assistance, feel free to reach out through any of the following channels:</p>
-<ul>
-<li>
-<p>🛠️ <strong>Support Portal:</strong> <a href="https://support.eagle3dstreaming.com/" rel="external noreferrer">Contact Our Support Team</a></p>
-</li>
-<li>
-<p>💬 <strong>Discord Community (Faster Support):</strong> <a href="https://discord.com/invite/yvkZewuXKG" rel="noreferrer" target="_blank">Join Our Discord Community</a></p>
-</li>
-<li>
-<p>📧 <strong>Email Support:</strong> <a href="mailto:support@eagle3dstreaming.com" rel="external noreferrer">support@eagle3dstreaming.com</a></p>
-</li>
-</ul>
-
-<p>🆓 <a href="https://controlpanel.eagle3dstreaming.com/signup" rel="external noreferrer"><strong>Get Started for free</strong></a></p>
-
-<p>Follow us on:</p>
-<p><a href="https://www.facebook.com/Eagle3DStreaming/" rel="noreferrer" target="_blank"><strong>Facebook</strong></a> | <a href="https://github.com/e3ds" rel="noreferrer" target="_blank"><strong>GitHub</strong></a> | <a href="https://www.linkedin.com/company/eagle-3d-streaming" rel="noreferrer" target="_blank"><strong>LinkedIn</strong></a> | <a href="https://www.youtube.com/@eagle3dstreaming" rel="noreferrer" target="_blank"><strong>YouTube</strong></a></p>
   <h2 class="children-head">In this section</h2><ul class="children"><li><a href="/wiki/install-e3ds-automation-tools">Install E3DS Automation Tools</a></li><li><a href="/wiki/upload-and-stream-the-app">Upload and Stream the App</a></li></ul>
-  <footer>Eagle 3D Streaming</footer>
+  <!-- Every source page carried its own copy of this. Once, here, instead:
+       sixteen copies is sixteen places to update a support link. -->
+  <footer>
+    <p class="help">
+      <strong>Need help?</strong>
+      <a href="https://support.eagle3dstreaming.com/" rel="noreferrer" target="_blank">Support portal</a> &middot;
+      <a href="https://discord.com/invite/yvkZewuXKG" rel="noreferrer" target="_blank">Discord</a> &middot;
+      <a href="mailto:support@eagle3dstreaming.com">support@eagle3dstreaming.com</a>
+    </p>
+    <p>Eagle 3D Streaming</p>
+  </footer>
 </div>
