@@ -1,0 +1,64 @@
+<p class="standfirst">
+  Epic ships two versions of the Pixel Streaming plugin. Which one you can use
+  depends on your Unreal version and on whether your app needs to talk to the
+  web page.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead>
+      <tr><th>Unreal version</th><th>Plugin</th><th>Streaming</th><th>Browser &harr; Unreal communication</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>5.7 and newer</td><td>PSP2</td><td>Supported</td><td><strong>Not supported</strong></td></tr>
+      <tr><td>5.6</td><td>PSP2</td><td>Not supported</td><td>Not supported</td></tr>
+      <tr><td>5.5</td><td>PSP2</td><td>Not supported</td><td>Not supported</td></tr>
+      <tr><td>5.1 and newer</td><td><strong>PSP1</strong></td><td>Supported</td><td><strong>Supported</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Which to use</h2>
+
+<div class="choices">
+  <div class="choice pick">
+    <span class="tag">Almost always</span>
+    <h3>Plugin 1</h3>
+    <p>
+      Works from Unreal 5.1 onwards, and it is the only one that supports
+      communication between your app and the page. If you send data either way
+      &mdash; and most integrations do &mdash; this is the only option.
+    </p>
+  </div>
+  <div class="choice">
+    <h3>Plugin 2</h3>
+    <p>
+      Only on Unreal 5.7 or newer, and only for plain playback. Choose it if
+      your app is watched rather than talked to, and you specifically want
+      Epic's newer architecture.
+    </p>
+  </div>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Enabling Plugin 2 on Unreal 5.5 or 5.6 will not stream at all.</strong>
+    The combination is unsupported, and the failure appears during upload
+    testing or when a viewer opens the stream &mdash; not at the moment you
+    enable it, which is where the cause is obvious.
+  </p>
+</aside>
+
+<div class="outcome">
+  <strong>The question that decides it</strong>
+  <p>
+    Does your page send anything to your app, or receive anything from it? If
+    yes, Plugin 1 &mdash; there is no version of Unreal where Plugin 2 supports
+    that. If your app simply plays, and you are on 5.7 or newer, either works.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/sending-and-receiving-data">Sending and receiving data &rarr;</a>
+  <p>What "communication" means here, and what it needs on the Unreal side.</p>
+</div>

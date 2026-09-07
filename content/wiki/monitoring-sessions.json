@@ -1,0 +1,15 @@
+{
+ "title": "Monitoring and analytics",
+ "slug": "monitoring-sessions",
+ "section": "Control Panel Features",
+ "parents": [
+  "control-panel-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/streaming-app-monitor",
+ "rewritten": true,
+ "replaces": [
+  "streaming-app-monitor",
+  "notification",
+  "track-your-streaming-usage-from-analytics"
+ ]
+}

@@ -3,5 +3,9 @@
  "slug": "control-panel-features",
  "section": "(top level)",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/control-panel-features"
+ "source": "https://docs.eagle3dstreaming.com/wiki/control-panel-features",
+ "rewritten": true,
+ "replaces": [
+  "stream-app-using-mobile-browser"
+ ]
 }

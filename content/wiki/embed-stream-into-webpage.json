@@ -4,5 +4,8 @@
  "section": "(top level)",
  "parents": [],
  "source": "https://docs.eagle3dstreaming.com/wiki/embed-stream-into-webpage",
- "rewritten": true
+ "rewritten": true,
+ "replaces": [
+  "customize-ui-elements-and-embed-the-app-with-websi"
+ ]
 }
