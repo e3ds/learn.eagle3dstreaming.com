@@ -1,0 +1,15 @@
+{
+ "title": "Open and redirect URLs",
+ "slug": "open-and-redirect-urls",
+ "section": "Developer Guides",
+ "parents": [
+  "features-plugin"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/open-url",
+ "rewritten": true,
+ "replaces": [
+  "open-url",
+  "redirect-to-a-new-url"
+ ],
+ "order": 2
+}

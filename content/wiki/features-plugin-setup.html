@@ -1,0 +1,83 @@
+<p class="standfirst">
+  The E3DS Features plugin adds one Blueprint node per feature, so your app can
+  talk to the browser without you writing the message-passing yourself. Here is
+  how to install it.
+</p>
+
+<p>
+  Everything the plugin does is possible without it &mdash; by sending
+  <a href="/wiki/sending-and-receiving-data">custom messages</a> between page and
+  app and handling them at both ends. The plugin is that work, already done, with
+  a node in front of it.
+</p>
+
+<div class="prereq">
+  <strong>Before you start</strong>
+  <p>
+    Unreal Engine 5.3 to 5.8, and Epic's Pixel Streaming plugin &mdash; the
+    Features plugin will not load without it.
+  </p>
+</div>
+
+<ol class="steps">
+  <li>
+    <p>
+      <strong>Download it</strong> from
+      <a href="https://www.fab.com/listings/f2432b49-10e7-48b6-a812-d14b706a1f3b">Fab</a>
+      or <a href="https://github.com/e3ds-ue4/E3DSFeaturesPlugin/">GitHub</a>.
+    </p>
+  </li>
+  <li>
+    <p>
+      <strong>Put the <code>E3DSFeatures</code> folder in your project's
+      <code>Plugins</code> folder</strong>, creating that folder at the project
+      root if it does not exist yet.
+    </p>
+<pre><code>YourProject/
+├── Config/
+├── Content/
+├── Plugins/
+│   └── E3DSFeatures/
+└── YourProject.uproject</code></pre>
+  </li>
+  <li>
+    <p>
+      <strong>Enable both plugins.</strong> Open the project, go to
+      <strong>Edit &rarr; Plugins</strong>, and enable <strong>Pixel
+      Streaming</strong> and <strong>E3DS Features</strong>. Restart when asked.
+    </p>
+    <figure>
+      <img src="/images/image-20250820-153707-d63fbb.png" alt="The error Unreal shows when the Pixel Streaming plugin is not enabled" loading="lazy">
+      <figcaption>Enabling E3DS Features without Pixel Streaming produces this error.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You now have the E3DS nodes</strong>
+  <p>
+    Right-click in any Blueprint graph and search for <code>E3DS</code>. If
+    nothing comes up, the plugin is not enabled &mdash; check
+    <strong>Edit &rarr; Plugins</strong> again and confirm the editor restarted.
+  </p>
+</div>
+
+<h2>What it gives you</h2>
+
+<ul>
+  <li><a href="/wiki/screenshots">Capture and download a screenshot</a></li>
+  <li><a href="/wiki/open-and-redirect-urls">Open a URL in a new tab, or redirect the current one</a></li>
+  <li><a href="/wiki/ending-sessions">End the streaming session</a></li>
+  <li><a href="/wiki/file-transfer">Send files to and from the viewer's device</a></li>
+  <li><a href="/wiki/device-detection">Detect the viewer's device and platform</a></li>
+  <li><a href="/wiki/mouse-and-fullscreen">Toggle fullscreen, and switch mouse schemes</a></li>
+</ul>
+
+<p>
+  <a href="https://youtu.be/HqPuKX7Y21I">Video walkthrough of the installation</a>.
+</p>
+
+<div class="next">
+  <a href="/wiki/features-plugin">The feature nodes &rarr;</a>
+  <p>What each node does, and the Blueprint setup it needs.</p>
+</div>

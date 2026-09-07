@@ -1,0 +1,72 @@
+<p class="standfirst">
+  What the E3DS Features plugin's Blueprint nodes do &mdash; screenshots, URLs,
+  file transfer, ending a session, device detection, fullscreen and mouse
+  handling &mdash; and how to wire each one up.
+</p>
+
+<p>
+  All of these work the same way. Your app cannot reach the browser directly, so
+  it sends a message to the streaming system, which acts on it in the page. The
+  plugin is a Blueprint node per message, so you connect a node instead of
+  constructing JSON.
+</p>
+
+<div class="prereq">
+  <strong>Every page in this section assumes two things</strong>
+  <p>
+    The <a href="/wiki/features-plugin-setup">plugin is installed and enabled</a>,
+    and an instance of <strong>E3DS_PS_actor</strong> is in the level you are
+    streaming. Without the actor the nodes compile and do nothing &mdash; which
+    is the single most common reason a feature "does not work".
+  </p>
+</div>
+
+<h2>The features</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Feature</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/wiki/screenshots">Screenshots</a></td><td>Captures a frame at Unreal's own quality &mdash; not the stream's &mdash; and downloads it in the viewer's browser.</td></tr>
+      <tr><td><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></td><td>Opens a link in a new tab, or sends the current tab somewhere else.</td></tr>
+      <tr><td><a href="/wiki/ending-sessions">Ending a session</a></td><td>Stops the stream, or closes the viewer's tab, from inside the app.</td></tr>
+      <tr><td><a href="/wiki/file-transfer">File transfer</a></td><td>Sends a file down to the viewer, or lets them upload one into the app.</td></tr>
+      <tr><td><a href="/wiki/device-detection">Device detection</a></td><td>Tells your app what the viewer is on, so it can adapt its interface.</td></tr>
+      <tr><td><a href="/wiki/mouse-and-fullscreen">Fullscreen and mouse</a></td><td>Goes fullscreen, and switches between hovering and locked mouse.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Try them first</h2>
+
+<p>
+  Every feature here is running in one demo app, keyed to the number row. Open
+  it and press the keys before you build anything &mdash; it takes a minute and
+  tells you what each one actually does.
+</p>
+
+<p>
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo"><strong>Features plugin demo</strong></a>
+  &mdash; also built per engine version:
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE53/featuresPluginDemo">5.3</a>,
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE54/featuresPluginDemo">5.4</a>,
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE55/featuresPluginDemo">5.5</a>,
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE56/featuresPluginDemo">5.6</a>,
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE57/featuresPluginDemo">5.7</a>,
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE58/featuresPluginDemo">5.8</a>.
+</p>
+
+<aside class="callout tip">
+  <p>
+    <strong>Test in the remote editor, not in a packaged build.</strong> These
+    features only do anything while streaming, so a packaged rebuild per change
+    is a slow way to find a wiring mistake.
+    <a href="/wiki/remote-editor-plugin">Streaming the editor</a> lets you edit
+    the Blueprint and press the key in the same session.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/screenshots">Screenshots &rarr;</a>
+  <p>The one whose output is visibly better than doing it in the browser.</p>
+</div>

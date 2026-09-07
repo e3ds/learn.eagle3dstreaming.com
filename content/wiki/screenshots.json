@@ -1,0 +1,14 @@
+{
+ "title": "Capture a screenshot",
+ "slug": "screenshots",
+ "section": "Developer Guides",
+ "parents": [
+  "features-plugin"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/capture-and-download-a-screenshot",
+ "rewritten": true,
+ "replaces": [
+  "capture-and-download-a-screenshot"
+ ],
+ "order": 1
+}

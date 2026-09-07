@@ -1,0 +1,88 @@
+<p class="standfirst">
+  Send the viewer to a web page from inside your app &mdash; either in a new tab,
+  leaving the stream running, or in the current one, ending it.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Node</th><th>Effect</th><th>The stream</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>E3DS Open URL</strong></td>
+        <td>Opens the address in a new tab.</td>
+        <td>Keeps running. The viewer comes back to it.</td>
+      </tr>
+      <tr>
+        <td><strong>Redirect To</strong></td>
+        <td>Navigates the current tab away.</td>
+        <td>Ends. There is nothing to come back to.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="outcome">
+  <strong>Choose by whether they are finished</strong>
+  <p>
+    A spec sheet, a product page, a form to fill in &mdash; open a new tab, so
+    the configuration they built is still there afterwards. Redirect only at a
+    genuine end point, such as handing off to a checkout, because it discards
+    the session and everything in it.
+  </p>
+</div>
+
+<h2>Opening a new tab</h2>
+
+<ol class="steps">
+  <li><p>Place <strong>BP_E3DS_PS_Actor</strong> from the plugin content into your level.</p></li>
+  <li><p>From any actor, call <strong>E3DS Open URL</strong> and put the address in <strong>Url To Open</strong>.</p></li>
+</ol>
+
+<aside class="callout warning">
+  <p>
+    <strong>Other plugins also ship a node called "Open URL".</strong> Picking
+    the wrong one produces a Blueprint that compiles cleanly and does nothing
+    when streamed. Hover the node before wiring it &mdash; the tooltip must say
+    <code>Target is BPFL E3DS PS Functions</code>.
+  </p>
+</aside>
+
+<h2>Redirecting the current tab</h2>
+
+<ol class="steps">
+  <li>
+    <p>Place an <strong>E3DS_PS_actor</strong> in the level you are streaming.</p>
+    <figure><img src="/images/image-20250729-035351-048900.png" alt="Dragging E3DS_PS_actor into the level" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>In the Level Blueprint, add your trigger &mdash; the demo uses the <strong>9</strong> key &mdash; drag from its <em>Pressed</em> pin and add <strong>Redirect To</strong>. Put the full address in <strong>Url To Redirect To</strong>, then compile and save.</p>
+    <figure><img src="/images/image-20250729-035421-bbcb82.png" alt="The Redirect To node wired to a key press" loading="lazy"></figure>
+  </li>
+</ol>
+
+<h2>Without the plugin</h2>
+
+<p>
+  Both nodes wrap a message you can send yourself. Add a
+  <strong>PixelStreamingInput</strong> component to an actor and send the string
+  with <strong>Send Pixel Streaming Response</strong>:
+</p>
+
+<pre><code class="language-json">{"cmd":"launchUrl","value":"https://www.eagle3dstreaming.com"}</code></pre>
+<pre><code class="language-json">{"cmd":"redirectTo","value":"https://www.eagle3dstreaming.com"}</code></pre>
+
+<figure><img src="/images/image-20250901-192911-a37b73.png" alt="Sending launchUrl manually from a Blueprint" loading="lazy"></figure>
+
+<aside class="callout note">
+  <p>
+    <strong>The component only goes on an Actor.</strong> Actors, Pawns,
+    Characters and Player Controllers can hold components; Widgets, GameModes and
+    Level Blueprints cannot. And the actor must actually exist in the level
+    &mdash; a Blueprint class that is never placed or spawned sends nothing.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/device-detection">Device detection &rarr;</a>
+  <p>Finding out what the viewer is on, so your app can respond to it.</p>
+</div>

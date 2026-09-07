@@ -1,0 +1,109 @@
+<p class="standfirst">
+  Stream the Unreal <em>Editor</em> itself to a browser, and work in it from
+  anywhere &mdash; including setting Blueprint breakpoints and hitting them on
+  the remote machine.
+</p>
+
+<p>
+  Everything else on this site streams a packaged app. This streams the editor:
+  the machine runs Unreal, you get the full editor in a browser tab, and you
+  build in it as if you were sitting at that machine. One toolbar toggle starts
+  the session &mdash; no signalling server to configure, no ports to open.
+</p>
+
+<div class="outcome">
+  <strong>What it is actually for</strong>
+  <p>
+    A workstation you cannot sit at: a GPU machine in an office you are not in,
+    a cloud box far stronger than your laptop, or a review where a colleague
+    needs to see the project without installing Unreal and pulling the repo.
+  </p>
+</div>
+
+<div class="prereq">
+  <strong>Requires</strong>
+  <p>
+    Unreal Engine 5.3 to 5.8, and the plugin from
+    <a href="https://www.fab.com/listings/cd143e07-6a8c-400b-b156-c7b30891b282">Fab</a>.
+    Restart the editor after installing.
+  </p>
+</div>
+
+<h2>Turn it on</h2>
+
+<ol class="steps">
+  <li>
+    <p>Open your project, then <strong>Edit &rarr; Plugins</strong> and search for <strong>Unreal Editor Remote Control</strong>.</p>
+    <figure><img src="/images/image-20260114-063037-2e1e36.png" alt="Searching for the Unreal Editor Remote Control plugin" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Enable it, confirm, and restart the editor when prompted.</p>
+    <figure><img src="/images/image-20260114-063248-424e7f.png" alt="Enabling the plugin in the Plugins window" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Open the <strong>Remote Control Unreal Editor</strong> dropdown in the toolbar and tick <strong>Allow Remote Control</strong>.</p>
+    <figure><img src="/images/image-20260114-063542-6ef59e.png" alt="Enabling Allow Remote Control from the toolbar dropdown" loading="lazy"></figure>
+  </li>
+</ol>
+
+<p>
+  By default that starts the stream and opens your browser on it immediately. If
+  you would rather have the URL and open it yourself &mdash; on another device,
+  say &mdash; turn off <strong>Automatically Open Browser on Stream Start</strong>
+  and copy the generated URL.
+</p>
+
+<figure><img src="/images/image-20260114-063713-d73bc0.png" alt="Copying the generated remote editor URL" loading="lazy"></figure>
+
+<figure>
+  <img src="/images/image-20260114-063840-c1907d.png" alt="The Unreal Editor running in a browser tab" loading="lazy">
+  <figcaption>The editor, in a browser, on another machine.</figcaption>
+</figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>Anyone with that URL has your editor.</strong> Not a view of it
+    &mdash; control of it, including the ability to change and save the project.
+    Share it deliberately, and use <strong>Stop Remote Control</strong> from the
+    same dropdown when you are finished rather than leaving the session up.
+  </p>
+</aside>
+
+<h2>Debugging Blueprints over the stream</h2>
+
+<p>
+  Breakpoints work exactly as they do locally, which is the part people do not
+  expect. If a Blueprint is not behaving, you can stop it on the remote machine
+  and inspect it.
+</p>
+
+<ol class="steps">
+  <li><p>In the streamed editor, open the Blueprint you want to debug and find the node you suspect.</p></li>
+  <li>
+    <p>Right-click that node and choose <strong>Add Breakpoint</strong>. A solid red octagon appears on it.</p>
+    <figure><img src="/images/image-20250729-045130-fa6664.png" alt="Adding a breakpoint to a Blueprint node" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Go back to the viewport and trigger the event.</p>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>What you should see</strong>
+  <p>
+    The session pauses, the view switches to the Event Graph, and a red arrow
+    points at your node. Hover any input or output pin to read its value at that
+    moment. If it never pauses, the event is not reaching that node at all
+    &mdash; which is itself the answer.
+  </p>
+</div>
+
+<p>
+  <a href="https://youtu.be/-8AWNIS2qzI">Video walkthrough</a> &mdash; the
+  debugging section starts at 2:39.
+</p>
+
+<div class="next">
+  <a href="/wiki/test-locally">Testing locally &rarr;</a>
+  <p>Running your packaged app against a signalling server before you upload it.</p>
+</div>

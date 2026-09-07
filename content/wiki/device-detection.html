@@ -1,0 +1,93 @@
+<p class="standfirst">
+  Your app runs on a server, so it cannot tell whether the person watching is on
+  a desktop or a phone. This asks the browser and tells the app.
+</p>
+
+<p>
+  Everything Unreal knows about "the machine" is the streaming machine &mdash;
+  always a Windows or Linux server with no touchscreen. The viewer might be on an
+  iPad. Without asking, your app will happily show a right-click hint to someone
+  who has no right button.
+</p>
+
+<div class="outcome">
+  <strong>What this is worth doing for</strong>
+  <p>
+    Swapping the control scheme and the on-screen hints: touch gestures and
+    larger hit areas on mobile, mouse and keyboard on desktop. It is the
+    difference between an app that works on a phone and one that merely appears
+    on it.
+  </p>
+</div>
+
+<h2>Asking</h2>
+
+<ol class="steps">
+  <li><p>Place an <strong>E3DS_PS_actor</strong> in the level.</p></li>
+  <li>
+    <p>Call <strong>Request User Device Info</strong>.</p>
+    <figure><img src="/images/image-20250805-084524-e4d84d.png" alt="The Request User Device Info node in a Blueprint" loading="lazy"></figure>
+  </li>
+</ol>
+
+<h2>The answer</h2>
+
+<p>The platform replies with a JSON message describing the viewer's device:</p>
+
+<pre><code class="language-json">{
+  "type": "takeUserDeviceInfo",
+  "userDeviceInfo": {
+    "os": {
+      "name": "Windows",
+      "short_name": "WIN",
+      "version": "10",
+      "platform": "x64",
+      "family": "Windows"
+    }
+    // ... browser, engine and other details
+  }
+}</code></pre>
+
+<p>
+  There is more in there &mdash; browser, rendering engine, and so on &mdash; but
+  in practice you want <code>os.name</code> or <code>os.short_name</code>:
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>name</th><th>short_name</th></tr></thead>
+    <tbody>
+      <tr><td>Windows</td><td><code>WIN</code></td></tr>
+      <tr><td>macOS</td><td><code>MAC</code></td></tr>
+      <tr><td>Linux</td><td><code>LIN</code></td></tr>
+      <tr><td>ChromeOS</td><td><code>CHR</code></td></tr>
+      <tr><td>Android</td><td><code>AND</code></td></tr>
+      <tr><td>iOS</td><td><code>IOS</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Reading it without parsing JSON</h2>
+
+<p>
+  You can parse that yourself, or with a JSON plugin such as Json Utilities or
+  VaRest. The simpler route is the plugin's own
+  <strong>Detect User Device</strong> node, which does the parsing and hands back
+  the two values most apps actually branch on: the OS name, and whether this is a
+  touch device.
+</p>
+
+<aside class="callout tip">
+  <p>
+    <strong>Branch on "is touch device", not on the OS name.</strong> A Windows
+    tablet has a touchscreen and a Mac does not, so the OS is a poor proxy for
+    the question you are really asking. Use the OS name for things that genuinely
+    differ by platform &mdash; keyboard modifiers, say &mdash; and the touch flag
+    for input.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/mouse-and-fullscreen">Fullscreen and mouse &rarr;</a>
+  <p>The other half of adapting to the viewer: how the pointer behaves.</p>
+</div>

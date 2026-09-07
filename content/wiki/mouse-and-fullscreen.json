@@ -1,0 +1,16 @@
+{
+ "title": "Mouse and fullscreen",
+ "slug": "mouse-and-fullscreen",
+ "section": "Developer Guides",
+ "parents": [
+  "features-plugin"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/toggle-fullscreen",
+ "rewritten": true,
+ "replaces": [
+  "mouse-handling-in-unreal-pixel-streaming",
+  "switch-between-hovering-and-locked-mouse-schemes",
+  "toggle-fullscreen"
+ ],
+ "order": 6
+}
