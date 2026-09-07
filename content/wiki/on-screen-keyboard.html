@@ -1,207 +1,71 @@
-<p>On-Screen Keyboard (OSK) functionality allows users to input text directly within Pixel Streaming applications without requiring a physical keyboard.</p>
+<p class="standfirst">
+  A phone has no keyboard until something asks for one. When a text field in your
+  streamed app takes focus, the device's own keyboard appears &mdash; on Unreal
+  5.6 and above.
+</p>
 
-<p>⚠️ <strong>Important</strong></p>
-<p>This feature is fully supported in <strong>Unreal Engine 5.6 and above</strong>.</p>
-<p>It works seamlessly on mobile and tablet devices, providing a consistent user experience across platforms.</p>
-
-<p><strong>Unreal Engine Compatibility</strong></p>
-<div class="theme-table" style="--width: 760px;">
-
-<div class="scroll"><table><thead><tr>
-<th>
-<p>Unreal Version</p>
-</th>
-<th>
-<p>Supported</p>
-</th>
-<th>
-<p>Note</p>
-</th>
-</tr></thead>
-<tbody>
-
-<tr>
-<td>
-<p>5.3</p>
-</td>
-<td>
-<p>No</p>
-</td>
-<td>
-<p>Allows input interaction, but text is not applied (e.g., typing "hello" does not update the field)</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>5.4</p>
-</td>
-<td>
-<p>No</p>
-</td>
-<td>
-<p>Input appears, but the Unreal application crashes after typing</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>5.5</p>
-</td>
-<td>
-<p>No</p>
-</td>
-<td>
-<p>Input appears, but the Unreal application crashes after typing</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>5.6</p>
-</td>
-<td>
-<p>Yes</p>
-</td>
-<td>
-<p>Fully supported and stable</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>5.7</p>
-</td>
-<td>
-<p>Yes</p>
-</td>
-<td>
-<p>Fully supported and stable</p>
-</td>
-</tr>
-</tbody>
-</table></div>
-
+<div class="outcome">
+  <strong>Nothing to enable</strong>
+  <p>
+    Focus a text input in the streamed app and the keyboard comes up. Typing is
+    captured and applied in real time. No plugin, no configuration, no code.
+  </p>
 </div>
 
-<h2 id="Demo-URL" style=""><span id="On-ScreenKeyboard-DemoURL"></span>Demo URL
- </h2>
-<p><a href="https://connector.eagle3dstreaming.com/v5/demo/e3ds_demo_onScreenKeyBoard/default" rel="external noreferrer">https://connector.eagle3dstreaming.com/v5/demo/e3ds_demo_onScreenKeyBoard/default</a></p>
+<h2>Unreal version support</h2>
 
-<h2 id="Video-Preview" style=""><span id="On-ScreenKeyboard-VideoPreview"></span>Video Preview
- </h2>
-<p><em>On-Screen Keyboard on Mobile Device</em></p>
-<div data-autoscale="" data-ratio="16:9" data-service="external_content">
-<div data-placeholder="">
-<template>
- <a href="https://youtu.be/r4B83FBK1Qc" rel="noreferrer" target="_blank">
-
-</a> 
-</template>
-</div>
+<div class="scroll">
+  <table>
+    <thead><tr><th>Unreal</th><th>Works</th><th>What happens on the older ones</th></tr></thead>
+    <tbody>
+      <tr><td>5.7</td><td><strong>Yes</strong></td><td>&mdash;</td></tr>
+      <tr><td>5.6</td><td><strong>Yes</strong></td><td>&mdash;</td></tr>
+      <tr><td>5.5</td><td>No</td><td>The keyboard appears, then the app crashes when you type.</td></tr>
+      <tr><td>5.4</td><td>No</td><td>The keyboard appears, then the app crashes when you type.</td></tr>
+      <tr><td>5.3</td><td>No</td><td>The keyboard appears and accepts input, but the field never updates.</td></tr>
+    </tbody>
+  </table>
 </div>
 
-<h2 id="How-It-Works" style=""><span id="On-ScreenKeyboard-HowItWorks"></span>How It Works
- </h2>
-<ol>
-<li>
-<p>When a text input field is focused within the Pixel Streaming application, the On-Screen Keyboard automatically appears.</p>
-</li>
-<li>
-<p>Users can type using the OSK instead of a physical keyboard.</p>
-</li>
-<li>
-<p>Input is captured in real-time and reflected in the application immediately.</p>
-</li>
-<li>
-<p>Works natively in supported browsers without additional plugins.</p>
-</li>
-</ol>
+<aside class="callout warning">
+  <p>
+    <strong>On 5.4 and 5.5 this is not a cosmetic problem.</strong> Typing
+    crashes the application, which ends the viewer's session. If your app takes
+    text input and your audience is on phones, upgrading to 5.6 is the fix
+    &mdash; there is no workaround on the older versions.
+  </p>
+</aside>
 
-<h2 id="Limitations" style=""><span id="On-ScreenKeyboard-Limitations"></span>Limitations
- </h2>
-<ul>
-<li>
-<p>Fully supported only in <strong>Unreal Engine 5.6 and above</strong></p>
-</li>
-<li>
-<p>OSK appearance and behavior may vary slightly between browsers and devices.</p>
-</li>
-<li>
-<p>Mobile browsers may require full-screen mode to properly display the keyboard.</p>
-</li>
-<li>
-<p>Physical keyboard input still takes priority if a device has one connected.</p>
-</li>
-</ul>
+<p>
+  <a href="https://connector.eagle3dstreaming.com/v5/demo/e3ds_demo_onScreenKeyBoard/default">Try it</a>
+  on a phone.
+</p>
 
-<h2 id="Troubleshooting" style=""><span id="On-ScreenKeyboard-Troubleshooting"></span>Troubleshooting
- </h2>
-<div class="theme-table" style="--width: 760px;">
+<h2>If something is wrong</h2>
 
-<div class="scroll"><table><thead><tr>
-<th>
-<p>Issue</p>
-</th>
-<th>
-<p>Possible Cause</p>
-</th>
-<th>
-<p>Solution</p>
-</th>
-</tr></thead>
-<colgroup>
-<col style="width: 284px"/>
-<col style="width: 254px"/>
-<col style="width: 220px"/>
-</colgroup>
-<tbody>
-
-<tr>
-<td>
-<p>On-Screen Keyboard does not appear</p>
-</td>
-<td>
-<p>Unsupported Unreal Engine version</p>
-</td>
-<td>
-<p>Upgrade to UE 5.6 or above</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Keyboard appears but inputs are not registered</p>
-</td>
-<td>
-<p>Unsupported Unreal Engine version</p>
-</td>
-<td>
-<p>Upgrade to UE 5.6 or above</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Keyboard partially hidden or cut off on mobile</p>
-</td>
-<td>
-<p>Mobile browser viewport or scaling issue</p>
-</td>
-<td>
-<p>Enable full-screen mode or adjust viewport scaling.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Typing lag or delayed input</p>
-</td>
-<td>
-<p>Network latency or heavy rendering load</p>
-</td>
-<td>
-<p>Ensure a stable internet connection and close background apps that may consume bandwidth.</p>
-</td>
-</tr>
-</tbody>
-</table></div>
-
+<div class="scroll">
+  <table>
+    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>No keyboard appears at all</td><td>Unreal version below 5.6</td><td>Upgrade to 5.6 or later.</td></tr>
+      <tr><td>Keyboard appears, typing does nothing</td><td>Unreal version below 5.6</td><td>Upgrade to 5.6 or later.</td></tr>
+      <tr><td>Keyboard is cut off or covers the field</td><td>Mobile viewport and scaling</td><td>Put the stream in fullscreen, which gives the browser a viewport it can resize around.</td></tr>
+      <tr><td>Typing feels delayed</td><td>Network, or the app is rendering heavily</td><td>The keystrokes are travelling to the server and back like any other input &mdash; see <a href="/wiki/network-and-firewall">network requirements</a>.</td></tr>
+    </tbody>
+  </table>
 </div>
 
-<h2 id="Summary" style=""><span id="On-ScreenKeyboard-Summary"></span>Summary
- </h2>
-<p>The On-Screen Keyboard enables seamless text input for Pixel Streaming applications on touch devices without requiring a physical keyboard. It ensures a smooth and responsive user experience, but full functionality is available only in Unreal Engine 5.6 and above.</p>
+<aside class="callout note">
+  <p>
+    <strong>A connected physical keyboard wins.</strong> On a tablet with a
+    keyboard case, the on-screen keyboard will not appear &mdash; which is
+    correct behaviour, and worth knowing before you conclude it is broken.
+    Appearance also varies a little between browsers and devices, since it is
+    the device's keyboard, not ours.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/audio-and-microphone">Audio and microphone &rarr;</a>
+  <p>Why the stream starts silent, and when a microphone setting stops it starting at all.</p>
+</div>

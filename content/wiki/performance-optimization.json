@@ -1,9 +1,12 @@
 {
- "title": "Performance & Optimization",
+ "title": "Input and performance",
  "slug": "performance-optimization",
  "section": "Developer Guides",
  "parents": [
   "development-guides"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/performance-optimization"
+ "source": "https://docs.eagle3dstreaming.com/wiki/performance-optimization",
+ "rewritten": true,
+ "replaces": [],
+ "order": 40
 }

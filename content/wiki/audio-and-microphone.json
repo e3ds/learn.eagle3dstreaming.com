@@ -1,0 +1,15 @@
+{
+ "title": "Audio and microphone",
+ "slug": "audio-and-microphone",
+ "section": "Developer Guides",
+ "parents": [
+  "performance-optimization"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/why-pixel-streaming-starts-muted",
+ "rewritten": true,
+ "replaces": [
+  "streaming-failure-due-to-browser-mic-permission",
+  "why-pixel-streaming-starts-muted"
+ ],
+ "order": 4
+}

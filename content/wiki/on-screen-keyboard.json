@@ -1,10 +1,12 @@
 {
- "title": "On-Screen Keyboard",
+ "title": "On-screen keyboard",
  "slug": "on-screen-keyboard",
  "section": "Developer Guides",
  "parents": [
-  "development-guides",
   "performance-optimization"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/on-screen-keyboard"
+ "source": "https://docs.eagle3dstreaming.com/wiki/on-screen-keyboard",
+ "rewritten": true,
+ "replaces": [],
+ "order": 2
 }
