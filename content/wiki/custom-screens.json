@@ -1,0 +1,18 @@
+{
+ "title": "Custom loading and error screens",
+ "slug": "custom-screens",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/set-up-custom-loading-screen",
+ "rewritten": true,
+ "replaces": [
+  "ui-ux-customization-using-sdk",
+  "ui-ux-customization-using-iframe",
+  "set-up-custom-loading-screen",
+  "set-up-custom-session-expired-screen",
+  "custom-session-expired-screen",
+  "handling-app-crash-message-in-iframe"
+ ]
+}
