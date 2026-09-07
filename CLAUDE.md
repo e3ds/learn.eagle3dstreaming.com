@@ -308,45 +308,42 @@ linking out to a schema dump. Raised 2026-09-07. Not started.
 
 ## 10. State of the migration
 
-The old wiki holds **302 published pages, 117,620 words, 1,394 images (~211 MB),
-566 code blocks and 88 tables**, five levels deep. It is in good condition: no
-duplicate titles, no abandoned stubs. The 13 very short pages are all hubs that
-exist to link onward.
+The old wiki held **302 published pages, 117,620 words, 1,394 images (~211 MB)**,
+five levels deep. Everything is on this site; the rewrite proceeds by section.
 
-Everything needed is in the served HTML — text, headings, code, tables, image
-URLs — and each page states its ancestors in its breadcrumbs. **No Confluence
-access or export is needed**, unless there are unpublished or permission-restricted
-pages, which a crawl cannot see.
+**A page that has not been rewritten says so, in a banner.** That disappears
+when its fragment is marked `"rewritten": true`.
 
-| batch | pages | status |
+| section | rewritten | still ported |
 |---|---|---|
-| Getting Started | 18 | **done** — VERIFIED below |
-| Control Panel Features | 61 | not started |
-| App Configuration | 43 | not started |
-| Developer Guides | 43 | not started |
-| Embed Stream into Webpage | 40 | not started |
-| Multiplayer Pixel Streaming | 39 | not started |
-| Foundational knowledge | 20 | not started |
-| System Requirements | 11 | not started |
-| Linux Pixel Streaming | 9 | not started |
-| Virtual Reality Pixel Streaming | 4 | not started |
-| What's New | 3 | not started |
-| Microphone settings, Fullscreen button | 2 | hand-written, not yet fragments |
+| (top level) | 3 | 6 |
+| App Configuration | 4 | **done** |
+| Control Panel Features | 0 | 60 |
+| Developer Guides | 0 | 43 |
+| Embed Stream into Webpage | 7 | **done** |
+| Foundational knowledge | 0 | 20 |
+| Getting Started | 5 | **done** |
+| Linux Pixel Streaming | 3 | **done** |
+| Multiplayer Pixel Streaming | 0 | 39 |
+| System Requirements | 7 | **done** |
+| Virtual Reality Pixel Streaming | 2 | **done** |
+| What's New | 0 | 3 |
 
-**VERIFIED** for Getting Started on 2026-09-06, by counting the source against
-the output page by page: **4,435 of 4,435 words, 109 of 109 images, 176 of 176
-links**, and every probe for leftover theme markup clean. All 218 image
-references resolve to a file on disk. Pages serve locally and over
-`https://learn.eagle3dstreaming.com`.
+**Merging is the point, not a side effect.** The wiki has one page per action,
+which is how a reader ends up opening three pages to discover they needed one.
+Roughly: 18 Getting Started pages became 6, 40 Embedding pages became 8, 43 App
+Configuration pages became 6, 12 System Requirements became 6.
 
-**NOT verified:** how the converter handles tables and code blocks — Getting
-Started contains none of either. The first batch that does (Developer Guides has
-the most code, Embed Stream the most tables) must be checked with that in mind
-rather than assumed to work because this one did.
+**Every merged-away slug keeps working.** Each rewritten fragment lists what it
+`replaces`, and `build.js` writes a static redirect stub per old slug -
+canonical link, meta refresh, and a visible line so nobody wonders where they
+landed.
 
-The two hand-written pages predate the template and still carry their own
-inline CSS. They should become fragments like everything else, so that a change
-to the design reaches them too.
+**Still to do beyond the page rewrite:**
 
-**Nothing here is live to customers yet.** The Control Panel links to these
-pages, so a broken build here shows up as a broken info button there.
+- **What's New has no dates.** It cannot become a release feed until someone
+  supplies roughly when each entry shipped; a crawl cannot recover it.
+- **The Swagger API reference** at `agw.eaglepixelstreaming.com/api-docs`
+  (see section 9).
+- **The two hand-written guides** (microphone, fullscreen) are still standalone
+  HTML with their own CSS rather than fragments in the template.
