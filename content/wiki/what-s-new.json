@@ -1,7 +1,9 @@
 {
- "title": "What's New",
+ "title": "What's new",
  "slug": "what-s-new",
- "section": "(top level)",
+ "section": "What's New",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/what-s-new"
+ "source": "https://docs.eagle3dstreaming.com/wiki/what-s-new",
+ "rewritten": true,
+ "replaces": []
 }

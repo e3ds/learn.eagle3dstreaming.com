@@ -1,7 +1,9 @@
 {
- "title": "FAQ (Common E3DS questions)",
+ "title": "FAQ",
  "slug": "faq-frequently-asked-questions",
- "section": "(top level)",
+ "section": "FAQ",
  "parents": [],
- "source": "https://docs.eagle3dstreaming.com/wiki/faq-frequently-asked-questions"
+ "source": "https://docs.eagle3dstreaming.com/wiki/faq-frequently-asked-questions",
+ "rewritten": true,
+ "replaces": []
 }
