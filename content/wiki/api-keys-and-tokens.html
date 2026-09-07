@@ -1,0 +1,107 @@
+<p class="standfirst">
+  Two kinds of key, one kind of token, and a version-control switch. They live
+  in the Developer section of the Control Panel.
+</p>
+
+<h2>The two keys are not interchangeable</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>Your API key can delete your app, or replace it with a different
+    one.</strong> It is an account key, not a streaming key &mdash; anyone
+    holding it can do those things to your account.
+  </p>
+  <p>
+    <strong>Use the Streaming API key for anything that reaches a browser.</strong>
+    It exists precisely because the plain API key is too powerful to put in a
+    web page, and support for using the plain key that way is being withdrawn.
+  </p>
+</aside>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>API key</th><th>Streaming API key</th></tr></thead>
+    <tbody>
+      <tr><td>Can delete or replace your app</td><td><strong>Yes</strong></td><td>No</td></tr>
+      <tr><td>Use in a web integration</td><td>No &mdash; being withdrawn</td><td><strong>Yes</strong></td></tr>
+      <tr><td>Keep it</td><td>Server-side only</td><td>Server-side, and never longer than you must</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  If you have an existing integration using the plain API key, move it to the
+  Streaming API key now rather than when support ends. The change is one value,
+  and the current arrangement means a key with the power to delete your
+  application is being handed to every visitor's browser.
+</p>
+
+<h2>The API key</h2>
+
+<p>
+  One per account, found in the Developer section.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>Generating a new one immediately invalidates the old one.</strong>
+    Anything still using the previous key stops working at that moment &mdash;
+    every app, every integration, every script. Rotate it deliberately, and know
+    what will need updating before you press the button.
+  </p>
+</aside>
+
+<h2>Tokens</h2>
+
+<p>
+  A token authorises one streaming session. <strong>Single use, and it
+  expires</strong> if it is not used within the time you set.
+</p>
+
+<p>
+  That is what makes tokens the right thing to give a browser: one expires
+  harmlessly, where a leaked key does not. Generate them from the Token
+  Generation tab, or from your server as part of an
+  <a href="/wiki/embed-stream-using-e3ds-sdk">SDK integration</a>.
+</p>
+
+<p>
+  Because a token is single use, <strong>restarting a stream needs a fresh
+  one</strong> &mdash; reusing the previous token fails rather than reconnecting.
+</p>
+
+<h2>Version control</h2>
+
+<p>
+  A switch, and the two behaviours are quite different.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Version control</th><th>Uploading a new build</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>On</strong></td>
+        <td>Adds a version. Version 3 becomes version 4, and 3 remains.</td>
+      </tr>
+      <tr>
+        <td><strong>Off</strong></td>
+        <td>Replaces what was there. The previous build is gone.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="outcome">
+  <strong>Turn it on before you need it</strong>
+  <p>
+    With it off there is nothing to roll back to &mdash; the previous build was
+    overwritten, not archived. The moment you discover you want the old version
+    is the moment it is too late to have kept it.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK &rarr;</a>
+  <p>Where the streaming key and the token are actually used.</p>
+</div>

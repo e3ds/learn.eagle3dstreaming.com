@@ -1,0 +1,17 @@
+{
+ "title": "API keys and tokens",
+ "slug": "api-keys-and-tokens",
+ "section": "Control Panel Features",
+ "parents": [
+  "control-panel-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/streaming-api-key",
+ "rewritten": true,
+ "replaces": [
+  "developer-section",
+  "api-key",
+  "streaming-api-key",
+  "token-generation",
+  "version-control"
+ ]
+}
