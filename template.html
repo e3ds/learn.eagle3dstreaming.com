@@ -154,6 +154,17 @@
   .e3dsNavSec[open]>summary::before{transform:rotate(90deg)}
   .e3dsNavSec>summary>a{flex:1;min-width:0}
 
+  /* A GROUP is a label, not a link - it names a section and has no page of its
+     own. Styled as a heading so a reader can tell at a glance which entries are
+     sections and which are pages, which is the whole point of grouping them. */
+  .e3dsNavGroup>summary>span{flex:1;min-width:0;padding:6px 8px;
+    font-family:Archivo,Arial,sans-serif;font-size:12px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .e3dsNavGroup>summary:hover>span{color:var(--ink-2)}
+  .e3dsNavGroup{margin-bottom:6px}
+  /* Its children carry no rail: the group already provides the indent. */
+  .e3dsNavGroup>ul{padding-left:10px;border-left:none;margin-left:8px}
+
   #e3dsNavToggle{display:none}
   /* Narrower than this the tree would take most of the screen, so it becomes a
      drawer instead of a column. */
