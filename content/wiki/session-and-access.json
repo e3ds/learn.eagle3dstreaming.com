@@ -1,0 +1,17 @@
+{
+ "title": "Session and access",
+ "slug": "session-and-access",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/password-protect-your-stream",
+ "rewritten": true,
+ "replaces": [
+  "link-expiration",
+  "password-protect-your-stream",
+  "max-session-time",
+  "logout-automatically-after-inactivity",
+  "anonymize-your-app-url"
+ ]
+}
