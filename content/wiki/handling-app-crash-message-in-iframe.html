@@ -1,0 +1,199 @@
+<p>This guide walks through adding a message that appears only when the streamed Unreal app actually crashes, not for other session-end reasons like timeouts, wrong passwords, or expired links.</p>
+
+<h2 id="Overview" style=""><span id="HandlingAppCrashMessageiniFrame-Overview"></span>Overview
+ </h2>
+<p>Eagle3D's streaming client sends your page two relevant postMessage events when a session ends:</p>
+<ul>
+<li>
+<p><strong>handleStreamerDisconnected</strong>: fires only when the app process itself stopped (crash, unexpected close, or its machine went down). Carries no message text.</p>
+</li>
+<li>
+<p><strong>redirectingWithMessage</strong>: fires reliably whenever a session ends, for any reason, and carries a human-readable event.data.message string.</p>
+</li>
+</ul>
+<p>Because only handleStreamerDisconnected is crash-specific, the approach here is: set a flag when it fires, then only act on redirectingWithMessage if that flag is set.</p>
+<p><strong>Note:</strong> this filtering approach has a real limitation covered in Important Notes at the end of this document, read that section before shipping it.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Resources:</strong></p>
+<p>Download the complete demo project: <a href="https://drive.google.com/file/d/1grm7XaCp_6XvAdj00whFCULuPoiMgt4g/view?usp=sharing" rel="noreferrer" target="_blank">Download Full Demo Project</a></p>
+<p>After downloading the project:</p>
+<ol>
+<li>
+<p>Extract the project.</p>
+</li>
+<li>
+<p>Open <code>E3DS_Iframe_Demo.html</code>.</p>
+</li>
+<li>
+<p>Run the HTML file.</p>
+</li>
+<li>
+<p>Start a streaming session.</p>
+</li>
+<li>
+<p>Test the crash and non-crash scenarios described in the testing section.</p>
+</li>
+</ol>
+</aside>
+</div>
+
+<p>Now follow the steps below:</p>
+<h2 id="Step-1.-Add-the-Overlay-Markup-to-Your-HTML" style=""><span id="HandlingAppCrashMessageiniFrame-Step1.AddtheOverlayMarkuptoYourHTML"></span>Step 1. Add the Overlay Markup to Your HTML
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>File to edit:</strong></p>
+<p>E3DS_Iframe_Demo.html (or whichever HTML file embeds the streaming &lt;iframe&gt;</p>
+</aside>
+</div>
+<p>Add a hidden overlay element inside the same container as the &lt;iframe&gt;, so it can be shown on top of it:</p>
+<pre><code class="language-html">&lt;div
+id="sessionEndOverlay"
+style="
+ display: none;
+ visibility: visible;
+ position: absolute;
+ left: 0; right: 0; top: 0; bottom: 0;
+ background: rgba(20,20,20,0.96);
+ color: #fff;
+ z-index: 10;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ text-align: center;
+ font-family: sans-serif;
+ "
+&gt;
+&lt;div style="font-size: 72px; line-height: 1;"&gt;&amp;#128546;&lt;/div&gt;
+&lt;div id="sessionEndOverlayMessage" style="font-size: 20px; margin-top: 16px; maxwidth: 80%;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>Two details matter here:</p>
+<ul>
+<li>
+<p>visibility: visible must stay on this div even though its parent ( #content ) starts as visibility: hidden. If the crash happens before the parent becomes visible, this override is what still lets your overlay show through.</p>
+</li>
+<li>
+<p>display: none is what keeps it hidden until you flip it to flex in JavaScript.</p>
+</li>
+</ul>
+
+<h2 id="Step-2.-Add-a-Crash-Flag" style=""><span id="HandlingAppCrashMessageiniFrame-Step2.AddaCrashFlag"></span>Step 2. Add a Crash Flag
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>File to edit:</strong> message.js</p>
+</aside>
+</div>
+<p>At the top of message.js , outside the handler function, add a flag that tracks whether a crash was actually reported:</p>
+<pre><code class="language-javascript">let appCrashed = false;
+</code></pre>
+
+<h2 id="Step-3.-Set-the-Flag-on-handleStreamerDisconnected" style=""><span id="HandlingAppCrashMessageiniFrame-Step3.SettheFlagonhandleStreamerDisconnected"></span>Step 3. Set the Flag on handleStreamerDisconnected
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>File to edit: </strong>message.js</p>
+</aside>
+</div>
+<p>Find (or add) the handleStreamerDisconnected case in your messageHandler switch statement, and set the flag there:</p>
+<pre><code class="language-javascript">case "handleStreamerDisconnected":
+appCrashed = true;
+break;
+</code></pre>
+
+<p><strong>Note:</strong> this event can arrive late or not fire at all, see point 4 in Important Notes. Don't treat this step alone as a guarantee the flag will be set in time.</p>
+
+<h2 id="Step-4.-Gate-redirectingWithMessage-on-the-Flag" style=""><span id="HandlingAppCrashMessageiniFrame-Step4.GateredirectingWithMessageontheFlag"></span>Step 4. Gate redirectingWithMessage on the Flag
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>File to edit:</strong> message.js</p>
+</aside>
+</div>
+<p>Update the redirectingWithMessage case so it only shows the overlay when appCrashed is true . Otherwise it just breaks out and does nothing:</p>
+<pre><code class="language-javascript">case "redirectingWithMessage": {
+if (!appCrashed) break; // not a crash — ignore
+const overlay = document.getElementById("sessionEndOverlay");
+const overlayMsg = document.getElementById("sessionEndOverlayMessage");
+if (overlayMsg) overlayMsg.innerText = "The app crashed. Please refresh to
+reconnect.";
+if (overlay) overlay.style.display = "flex";
+break;
+}
+</code></pre>
+
+<p><strong>Note:</strong> never branch your code on the text of event.data.message itself, see point 2 in Important Notes. This step only checks the appCrashed flag, which is the supported way to do this.</p>
+
+<h2 id="Step-5.-Test-It" style=""><span id="HandlingAppCrashMessageiniFrame-Step5.TestIt"></span>Step 5. Test It
+ </h2>
+<ol>
+<li>
+<p>Load the page and start a session normally.</p>
+</li>
+<li>
+<p>Trigger an app crash (or ask your engineer how to simulate one in your test environment).</p>
+</li>
+<li>
+<p>Confirm the overlay appears with your crash message.</p>
+</li>
+<li>
+<p>Separately, test a non-crash session end (e.g. let a session time out, or use an expired link) and confirm the overlay does not appear in that case.</p>
+</li>
+<li>
+<p>Repeat the crash test a few times, because of point 3 below, a single successful test isn't proof the flag will always be set in time.</p>
+</li>
+</ol>
+
+<h2 id="Fallback:-Show-the-Overlay-for-Any-Session-End" style=""><span id="HandlingAppCrashMessageiniFrame-Fallback:ShowtheOverlayforAnySessionEnd"></span>Fallback: Show the Overlay for Any Session End
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>File to edit: </strong>message.js</p>
+</aside>
+</div>
+<p>If missing the crash message occasionally is worse than showing it too broadly, the safer default, and what Eagle3D's own demo does, is to skip the flag entirely and always show the overlay on redirectingWithMessage , using its event.data.message text. That guarantees the user always sees something when a session ends, at the cost of no longer distinguishing "crash" from other end-of-session reasons:</p>
+<pre><code class="language-javascript">case "redirectingWithMessage": {
+const overlay = document.getElementById("sessionEndOverlay");
+const overlayMsg = document.getElementById("sessionEndOverlayMessage");
+if (overlayMsg) overlayMsg.innerText = event.data.message || "The stream has
+ended.";
+if (overlay) overlay.style.display = "flex";
+break;
+}
+</code></pre>
+
+<h2 id="Important-Notes" style=""><span id="HandlingAppCrashMessageiniFrame-ImportantNotes"></span>Important Notes
+ </h2>
+<p>Before shipping this implementation, be aware of the following limitations. These limitations affect how reliably a <strong>crash-only</strong> message can be displayed:
+ <br/></p>
+<ol>
+<li>
+<p><strong>There is currently no session-end reason code.</strong> Eagle3D provides a short, human-readable display message, but does not provide a specific reason code such as <code>crash</code>, <code>afk</code>, or <code>wrong password</code>. If your integration needs to reliably distinguish between these reasons in code, this is not currently supported.
+   <br/></p>
+</li>
+<li>
+<p><strong>Do not parse or match against </strong><code>event.data.message</code><strong>.</strong> This value is intended for human-readable display and should not be used by your application logic. For example, do not check whether the message contains <code>"crash"</code>. The wording of the message may change without notice. <em>(Relevant to Step 4.)</em>
+<br/></p>
+</li>
+<li>
+<p><strong>Do not assume that </strong><code>handleStreamerDisconnected</code><strong> and </strong><code>redirectingWithMessage</code><strong> arrive together or in a specific order.</strong> Treat these as independent events. This directly affects the crash flag approach in Steps 2 to 4: because the event order is not guaranteed, <code>handleStreamerDisconnected</code> may not have been received before <code>redirectingWithMessage</code>, even when an actual crash occurs. <em>(Relevant to Steps 2, 3, and 4.)</em>
+<br/></p>
+</li>
+<li>
+<p><code>handleStreamerDisconnected</code><strong> may arrive late or may not arrive at all.</strong> This event is intended as an optional signal indicating whether the application or streamer is still running. It should not be treated as a guaranteed event for implementing a user-facing feature. <em>(Relevant to Step 3.)</em>
+<br/></p>
+</li>
+<li>
+<p><strong>Your page cannot stop or delay the session from ending.</strong> There is no way to intercept these events and cancel the session shutdown. Design your overlay to appear after the session-ending event rather than relying on the ability to prevent or delay the session from ending. <em>(Relevant to Step 1.)</em>
+<br/></p>
+</li>
+<li>
+<p><code>redirectingWithMessage</code><strong> is the recommended event for a general "stream ended" screen.</strong> It reliably fires when a session ends, regardless of the reason, which is why the fallback approach above, showing the overlay for any <code>redirectingWithMessage</code> event rather than only for crashes, is the approach used by Eagle3D's own demo by default.
+   <br/></p>
+</li>
+</ol>
+<p><strong>Bottom line:</strong> The crash flag approach in Steps 1 to 5 is a <strong>best-effort</strong> way to filter for crashes using the only crash-specific signal currently exposed by Eagle3D. It is <strong>not guaranteed to detect every crash</strong>, primarily because the event order is not guaranteed and <code>handleStreamerDisconnected</code> may arrive late or not at all. If your use case requires reliable, code-inspectable session-end reasons, contact Eagle3D Support before relying on this behavior in production.</p>

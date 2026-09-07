@@ -1,0 +1,360 @@
+<p>Epic Games introduced <strong>Pixel Streaming Plugin 2 (PSP2)</strong> with major architectural changes and improvements to Unreal Engine’s Pixel Streaming system.</p>
+<p>Eagle 3D Streaming currently supports <strong>Pixel Streaming Plugin 2 only with Unreal Engine 5.7+ and newer versions</strong> for standard Pixel Streaming playback.</p>
+<p>However, browser-to-Unreal and Unreal-to-browser communication features are currently <strong>not supported</strong> with Pixel Streaming Plugin 2. If your app requires communication between the browser and Unreal, use <strong>Pixel Streaming Plugin 1</strong>.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Pixel Streaming Plugin 2" decoding="async" loading="lazy" src="/images/image-20241224-023423-f1084e.png"/>
+
+<figcaption>Figure 1. Pixel Streaming Plugin 2</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Current-Compatibility-Status" style=""><span id="PixelStreamingPlugin2Compatibility-CurrentCompatibilityStatus"></span>Current Compatibility Status
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Unreal Engine Version</p>
+</th>
+<th>
+<p>Pixel Streaming Plugin</p>
+</th>
+<th>
+<p>Streaming Status</p>
+</th>
+<th>
+<p>Communication Support</p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 230px"/>
+<col style="width: 149px"/>
+<col style="width: 190px"/>
+<col style="width: 190px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p>UE 5.7 and Upper Version</p>
+</td>
+<td>
+<p>PSP2</p>
+</td>
+<td>
+<p>✅ Supported</p>
+</td>
+<td>
+<p>❌ Not supported</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>UE 5.5</p>
+</td>
+<td>
+<p>PSP2</p>
+</td>
+<td>
+<p>❌ Not supported</p>
+</td>
+<td>
+<p>❌ Not supported</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>UE 5.6</p>
+</td>
+<td>
+<p>PSP2</p>
+</td>
+<td>
+<p>❌ Not supported</p>
+</td>
+<td>
+<p>❌ Not supported</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>UE 5.1 – 5.8</p>
+</td>
+<td>
+<p>PSP1</p>
+</td>
+<td>
+<p>✅ Supported</p>
+</td>
+<td>
+<p>✅ Supported</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Main-Known-Issue" style=""><span id="PixelStreamingPlugin2Compatibility-MainKnownIssue"></span>Main Known Issue
+ </h2>
+<h4 id="Issue-1.-Video-Stream-Doesn’t-Start" style=""><span id="PixelStreamingPlugin2Compatibility-Issue1.VideoStreamDoesn’tStart"></span>Issue 1. Video Stream Doesn’t Start
+ </h4>
+<p>Applications built with:</p>
+<ul>
+<li>
+<p>Unreal Engine 5.5</p>
+</li>
+<li>
+<p>Unreal Engine 5.6</p>
+</li>
+</ul>
+<p>using:</p>
+<ul>
+<li>
+<p>Pixel Streaming Plugin 2</p>
+</li>
+</ul>
+<p>may experience a critical issue where:</p>
+<blockquote>
+<p>The WebRTC connection successfully negotiates, but the video stream fails to start (Figure 2)</p>
+</blockquote>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Video Stream Failed" decoding="async" loading="lazy" src="/images/image-20260507-054436-2411da.png"/>
+
+<figcaption>Figure 2. Video Stream Failed</figcaption>
+</figure>
+
+</div>
+
+<h4 id="Issue-2.-Communication-between-browser-and-Unreal" style=""><span id="PixelStreamingPlugin2Compatibility-Issue2.CommunicationbetweenbrowserandUnreal"></span>Issue 2. Communication between browser and Unreal
+ </h4>
+<p>Pixel Streaming Plugin 2 may also have limitations with browser-to-Unreal and Unreal-to-browser communication. Features such as frontend messages, UI interaction messages, and Unreal-to-browser responses are currently not supported with PSP2.</p>
+
+<h2 id="Why-This-Happens" style=""><span id="PixelStreamingPlugin2Compatibility-WhyThisHappens"></span>Why This Happens
+ </h2>
+<p>The issue appears to be highly dependent on:</p>
+<ul>
+<li>
+<p>Geographic region of the streaming machine</p>
+</li>
+<li>
+<p>Geographic region of the end user</p>
+</li>
+</ul>
+<p>This behavior originates from Epic Games’ Pixel Streaming Plugin 2 implementation in Unreal Engine 5.5 / 5.6.</p>
+<p>Eagle 3D Streaming only replicates Epic Games Pixel Streaming infrastructure and behavior. Therefore, this issue is <strong>not platform-specific</strong> and also occur when using Epic’s own signaling server and infrastructure directly.</p>
+
+<h2 id="Example" style=""><span id="PixelStreamingPlugin2Compatibility-Example"></span>Example
+ </h2>
+<p>Let’s say:</p>
+<ul>
+<li>
+<p>Your application is hosted in the USA (Streamer Machine Location is in USA)</p>
+</li>
+<li>
+<p>The app is built with:</p>
+<ul>
+<li>
+<p>Unreal Engine 5.5 or 5.6</p>
+</li>
+<li>
+<p>Pixel Streaming Plugin 2</p>
+</li>
+</ul>
+</li>
+</ul>
+
+<p><strong>User Connection Results:</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Streamer Region</p>
+</th>
+<th>
+<p>User Region</p>
+</th>
+<th>
+<p>Result</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>USA</p>
+</td>
+<td>
+<p>USA</p>
+</td>
+<td>
+<p>✅ Usually works</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>USA</p>
+</td>
+<td>
+<p>Europe</p>
+</td>
+<td>
+<p>❌ Video stream may fail</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>USA</p>
+</td>
+<td>
+<p>Asia</p>
+</td>
+<td>
+<p>❌ Video stream may fail</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<p><strong>Similarly:</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Streamer Region</p>
+</th>
+<th>
+<p>User Region</p>
+</th>
+<th>
+<p>Result</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Europe</p>
+</td>
+<td>
+<p>Europe</p>
+</td>
+<td>
+<p>✅ Usually works</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Europe</p>
+</td>
+<td>
+<p>USA</p>
+</td>
+<td>
+<p>❌ Video stream may fail</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Europe</p>
+</td>
+<td>
+<p>Asia</p>
+</td>
+<td>
+<p>❌ Video stream may fail</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Recommended-Setup" style=""><span id="PixelStreamingPlugin2Compatibility-RecommendedSetup"></span>Recommended Setup
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Setup</p>
+</th>
+<th>
+<p>Recommendation</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>UE (5.1 - 5.7) + PSP1</p>
+</td>
+<td>
+<p>✅ Best Option</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>UE 5.5 / 5.6 + PSP2</p>
+</td>
+<td>
+<p>❌ Not Recommended</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>UE 5.7 or 5.8 + PSP2</p>
+</td>
+<td>
+<p>✅ Stable for standard playback, but communication is not supported</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Important-Note-About-Internal-Testing" style=""><span id="PixelStreamingPlugin2Compatibility-ImportantNoteAboutInternalTesting"></span>Important Note About Internal Testing
+ </h2>
+<p>Many teams do not immediately notice this issue because:</p>
+<ul>
+<li>
+<p>Local testing often works correctly since both the streamer and browser are under the same network and geographic location</p>
+</li>
+</ul>
+<p>As a result, applications may appear to function correctly during development and internal QA testing.</p>
+<p>However, the issue becomes significantly more visible during:</p>
+<ul>
+<li>
+<p>Public deployments</p>
+</li>
+<li>
+<p>Global user access</p>
+</li>
+<li>
+<p>Cross-region streaming scenarios</p>
+</li>
+</ul>
+<p>This is why some applications work perfectly during internal testing but experience video stream failures after being deployed to users in different geographic regions.</p>
+<p>Also, if your application uses browser-to-Unreal and Unreal-to-browser communication, make sure to test features such as frontend messages, UI interaction messages, and browser-to-Unreal and Unreal-to-browser responses. These communication features are currently supported with Pixel Streaming Plugin 1, but not with Pixel Streaming Plugin 2.</p>
+
+<h2 id="What’s-Next?" style=""><span id="PixelStreamingPlugin2Compatibility-What’sNext?"></span>What’s Next?
+ </h2>
+<ul>
+<li>
+<p>Once Epic Games fixes the Pixel Streaming Plugin 2 video stream issue, the fix should automatically apply to Eagle 3D Streaming as well.</p>
+</li>
+<li>
+<p>We are working to add browser-to-Unreal and Unreal-to-browser communication support for Pixel Streaming Plugin 2. Until then, use Pixel Streaming Plugin 1 for communication features.</p>
+</li>
+</ul>

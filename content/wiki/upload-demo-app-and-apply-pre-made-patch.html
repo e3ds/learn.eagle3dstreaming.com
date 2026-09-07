@@ -1,0 +1,108 @@
+<p>This guide walks you through the process of uploading a demo Unreal Engine application and applying a pre-made <code>.pak</code> patch using the Eagle 3D Streaming platform. This is ideal for understanding how patch functionality works—without needing to build a project from scratch.</p>
+
+<h2 id="Step-1.-Download-the-demo-packaged-build-from-the-link-below:" style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step1.Downloadthedemopackagedbuildfromthelinkbelow:"></span><strong>Step 1. Download the demo packaged build from the link below:</strong>
+</h2>
+<p data-indentation-level="1"><a href="https://drive.google.com/file/d/1bYO_AfpTDxEi-9_3z8UcGCEsMYAcqMfJ/view?usp=sharing" rel="noreferrer" target="_blank">Download Packaged Demo Project</a></p>
+
+<h2 id="Step-2.-Go-to-Control-Panel" style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step2.GotoControlPanel"></span><strong>Step 2. Go to </strong><a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer">Control Panel</a>
+</h2>
+
+<h2 id="Step-3.-Upload-the-zip-file-downloaded-in-Step-1." style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step3.UploadthezipfiledownloadedinStep1."></span><strong>Step 3. Upload the zip file downloaded in Step 1.</strong>
+</h2>
+<p data-indentation-level="1">Refer to the official guide: <a href="https://docs.eagle3dstreaming.com/wiki/upload-and-stream-your-app-from-control-panel" rel="external noreferrer">Upload Your App</a></p>
+
+<h2 id="Step-4.-Play-the-game" style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step4.Playthegame"></span><strong>Step 4. Play the game </strong>
+</h2>
+<p data-indentation-level="1">Follow Step 7 onwards from the below documentation:  <a href="https://docs.eagle3dstreaming.com/wiki/upload-and-stream-your-app-from-control-panel" rel="external noreferrer">Stream Your App From Control Panel</a></p>
+
+<h2 id="Step-5.-You-should-now-see-your-app-running-in-the-browser." style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step5.Youshouldnowseeyourapprunninginthebrowser."></span><strong>Step 5. You should now see your app running in the browser.</strong>
+</h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Streaming the App" decoding="async" loading="lazy" src="/images/AD_4nXc94Jw9BAE_ypC-OhOhhNvqresQboVfMyYTpI5p3EOLxmHe-48233a.png"/>
+
+<figcaption>Figure 1. Streaming the App</figcaption>
+</figure>
+
+</div>
+
+<p>The next step is to upload pak file</p>
+
+<h2 id="Step-6.-Construct-Patch-Upload-URL" style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step6.ConstructPatchUploadURL"></span><strong>Step 6. Construct Patch Upload URL</strong>
+</h2>
+<p>Use this pattern to create the upload link:</p>
+<pre><code>https://upload-old.eagle3dstreaming.com/patch/{userName}/{appName}/latest
+</code></pre>
+<p><code>{userName}</code> → Your username on the <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer">https://controlpanel.eagle3dstreaming.com/</a></p>
+<p><code>{appName}</code> → The app name you used while uploading in <strong>Step 3</strong></p>
+
+<p>If your username is <code>demo</code> and your app name is <code>patchDemo</code>, your final URL will be:</p>
+<pre><code>https://upload-old.eagle3dstreaming.com/patch/demo/patchDemo/latest 
+</code></pre>
+
+<h2 id="Step-7.-Go-to-the-URL-you-constructed-above." style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step7.GototheURLyouconstructedabove."></span><strong>Step 7. Go to the URL you constructed above.</strong>
+</h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Visit Constucted URL" decoding="async" loading="lazy" src="/images/AD_4nXeeq_AEcCZAqhs5BaEnJJkvWHP60tBqf_giOXbAWawMVqEA-bc1150.png"/>
+
+<figcaption>Figure 2. Visit Constucted URL</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-8.-Choose-the-Patch-File" style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step8.ChoosethePatchFile"></span><strong>Step 8. Choose the Patch File</strong>
+</h2>
+<p>From the extracted contents of the <code>.zip</code> downloaded in <strong>Step 1</strong>, select the file:</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Choose Pak File" decoding="async" loading="lazy" src="/images/AD_4nXeoyWoSZcBjAQLMycAdBa_EaBlKq_MyjG2VvfG761BQObRM-cdcfa1.png"/>
+
+<figcaption>Figure 3. Choose Pak File</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-9.-Upload-the-pak-file" style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step9.Uploadthepakfile"></span><strong>Step 9. Upload the pak file</strong>
+</h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Upload the Pak File" decoding="async" loading="lazy" src="/images/AD_4nXdjwTSVk9AQgu77dPX4pZ5BxlmyPPBnfjmANB699JAw5jyM-32c084.png"/>
+
+<figcaption>Figure 4. Upload the Pak File</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 5. Upload Completed" decoding="async" loading="lazy" src="/images/AD_4nXd7HoHVMqe8weyzqeApLp-gh7aBHD6pGS4vQwfj0aue14Ru-fb95f6.png"/>
+
+<figcaption>Figure 5. Upload Completed</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-10.-Now-Play-the-app-again(like-step-4)" style=""><span id="UploadDemoAppandApplyPre-MadePatch-Step10.NowPlaytheappagain(likestep4)"></span><strong>Step 10.</strong> <strong>Now Play the app again(like step 4)</strong>
+</h2>
+<p>Now return to your app and play it again (same as <strong>Step 4</strong>). You should now see the patch effects applied in the streamed app.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 6. Patched App in Action" decoding="async" loading="lazy" src="/images/AD_4nXeYUdvKn89lhhHUNiouea-BJZ0abuFtpXOh1GdAzXr4dqUt-93b88c.png"/>
+
+<figcaption>Figure 6. Patched App in Action</figcaption>
+</figure>
+
+</div>

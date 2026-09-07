@@ -1,0 +1,110 @@
+<h2 id="Issue-Overview"><span id="ReadyPlayerMeinEagle3DStreaming-IssueOverview"></span>Issue Overview
+ </h2>
+<p>When attempting to stream an app integrated with <strong>Ready Player Me</strong> through Eagle3D Streaming, users may encounter the following error: <strong>“Failed to download a list of avatar templates.”</strong>
+<br/>
+ This issue arises due to network settings verification conflicts within the Unreal Engine project.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 1. Ready Player Me issue" decoding="async" loading="lazy" src="/images/image-20241010-124536-57fd12.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 1. Ready Player Me issue</em></span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="Temporary-Fix"><span id="ReadyPlayerMeinEagle3DStreaming-TemporaryFix"></span>Temporary Fix
+ </h2>
+<p>To resolve this issue for individual projects, the following steps need to be performed by an Unreal Engine developer for each app.</p>
+<h2 id="Steps-to-Apply-the-Fix"><span id="ReadyPlayerMeinEagle3DStreaming-StepstoApplytheFix"></span>Steps to Apply the Fix
+ </h2>
+<ol>
+<li>
+<p><strong>Navigate to the Project’s Config Folder</strong></p>
+<ul>
+<li>
+<p>Open the Unreal Engine project folder and navigate to the <code>Config</code> directory.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Modify the </strong><code>DefaultEngine.ini</code><strong> File</strong></p>
+<ul>
+<li>
+<p>Open <code>DefaultEngine.ini</code> in a text editor and append the following lines:</p>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>[/Script/Engine.NetworkSettings]
+n.VerifyPeer=false
+</code></pre>
+<ol start="3">
+<li>
+<p><strong>Rebuild the Project</strong></p>
+</li>
+</ol>
+<ul>
+<li>
+<p>Rebuild the project to ensure the settings are applied in the compiled build.</p>
+</li>
+<li>
+<p>Make sure that the updated version includes this configuration.</p>
+</li>
+</ul>
+<ol start="4">
+<li>
+<p><strong>Deploy and Test</strong>:</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>Deploy the updated build in E3DS Control Panel and test the Ready Player Me integration to verify the fix.</p>
+</li>
+</ul>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>To automatically deploy your Build using a script or an E3DS Automation plugin, refer to<a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/docs/pages/216039438/Developer+Upload+Automation?atl_f=content-tree" rel="noreferrer" target="_blank"> this document</a>.</p>
+<p>To manually deploy your app:</p>
+<ul>
+<li>
+<p><strong>Old Control Panel:</strong> refer to <a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/ED/pages/1638401/Uploading+an+App" rel="noreferrer" target="_blank">this document</a>.</p>
+</li>
+<li>
+<p><strong>New Control Panel:</strong> refer to <a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/ED/pages/565969030/Uploading+the+Project" rel="noreferrer" target="_blank">this document</a>.</p>
+</li>
+</ul>
+</aside>
+</div>
+<h2 id="Special-Note-for-Developers"><span id="ReadyPlayerMeinEagle3DStreaming-SpecialNoteforDevelopers"></span>Special Note for Developers
+ </h2>
+<ul>
+<li>
+<p>This fix only works for the specific project where the changes are applied. It is not a general fix for other apps using Eagle3D Streaming unless the modification is made in each project individually.</p>
+</li>
+<li>
+<p>A new build with the <code>.ini</code> modification should be created to ensure the fix works consistently.</p>
+</li>
+</ul>
+<h2 id="Version-Specific-Implementation"><span id="ReadyPlayerMeinEagle3DStreaming-Version-SpecificImplementation"></span>Version-Specific Implementation
+ </h2>
+<ul>
+<li>
+<p>The fix will be applied to the <strong>app Version</strong> using the Ready Player Me Character which you’re trying to play.</p>
+</li>
+<li>
+<p>Any users running older versions of the app should rebuild the project with this fix or run the <strong>app</strong> <strong>Version</strong> with the fix to resolve the Ready Player Me issue.</p>
+</li>
+</ul>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>To upload a New app Version:</p>
+<p><a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer"><strong>Old Control Panel</strong></a>: refer to <a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/~71202018a6dc3b268a4a73aaabab1c378fe10b/pages/218267652/Upload+a+new+App+Version" rel="noreferrer" target="_blank">this document</a>.</p>
+<p><a href="https://newcontrolpanel.eagle3dstreaming.com/" rel="external noreferrer"><strong>New Control Panel</strong></a>: refer to <a href="/wiki/upload-another-version-of-your-app">this document</a>.</p>
+</aside>
+</div>
+<h2 id="Conclusion"><span id="ReadyPlayerMeinEagle3DStreaming-Conclusion"></span>Conclusion
+ </h2>
+<p>For <strong>Ready Player Me</strong> to function properly in the Eagle3D Streaming environment, this <code>.ini</code> file modification is required for each Unreal Engine project. Ensure to communicate with developers responsible for each project to implement the change.</p>

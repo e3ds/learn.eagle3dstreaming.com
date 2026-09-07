@@ -1,0 +1,225 @@
+<p>This guide explains how Eagle 3D Streaming selects the datacenter that serves users, how routing works when the nearest region is unavailable, and how region availability differs between subscription plans. Understanding this process helps you estimate latency and predict how users connect from around the world.</p>
+
+<h2 id="Region-Availability-by-Plan" style=""><span id="DatacenterRouting-RegionAvailabilitybyPlan"></span>Region Availability by Plan
+ </h2>
+<p>The following regions are available depending on your subscription plan:</p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Plan</p>
+</th>
+<th>
+<p>Available Datacenter or Server Regions</p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 208px"/>
+<col style="width: 551px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p><strong>Trial Plan</strong></p>
+</td>
+<td>
+<p>USA, Europe</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>Core Plan</strong></p>
+</td>
+<td>
+<p>USA, Europe</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><strong>Enterprise Plan</strong></p>
+</td>
+<td>
+<p>Global (deployment available in your preferred cloud region)</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+<p><strong>Note:</strong> <a href="https://controlpanel.eagle3dstreaming.com/plans" rel="external noreferrer">Trial and Core plans</a> currently support deployments in <strong>USA</strong> and <strong>Europe</strong>. <a href="https://controlpanel.eagle3dstreaming.com/plans" rel="external noreferrer">Enterprise plan</a> can be deployed in <strong>any supported cloud region worldwide</strong>, allowing you to host your application closer to your users for lower latency and better performance</p>
+
+<h2 id="How-Routing-Works" style=""><span id="DatacenterRouting-HowRoutingWorks"></span>How Routing Works
+ </h2>
+<p>When a user starts a streaming session, Eagle 3D Streaming automatically selects the most appropriate datacenter. Users do not need to manually choose a region.</p>
+<p>The routing decision is based on:</p>
+<ul>
+<li>
+<p>The user's geographic location</p>
+</li>
+<li>
+<p>Distance to available datacenters</p>
+</li>
+<li>
+<p>Available streaming capacity</p>
+</li>
+<li>
+<p>Streamer machine availability</p>
+</li>
+<li>
+<p>Subsciption Plans</p>
+</li>
+</ul>
+
+<h2 id="Example" style=""><span id="DatacenterRouting-Example"></span>Example
+ </h2>
+<h4 id="Trial-and-Core-Plans" style=""><span id="DatacenterRouting-TrialandCorePlans"></span>Trial and Core Plans
+ </h4>
+<p>Trial and Core plans currently provide two deployment regions: <strong>USA</strong> and <strong>Europe</strong>.</p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>User Location</p>
+</th>
+<th>
+<p>Nearest Datacenter or Server Location</p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 214px"/>
+<col style="width: 545px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p>Europe</p>
+</td>
+<td>
+<p>Europe</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>USA</p>
+</td>
+<td>
+<p>USA</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Asia</p>
+</td>
+<td>
+<p>Europe</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Africa</p>
+</td>
+<td>
+<p>Europe</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>South America</p>
+</td>
+<td>
+<p>USA</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+<p>Users connecting from any country are automatically routed to the <strong>closest available region</strong> (USA or Europe).</p>
+<p><strong>Note:</strong> If the nearest region has no available streaming capacity, Eagle 3D Streaming automatically routes the user to the next closest available region to ensure the streaming session can still start.</p>
+
+<h4 id="Enterprise-Plan" style=""><span id="DatacenterRouting-EnterprisePlan"></span>Enterprise Plan
+ </h4>
+<p><strong>Enterprise plans can be deployed</strong> in any supported cloud region worldwide, allowing you to host your application closer to your users for lower latency and better performance.</p>
+<p>Example:</p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>User Location</p>
+</th>
+<th>
+<p>Nearest Datacenter or Server Location</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Germany</p>
+</td>
+<td>
+<p>Germany</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>USA</p>
+</td>
+<td>
+<p>USA</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>India</p>
+</td>
+<td>
+<p>India</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Australia</p>
+</td>
+<td>
+<p>Australia</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Brazil</p>
+</td>
+<td>
+<p>Brazil</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Middle East</p>
+</td>
+<td>
+<p>Middle East</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+<p><strong>Note:</strong> Enterprise deployments use dedicated infrastructure in your selected deployment region. Users always connect to that designated region and are not automatically routed to another region unless your deployment is specifically configured to support multiple regions.</p>
+
+<h2 id="Best-Practices" style=""><span id="DatacenterRouting-BestPractices"></span>Best Practices
+ </h2>
+<ul>
+<li>
+<p>Choose a deployment region closest to your primary audience.</p>
+</li>
+<li>
+<p>Estimate where most users will connect from before selecting a plan.</p>
+</li>
+<li>
+<p><a href="https://support.eagle3dstreaming.com/" rel="external noreferrer"><strong>Contact Eagle 3D Streaming Team</strong></a><strong> </strong>if your audience is concentrated in a specific region, as Enterprise deployments can be customized.</p>
+</li>
+</ul>
+<p>You can also select a preferred deployment region from your application configuration. Region selection has some limitations depending on your subscription plan. Refer to the <a href="/wiki/select-region">S<strong>elect Region documentation</strong></a> for more details.</p>

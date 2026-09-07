@@ -1,0 +1,272 @@
+<p>This document explains <strong>Dedicated Game Views and Controls</strong> in Eagle 3D Streaming.</p>
+<p>In a dedicated experience, each user opens the same App URL, but each user gets an independent streaming session.</p>
+<p>This means every user has their own:</p>
+<ul>
+<li>
+<p>Game view</p>
+</li>
+<li>
+<p>Input control</p>
+</li>
+<li>
+<p>Streaming session</p>
+</li>
+<li>
+<p>Assigned GPU machine</p>
+</li>
+<li>
+<p>Application experience</p>
+</li>
+</ul>
+<p>Dedicated Game Views and Controls are commonly used when each user needs to interact with the app separately.</p>
+
+<h2 id="Prerequisites"><span id="DedicatedGameViewsandControls-Prerequisites"></span>Prerequisites
+ </h2>
+<ol>
+<li>
+<p>Access the <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer">Control Panel</a></p>
+</li>
+<li>
+<p>A user Account from the <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer">Control Panel</a></p>
+</li>
+<li>
+<p>An uploaded and configured application</p>
+</li>
+</ol>
+
+<h2 id="How-Dedicated-Game-Views-and-Controls-Work"><span id="DedicatedGameViewsandControls-HowDedicatedGameViewsandControlsWork"></span>How Dedicated Game Views and Controls Work
+ </h2>
+<p>In Dedicated Mode:</p>
+<ul>
+<li>
+<p>Each user opens the same App URL.</p>
+</li>
+<li>
+<p>The system assigns a separate GPU machine or session for each user.</p>
+</li>
+<li>
+<p>Each user controls their own instance of the application.</p>
+</li>
+<li>
+<p>One user’s actions do not affect another user’s view or controls.</p>
+</li>
+<li>
+<p>Each connected user consumes one CCU.</p>
+</li>
+</ul>
+<p>For example, if the account has <strong>10 CCUs</strong>:</p>
+<ul>
+<li>
+<p>User 1 joins the app → 1 CCU is used.</p>
+</li>
+<li>
+<p>Remaining CCU count becomes <strong>9</strong>.</p>
+</li>
+<li>
+<p>User 2 joins the app → another CCU is used.</p>
+</li>
+<li>
+<p>Remaining CCU count becomes <strong>8</strong>.</p>
+</li>
+</ul>
+
+<h2 id="Instructions"><span id="DedicatedGameViewsandControls-Instructions"></span>Instructions
+ </h2>
+<h3 id="1.-User-1-runs-the-game"><span id="DedicatedGameViewsandControls-1.User1runsthegame"></span>1. User 1 runs the game
+ </h3>
+<p>Go to : <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer">Control Panel</a> -&gt;<span style="--color: var(--purple, #6554c0);"> </span>Click on an App -&gt; Play App. The system then looks for an available GPU machine to assign to the user.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 1. User 1 opens the App URL: Dedicated Game views and controls" decoding="async" loading="lazy" src="/images/image-20231214-151112-514410.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 1. User 1 opens the App URL: </span><span style="--color: var(--gray, #97a0af);"><strong>Dedicated Game views and controls</strong></span>
+</figcaption>
+</figure>
+
+</div>
+
+<h3 id="2.-A-connection-with-our-system-gets-initiated"><span id="DedicatedGameViewsandControls-2.Aconnectionwithoursystemgetsinitiated"></span>2. A connection with our system gets initiated
+ </h3>
+<p>After User 1 opens the App URL, the system receives the connection request. The system then looks for an available GPU machine to assign to the user.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 2. Connection request received, system looking for a free machine to assign it to the User" decoding="async" loading="lazy" src="/images/image-20260525-074446-d3b58a.png"/>
+
+<figcaption>Image 2. Connection request received, system looking for a free machine to assign it to the User</figcaption>
+</figure>
+
+</div>
+
+<h3 id="3.-The-system-installs-the-files-from-the-Cloud-to-the-GPU-machines"><span id="DedicatedGameViewsandControls-3.ThesysteminstallsthefilesfromtheCloudtotheGPUmachines"></span>3. The system installs the files from the Cloud to the GPU machines 
+ </h3>
+<p>The system prepares the application on the assigned GPU machine.</p>
+<p>If the app is running for the first time, the files are downloaded from cloud storage to the GPU machine.</p>
+<p>During this phase, the loading page may show:</p>
+<ul>
+<li>
+<p><strong>Acquiring App</strong></p>
+</li>
+<li>
+<p><strong>Preparing App</strong></p>
+</li>
+<li>
+<p><strong>Starting App</strong></p>
+</li>
+</ul>
+<p>If the app has already been prepared on the machine, the loading page may only show:</p>
+<ul>
+<li>
+<p><strong>Launching App</strong></p>
+</li>
+</ul>
+<p>Refer to <a href="/wiki/the-load-time-in-eagle-3d-streaming">this document</a> to get the Concept of Load time in Eagle 3D Streaming.</p>
+<h3 id="[hardBreak][hardBreak][hardBreak]4.--The-App-Is-Displayed-on-the-User’s-Screen"><span id="DedicatedGameViewsandControls-4.TheAppIsDisplayedontheUser’sScreen"></span>
+<br/>
+<br/>
+<br/>
+ 4. The App Is Displayed on the User’s Screen
+ </h3>
+<p>Once the app starts, the Pixel Streaming session appears in the user’s browser. User 1 now has a dedicated view of the application.
+ <br/>
+<br/></p>
+<h3 id="5.-Browser-Receives-User-Input"><span id="DedicatedGameViewsandControls-5.BrowserReceivesUserInput"></span>5. Browser Receives User Input
+ </h3>
+<p>When User 1 uses the keyboard or mouse, the browser receives those input actions.</p>
+<p>These inputs are then sent to the streamed Unreal Engine application.
+ <br/>
+<br/></p>
+<h3 id="6.-User-1-Controls-the-Application"><span id="DedicatedGameViewsandControls-6.User1ControlstheApplication"></span>6. User 1 Controls the Application
+ </h3>
+<p>The browser forwards the keyboard and mouse input to the Unreal Engine app.</p>
+<p>User 1 can now interact with the application in their own dedicated session.</p>
+<p>The stream from the Unreal application to the browser is bidirectional, while keyboard and mouse input is sent from the user’s browser to the application.</p>
+
+<h3 id="7.-User-2-Plays-the-Same-App"><span id="DedicatedGameViewsandControls-7.User2PlaystheSameApp"></span>7. User 2 Plays the Same App
+ </h3>
+<p>User 2 opens the same App URL.</p>
+<p>The system assigns User 2 a different streaming session or GPU machine.</p>
+<p>User 2 gets a separate view and separate control of the application.</p>
+<p>User 1 and User 2 are using the same app, but their sessions are independent.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 3. User 2 opens the App URL: Gets a different machine from User 1 : interacts with the App: Gets a Dedicated Game Views and Controls" decoding="async" loading="lazy" src="/images/image-20231214-151213-47dd07.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 3. User 2 opens the App URL: Gets a different machine from User 1 : interacts with the App: Gets a Dedicated Game Views and Controls </span>
+</figcaption>
+</figure>
+
+</div>
+
+<h2 id="User-1-vs-User-2-Experience"><span id="DedicatedGameViewsandControls-User1vsUser2Experience"></span>User 1 vs User 2 Experience
+ </h2>
+<div class="theme-table">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Feature</p>
+</th>
+<th>
+<p>User 1</p>
+</th>
+<th>
+<p>User 2</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>App URL</p>
+</td>
+<td>
+<p>Same App URL</p>
+</td>
+<td>
+<p>Same App URL</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>View</p>
+</td>
+<td>
+<p>Dedicated view</p>
+</td>
+<td>
+<p>Dedicated view</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Control</p>
+</td>
+<td>
+<p>Own control</p>
+</td>
+<td>
+<p>Own control</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Session</p>
+</td>
+<td>
+<p>Separate session</p>
+</td>
+<td>
+<p>Separate session</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>GPU assignment</p>
+</td>
+<td>
+<p>Assigned by system</p>
+</td>
+<td>
+<p>Assigned by system</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Interaction</p>
+</td>
+<td>
+<p>Independent</p>
+</td>
+<td>
+<p>Independent</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>CCU usage</p>
+</td>
+<td>
+<p>Uses 1 CCU</p>
+</td>
+<td>
+<p>Uses 1 CCU</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>To learn more about the Shared experience feature, please refer to <a href="/wiki/how-guests-share-game-views-and-controls-during-th"><strong>this document</strong></a>.<em><strong> </strong></em></p>
+</aside>
+</div>

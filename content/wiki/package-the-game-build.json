@@ -1,0 +1,11 @@
+{
+ "title": "Package the Game Build",
+ "slug": "package-the-game-build",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming",
+  "upload-and-play-join-server-manually",
+  "package-the-multiplayer-project"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/package-the-game-build"
+}

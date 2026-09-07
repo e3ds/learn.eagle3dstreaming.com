@@ -1,0 +1,77 @@
+<p>This document explains the standard hardware resources available on Eagle 3D Streaming servers and what to do if your app requires more resources.</p>
+
+<p>Our primary streaming servers are located in the <strong>United States</strong> and <strong>Europe</strong>.
+ <br/>
+ We also support deployment on major public cloud platforms such as <strong>GCP, Azure, and AWS</strong>.</p>
+<p>Refer to <a href="/wiki/cloud-vm-hardware-specifications"><strong>this document</strong></a> to see our Cloud VM Hardware Specifications.</p>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Note :</strong> If you need custom hardware, please <a href="https://support.eagle3dstreaming.com/" rel="external noreferrer"><strong>Contact Support</strong></a>.</p>
+</aside>
+</div>
+
+<h2 id="Resource-Specifications" style=""><span id="HardwareandSoftwareSpecifications-ResourceSpecifications"></span>Resource Specifications
+ </h2>
+<h4 id="Eagle-3D’s-Hardware-for-Streaming-Unreal-Engine-Apps" style=""><span id="HardwareandSoftwareSpecifications-Eagle3D’sHardwareforStreamingUnrealEngineApps"></span>Eagle 3D’s Hardware for Streaming Unreal Engine Apps
+ </h4>
+<ul>
+<li>
+<p>32 GB RAM (Memory).</p>
+</li>
+<li>
+<p>8 GB/16 GB GPU VRAM.</p>
+</li>
+<li>
+<p>i7/R7 Processor.</p>
+</li>
+<li>
+<p>RTX 4080/5070 GPU.</p>
+</li>
+</ul>
+<h4 id="Preferred-Maximum-Resource-Allocations-for-Unreal-Engine-Apps" style=""><span id="HardwareandSoftwareSpecifications-PreferredMaximumResourceAllocationsforUnrealEngineApps"></span>Preferred Maximum Resource Allocations for Unreal Engine Apps
+ </h4>
+<ul>
+<li>
+<p>Upto 20 GB RAM (Memory).</p>
+</li>
+<li>
+<p>4-6 GB GPU VRAM.</p>
+</li>
+<li>
+<p>50-70% CPU utilization.</p>
+</li>
+<li>
+<p>50-70% GPU utilization.</p>
+</li>
+</ul>
+
+<h2 id="Important" style=""><span id="HardwareandSoftwareSpecifications-Important"></span>Important
+ </h2>
+
+<p>Your app will run on Eagle 3D Streaming production servers for Pixel Streaming. It must be optimized to work within our standard server hardware limits.</p>
+<p>If the app uses more resources than the available server hardware, it may crash during the upload testing process or while streaming. One common issue is:</p>
+<p>Out of Video Memory
+ <br/>
+<br/></p>
+
+<h4 id="What-You-Should-Do" style=""><span id="HardwareandSoftwareSpecifications-WhatYouShouldDo"></span>What You Should Do
+ </h4>
+<p>Please optimize your Unreal Engine app to reduce GPU VRAM and memory usage before uploading again. If your app can run within the recommended limits, you can use our standard production system.</p>
+
+<h2 id="If-Your-App-Needs-Higher-Hardware" style=""><span id="HardwareandSoftwareSpecifications-IfYourAppNeedsHigherHardware"></span>If Your App Needs Higher Hardware
+ </h2>
+<p>If your application cannot be optimized and requires more RAM, GPU VRAM, or a more powerful GPU than our standard production servers provide, you will need an <a href="https://controlpanel.eagle3dstreaming.com/plans" rel="external noreferrer"><strong>Enterprise Plan</strong></a> with custom hardware.</p>
+<p>However, <strong>before proceeding with an </strong><a href="https://controlpanel.eagle3dstreaming.com/plans" rel="external noreferrer"><strong>Enterprise Plan</strong></a>, we recommend testing your application using your own hardware.</p>
+
+<h4 id="Step-1-(Recommended):-Test-on-Your-Own-Hardware" style=""><span id="HardwareandSoftwareSpecifications-Step1(Recommended):TestonYourOwnHardware"></span><strong>Step 1 (Recommended): Test on Your Own Hardware</strong>
+</h4>
+<p>If you simply want to verify that your application works correctly with higher hardware resources <strong>before moving to an Enterprise deployment</strong>, you can use the <strong>E3DS Streaming Agent (Binary EL)</strong> on your own computer.</p>
+<p>If your computer meets your application's hardware requirements, this allows you to test the Pixel Streaming experience in an environment similar to our Enterprise solution without provisioning dedicated cloud hardware.</p>
+<p>Follow this guide to get started:</p>
+<p><a href="/wiki/install-the-binary-el-on-your-own-hardware"><strong>Set up E3DS Streaming Agent on Your Own Machine</strong></a></p>
+
+<h4 id="Step-2:-Enterprise-Deployment" style=""><span id="HardwareandSoftwareSpecifications-Step2:EnterpriseDeployment"></span>Step 2: Enterprise Deployment
+ </h4>
+<p>Once you have completed your testing (or if you are ready to deploy), you can proceed with our <a href="https://controlpanel.eagle3dstreaming.com/plans" rel="external noreferrer"><strong>Enterprise Plan</strong>.</a></p>
+
+<p>Please contact our <a href="https://support.eagle3dstreaming.com/" rel="external noreferrer"><strong>support team</strong></a> with your required hardware specifications. Our team will arrange a meeting with you to review your requirements and recommend the most suitable Enterprise configuration for your application.</p>

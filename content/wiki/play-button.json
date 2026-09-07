@@ -1,0 +1,13 @@
+{
+ "title": "Play Button",
+ "slug": "play-button",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration",
+  "edit-your-config",
+  "edit-the-advanced-options-features-of-your-config",
+  "loading-screen",
+  "2d-image-asset"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/play-button"
+}

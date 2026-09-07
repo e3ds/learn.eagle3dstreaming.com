@@ -1,0 +1,179 @@
+<p><em>Add Command parameters to the end of your App URL.</em></p>
+<h2 id="Overview"><span id="AppendParameterstoURL-Overview"></span>Overview
+ </h2>
+<p>After Passing a Command to your App from the Control Panel Config “<strong>Parameters to Pass to App</strong>”, you can append Parameters to your App URL by enabling the Feature from the New Control Panel and adding CMD Line arguments to the end of your App URL.</p>
+<h2 id="Prerequisites"><span id="AppendParameterstoURL-Prerequisites"></span>Prerequisites
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em>Make sure you :</em></p>
+<ol>
+<li>
+<p><em>Have access to the</em><em><strong> </strong></em><a href="https://newcontrolpanel.eagle3dstreaming.com/" rel="external noreferrer"><em><strong>New Control Panel</strong></em></a><em><strong>.</strong></em></p>
+</li>
+<li>
+<p><em>Have an </em><a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/ED/pages/294748170/Creating+an+Account" rel="noreferrer" target="_blank"><em><strong>Eagle 3D’s User Account.</strong></em></a></p>
+</li>
+</ol>
+</aside>
+</div>
+<h2 id="Instructions"><span id="AppendParameterstoURL-Instructions"></span>Instructions
+ </h2>
+<h3 id="Step-1.-Prepare-the-setup"><span id="AppendParameterstoURL-Step1.Preparethesetup"></span>Step 1. Prepare the setup
+ </h3>
+<p>To prepare the setup for this tutorial, refer to <a href="/wiki/pass-parameters-to-your-app-from-the-new-control-p">this document</a> and follow the instructions.</p>
+<p>The steps explained in the document are :</p>
+<ol>
+<li>
+<p>Download the sample App “<strong>E3DSFeatures Template</strong>”.</p>
+</li>
+<li>
+<p>Upload “<strong>E3DSFeaturesTemplate</strong>” on the New Control Panel.</p>
+</li>
+<li>
+<p>Select the App and create a New Streaming Link.</p>
+</li>
+<li>
+<p>Create a New Config and call it “<strong>CMDLineDemo</strong>”.</p>
+</li>
+<li>
+<p>Enable “<strong>Parameters to Pass to App</strong>”.</p>
+</li>
+<li>
+<p>Add <strong>-green</strong> in the text box of “<strong>Parameters to Pass to App</strong>”.</p>
+</li>
+<li>
+<p>Play the “<strong>E3DSFeaturesTemplate</strong>” game and run to the 12th Bay.</p>
+</li>
+<li>
+<p>Check the color of the Sphere which should be green (i.e. same color as the Command <strong>-green</strong>).</p>
+</li>
+</ol>
+<p>After completing the steps above from the document, you are now ready to move to Step 2 of this tutorial to Append Parameters To your App URL.</p>
+<h3 id="Step-2.-Enable-Append-Parameters-To-URL"><span id="AppendParameterstoURL-Step2.EnableAppendParametersToURL"></span>Step 2. Enable Append Parameters To URL
+ </h3>
+<ol>
+<li>
+<p>Select “<strong>E3DSFeaturesTemplate”</strong> from the New Control Panel from the List of Apps in “<strong>Applications”</strong>.</p>
+</li>
+<li>
+<p>Go to :</p>
+</li>
+</ol>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><a href="/wiki/generate-a-streaming-link-for-your-app"><em>Streaming Link</em></a><em> &gt;</em><a href="/wiki/edit-your-config">Edit Config</a><em> &gt; </em><a href="/wiki/edit-the-advanced-options-features-of-your-config">Advanced Options</a><em> &gt; </em><a href="/wiki/developer">Developer</a><em>.</em></p>
+</aside>
+</div>
+<ol start="3">
+<li>
+<p>Enable “<strong>Append Parameters To URL</strong>”.</p>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ol>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 1. Enable Append Parameters To URL . Click Save" decoding="async" loading="lazy" src="/images/image-20240702-140955-3e9c06.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 1. Enable</em></span><span style="--color: var(--gray, #97a0af);"><em><strong> Append Parameters To URL</strong></em></span><span style="--color: var(--gray, #97a0af);"><em>. Click </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Save</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="Step-3.-Copy-the-App-URL-to-the-Clipboard"><span id="AppendParameterstoURL-Step3.CopytheAppURLtotheClipboard"></span>Step 3. Copy the App URL to the Clipboard
+ </h3>
+<p>Once you save the changes, you will be redirected to the Streaming Links page.</p>
+<ol>
+<li>
+<p>On the Streaming Link created in “<strong>step 1 : Prepare the Setup”</strong>, click “<strong>Copy Streaming URL</strong>”. (See image below).</p>
+</li>
+</ol>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 2. Click Copy Streaming URL" decoding="async" loading="lazy" src="/images/image-20240702-141447-b8f7ff.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 2. Click </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Copy Streaming URL</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+
+<ol start="2">
+<li>
+<p>This URL will be copied to the Clipboard (<strong>Username is your Eagle 3D Account user name</strong>) :</p>
+</li>
+</ol>
+<p><code>https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo</code></p>
+<h3 id="Step-4.-Add-the-Command-Lines-to-the-copied-App-URL"><span id="AppendParameterstoURL-Step4.AddtheCommandLinestothecopiedAppURL"></span>Step 4. Add the Command Lines to the copied App URL
+ </h3>
+<p>We are going to add '<strong>?exeLunchArgs=-[variable]</strong>'<strong> </strong>to the end of the URL. Follow the examples below.</p>
+
+<ul>
+<li>
+<p><strong>Example 1 :</strong></p>
+</li>
+</ul>
+<p data-indentation-level="1">In this example, we are adding <strong>?exeLunchArgs=-blue</strong> to the end of the URL :</p>
+<p data-indentation-level="1"><code>https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo?exeLunchArgs=-blue</code></p>
+
+<p data-indentation-level="1">The system has now appended the<strong> </strong>Command and has sent both the Command added into the Config (i.e. <strong>-green</strong>) and the Command added into the URL (i.e. <strong>?exeLunchArgs=-blue</strong>) to the UE game.</p>
+
+<ul>
+<li>
+<p><strong>Example 2 :</strong></p>
+</li>
+</ul>
+<p data-indentation-level="1">In this example, we are adding <strong>?exeLunchArgs=-green pink red</strong> to the end of the URL :</p>
+<p data-indentation-level="1"><code>https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo?exeLunchArgs=-green pink red</code></p>
+
+<p data-indentation-level="1">The system has now appended the <strong>?exeLunchArgs=-green pink red </strong>Command and has sent both the Command added into the Config (i.e. <strong>-green</strong>) and the Command added into the URL (i.e. <strong>?exeLunchArgs=-green pink red</strong>) to the UE game.</p>
+<h3 id="Step-5.-Open-the-game.-Run-to-the-12th-bay"><span id="AppendParameterstoURL-Step5.Openthegame.Runtothe12thbay"></span>Step 5. Open the game. Run to the 12th bay
+ </h3>
+<p>Paste the App URL from the Clipboard to the Browser :</p>
+<p><code>https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo?exeLunchArgs=-blue</code></p>
+
+<p><strong>Warning</strong> 🛑</p>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p><strong>DO NOT </strong>run the game by clicking “<strong>Play App</strong>” from the Streaming Link in the Control Panel !!!</p>
+<p>That causes you to <strong>ONLY</strong> see the changes made to the “<strong>Parameters to Pass to App</strong>” Config from the Control Panel (i.e. the green color) and not the ones made to the App URL.</p>
+</aside>
+</div>
+
+<p>In the game, 2 values will be getting parsed from 2 places in the CMDLine arguments (image below):</p>
+<ol>
+<li>
+<p>From the “<strong>Parameters To Pass to App</strong>” Config Feature (the green color).</p>
+</li>
+<li>
+<p>From the additional Command added to the end of the URL (the blue color).</p>
+</li>
+</ol>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 3. E3DSFeaturesTemplate : ' ?exeLunchArgs=-blue ' at the end of the App URL" decoding="async" loading="lazy" src="/images/image-20240702-144442-293f71.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 3. </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>E3DSFeaturesTemplate</strong></em></span><span style="--color: var(--gray, #97a0af);"><em> : </em></span><span style="--color: var(--gray, #97a0af);">'</span><span style="--color: var(--gray, #97a0af);"><strong>?exeLunchArgs=-blue</strong></span><span style="--color: var(--gray, #97a0af);">' </span><span style="--color: var(--gray, #97a0af);"><em>at the end of the App URL</em></span>
+</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em>Now that we are familiar with how the appending system works, we can explore how this is used for </em><em><strong>Authentication</strong></em><em>. Refer to </em><a href="/wiki/use-the-appending-system-for-authentication"><em>this document</em></a><em>.</em></p>
+</aside>
+</div>

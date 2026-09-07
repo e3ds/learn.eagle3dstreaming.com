@@ -20,7 +20,7 @@
     --ground:#FAFBFA; --surface:#FFFFFF; --surface-2:#F1F4F3;
     --line:#DDE3E1; --ink:#141A19; --ink-2:#4A5654; --ink-3:#737F7D;
     --accent:#176B6B; --measure:68ch; --r:3px;
-    --accent-soft:#ECF6F5; --note:#1E6A8D; --note-bg:#EDF5F9; --tip:#1F6B4A; --tip-bg:#ECF6F1;
+    --accent-soft:#ECF6F5; --warn:#8A5A00; --warn-bg:#FBF3E2; --note:#1E6A8D; --note-bg:#EDF5F9; --tip:#1F6B4A; --tip-bg:#ECF6F1;
     --warn:#8A5A00; --warn-bg:#FBF3E2;
   }
   @media (prefers-color-scheme:dark){
@@ -28,7 +28,7 @@
       --ground:#0F1413; --surface:#161C1B; --surface-2:#1D2524;
       --line:#2A3433; --ink:#E8EEEC; --ink-2:#A8B4B2; --ink-3:#7C8886;
       --accent:#5FC2BC;
-      --accent-soft:#11211F; --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
+      --accent-soft:#11211F; --warn:#DBA84E; --warn-bg:#231C0E; --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
       --warn:#DBA84E; --warn-bg:#231C0E;
     }
   }
@@ -36,7 +36,7 @@
     --ground:#0F1413; --surface:#161C1B; --surface-2:#1D2524;
     --line:#2A3433; --ink:#E8EEEC; --ink-2:#A8B4B2; --ink-3:#7C8886;
     --accent:#5FC2BC;
-    --accent-soft:#11211F; --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
+    --accent-soft:#11211F; --warn:#DBA84E; --warn-bg:#231C0E; --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
     --warn:#DBA84E; --warn-bg:#231C0E;
   }
   *{box-sizing:border-box}
@@ -130,6 +130,14 @@
     font-weight:500;letter-spacing:.14em;text-transform:uppercase;
     color:var(--accent);margin:0 0 14px}
   /* The one paragraph that says what this page gets you. Every page has one. */
+  /* Shown only on pages still carrying their ported text. The site is internal
+     while the rewrite runs, and a reviewer needs to know whether they are
+     reading finished prose or the old wiki in a new template - otherwise every
+     page reads as a claim about the standard we are holding. */
+  .ported{margin:0 0 28px;padding:11px 15px;border-left:3px solid var(--warn);
+    background:var(--warn-bg);border-radius:0 var(--r) var(--r) 0;
+    font-family:Archivo,Arial,sans-serif;font-size:14px;color:var(--ink-2)}
+  .ported strong{color:var(--warn)}
   .standfirst{font-size:19px;line-height:1.55;color:var(--ink-2);
     max-width:var(--measure);margin:0 0 36px}
 
@@ -257,6 +265,7 @@
 
 <div class="wrap">
   {{breadcrumbs}}
+  {{ported}}
   <h1>{{h1}}</h1>
   {{content}}
   {{children}}

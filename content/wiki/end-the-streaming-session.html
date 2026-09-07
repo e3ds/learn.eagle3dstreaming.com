@@ -1,0 +1,140 @@
+<p>This guide explains how to <strong>end a Pixel Streaming session</strong> from within your Unreal Engine application.</p>
+
+<h2 id="Video-Preview" style=""><span id="EndtheStreamingSession-VideoPreview"></span><strong>Video Preview</strong>
+</h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/6eRXy2aNiYo" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo URL:</strong></p>
+<p><a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Pixel Streaming Demos (click a version to launch):</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE53/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.3 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE54/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.4 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE55/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.5 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE56/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.6 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE57/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.7 Demo</strong></a>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE58/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.8 Demo</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Prerequisite:</strong></p>
+<p>Before proceeding, ensure you have <strong>downloaded and installed the E3DS Features Plugin</strong> in your Unreal Engine project. For detailed instructions, refer to:
+   <br/>
+<a href="/wiki/download-and-install-the-e3ds-features-plugin"><u><strong>Download and Install the E3DS Features Plugin</strong></u></a></p>
+</aside>
+</div>
+
+<p>Follow the guidelines below:</p>
+<h2 id="Part-1.-Blueprint-Logic-for-Ending-the-Session" style=""><span id="EndtheStreamingSession-Part1.BlueprintLogicforEndingtheSession"></span><strong>Part 1. Blueprint Logic for Ending the Session</strong>
+</h2>
+<ol>
+<li>
+<p>Open the level you intend to stream.
+   <br/></p>
+</li>
+<li>
+<p>Drag and drop an instance of <code>E3DS_PS_actor</code> into your level.
+   <br/>
+<br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Drag and Drop E3DS_PS_actor into Your Level" decoding="async" loading="lazy" src="/images/image-20250728-172112-4d78c6.png"/>
+
+<figcaption>Figure 1. Drag and Drop E3DS_PS_actor into Your Level</figcaption>
+</figure>
+
+</div>
+
+</li>
+<li>
+<p>Open the <strong>Level Blueprint</strong>.
+   <br/></p>
+</li>
+<li>
+<p>In the Event Graph, right-click and search for the <strong>Keyboard 6</strong> event to add it to the graph.
+   <br/></p>
+</li>
+<li>
+<p>Right-click again and search for the <strong>Construct PS Message To Force End Session</strong> node.
+   <br/></p>
+</li>
+<li>
+<p>Drag from the <code>Pressed</code> execution pin of the <strong>6</strong> key event and search for the <strong>Send Message To E3ds PS System</strong> node.
+   <br/></p>
+</li>
+<li>
+<p>Connect the output pin of the <code>Construct</code> node to the <code>Descriptor</code> input pin of the <code>Send Message</code> node.
+   <br/></p>
+</li>
+<li>
+<p>Connect the nodes as shown below.
+   <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Blueprint Setup for Ending the Session" decoding="async" loading="lazy" src="/images/image-20250728-172049-80896b.png"/>
+
+<figcaption>Figure 2. Blueprint Setup for Ending the Session</figcaption>
+</figure>
+
+</div>
+
+</li>
+<li>
+<p>Compile and <strong>Save</strong> the Blueprint.</p>
+</li>
+</ol>
+
+<h2 id="Part-2.-Verification" style=""><span id="EndtheStreamingSession-Part2.Verification"></span><strong>Part 2. Verification</strong>
+</h2>
+<p>To confirm that the session end functionality works:
+ <br/></p>
+<ol>
+<li>
+<p>Connect to your remote editor session in your web browser by following the steps in our <a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/SFFI/pages/922255361/Remote+Control+Unreal+Editor" rel="noreferrer" target="_blank">How to test in remote editor streaming</a> documentation. Click inside the editor viewport to ensure it has focus.
+   <br/></p>
+</li>
+<li>
+<p>Press the <strong>6</strong> key on your keyboard.</p>
+<ul>
+<li>
+<p><strong>Expected Result:</strong> The Pixel Streaming session should immediately end.
+     <br/></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>This confirms that the Blueprint is successfully sending the <strong>end session command</strong> to the E3DS system.</p>
+
+<h2 id="Related-Guides" style=""><span id="EndtheStreamingSession-RelatedGuides"></span>Related Guides
+ </h2>
+<ul>
+<li>
+<p><a href="/wiki/blueprint-debugging">How to do blueprint debugging incase something in not working</a></p>
+</li>
+</ul>

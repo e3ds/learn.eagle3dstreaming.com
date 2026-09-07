@@ -1,0 +1,11 @@
+{
+ "title": "Send Data from Unreal App (sender) to Webpage (receiver)",
+ "slug": "send-data-from-unreal-app-sender-to-webpage-receiv",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage",
+  "embed-stream-using-iframe",
+  "communication"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/send-data-from-unreal-app-sender-to-webpage-receiv"
+}

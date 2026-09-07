@@ -1,0 +1,75 @@
+<p>In this guide, we’ll show you how to <strong>receive data</strong> from an <strong>Unreal Engine (UE) application (sender)</strong> into your <strong>webpage (receiver)</strong> using the <strong>Eagle 3D Streaming iframe-based integration</strong>.</p>
+
+<p>Follow the steps below:</p>
+
+<h2 id="Step-1:-Listen-for-Incoming-Messages" style=""><span id="ReceiveDatainWebpage(receiver)fromUnrealApp(sender)-Step1:ListenforIncomingMessages"></span>Step 1: Listen for Incoming Messages
+ </h2>
+<p>Add the following code inside a <code>&lt;script&gt;</code> tag in your HTML (preferably within the <code>&lt;head&gt;</code> or before the closing <code>&lt;/body&gt;</code> tag):</p>
+
+<pre><code class="language-html">window.addEventListener("message", messageHandler);
+</code></pre>
+
+<p>This line sets up an event listener on the browser window. It listens for messages from the iframe (which contains the UE app) and triggers the <code>messageHandler</code> function when a message is received.</p>
+
+<h2 id="Step-2:-Handle-and-Log-Incoming-Messages" style=""><span id="ReceiveDatainWebpage(receiver)fromUnrealApp(sender)-Step2:HandleandLogIncomingMessages"></span>Step 2: Handle and Log Incoming Messages
+ </h2>
+<p>Now define the <code>messageHandler</code> function. In the example below, incoming data will be printed to the browser’s developer console:</p>
+<pre><code>const messageHandler = (event) =&gt; {
+  console.log("Message From UE → Iframe:", event.data);
+};
+</code></pre>
+
+<p>The <code>event.data</code> contains the message payload sent from Unreal.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Console log of a message received from UE" decoding="async" loading="lazy" src="/images/image-20250731-191822-6d1eda.png"/>
+
+<figcaption>Figure 1. Console log of a message received from UE</figcaption>
+</figure>
+
+</div>
+
+<p>By receiving structured messages from Unreal, your webpage can respond dynamically—enabling powerful interactive features between the frontend and the UE application.</p>
+
+<h2 id="Full-Example-Code" style=""><span id="ReceiveDatainWebpage(receiver)fromUnrealApp(sender)-FullExampleCode"></span>Full Example Code
+ </h2>
+<p>Expand to view the complete<strong> </strong>example.</p>
+<details class="expand">
+<summary class="expand-control"> index.html </summary>
+<div class="expand-body">
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;title&gt;UE to Webpage Data Receiver&lt;/title&gt;
+    &lt;script&gt;
+      // Define the function that will handle incoming messages
+      function messageHandler(event) {
+        console.log("Message from UE → Iframe:", event.data);
+      }
+      // Register an event listener to listen for messages from the iframe (UE app)
+      window.addEventListener("message", messageHandler);
+    &lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;div&gt;
+      &lt;!-- This is the iframe where the Unreal Engine application is embedded --&gt;
+      &lt;iframe
+        id="iframe_1"
+        style="visibility: visible"
+        src="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/fakhrul"
+        height="100%"
+        width="100%"
+        allowfullscreen
+        title="Unreal App"
+      &gt;&lt;/iframe&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div>
+</details>

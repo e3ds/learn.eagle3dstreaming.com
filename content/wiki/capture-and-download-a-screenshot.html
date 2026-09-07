@@ -1,0 +1,173 @@
+<p>This guide explains how to capture <strong>high-resolution screenshots</strong> of your Pixel Streamed Unreal Engine application and allow users to <strong>download them directly through their browser</strong>.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>There are three ways to Capture Screenshot:</p>
+<ul>
+<li>
+<p><strong>Inside the Unreal App (Blueprint)</strong>: Covered in this guide.</p>
+</li>
+<li>
+<p><strong>Capture Screenshot using iFrame: </strong>Coming Soon….</p>
+</li>
+<li>
+<p><strong>Capture Screenshot Using SDK: </strong>Refers to <a href="/wiki/capture-screenshot-using-sdk">Capture Screenshot Using SDK</a> guide.</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<h2 id="Video-Preview" style=""><span id="CaptureandDownloadaScreenshot-VideoPreview"></span>Video Preview
+ </h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/IQ4Hy_wbDsY" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo URL:</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Pixel Streaming Demos (click a version to launch):</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE53/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.3 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE54/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.4 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE55/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.5 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE56/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.6 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE57/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.7 Demo</strong></a>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE58/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.8 Demo</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Unlike regular screen captures or streamed frames, this method captures the raw output directly from Unreal Engine, meaning:</p>
+<ul>
+<li>
+<p>Screenshots are unaffected by video streaming quality.</p>
+</li>
+<li>
+<p>Quality is <strong>independent of the user’s internet speed</strong> or stream resolution.</p>
+</li>
+<li>
+<p>The result is a <strong>clean, high-fidelity image</strong> saved as a downloadable file.</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<p>You can trigger a screenshot in one of two method:</p>
+<h2 id="Method-1.-Using-E3DS-Features-plugin-(Recommended)" style=""><span id="CaptureandDownloadaScreenshot-Method1.UsingE3DSFeaturesplugin(Recommended)"></span>Method 1. Using E3DS Features plugin <strong>(Recommended)</strong>
+</h2>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Prerequisite:</strong></p>
+<p>Before proceeding, ensure you have <strong>downloaded and installed the E3DS Features Plugin</strong> in your Unreal Engine project. For detailed instructions, refer to:
+   <br/>
+<a href="/wiki/download-and-install-the-e3ds-features-plugin"><u><strong>Download and Install the E3DS Features Plugin</strong></u></a></p>
+</aside>
+</div>
+
+<ol>
+<li>
+<p>Place an instance of <code>E3DS_PS_Actor</code> in your level.</p>
+</li>
+<li>
+<p>Call the <strong>CaptureScreenshot</strong> function from any actor (e.g., Level Blueprint, Player Character).</p>
+</li>
+<li>
+<p>The plugin handles the request and communication automatically.</p>
+</li>
+</ol>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Capture Screenshot (Using E3DS Plugin)" decoding="async" loading="lazy" src="/images/image-20250806-084258-f93a15.png"/>
+
+<figcaption>Figure 1. Capture Screenshot (Using E3DS Plugin)</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Method-2.-Send-the-Request-Manually-(Not-Recommended)" style=""><span id="CaptureandDownloadaScreenshot-Method2.SendtheRequestManually(NotRecommended)"></span>Method 2. Send the Request Manually (Not <strong>Recommended</strong>)
+ </h2>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>If you’re not experienced with Blueprint development, do <strong>not</strong> use Method 2. Please use <strong>Method 1</strong> instead — Method 2 is more error-prone and increases the chance of implementation mistakes.</p>
+</aside>
+</div>
+
+<ol>
+<li>
+<p>Enable the <strong>Pixel Streaming plugin</strong>:
+   <br/>
+<code>Edit &gt; Plugins &gt; Pixel Streaming</code></p>
+</li>
+<li>
+<p>Add a <strong>PixelStreamingInput component</strong> to an Actor.</p>
+<ul>
+<li>
+<p>Ensure it is placed in the level or spawned at runtime.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Send the screenshot request using the <strong>Send Pixel Streaming Response</strong> Blueprint node with the following JSON:</p>
+</li>
+</ol>
+<pre><code>{"cmd":"captureScreenShot"}
+</code></pre>
+<p>This will instruct the Pixel Streaming system to capture and deliver a screenshot.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Capture Screenshot (Manual Method)" decoding="async" loading="lazy" src="/images/image-20250806-083943-204554.png"/>
+
+<figcaption>Figure 2. Capture Screenshot (Manual Method)</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Result" style=""><span id="CaptureandDownloadaScreenshot-Result"></span><strong>Result</strong>
+</h2>
+<p>Regardless of the method used:</p>
+<ul>
+<li>
+<p>The request is received by the <strong>E3DS platform</strong>.</p>
+</li>
+<li>
+<p>A screenshot is captured directly from Unreal Engine.</p>
+</li>
+<li>
+<p>The image is <strong>automatically downloaded in the user’s browser</strong> as a high-quality file.</p>
+</li>
+</ul>
+
+<h2 id="Related-Guides" style=""><span id="CaptureandDownloadaScreenshot-RelatedGuides"></span>Related Guides
+ </h2>
+<ul>
+<li>
+<p><a href="/wiki/blueprint-debugging">How to do blueprint debugging incase something in not working</a></p>
+</li>
+</ul>

@@ -1,0 +1,331 @@
+<p>This guide explains how to redirect the user’s current browser tab to a different web page from within an Unreal Engine application running in a browser.</p>
+
+<h2 id="Video-Preview" style=""><span id="RedirecttoaNewURL-VideoPreview"></span>Video Preview
+ </h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/q5whTzi2UbU" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo URL:</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Pixel Streaming Demos (click a version to launch):</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE53/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.3 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE54/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.4 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE55/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.5 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE56/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.6 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE57/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.7 Demo</strong></a>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE58/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.8 Demo</strong></a></p>
+</aside>
+</div>
+
+<p>You can redirect to new URL using either of the following two methods:</p>
+<h2 id="Method-1.-Using-the-E3DS-Features-Plugin-(Recommended)" style=""><span id="RedirecttoaNewURL-Method1.UsingtheE3DSFeaturesPlugin(Recommended)"></span>Method 1. Using the E3DS Features Plugin (Recommended)
+ </h2>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Method 1</strong> is recommended because it is faster, easier, and less prone to errors.</p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Prerequisite:</strong></p>
+<p>Before proceeding, ensure you have <strong>downloaded and installed the E3DS Features Plugin</strong> in your Unreal Engine project. For detailed instructions, refer to:
+   <br/>
+<a href="/wiki/download-and-install-the-e3ds-features-plugin"><u><strong>Download and Install the E3DS Features Plugin</strong></u></a></p>
+</aside>
+</div>
+
+<p>Follow the steps bellow:</p>
+<ol>
+<li>
+<p>Open the level you intend to stream.
+   <br/></p>
+</li>
+<li>
+<p>Ensure an instance of <code>E3DS_PS_actor</code> is placed in your level.
+   <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Drag and drop E3DS_PS_actor into your level" decoding="async" loading="lazy" src="/images/image-20250729-035351-048900.png"/>
+
+<figcaption>
+      Figure 1. Drag and drop <code>E3DS_PS_actor</code> into your level
+      <br/>
+</figcaption>
+</figure>
+
+</div>
+</li>
+<li>
+<p>Open the <strong>Level Blueprint</strong>.
+   <br/></p>
+</li>
+<li>
+<p>In the <strong>Event Graph</strong>, right-click and search for the <strong>Keyboard 9</strong> event. Add it to the graph.
+   <br/></p>
+</li>
+<li>
+<p>From the <strong>Pressed</strong> execution pin of the <code>9</code> key event, search for and add the <strong>Redirect To</strong> node.
+   <br/></p>
+</li>
+<li>
+<p>In the <strong>Url To Redirect To</strong> text field, enter the full web address you want the user redirected to (e.g., <code>https://eagle3dstreaming.com/</code>).
+   <br/></p>
+</li>
+<li>
+<p>Connect the nodes as shown below.
+   <br/></p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Connect the Nodes" decoding="async" loading="lazy" src="/images/image-20250729-035421-bbcb82.png"/>
+
+<figcaption>Figure 3. Connect the Nodes</figcaption>
+</figure>
+
+</div>
+
+</li>
+<li>
+<p>Compile and <strong>Save</strong> the Blueprint.</p>
+</li>
+</ol>
+
+<h2 id="Method-2.-Using-a-Custom-Blueprint-(Not-Recommended)" style=""><span id="RedirecttoaNewURL-Method2.UsingaCustomBlueprint(NotRecommended)"></span>Method 2. Using a Custom Blueprint (Not <strong>Recommended</strong>)
+ </h2>
+
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>If you’re not experienced with Blueprint development, do <strong>not</strong> use Method 2. Please use <strong>Method 1</strong> instead — Method 2 is more error-prone and increases the chance of implementation mistakes.</p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<ol>
+<li>
+<p>Create a new Blueprint or open an existing one.</p>
+</li>
+<li>
+<p>Add the <strong>PixelStreamingInput</strong> component.</p>
+</li>
+<li>
+<p>Create a <strong>Custom Event</strong> or function.</p>
+</li>
+<li>
+<p>Add a <strong>Send Pixel Streaming Response</strong> node.</p>
+</li>
+<li>
+<p>end the following message as a string:</p>
+</li>
+</ol>
+<pre><code>{"cmd":"redirectTo","value":"https://www.eagle3dstreaming.com"}
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Example of sending a manual Pixel Streaming redirect message" decoding="async" loading="lazy" src="/images/image-20250901-204154-5cb19f.png"/>
+
+<figcaption>Figure 2. Example of sending a manual Pixel Streaming redirect message</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Note:</strong> Replace the URL above with any destination you wish to redirect to.</p>
+</aside>
+</div>
+
+<h2 id="Verification" style=""><span id="RedirecttoaNewURL-Verification"></span><strong>Verification</strong>
+</h2>
+<p>To confirm that the redirect works:</p>
+<ol>
+<li>
+<p>Connect to your remote editor session in your web browser by following the steps in our <a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/SFFI/pages/922255361/Remote+Control+Unreal+Editor" rel="noreferrer" target="_blank">How to test in remote editor streaming</a> documentation.</p>
+</li>
+<li>
+<p>Click inside the <strong>editor viewport</strong> to ensure it has focus.</p>
+</li>
+<li>
+<p>Press the <strong>9</strong> key on your keyboard.</p>
+</li>
+</ol>
+<h4 id="Expected-Result:" style=""><span id="RedirecttoaNewURL-ExpectedResult:"></span>Expected Result:
+ </h4>
+<p>The current browser tab running the Pixel Streaming session will navigate away and load the new URL you specified. This confirms the Blueprint successfully sends the redirect command to the client’s browser.
+ <br/></p>
+
+<h2 id="Related-Live-Sessions" style=""><span id="RedirecttoaNewURL-RelatedLiveSessions"></span><strong>Related Live Sessions</strong>
+</h2>
+<p>These YouTube Live sessions cover topics directly related to this guide:</p>
+<ul>
+<li>
+<p>Redirect to a New URL on User’s Device
+   <br/>
+<a href="https://youtube.com/live/bjoFSGO0FgI" rel="noreferrer" target="_blank">https://youtube.com/live/bjoFSGO0FgI</a>
+<br/></p>
+</li>
+</ul>
+
+<h2 id="Related-Guides" style=""><span id="RedirecttoaNewURL-RelatedGuides"></span>Related Guides
+ </h2>
+<ul>
+<li>
+<p><a href="/wiki/blueprint-debugging">How to do blueprint debugging incase something in not working</a></p>
+</li>
+</ul>
+
+<hr/>
+
+<h2 id="Troubleshooting" style="--text-align: center"><span id="RedirecttoaNewURL-Troubleshooting"></span><span style="--color: var(--red, #ff5630);"><strong>Troubleshooting</strong></span>
+</h2>
+
+<hr/>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Issue</p>
+</th>
+<th>
+<p>Possible Cause</p>
+</th>
+<th>
+<p>Solution</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Redirect does not happen when pressing the trigger key</p>
+</td>
+<td>
+<p>Browser restrictions or security policies</p>
+</td>
+<td>
+<ul>
+<li>
+<p>Ensure the browser allows redirects initiated by user interaction.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<p>Redirect works locally but not in Pixel Streaming</p>
+</td>
+<td>
+<p>Using Unreal’s built-in <code>Launch URL</code> node</p>
+</td>
+<td>
+<ul>
+<li>
+<p>Do <strong>not</strong> use Unreal’s built-in <code>Launch URL</code> node.</p>
+</li>
+<li>
+<p>Always use the <strong>E3DS Redirect To</strong> node or the Pixel Streaming message approach.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<p>Nothing happens when key is pressed</p>
+</td>
+<td>
+<p>Blueprint is not receiving input</p>
+</td>
+<td>
+<ul>
+<li>
+<p>Click inside the streamed viewport to ensure it has focus before pressing the key.</p>
+</li>
+<li>
+<p>Verify the key binding is correct.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<p>Custom Blueprint redirect does not work</p>
+</td>
+<td>
+<p>Actor not placed or spawned</p>
+</td>
+<td>
+<p>Ensure the Blueprint actor is placed in the level or spawned at runtime using <code>Spawn Actor from Class</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Redirect message not received by browser</p>
+</td>
+<td>
+<p>Incorrect message format</p>
+</td>
+<td>
+<p>Verify the JSON message format is correct:<code>{"cmd":"redirectTo","value":"https://example.com"}</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Redirect node not found</p>
+</td>
+<td>
+<p>E3DS Features Plugin not installed or enabled</p>
+</td>
+<td>
+<p>Confirm the E3DS Features Plugin is installed and enabled, then restart the editor if needed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Redirect happens in a new tab instead of current tab</p>
+</td>
+<td>
+<p>Incorrect command used</p>
+</td>
+<td>
+<ul>
+<li>
+<p>Use <code>redirectTo</code> for redirecting the <strong>current tab</strong>.</p>
+</li>
+<li>
+<p>Use <code>launchUrl</code> only when opening a new tab.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

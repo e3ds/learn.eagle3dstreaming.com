@@ -1,0 +1,77 @@
+<p>Get the Loading time of your App.</p>
+<h2 id="Understanding-the-concepts"><span id="DeterminingLoadtime-Understandingtheconcepts"></span>Understanding the concepts
+ </h2>
+<p><a href="/wiki/the-concept-of-load-time-in-eagle-3d-streaming">See this document. </a></p>
+<h2 id="Determining-the-Load-time-of-your-App"><span id="DeterminingLoadtime-DeterminingtheLoadtimeofyourApp"></span>Determining the Load time of your App
+ </h2>
+<h3 id="1.-Calculate-manually"><span id="DeterminingLoadtime-1.Calculatemanually"></span>1. Calculate manually
+ </h3>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="I mage 1. Manual calculation of the load time" decoding="async" loading="lazy" src="/images/image-20231019-132605-04a41c.png"/>
+
+<figcaption>
+    I<span style="--color: var(--gray, #97a0af);">mage 1. Manual calculation of the load time</span>
+</figcaption>
+</figure>
+
+</div>
+<p>The load time of an App can be calculated manually from the time you click on the URL and the progress bar starts loading, to the completion, when the page is fully loaded and started running. </p>
+<p>Then,<strong> subtracting the recorded timestamps</strong> of <strong>the beginning of the loading process</strong> from <strong>the end when the App is fully loaded</strong> and is ready for interaction.</p>
+<h3 id="2.-Use-the-web-browser"><span id="DeterminingLoadtime-2.Usethewebbrowser"></span>2. Use the web browser 
+ </h3>
+<h4 id="--Open-Inspect-element"><span id="DeterminingLoadtime--OpenInspectelement"></span>- Open Inspect element
+ </h4>
+<div class="task-list">
+<ul>
+<li class="task-item" id="977abe35-bfa3-44b4-a401-9aea3092e1c0"><input aria-labelledby="977abe35-bfa3-44b4-a401-9aea3092e1c0" checked="" class="task-item-icon" disabled="" type="checkbox"/>Click on <code>CTRL+shift+i </code>or <code>F12</code> on your keyboard if you are on windows to open the <strong>Inspect Element</strong> feature of your browser while streaming your app.</li>
+<li class="task-item" id="23fbd26c-c7f5-452b-9200-59246e39ec5f"><input aria-labelledby="23fbd26c-c7f5-452b-9200-59246e39ec5f" checked="" class="task-item-icon" disabled="" type="checkbox"/>Go to <strong>Network</strong></li>
+<li class="task-item" id="598c2a8d-df20-49ad-98fb-eab819435450"><input aria-labelledby="598c2a8d-df20-49ad-98fb-eab819435450" checked="" class="task-item-icon" disabled="" type="checkbox"/>Find the time of Queued, Started, Finish, Downloaded etc.. (s)</li>
+</ul>
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 2. Inspect elements: Network: Determine the load time (s)" decoding="async" loading="lazy" src="/images/Inkednetwork%20monitor1-3a23cc.jpg"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Image 2. Inspect elements: Network: Determine the load time (s)</span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="Minimizing-the-load-time-of-a-large-app"><span id="DeterminingLoadtime-Minimizingtheloadtimeofalargeapp"></span>Minimizing the load time of a large app
+ </h2>
+<p>Refer to <a href="/wiki/eagle-3d-s-guidelines-for-a-minimized-load-time">this document</a>.</p>
+<p>If your App takes <strong>too long to load</strong>:</p>
+<ol>
+<li>
+<p>Determine the Loading time (follow the steps above)</p>
+</li>
+<li>
+<p>Compare it to the average Eagle 3D loading time (~20 seconds), if it exceeds that, <a href="https://eagle3dstreaming.atlassian.net/servicedesk/customer/portals" rel="noreferrer" target="_blank">contact support</a>.</p>
+</li>
+</ol>
+<div data-appearance="info" role="note">
+<aside class="callout warning">
+<p><strong>Warning </strong>❌<strong> </strong>🚫</p>
+<p>If your App shows a ‘<strong>Video Stream failed to start</strong>’ message (screenshot below), that is because it kept loading from 2- 5 minutes.</p>
+<div class="theme-block-image">
+
+<div class="block-image" style="--width: 315px">
+<img alt="" decoding="async" loading="lazy" src="/images/image-20240919-135740-537cf9.png"/>
+</div>
+
+</div>
+
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Customize the loading screen page. <a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/~71202018a6dc3b268a4a73aaabab1c378fe10b/pages/207192210/Customization" rel="noreferrer" target="_blank">Follow this document. </a></p>
+</aside>
+</div>

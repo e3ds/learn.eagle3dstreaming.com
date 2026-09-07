@@ -1,0 +1,556 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capture Screenshot Using SDK — Eagle 3D Streaming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
+<meta name="description" content="This guide explains how to capture a screenshot from your Pixel Streaming session using the Eagle 3D Streaming SDK. There are three ways to Capture Screenshot: Inside the Unreal App (Blueprint) : Refers to Capture Screenshot Using SDK guide. Capture Screenshot using iFrame: Coming Soon….">
+<!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
+     is still the public site, so it keeps the canonical and this one is hidden.
+     AT LAUNCH: remove the robots meta and point canonical back here. -->
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://docs.eagle3dstreaming.com/wiki/capture-screenshot-using-sdk">
+
+<style>
+  :root{
+    --ground:#FAFBFA; --surface:#FFFFFF; --surface-2:#F1F4F3;
+    --line:#DDE3E1; --ink:#141A19; --ink-2:#4A5654; --ink-3:#737F7D;
+    --accent:#176B6B; --measure:68ch; --r:3px;
+    --accent-soft:#ECF6F5; --warn:#8A5A00; --warn-bg:#FBF3E2; --note:#1E6A8D; --note-bg:#EDF5F9; --tip:#1F6B4A; --tip-bg:#ECF6F1;
+    --warn:#8A5A00; --warn-bg:#FBF3E2;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0F1413; --surface:#161C1B; --surface-2:#1D2524;
+      --line:#2A3433; --ink:#E8EEEC; --ink-2:#A8B4B2; --ink-3:#7C8886;
+      --accent:#5FC2BC;
+      --accent-soft:#11211F; --warn:#DBA84E; --warn-bg:#231C0E; --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
+      --warn:#DBA84E; --warn-bg:#231C0E;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0F1413; --surface:#161C1B; --surface-2:#1D2524;
+    --line:#2A3433; --ink:#E8EEEC; --ink-2:#A8B4B2; --ink-3:#7C8886;
+    --accent:#5FC2BC;
+    --accent-soft:#11211F; --warn:#DBA84E; --warn-bg:#231C0E; --note:#6FB6D8; --note-bg:#12212A; --tip:#6FC79C; --tip-bg:#0F2119;
+    --warn:#DBA84E; --warn-bg:#231C0E;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:"Source Serif 4",Georgia,serif;font-size:17px;line-height:1.65;
+    -webkit-text-size-adjust:100%}
+  .wrap{max-width:820px;padding:44px 30px 100px;margin:0}
+  a{color:var(--accent)}
+
+  .crumbs{font-family:Archivo,Arial,sans-serif;font-size:13px;color:var(--ink-3);
+    margin:0 0 18px;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .crumbs a{color:var(--ink-3);text-decoration:none}
+  .crumbs a:hover{color:var(--accent)}
+  .crumbs span{opacity:.5}
+
+  h1{font-family:Archivo,Arial,sans-serif;font-weight:700;
+    font-size:clamp(28px,4.4vw,38px);line-height:1.12;letter-spacing:-.02em;
+    margin:0 0 28px;text-wrap:balance}
+  h2{font-family:Archivo,Arial,sans-serif;font-weight:600;font-size:23px;
+    line-height:1.25;margin:44px 0 12px;text-wrap:balance}
+  h3{font-family:Archivo,Arial,sans-serif;font-weight:600;font-size:19px;
+    margin:32px 0 10px}
+  h4{font-family:Archivo,Arial,sans-serif;font-weight:600;font-size:16px;
+    margin:26px 0 8px}
+  p,li{max-width:var(--measure)}
+  p{margin:0 0 16px}
+  ul,ol{padding-left:24px}
+  li{margin-bottom:7px}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  strong{font-weight:600}
+
+  /* Pictures: the box holds its shape before the image lands, so text below
+     does not jump while the page loads. */
+  figure{margin:30px 0}
+  figure img,p img{display:block;max-width:100%;height:auto;
+    border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2)}
+  figcaption{margin-top:9px;font-family:Archivo,Arial,sans-serif;font-size:14px;
+    line-height:1.45;color:var(--ink-3)}
+
+  /* Callouts carry their meaning in a coloured rail rather than a filled box,
+     so a page with several of them does not turn into a patchwork. */
+  .callout{margin:24px 0;padding:14px 18px;border-left:3px solid var(--note);
+    background:var(--note-bg);border-radius:0 var(--r) var(--r) 0}
+  .callout p:last-child{margin-bottom:0}
+  .callout.tip{border-left-color:var(--tip);background:var(--tip-bg)}
+  .callout.warning{border-left-color:var(--warn);background:var(--warn-bg)}
+
+  code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.88em;
+    background:var(--surface-2);padding:2px 5px;border-radius:3px}
+  pre{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);
+    padding:14px 16px;overflow-x:auto;margin:22px 0}
+  pre code{background:none;padding:0;font-size:13.5px;line-height:1.6}
+
+  /* A wide table scrolls inside its own box. Without this the page body
+     scrolls sideways and every line of text becomes hard to follow. */
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:24px 0;
+    border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+  table{border-collapse:collapse;width:100%;font-family:Archivo,Arial,sans-serif;
+    font-size:14.5px}
+  th{text-align:left;font-weight:600;font-size:12px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);
+    padding:11px 14px;border-bottom:1px solid var(--line)}
+  td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  td p:last-child,th p:last-child{margin-bottom:0}
+  tr:last-child td{border-bottom:none}
+
+  .children{margin:36px 0 0;padding:0;list-style:none;display:grid;gap:10px;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .children a{display:block;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--r);padding:14px 16px;text-decoration:none;color:var(--ink);
+    font-family:Archivo,Arial,sans-serif;font-size:15px;font-weight:500}
+  .children a:hover{border-color:var(--accent);color:var(--accent)}
+  .children-head{font-family:Archivo,Arial,sans-serif;font-weight:600;font-size:12px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+    margin:48px 0 0;padding-bottom:9px;border-bottom:1px solid var(--line)}
+
+  footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);
+    font-family:Archivo,Arial,sans-serif;font-size:13px;color:var(--ink-3)}
+  footer a{color:var(--ink-3)}
+  footer p{margin:0 0 6px}
+  footer .help strong{color:var(--ink-2);margin-right:4px}
+
+  /* ---- content components -------------------------------------------
+     The shapes every page is written into. A reader learns them once and can
+     then skim any page in the set, which is most of what "professional" means
+     in documentation - far more than typography does. Add a component here
+     rather than styling one page specially. */
+
+  /* The label above the title: where you are, in two or three words. */
+  .eyebrow{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11.5px;
+    font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 14px}
+  /* The one paragraph that says what this page gets you. Every page has one. */
+  /* Shown only on pages still carrying their ported text. The site is internal
+     while the rewrite runs, and a reviewer needs to know whether they are
+     reading finished prose or the old wiki in a new template - otherwise every
+     page reads as a claim about the standard we are holding. */
+  .ported{margin:0 0 28px;padding:11px 15px;border-left:3px solid var(--warn);
+    background:var(--warn-bg);border-radius:0 var(--r) var(--r) 0;
+    font-family:Archivo,Arial,sans-serif;font-size:14px;color:var(--ink-2)}
+  .ported strong{color:var(--warn)}
+  .standfirst{font-size:19px;line-height:1.55;color:var(--ink-2);
+    max-width:var(--measure);margin:0 0 36px}
+
+  /* What must already be true. Stated up front so nobody discovers at step 6
+     that they needed something at step 1. */
+  .prereq{margin:0 0 34px;padding:16px 20px;border:1px solid var(--line);
+    border-radius:var(--r);background:var(--surface)}
+  .prereq h2{font-family:Archivo,Arial,sans-serif;font-size:12px;font-weight:600;
+    letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);margin:0 0 10px}
+  .prereq ul{margin:0;padding-left:20px}
+  .prereq li{margin-bottom:5px}
+  .prereq li:last-child{margin-bottom:0}
+
+  /* Numbered steps. The number is drawn by CSS from the list itself, so steps
+     cannot end up mis-numbered when one is inserted or removed. */
+  ol.steps{list-style:none;counter-reset:step;padding:0;margin:32px 0}
+  ol.steps>li{counter-increment:step;position:relative;
+    padding:0 0 30px 52px;margin:0}
+  ol.steps>li::before{content:counter(step);position:absolute;left:0;top:1px;
+    width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+    background:var(--surface-2);border:1px solid var(--line);
+    font-family:"JetBrains Mono",monospace;font-size:14px;color:var(--accent)}
+  /* The rail joins the steps into one sequence instead of a stack of boxes. */
+  ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:16px;
+    top:38px;bottom:6px;width:1px;background:var(--line)}
+  ol.steps>li>h3{margin:4px 0 8px;font-size:17px}
+  ol.steps>li>p:last-child,ol.steps>li>figure:last-child{margin-bottom:0}
+
+  /* How you know it worked. A step people skip is a step they repeat. */
+  .outcome{margin:30px 0;padding:14px 18px;border-left:3px solid var(--accent);
+    background:var(--accent-soft,var(--surface-2));border-radius:0 var(--r) var(--r) 0}
+  .outcome strong{display:block;font-family:Archivo,Arial,sans-serif;font-size:12px;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .outcome p{margin:0}
+
+  /* Two or more ways to do one thing, with the recommendation stated. Readers
+     given three equal options pick none and ask support instead. */
+  .choices{display:grid;gap:14px;margin:28px 0;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .choice{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;
+    background:var(--surface)}
+  .choice.pick{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+  .choice h3{margin:0 0 6px;font-size:16px}
+  .choice .tag{display:inline-block;font-family:Archivo,Arial,sans-serif;font-size:10.5px;
+    font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:8px}
+  .choice p{margin:0;font-size:15.5px;color:var(--ink-2)}
+
+  /* Where to go next. A page that ends without one ends the reader's session. */
+  .next{margin:44px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+  .next a{font-family:Archivo,Arial,sans-serif;font-weight:600;font-size:17px;
+    text-decoration:none}
+  .next p{margin:4px 0 0;color:var(--ink-2);font-size:15.5px}
+
+  /* NAV-CSS:BEGIN - extracted by build.js and stamped into the hand-written
+     pages too, so there is exactly one copy of these rules. */
+  /* ---- the tree down the left ---------------------------------------- */
+  /* The white areas. `html` had NO background of its own, so anywhere the
+     body's background did not reach, what showed through was the browser's
+     default canvas - white, in a dark page. Painting the root as well closes
+     that gap for good, and min-height stops a short page leaving the lower part
+     of the screen unpainted. Cheap, and it removes a whole class of bug rather
+     than one instance of it. */
+  html { background: var(--ground); }
+  body { min-height: 100vh; background: var(--ground); }
+  body{display:flex;align-items:flex-start}
+  /* Stretches to the full page height; the inner element is what sticks. At
+     height:100vh the left column changed colour one screen down. */
+  #e3dsNav{flex:0 0 286px;width:286px;align-self:stretch;
+    border-right:1px solid var(--line);background:var(--surface)}
+  .e3dsNavInner{position:sticky;top:0;max-height:100vh;overflow-y:auto;
+    padding:22px 12px 60px}
+  .e3dsNavHome{display:block;font-family:Archivo,Arial,sans-serif;font-weight:700;
+    font-size:14px;margin:0 8px 16px;text-decoration:none;color:var(--ink)}
+  .e3dsNavRoot,#e3dsNav ul{list-style:none;margin:0;padding:0}
+  #e3dsNav ul ul{padding-left:13px;border-left:1px solid var(--line);margin-left:9px}
+  #e3dsNav a{display:block;padding:5px 8px;border-radius:4px;font-size:14px;
+    line-height:1.35;text-decoration:none;color:var(--ink-2);
+    font-family:Archivo,Arial,sans-serif}
+  #e3dsNav a:hover{background:var(--surface-2);color:var(--ink)}
+  /* The page being read gets a rail as well as colour - colour alone is easy
+     to lose halfway down a tree this long. */
+  #e3dsNav a.on{color:var(--accent);font-weight:600;background:var(--surface-2);
+    box-shadow:inset 2px 0 0 var(--accent)}
+  .e3dsNavSec>summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start}
+  .e3dsNavSec>summary::-webkit-details-marker{display:none}
+  .e3dsNavSec>summary::before{content:"\25B8";flex:0 0 auto;margin:7px 1px 0 0;
+    font-size:9px;color:var(--ink-3);transition:transform .12s}
+  .e3dsNavSec[open]>summary::before{transform:rotate(90deg)}
+  .e3dsNavSec>summary>a{flex:1;min-width:0}
+
+  /* A GROUP is a label, not a link - it names a section and has no page of its
+     own. Styled as a heading so a reader can tell at a glance which entries are
+     sections and which are pages, which is the whole point of grouping them. */
+  .e3dsNavGroup>summary>a,
+  .e3dsNavGroup>summary>span{flex:1;min-width:0;padding:6px 8px;
+    font-family:Archivo,Arial,sans-serif;font-size:12px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .e3dsNavGroup>summary:hover>span{color:var(--ink-2)}
+  .e3dsNavGroup>summary>a:hover{color:var(--ink);background:none}
+  .e3dsNavGroup>summary>a.on{color:var(--accent);background:none;box-shadow:none}
+  .e3dsNavGroup{margin-bottom:6px}
+  /* Its children carry no rail: the group already provides the indent. */
+  .e3dsNavGroup>ul{padding-left:10px;border-left:none;margin-left:8px}
+
+  #e3dsNavToggle{display:none}
+  /* Narrower than this the tree would take most of the screen, so it becomes a
+     drawer instead of a column. */
+  @media (max-width:760px){
+    body{display:block}
+    .wrap{max-width:none;padding:30px 20px 90px}
+    #e3dsNav{position:fixed;left:0;top:0;height:100vh;z-index:9998;
+      transform:translateX(-100%);transition:transform .18s;
+      box-shadow:2px 0 18px rgba(0,0,0,.35)}
+    body.e3dsNavOpen #e3dsNav{transform:none}
+    #e3dsNavToggle{display:block;position:fixed;left:12px;bottom:12px;z-index:9999;
+      padding:10px 15px;border-radius:8px;border:1px solid var(--line);
+      background:var(--surface);color:var(--ink);
+      font:15px Archivo,Arial,sans-serif;cursor:pointer}
+  }
+  /* NAV-CSS:END */
+</style>
+
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/summary">Summary</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen button</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/create-a-config-for-each-streaming-link">Create Config</a></li><li><a href="/wiki/delete-your-selected-config">Delete Selected Config</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/edit-your-config">Edit Config</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/edit-the-advanced-options-features-of-your-config">Advanced Options</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/developer">Developer</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/append-parameters-to-a-url">Append Parameters to URL</a></summary><ul><li><a href="/wiki/use-the-appending-system-for-authentication">Use the Appending system for Authentication</a></li></ul></details></li><li><a href="/wiki/auto-download-ue-crash-log">Auto Download UE Crash Log</a></li><li><a href="/wiki/console-command-to-pass-to-unreal-app">Console Commands To Pass To Unreal App</a></li><li><a href="/wiki/email-to-send-log-to-upon-crash">Email to Send Log to Upon App Crash</a></li><li><a href="/wiki/pass-parameters-to-your-app-from-the-new-control-p">Parameters to pass to App (New Control Panel)</a></li><li><a href="/wiki/predefined-streaming-quality">Predefined Streaming Quality</a></li><li><a href="/wiki/print-ue-log-in-browser-console">Print UE Log in Browser Console</a></li><li><a href="/wiki/select-region">Select Region</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/loading-screen">Loading Screen</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/2d-image-asset">2D image Assets</a></summary><ul><li><a href="/wiki/loading-background">Loading Background</a></li><li><a href="/wiki/loading-image">Loading image</a></li><li><a href="/wiki/logo">Logo</a></li><li><a href="/wiki/play-button">Play Button</a></li><li><a href="/wiki/queue-background">Queue Background</a></li><li><a href="/wiki/title-bar-icon">Title Bar icon</a></li></ul></details></li><li><a href="/wiki/2d-video-asset">3D Video Assets</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-ui">UI</a></summary><ul><li><a href="/wiki/autoplay">AutoPlay</a></li><li><a href="/wiki/draggable-settings-button">Draggable Settings Button</a></li><li><a href="/wiki/browser-microphone">Enable Browser Microphone</a></li><li><a href="/wiki/enable-voip">Enable VOIP</a></li><li><a href="/wiki/fake-mouse-with-touches">Fake Mouse With Touch</a></li><li><a href="/wiki/quality-control-menu">Quality Control Menu</a></li><li><a href="/wiki/runtime-notifications">Runtime Notifications</a></li><li><a href="/wiki/screenshot">Screenshot</a></li><li><a href="/wiki/settings-control-bar">Settings Control Bar</a></li><li><a href="/wiki/share-streaming-session-with-guests">Share Streaming Session with Guests</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/edit-the-common-config-features">Common</a></summary><ul><li><a href="/wiki/anonymize-your-app-url">Anonymize URL</a></li><li><a href="/wiki/set-a-browser-resolution-from-the-new-control-pane">Browser Resolution</a></li><li><a href="/wiki/link-expiration">Link Expiration</a></li><li><a href="/wiki/logout-automatically-after-inactivity">Logout automatically after Inactivity</a></li><li><a href="/wiki/max-session-time">Max Session Time</a></li><li><a href="/wiki/password-protect-your-stream">Password Protect Stream</a></li><li><a href="/wiki/select-your-mouse-control-scheme">Select Mouse Control Scheme</a></li><li><a href="/wiki/show-your-browser-mouse">Show the Browser Mouse</a></li></ul></details></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/track-your-streaming-usage-from-analytics">Analytics</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/generate-a-streaming-link-for-your-app">Create a New Stream Link</a></summary><ul><li><a href="/wiki/copy-a-streaming-iframe-script">Copy Streaming IFrame</a></li><li><a href="/wiki/copy-your-streaming-url">Copy Streaming URL</a></li><li><a href="/wiki/delete-a-version-of-your-app-new-control-panel">Delete App Version</a></li><li><a href="/wiki/delete-a-streaming-link">Delete Streaming Link</a></li><li><a href="/wiki/play-your-app">Play App</a></li><li><a href="/wiki/select-a-version-of-your-app-to-run-it">Select App Version</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/customize-ui-elements-and-embed-the-app-with-websi">Customization UI Elements and Embed Streaming within User Website</a></summary><ul><li><a href="/wiki/customize-ui-elements-and-embed-the-app-with-user-">Customize UI Elements and Embed Streaming within Your Website</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/customize-ui-elements-using-e3ds-control-panel">Customize UI Elements using E3DS Control Panel</a></summary><ul><li><a href="/wiki/accessing-the-customization-section">Accessing the Customization Section</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/customize-ui-elements">Customize UI Elements</a></summary><ul><li><a href="/wiki/customize-loading-background">Customize Loading Background</a></li><li><a href="/wiki/customize-loading-image">Customize Loading Image</a></li><li><a href="/wiki/customize-logo">Customize Logo</a></li><li><a href="/wiki/customize-play-button">Customize Play Button</a></li><li><a href="/wiki/customize-queue-background">Customize Queue Background</a></li><li><a href="/wiki/customize-title-bar-icon">Customize Title Bar Icon</a></li></ul></details></li><li><a href="/wiki/summary-of-customize-ui-elements">Summary of Customize UI Elements</a></li><li><a href="/wiki/upload-2d-assets-from-the-control-panel">Upload 2D Assets from the Control Panel</a></li></ul></details></li></ul></details></li><li><a href="/wiki/delete-your-app-optional">Delete App</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/developer-section">Developer Section</a></summary><ul><li><a href="/wiki/api-key">API Key</a></li><li><a href="/wiki/streaming-api-key">Streaming API Key</a></li><li><a href="/wiki/token-generation">Token Generation</a></li><li><a href="/wiki/version-control">Version Control</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/manage-your-account">Manage Account</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/manage-your-profile">My Profile</a></summary><ul><li><a href="/wiki/change-email-address">Change Email Address</a></li><li><a href="/wiki/change-password">Change Password</a></li><li><a href="/wiki/delete-account">Delete Account</a></li><li><a href="/wiki/update-profile-logo">Update Profile Logo</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/manage-your-subscriptions">Subscriptions</a></summary><ul><li><a href="/wiki/edit-payment-information">Edit Payment Information</a></li><li><a href="/wiki/purchase-more-storage">Edit Storage</a></li><li><a href="/wiki/minutes-streamed-limit">Minutes Streamed Limit (PPM plan)</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/your-subscription">Your Subscription</a></summary><ul><li><a href="/wiki/cancel-your-subscription-if-needed">Cancel Plan</a></li></ul></details></li></ul></details></li><li><a href="/wiki/manage-your-transactions">Transactions</a></li></ul></details></li><li><a href="/wiki/notification">Manage Notifications</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/meeting-links">Meeting Links</a></summary><ul><li><a href="/wiki/generate-a-meeting-link-for-your-app">Create New Meeting Link and Join as Host and Guest</a></li></ul></details></li><li><a href="/wiki/phases-after-accessing-the-streaming-url">Phases After Accessing the Streaming URL</a></li><li><a href="/wiki/phases-in-the-upload-sequence">Phases in the Upload Sequence</a></li><li><a href="/wiki/pixel-streaming-plugin-2-compatibility">Pixel Streaming Plugin 2 Compatibility</a></li><li><a href="/wiki/stream-app-using-mobile-browser">Stream App using Mobile Browser</a></li><li><a href="/wiki/streaming-app-monitor">Streaming App Monitor</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/team-1">Team</a></summary><ul><li><a href="/wiki/access-the-team-s-control-panel">Access the Team's Control Panel</a></li><li><a href="/wiki/decline-team-invitation">Decline Team Invitation</a></li><li><a href="/wiki/invite-member">Invite Member</a></li><li><a href="/wiki/remove-team-member">Remove Team Member</a></li></ul></details></li><li><a href="/wiki/upload-another-version-of-your-app">Update App</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upgrade-to-a-paid-plan-from-your-control-panel">Upgrading to a Paid Plan</a></summary><ul><li><a href="/wiki/core-plan-usage-billing">Core Plan: Usage &amp; Billing</a></li><li><a href="/wiki/selecting-core-plan">Selecting Core Plan</a></li><li><a href="/wiki/get-an-enterprise-plan">Selecting Enterprise</a></li><li><a href="/wiki/trial-plan-usage">Trial Plan: Usage</a></li><li><a href="/wiki/upgrading-your-plan">Upgrading Your Plan</a></li></ul></details></li><li><a href="/wiki/version-rollback-version-management">Version Rollback</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><details class="e3dsNavSec" open><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed Stream using E3DS SDK</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/communication-in-sdk">Communication in SDK</a></summary><ul><li><a href="/wiki/receive-data-in-unreal-app-from-webpage">Receive Data in Unreal App from Webpage</a></li><li><a href="/wiki/receive-data-in-webpage-from-unreal-app">Receive Data in Webpage from Unreal App</a></li><li><a href="/wiki/send-data-from-unreal-app-to-webpage">Send Data from Unreal App to Webpage</a></li><li><a href="/wiki/send-data-from-webpage-to-unreal-app">Send Data from Webpage to Unreal App</a></li></ul></details></li><li><a href="/wiki/login-integration-with-e3ds-sdk">Login Integration with E3DS SDK</a></li><li><a href="/wiki/transition-from-old-sdk-to-new-sdk">Migrating from Legacy SDK</a></li><li><a href="/wiki/sdk-integration-guide">SDK Integration Guide</a></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/stream-controls-using-sdk">Stream Controls Using SDK</a></summary><ul><li><a href="/wiki/advanced-features-sdk-behavior">Advanced Features &amp; SDK Behavior</a></li><li><a href="/wiki/capture-screenshot-using-sdk" class="on" aria-current="page">Capture Screenshot Using SDK</a></li><li><a href="/wiki/control-video-quality-using-sdk">Control Video Quality Using SDK</a></li><li><a href="/wiki/runtime-events-utility-functions">Runtime Events &amp; Utility Functions</a></li><li><a href="/wiki/toggle-between-hover-and-locked-mouse-using-sdk">Toggle Between Hover and Locked Mouse Using SDK</a></li><li><a href="/wiki/toggle-fullscreen-using-sdk">Toggle Fullscreen Using SDK</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/ui-ux-customization-using-sdk">UI &amp; UX Customization Using SDK</a></summary><ul><li><a href="/wiki/set-up-custom-loading-screen">Set Up Custom Loading Screen</a></li><li><a href="/wiki/set-up-custom-session-expired-screen">Set Up Custom Session Expired Screen</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-iframe">Embed Stream Using iFrame</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/communication">Communication in Iframe</a></summary><ul><li><a href="/wiki/receive-data-in-unreal-app-receiver-from-webpage-s">Receive Data in Unreal App (receiver) from Webpage (sender)</a></li><li><a href="/wiki/receive-data-in-webpage-receiver-from-unreal-app-s">Receive Data in Webpage (receiver) from Unreal App (sender)</a></li><li><a href="/wiki/send-data-from-unreal-app-sender-to-webpage-receiv">Send Data from Unreal App (sender) to Webpage (receiver)</a></li><li><a href="/wiki/send-data-from-webpage-sender-to-unreal-app-receiv">Send Data from Webpage (sender) to Unreal App (receiver)</a></li></ul></details></li><li><a href="/wiki/embed-e3ds-app-with-your-html-webpage">Embed Streaming within HTML Webpage</a></li><li><a href="/wiki/embed-streaming-within-react-webpage-using-iframe">Embed Streaming within React Webpage</a></li><li><a href="/wiki/iframe-stages">Iframe Lifecycle Stages</a></li><li><a href="/wiki/login-integration-in-iframe">Login Integration in iFrame</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/stream-controls-using-iframe">Stream Controls Using iFrame</a></summary><ul><li><a href="/wiki/send-keyboard-input-to-a-ue-app-from-iframe">Send Keyboard Input to a UE App from iFrame</a></li><li><a href="/wiki/set-stream-quality-in-iframe">Set Stream Quality in iFrame</a></li><li><a href="/wiki/set-the-resolution-in-iframe">Set the Resolution in Iframe</a></li><li><a href="/wiki/switch-between-hover-and-locked-mouse-in-iframe">Switch Between Hover and Locked Mouse in iFrame</a></li><li><a href="/wiki/toggle-fullscreen-in-iframe">Toggle Fullscreen in iFrame</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/ui-ux-customization-using-iframe">UI &amp; UX Customization Using iFrame</a></summary><ul><li><a href="/wiki/custom-session-expired-screen">Custom Session Expired Screen</a></li><li><a href="/wiki/handling-app-crash-message-in-iframe">Handling App Crash Message in iFrame</a></li></ul></details></li></ul></details></li><li><a href="/wiki/hosting-your-website">Hosting Your Website</a></li><li><a href="/wiki/whitelisting">Whitelisting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API Reference</a></summary><ul><li><a href="/wiki/use-the-eagle-pixel-streaming-analytics-api">Eagle Pixel Streaming Analytics API</a></li><li><a href="/wiki/service-health-check-api">Service Health Check API</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/app-upload-automation">App Upload Automation</a></summary><ul><li><a href="/wiki/upload-unreal-app-using-e3ds-automation-kit">Upload Unreal App Using E3DS Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/e3ds-pixel-streaming-features-plugin-documentation">Communication</a></summary><ul><li><a href="/wiki/capture-and-download-a-screenshot">Capture and Download a Screenshot</a></li><li><a href="/wiki/blueprint-debugging">Debugging and Testing Pixel Streaming Code</a></li><li><a href="/wiki/detecting-user-s-device-in-pixel-streaming">Detecting User's Device in pixel streaming</a></li><li><a href="/wiki/download-a-file-from-the-server">Download a File from the Server</a></li><li><a href="/wiki/end-a-client-s-session">End a Client's Session</a></li><li><a href="/wiki/end-the-streaming-session">End the Streaming Session</a></li><li><a href="/wiki/open-url">Open a URL in a New Browser Tab</a></li><li><a href="/wiki/redirect-to-a-new-url">Redirect to a New URL</a></li><li><a href="/wiki/switch-between-hovering-and-locked-mouse-schemes">Switch Between Hovering and Locked Mouse Schemes</a></li><li><a href="/wiki/toggle-fullscreen">Toggle Fullscreen</a></li><li><a href="/wiki/transferring-file-from-user-s-device-to-pixel-stre">Transferring file from user's device to Pixel-Streamed Unreal Applications</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos and Tutorials</a></summary><ul><li><a href="/wiki/change-maps-in-an-unreal-app-from-an-iframe">Change Maps in an Unreal App from an Iframe</a></li><li><a href="/wiki/react-iframe-demo">React iFrame demo</a></li></ul></details></li><li><a href="/wiki/integration-of-mic-in-a-project-using-convai">Integration of Mic in a project using Convai</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patch-creation-testing-guide-for-unreal-engine-app">Patch Creation &amp; Testing Guide for Unreal Engine Applications</a></summary><ul><li><a href="/wiki/creating-custom-launch-profiles-in-project-launche">Creating Custom Launch Profiles in Project Launcher</a></li><li><a href="/wiki/modify-project-and-create-your-own-patch-file">Modify Project and Create Your Own Patch File</a></li><li><a href="/wiki/upload-demo-app-and-apply-pre-made-patch">Upload Demo App and Apply Pre-Made Patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Performance &amp; Optimization</a></summary><ul><li><a href="/wiki/game-controller-support">Game Controller Support</a></li><li><a href="/wiki/integrating-nvidia-dlss-into-unreal-engine-project">Integrating NVIDIA DLSS into Unreal Engine</a></li><li><a href="/wiki/mouse-handling-in-unreal-pixel-streaming">Mouse Handling in Unreal Pixel Streaming</a></li><li><a href="/wiki/on-screen-keyboard">On-Screen Keyboard</a></li><li><a href="/wiki/streaming-failure-due-to-browser-mic-permission">Streaming Failure Due to Browser Mic Permission</a></li><li><a href="/wiki/why-pixel-streaming-starts-muted">Why Pixel Streaming Starts Muted</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/e3ds-automation-tools-plugin">E3DS Automation Tools Plugin</a></li><li><a href="/wiki/download-and-install-the-e3ds-features-plugin">E3DS Features Plugin</a></li><li><a href="/wiki/multiplayer-server-scaling-system-plugin">Multiplayer Server Scaling System Plugin</a></li><li><a href="/wiki/remote-control-unreal-editor-plugin">Remote Control Unreal Editor Plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/testing-app-locally-with-epic-s-signaling-server">Testing App Locally with Epic's Signaling Server</a></summary><ul><li><a href="/wiki/test-your-application-remotely-same-network">Test Your Application Remotely (Same Network)</a></li><li><a href="/wiki/testing-app-from-computer-browser">Testing App from Computer Browser</a></li><li><a href="/wiki/testing-dedicated-server-locally">Testing Dedicated Server Locally</a></li><li><a href="/wiki/testing-linux-app-locally-using-epics-signaling-se">Testing Linux App Locally Using Epic’s Signaling Server</a></li><li><a href="/wiki/testing-unreal-vr-app-using-epics-signaling-server">Testing Unreal VR App Using Epic’s Signaling Server with a VR Headset</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/automatic-server-join-multiplayer-server-scaling-p">Automatic Server Join (Multiplayer Server Scaling Plugin)</a></summary><ul><li><a href="/wiki/configure-e3ds-multiplayer-class">Configure E3DS Multiplayer Class</a></li><li><a href="/wiki/enable-necessary-plugin">Enable Necessary Plugin</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/packaging-the-multiplayer-project">Packaging the Multiplayer Project</a></summary><ul><li><a href="/wiki/packaging-the-game-build">Packaging the Game Build</a></li><li><a href="/wiki/packaging-the-server-build">Packaging the Server Build</a></li></ul></details></li><li><a href="/wiki/start-sever-automatically-and-play-the-game">Start Server Automatically and Play the Game</a></li><li><a href="/wiki/summary-of-automatically-joining-the-server">Summary of Upload the Multiplayer Project and Join the Server Automatically</a></li><li><a href="/wiki/uploading-the-game-build">Uploading the Game Build</a></li><li><a href="/wiki/uploading-the-server-build">Uploading the Server Build</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/create-a-multiplayer-desktop-game-application">Create a Multiplayer Desktop Game Application</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/add-multiplayer-functionality-in-single-player-gam">Add Multiplayer Functionality in Single Player Game</a></summary><ul><li><a href="/wiki/add-a-server-module-in-the-project">Add a Server Module in the Project</a></li><li><a href="/wiki/convert-the-project-into-a-c-project">Convert the Project into a C++ Project</a></li></ul></details></li><li><a href="/wiki/make-a-single-player-game">Make a Single Player Game</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/packaging-multiplayer-project">Packaging Multiplayer Project</a></summary><ul><li><a href="/wiki/packaging-game-build">Packaging Game Build</a></li><li><a href="/wiki/packaging-server-build">Packaging Server Build</a></li></ul></details></li><li><a href="/wiki/running-the-multiplayer-game-app-in-your-pc">Running the Multiplayer Game App in Your PC</a></li><li><a href="/wiki/summary-of-create-a-multiplayer-desktop-game-appli">Summary of Create a Multiplayer Desktop Game Application</a></li><li><a href="/wiki/uploading-the-server">Uploading the Server</a></li></ul></details></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse Pixel Streaming</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-and-play-join-server-manually">Upload and Play (Join Server Manually)</a></summary><ul><li><a href="/wiki/enable-pixel-streaming-plugin">Enable Pixel Streaming Plugin</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/package-the-multiplayer-project">Package the Multiplayer Project</a></summary><ul><li><a href="/wiki/package-the-game-build">Package the Game Build</a></li><li><a href="/wiki/package-the-server-build">Package the Server Build</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/play-the-multiplayer-game">Play the Multiplayer Game</a></summary><ul><li><a href="/wiki/play-the-game">Play the Game</a></li><li><a href="/wiki/start-the-server">Start the Server</a></li></ul></details></li><li><a href="/wiki/summary-of-upload-the-multiplayer-project-and-join">Summary of Upload the Multiplayer Project and Join a server Manually</a></li><li><a href="/wiki/upload-the-game">Upload the Game</a></li><li><a href="/wiki/upload-the-server">Upload the Server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/upload-from-ue-editor-e3ds-automation-tools-plugin">Upload from UE Editor (E3DS Automation Tools Plugin)</a></summary><ul><li><a href="/wiki/configure-the-project-settings">Configure the Project Settings</a></li><li><a href="/wiki/enable-e3ds-automation-tools-plugin">Enable E3DS Automation Tools Plugin</a></li><li><a href="/wiki/package-and-upload-the-project">Package and Upload the Project</a></li><li><a href="/wiki/playing-the-multiplayer-game">Playing the Multiplayer Game</a></li><li><a href="/wiki/summary-of-automatically-upload-the-multiplayer-pr">Summary of Upload the Multiplayer Project from Unreal Editor Using E3DS Automation Tools Plugin</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/create-a-vr-project-and-set-it-up-for-uploading">Create a VR Project and Set It Up for Uploading</a></li><li><a href="/wiki/fixing-ground-stuck-issue-in-vr">Fixing Ground Stuck Issue in VR</a></li><li><a href="/wiki/summary-of-virtual-reality-streaming">Summary of Virtual Reality Streaming</a></li><li><a href="/wiki/upload-and-stream-your-vr-app">Upload and Stream Your VR App</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/create-a-config-for-linux-build-streaming">Create a Config for Linux Build Streaming</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/create-a-linux-build">Create a Linux Build</a></summary><ul><li><a href="/wiki/create-package-a-linux-build">Create &amp; Package a Linux Build</a></li><li><a href="/wiki/setup-the-linux-cross-compile-toolchain">Setup the Linux Cross-Compile Toolchain</a></li></ul></details></li><li><a href="/wiki/current-limitations-and-solutions">Current Limitations and Solutions</a></li><li><a href="/wiki/streaming-the-app">Streaming the App</a></li><li><a href="/wiki/summary-of-pixel-streaming-for-linux-build">Summary of Pixel Streaming for Linux Build</a></li><li><a href="/wiki/upload-a-linux-build">Upload a Linux Build</a></li><li><a href="/wiki/why-load-time-is-high">Why Load Time is High</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vm-hardware-specifications">Cloud VM Hardware Specifications</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/e3ds-streaming-agent-setup-configuration">E3DS Streaming Agent Setup &amp; Configuration</a></summary><ul><li><a href="/wiki/preallocated-app">Preallocated App</a></li><li><a href="/wiki/install-the-binary-el-on-your-own-hardware">Setting Up E3DS Streaming Agent</a></li><li><a href="/wiki/starting-the-el-automatically-upon-every-windows-s">Starting EL automatically upon every Windows startup</a></li><li><a href="/wiki/update-app-without-uploading-a-new-build">Update App Without Uploading a New Build</a></li></ul></details></li><li><a href="/wiki/eagle-3d-s-guidelines-on-the-firewall-restrictions">Firewall restrictions</a></li><li><a href="/wiki/hardware-and-software-specifications">Hardware and Software Specifications</a></li><li><a href="/wiki/multiplayer-server-app-hosting-hardware">Multiplayer Server App Hosting Hardware</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-specifications">Performance recommendations</a></summary><ul><li><a href="/wiki/tips-for-performance-and-mobile">Optimizing App Performance</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/datacenter-routing">Datacenter Routing</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/the-dedicated-and-shared-game-views-and-controls">Dedicated and Shared Game Views and Controls</a></summary><ul><li><a href="/wiki/how-users-get-a-dedicated-game-views-and-controls">Dedicated Game Views and Controls</a></li><li><a href="/wiki/how-guests-share-game-views-and-controls-during-th">Shared Game Views and Controls</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/the-load-time-in-eagle-3d-streaming">Load time</a></summary><ul><li><a href="/wiki/determine-the-load-time-of-your-application">Determining Load time</a></li><li><a href="/wiki/the-concept-of-load-time-in-eagle-3d-streaming">Loading screen concepts</a></li><li><a href="/wiki/eagle-3d-s-guidelines-for-a-minimized-load-time">Minimizing the Load time</a></li></ul></details></li><li><a href="/wiki/understanding-ccu">Understanding CCU</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/unreal-engine-faqs">Unreal Engine Guides</a></summary><ul><li><a href="/wiki/eagle-3d-on-anti-aliasing">Anti-Aliasing</a></li><li><a href="/wiki/enable-logs-in-a-shipping-build">Enabling Logs in Shipping Builds</a></li><li><a href="/wiki/how-to-package-extra-nonuasset-videos-texts-files-">Packaging Extra Non UASSET Files</a></li><li><a href="/wiki/passing-and-parsing-command-line-parameters-in-unr">Passing and Parsing Command Line Parameters in Unreal with Eagle 3D Streaming</a></li><li><a href="/wiki/ready-player-me-in-eagle3d-streaming">Ready Player Me in Eagle3D Streaming</a></li><li><a href="/wiki/difference-in-relative-path-and-absolute-path-in-u">Relative Path vs Absolute Path</a></li><li><a href="/wiki/selecting-build-configuration">Selecting Build Configuration</a></li><li><a href="/wiki/show-mouse-cursor-in-unreal-engine">Showing Mouse Cursor in Unreal Engine</a></li><li><a href="/wiki/difference-between-varest-and-pixel-streaming-inpu">VaRest vs Pixel Streaming Input</a></li></ul></details></li><li><a href="/wiki/upload-speed-overview-by-region">Upload Speed Overview by Region</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-label="Show the contents" onclick="document.body.classList.toggle('e3dsNavOpen')">Contents</button>
+
+<div class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span>/</span><a href="/wiki/embed-stream-into-webpage">Embed Stream into Webpage</a><span>/</span><a href="/wiki/embed-stream-using-e3ds-sdk">Embed Stream using E3DS SDK</a><span>/</span><a href="/wiki/stream-controls-using-sdk">Stream Controls Using SDK</a></nav>
+  <p class="ported"><strong>Not yet rewritten.</strong> This page is the original wiki text in the new template. It is accurate but has not been through the rewrite.</p>
+  <h1>Capture Screenshot Using SDK</h1>
+  <p>This guide explains how to capture a screenshot from your Pixel Streaming session using the Eagle 3D Streaming SDK.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>There are three ways to Capture Screenshot:</p>
+<ul>
+<li>
+<p><strong>Inside the Unreal App (Blueprint)</strong>: Refers to <a href="/wiki/capture-and-download-a-screenshot"><u><strong>Capture Screenshot Using SDK</strong></u></a> guide.</p>
+</li>
+<li>
+<p><strong>Capture Screenshot using iFrame: </strong>Coming Soon….</p>
+</li>
+<li>
+<p><strong>Capture Screenshot Using SDK: </strong>Covered in this guide.</p>
+</li>
+</ul>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Live Streaming URL:</strong></p>
+<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank"><u><strong>https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</strong></u></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo Project GitHub Repository:</strong></p>
+<p><a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank"><u><strong>https://github.com/e3ds/pixelstreaming-sdk</strong></u></a></p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Add-the-Screenshot-Function" style=""><span id="CaptureScreenshotUsingSDK-Step1.AddtheScreenshotFunction"></span>Step 1. Add the Screenshot Function
+ </h2>
+<p>Add the following function inside your <code>scripts_demo.js</code> file:</p>
+<pre><code class="language-javascript">function captureStreamScreenshot() {
+    console.log("Capturing screenshot");
+    e3ds_controller.captureScreenShot();
+}
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Capture Screenshot Function" decoding="async" loading="lazy" src="/images/image-20260608-151125-c9eb65.png"/>
+
+<figcaption>Figure 1. Capture Screenshot Function</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Explanation</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Code</p>
+</th>
+<th>
+<p>Meaning</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>function captureStreamScreenshot()</code></p>
+</td>
+<td>
+<p>Creates a function to capture a screenshot from the stream.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>console.log("Capturing screenshot");</code></p>
+</td>
+<td>
+<p>Prints a message in the browser console for testing.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>e3ds_controller.captureScreenShot();</code></p>
+</td>
+<td>
+<p>Calls the SDK function to capture the screenshot from the Pixel Streaming session.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Step-2.-Add-a-Screenshot-Button-in-the-HTML-Page" style=""><span id="CaptureScreenshotUsingSDK-Step2.AddaScreenshotButtonintheHTMLPage"></span>Step 2. Add a Screenshot Button in the HTML Page
+ </h2>
+<p>Add the following button in your HTML page:</p>
+<pre><code class="language-html">&lt;button onclick="captureStreamScreenshot()"&gt;Capture Screenshot&lt;/button&gt;
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Capture Screenshot Button" decoding="async" loading="lazy" src="/images/image-20260608-151223-975c4f.png"/>
+
+<figcaption>Figure 2. Capture Screenshot Button</figcaption>
+</figure>
+
+</div>
+
+<p><strong>Explanation</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Code</p>
+</th>
+<th>
+<p>Meaning</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>&lt;button&gt;</code></p>
+</td>
+<td>
+<p>Creates a clickable button on the webpage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>onclick="captureStreamScreenshot()"</code></p>
+</td>
+<td>
+<p>Calls the screenshot function when the button is clicked.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>Capture Screenshot</code></p>
+</td>
+<td>
+<p>Text shown on the button.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Step-3.-Test-the-Screenshot-Button" style=""><span id="CaptureScreenshotUsingSDK-Step3.TesttheScreenshotButton"></span>Step 3. Test the Screenshot Button
+ </h2>
+<p>After adding the function and button:</p>
+<ol>
+<li>
+<p>Run your SDK webpage.</p>
+</li>
+<li>
+<p>Wait until the stream is fully connected.</p>
+</li>
+<li>
+<p>Click the <strong>Capture Screenshot</strong> button.</p>
+</li>
+<li>
+<p>The SDK will capture a screenshot from the current stream view.</p>
+</li>
+</ol>
+<p>You can also open the browser console and check the log:</p>
+<pre><code>Capturing screenshot
+</code></pre>
+<p>This confirms that the screenshot function is being triggered from the frontend.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Live Streaming URL:</strong></p>
+<p><a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html" rel="noreferrer" target="_blank"><u><strong>https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html</strong></u></a></p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Testing the capture screenshot button" decoding="async" loading="lazy" src="/images/image-20260608-151352-c9b38a.png"/>
+
+<figcaption>Figure 3. Testing the capture screenshot button</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Important" style=""><span id="CaptureScreenshotUsingSDK-Important"></span>Important
+ </h2>
+<p>The screenshot should be captured only after the stream is fully connected.</p>
+<p>If the stream is not loaded yet, the screenshot may not capture properly.</p>
+<p>Make sure the user clicks the button after the video stream is visible.</p>
+
+<h2 id="Troubleshooting" style=""><span id="CaptureScreenshotUsingSDK-Troubleshooting"></span>Troubleshooting
+ </h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Issue</p>
+</th>
+<th>
+<p>Possible Cause</p>
+</th>
+<th>
+<p>Solution</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Screenshot button does nothing</p>
+</td>
+<td>
+<p>Function name mismatch</p>
+</td>
+<td>
+<p>Make sure the button calls the correct function name: <code>captureStreamScreenshot()</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>captureStreamScreenshot is not defined</code></p>
+</td>
+<td>
+<p>Function is not added or not loaded properly</p>
+</td>
+<td>
+<p>Add the function in <code>scripts_demo.js</code> and make sure the file is linked correctly</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>e3ds_controller is not defined</code></p>
+</td>
+<td>
+<p>SDK is not loaded yet</p>
+</td>
+<td>
+<p>Make sure the SDK is loaded before calling <code>e3ds_controller.captureScreenShot()</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Screenshot is blank or not correct</p>
+</td>
+<td>
+<p>Stream is not fully loaded</p>
+</td>
+<td>
+<p>Wait until the stream is fully connected and visible before capturing</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Screenshot does not download/show</p>
+</td>
+<td>
+<p>Browser or SDK behavior may depend on implementation</p>
+</td>
+<td>
+<p>Check browser console for errors and test again after stream is connected</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+  
+  <!-- Every source page carried its own copy of this. Once, here, instead:
+       sixteen copies is sixteen places to update a support link. -->
+  <footer>
+    <p class="help">
+      <strong>Need help?</strong>
+      <a href="https://support.eagle3dstreaming.com/" rel="noreferrer" target="_blank">Support portal</a> &middot;
+      <a href="https://discord.com/invite/yvkZewuXKG" rel="noreferrer" target="_blank">Discord</a> &middot;
+      <a href="mailto:support@eagle3dstreaming.com">support@eagle3dstreaming.com</a>
+    </p>
+    <p>Eagle 3D Streaming</p>
+  </footer>
+</div>

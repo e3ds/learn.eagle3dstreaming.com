@@ -1,0 +1,310 @@
+<p>In this document, we will guide you through preparing the <strong>Convai</strong> Unreal Engine project for Pixel Streaming, enabling microphone input for streaming sessions.</p>
+
+<h2 id="Demo-Project" style=""><span id="IntegrationofMicinaprojectusingConvai-DemoProject"></span>Demo Project
+ </h2>
+<p>You can download the demo project here: <a href="https://drive.google.com/file/d/1y1s6XkphAIcEPPBSfVQ-UAz0WHwgrI20/view" rel="noreferrer" target="_blank"><strong>Download Demo Project</strong></a></p>
+
+<h2 id="Video-Preview" style=""><span id="IntegrationofMicinaprojectusingConvai-VideoPreview"></span>Video Preview
+ </h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/pyHYiOCCXT8" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo URL:</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/e3ds_mic_demo/mic" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/e3ds_mic_demo/mic</strong></a></p>
+</aside>
+</div>
+
+<p>Follow the guidelines below:</p>
+<h2 id="Part-1.-Configure-the-Character-Blueprint" style=""><span id="IntegrationofMicinaprojectusingConvai-Part1.ConfiguretheCharacterBlueprint"></span>Part 1. Configure the Character Blueprint
+ </h2>
+
+<h4 id="1.-Open-the-Project" style=""><span id="IntegrationofMicinaprojectusingConvai-1.OpentheProject"></span><strong>1. Open the Project</strong>
+</h4>
+<ul>
+<li>
+<p>Launch the Convai project in <strong>Unreal Engine</strong>.</p>
+</li>
+<li>
+<p>Navigate to your character’s blueprint (e.g., <code>BP_Character</code>).</p>
+</li>
+</ul>
+<h4 id="2.-Add-Pixel-Streaming-Audio-Component" style=""><span id="IntegrationofMicinaprojectusingConvai-2.AddPixelStreamingAudioComponent"></span><strong>2. Add Pixel Streaming Audio Component</strong>
+</h4>
+<ul>
+<li>
+<p>Add the <strong>PixelStreamingAudio</strong> component to your character blueprint.</p>
+</li>
+</ul>
+<h4 id="3.-Add-Audio-Streaming-Nodes" style=""><span id="IntegrationofMicinaprojectusingConvai-3.AddAudioStreamingNodes"></span><strong>3. Add Audio Streaming Nodes</strong>
+</h4>
+<ul>
+<li>
+<p>In the <strong>Event Graph</strong>, add and connect the required nodes to handle audio streaming.
+   <br/></p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Add the following Nodes" decoding="async" loading="lazy" src="/images/image-20250826-151423-44a18b.png"/>
+
+<figcaption>Figure 1. Add the following Nodes</figcaption>
+</figure>
+
+</div>
+
+<h4 id="4.-Configure-Component-Settings" style=""><span id="IntegrationofMicinaprojectusingConvai-4.ConfigureComponentSettings"></span><strong>4. Configure Component Settings</strong>
+</h4>
+<ul>
+<li>
+<p>In the <strong>PixelStreamingAudio</strong> component settings, <strong>disable</strong> the option: <code>Use Pixel Streaming Mic Input</code>.
+   <br/></p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Disable Use Pixel Streaming Mic Input" decoding="async" loading="lazy" src="/images/image-20250828-072429-15e811.png"/>
+
+<figcaption>Figure 2. Disable Use Pixel Streaming Mic Input</figcaption>
+</figure>
+
+</div>
+<h4 id="[hardBreak]5.-Add-Audio-Input" style=""><span id="IntegrationofMicinaprojectusingConvai-5.AddAudioInput"></span>
+<br/>
+<strong>5. Add Audio Input</strong>
+</h4>
+<ul>
+<li>
+<p>Under the <strong>PixelStreamingAudio</strong> component, add an <strong>AudioInput</strong> node.</p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Add AudioInput Under PixelStreamingAudio" decoding="async" loading="lazy" src="/images/image_2025-11-01_02-03-22-20251031-202333-eea9ee.png"/>
+
+<figcaption>Figure 3. Add AudioInput Under PixelStreamingAudio</figcaption>
+</figure>
+
+</div>
+
+<h4 id="6.-Open-Project-Settings" style=""><span id="IntegrationofMicinaprojectusingConvai-6.OpenProjectSettings"></span><strong>6. Open Project Settings</strong>
+</h4>
+<ul>
+<li>
+<p>Go to <strong>Edit → Project Settings → Convai</strong>.</p>
+</li>
+</ul>
+<h4 id="7.-Add-Your-API-Key" style=""><span id="IntegrationofMicinaprojectusingConvai-7.AddYourAPIKey"></span><strong>7. Add Your API Key</strong>
+</h4>
+<ul>
+<li>
+<p>Enter your <strong>API key</strong> obtained from your Convai account under the <a href="https://convai.com/pipeline/dashboard" rel="noreferrer" target="_blank"><em>Authentication</em> section.</a></p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Add Convai API Key" decoding="async" loading="lazy" src="/images/image-20251031-143633-3650eb.png"/>
+
+<figcaption>Figure 4. Add Convai API Key</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 5. API Key Configuration" decoding="async" loading="lazy" src="/images/image-20251031-144044-d5f657.png"/>
+
+<figcaption>Figure 5. API Key Configuration</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Part-2.-Local-Testing" style=""><span id="IntegrationofMicinaprojectusingConvai-Part2.LocalTesting"></span>Part 2. Local Testing
+ </h2>
+<h4 id="1.-Package-and-Run-Locally" style=""><span id="IntegrationofMicinaprojectusingConvai-1.PackageandRunLocally"></span><strong>1. Package and Run Locally</strong>
+</h4>
+<ul>
+<li>
+<p>Package your project and run it locally for testing.</p>
+</li>
+</ul>
+<h4 id="2.-Enable-Microphone" style=""><span id="IntegrationofMicinaprojectusingConvai-2.EnableMicrophone"></span><strong>2. Enable Microphone</strong>
+</h4>
+<ul>
+<li>
+<p>Ensure the <strong>Use Microphone</strong> option is enabled.</p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 6. Enable “Use Microphone”" decoding="async" loading="lazy" src="/images/image-20251031-161446-24e842.png"/>
+
+<figcaption>
+    Figure 6. Enable “Use Microphone”
+    <br/>
+<br/>
+</figcaption>
+</figure>
+
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 7. Testing Microphone Input" decoding="async" loading="lazy" src="/images/image-20251031-161358-dd9d17.png"/>
+
+<figcaption>Figure 7. Testing Microphone Input</figcaption>
+</figure>
+
+</div>
+
+<h4 id="3.-Verify-Audio-Input" style=""><span id="IntegrationofMicinaprojectusingConvai-3.VerifyAudioInput"></span><strong>3. Verify Audio Input</strong>
+</h4>
+<ul>
+<li>
+<p>Speak into your microphone during the session.</p>
+</li>
+<li>
+<p>The audio should be captured and transmitted through the Pixel Streaming setup.</p>
+</li>
+</ul>
+<p><strong>Expected Result:</strong>
+<br/>
+ You should be able to speak, and the system will successfully capture and stream your voice input.</p>
+
+<h2 id="Part-3:-Upload-to-Eagle-Control-Panel" style=""><span id="IntegrationofMicinaprojectusingConvai-Part3:UploadtoEagleControlPanel"></span>Part 3: Upload to Eagle Control Panel
+ </h2>
+<h4 id="1.-Upload-Project" style=""><span id="IntegrationofMicinaprojectusingConvai-1.UploadProject"></span><strong>1. Upload Project</strong>
+</h4>
+<ul>
+<li>
+<p>Open the <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer"><strong>Eagle Control Panel</strong></a>.</p>
+</li>
+<li>
+<p>Upload your packaged project, refer to our documentation:<strong> </strong><a href="https://docs.eagle3dstreaming.com/wiki/upload-and-stream-your-app-from-control-panel" rel="external noreferrer"><strong>Upload Packaged App</strong></a></p>
+</li>
+<li>
+<p>After uploading, create a new configuration for your application.</p>
+</li>
+</ul>
+<h4 id="2.-Enable-Browser-Microphone" style=""><span id="IntegrationofMicinaprojectusingConvai-2.EnableBrowserMicrophone"></span><strong>2. Enable Browser Microphone</strong>
+</h4>
+<ul>
+<li>
+<p>In your configuration settings, enable the <strong>Browser Microphone</strong> option.</p>
+</li>
+<li>
+<p>For detailed instructions, refer to our documentation:
+   <br/>
+<a href="https://docs.eagle3dstreaming.com/wiki/browser-microphone" rel="external noreferrer"><strong>Enable Browser Microphone</strong></a></p>
+</li>
+</ul>
+
+<hr/>
+<h2 id="Troubleshooting" style="--text-align: center"><span id="IntegrationofMicinaprojectusingConvai-Troubleshooting"></span>Troubleshooting
+ </h2>
+
+<hr/>
+<p>If your microphone or audio isn’t working as expected, follow these steps:</p>
+<h4 id="1.-Enable-Microphone-Access-in-the-Browser" style=""><span id="IntegrationofMicinaprojectusingConvai-1.EnableMicrophoneAccessintheBrowser"></span><strong>1. Enable Microphone Access in the Browser</strong>
+</h4>
+<ul>
+<li>
+<p>When the browser asks for permission, click <strong>Allow</strong>.</p>
+</li>
+<li>
+<p>If you denied access previously:</p>
+<ul>
+<li>
+<p>Click the lock icon 🔒 in your browser’s address bar.</p>
+</li>
+<li>
+<p>Go to <strong>Site Settings → Permissions → Microphone → Allow</strong>.</p>
+</li>
+<li>
+<p>Refresh the page.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2.-Enable-Sound-Output" style=""><span id="IntegrationofMicinaprojectusingConvai-2.EnableSoundOutput"></span><strong>2. Enable Sound Output</strong>
+</h4>
+<ul>
+<li>
+<p>Check that your <strong>system sound</strong> and <strong>browser tab volume</strong> are not muted.</p>
+</li>
+<li>
+<p>In browsers like Chrome or Edge:</p>
+<ul>
+<li>
+<p>Right-click the browser tab → Ensure “Mute site” is <strong>unchecked</strong>.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3.-Enable-Pop-Ups" style=""><span id="IntegrationofMicinaprojectusingConvai-3.EnablePop-Ups"></span><strong>3. Enable Pop-Ups</strong>
+</h4>
+<ul>
+<li>
+<p>Some browsers block pop-ups required for microphone initialization or dialogs.</p>
+<ul>
+<li>
+<p>Click the lock icon 🔒 next to the URL → <strong>Site Settings</strong>.</p>
+</li>
+<li>
+<p>Under <strong>Pop-ups and redirects</strong>, select <strong>Allow</strong>.</p>
+</li>
+<li>
+<p>Refresh the page.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="4.-Verify-Browser-Compatibility" style=""><span id="IntegrationofMicinaprojectusingConvai-4.VerifyBrowserCompatibility"></span><strong>4. Verify Browser Compatibility</strong>
+</h4>
+<ul>
+<li>
+<p>Use a supported browser such as <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong>, or <strong>Firefox</strong>.</p>
+</li>
+<li>
+<p>Safari and mobile browsers may restrict mic access depending on version and OS.</p>
+</li>
+</ul>
+<h4 id="5.-Clear-Browser-Cache" style=""><span id="IntegrationofMicinaprojectusingConvai-5.ClearBrowserCache"></span><strong>5. Clear Browser Cache</strong>
+</h4>
+<ul>
+<li>
+<p>Cached permissions or old configurations may block new mic access.</p>
+</li>
+<li>
+<p>Clear the browser cache and re-launch the session.</p>
+</li>
+</ul>
+<h4 id="6.-Restart-Stream" style=""><span id="IntegrationofMicinaprojectusingConvai-6.RestartStream"></span><strong>6. Restart Stream</strong>
+</h4>
+<ul>
+<li>
+<p>After changing permissions, <strong>restart the streaming session</strong> from the Eagle Control Panel for changes to take effect.</p>
+</li>
+</ul>

@@ -313,12 +313,34 @@ def main():
             print("  sections: " + ", ".join(sorted({p["section"] for p in inv["pages"]})))
             return 1
 
+    """A page that has been REWRITTEN is never overwritten by a re-convert, and
+    neither is a slug some rewritten page has already absorbed.
+
+    Without this, one --all run silently replaces finished prose with the ported
+    original and resurrects the pages it replaced - the migration undoing itself,
+    with nothing to show it happened but a diff nobody asked for."""
+    protected, absorbed = set(), set()
+    if os.path.isdir(CONTENT):
+        for f in os.listdir(CONTENT):
+            if not f.endswith(".json"):
+                continue
+            meta = json.load(io.open(os.path.join(CONTENT, f), encoding="utf-8"))
+            if meta.get("rewritten"):
+                protected.add(meta["slug"])
+                absorbed.update(meta.get("replaces", []))
+
     os.makedirs(CONTENT, exist_ok=True)
     os.makedirs(IMAGES, exist_ok=True)
     c = Converter()
     done, skipped = 0, []
 
     for p in pages:
+        if p["slug"] in protected:
+            skipped.append((p["slug"], "rewritten - left alone"))
+            continue
+        if p["slug"] in absorbed:
+            skipped.append((p["slug"], "already merged into a rewritten page"))
+            continue
         src = os.path.join(MIRROR, p["slug"] + ".html")
         if not os.path.exists(src):
             skipped.append((p["slug"], "not in the mirror"))

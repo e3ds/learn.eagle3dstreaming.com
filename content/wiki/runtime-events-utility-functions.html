@@ -1,0 +1,375 @@
+<p>The E3DS Frontend SDK provides a set of callbacks and control functions that allow you to monitor session lifecycle events, handle errors gracefully, and extend user experience with custom UI or application logic.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>GitHub Source File</strong>
+<br/>
+<a href="https://github.com/e3ds/pixelstreaming-sdk/blob/main/scripts/scripts_demo.js" rel="noreferrer" target="_blank">https://github.com/e3ds/pixelstreaming-sdk/blob/main/scripts/scripts_demo.js</a></p>
+</aside>
+</div>
+
+<h2 id="1.-Error-Handling-&amp;-Session-Control" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-1.ErrorHandling&amp;amp;SessionControl"></span>1. Error Handling &amp; Session Control
+ </h2>
+<h4 id="Prevent-Error-Redirect" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-PreventErrorRedirect"></span>Prevent Error Redirect
+ </h4>
+<p>If enabled, the SDK will <strong>not redirect users</strong> to an error page on streaming failure.
+ <br/>
+ Developers can instead show their own UI message.</p>
+<pre><code class="language-javascript">let preventErrorRedirect = true;
+</code></pre>
+
+<h4 id="onError" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-onError"></span>onError
+ </h4>
+<p>Triggered when any streaming or connection error occurs.</p>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onError = function(errorMsg){
+    console.error("onError:", errorMsg);
+};
+</code></pre>
+
+<p>Use Case Examples:</p>
+<ul>
+<li>
+<p>Show custom “Connection Failed” UI</p>
+</li>
+<li>
+<p>Log errors for analytics</p>
+</li>
+<li>
+<p>Retry connection logic</p>
+</li>
+</ul>
+
+<h4 id="onSessionExpired" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-onSessionExpired"></span>onSessionExpired
+ </h4>
+<p>Called when the authentication session token expires.</p>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onSessionExpired = function(){
+    self.location = "assets/pages/session-expired.htm";
+};
+</code></pre>
+
+<p>Recommended Actions:</p>
+<ul>
+<li>
+<p>Redirect to your own session expired page</p>
+</li>
+<li>
+<p>Regenerate token</p>
+</li>
+<li>
+<p>Auto-reconnect flow</p>
+</li>
+</ul>
+
+<h2 id="2.-Connection-&amp;-Data-Channel-Events" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-2.Connection&amp;amp;DataChannelEvents"></span>2. Connection &amp; Data Channel Events
+ </h2>
+<h4 id="onConfigAcquire" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-onConfigAcquire"></span>onConfigAcquire
+ </h4>
+<p>Called when streaming configuration has successfully been retrieved.</p>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onConfigAcquire = function(){
+    console.log("onConfigAcquire");
+};
+</code></pre>
+
+<p>Use this to:</p>
+<ul>
+<li>
+<p>Confirm configuration readiness</p>
+</li>
+<li>
+<p>Trigger UI state updates</p>
+</li>
+</ul>
+
+<h4 id="onDataChannelOpen" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-onDataChannelOpen"></span>onDataChannelOpen
+ </h4>
+<p>Fires when the WebRTC data channel with Unreal Engine is successfully opened.</p>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onDataChannelOpen = function(){
+    console.log("onDataChannelOpen");
+};
+</code></pre>
+
+<h4 id="onDataChannelClose" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-onDataChannelClose"></span>onDataChannelClose
+ </h4>
+<p>Triggered when the data channel closes.</p>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onDataChannelClose = function(){
+    console.log("onDataChannelClose");
+};
+</code></pre>
+
+<p>Use these to:</p>
+<ul>
+<li>
+<p>Enable/disable UI controls</p>
+</li>
+<li>
+<p>Detect unexpected session drops</p>
+</li>
+</ul>
+
+<h2 id="3.-Unreal-Communication" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-3.UnrealCommunication"></span>3. Unreal Communication
+ </h2>
+<h4 id="onResponseFromUnreal" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-onResponseFromUnreal"></span>onResponseFromUnreal
+ </h4>
+<p>Receives messages sent back from Unreal.</p>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onResponseFromUnreal = function(descriptor){
+    console.log("UnrealResponse:", descriptor);
+};
+</code></pre>
+
+<p>Typical Uses:</p>
+<ul>
+<li>
+<p>Receive gameplay state updates</p>
+</li>
+<li>
+<p>Handle UX responses</p>
+</li>
+<li>
+<p>Debug Unreal messaging</p>
+</li>
+</ul>
+
+<h2 id="4.-Streaming-Progress-Events" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-4.StreamingProgressEvents"></span>4. Streaming Progress Events
+ </h2>
+<p>These callbacks provide real-time progress updates while the app is initializing.</p>
+<h4 id="App-Acquisition-Progress" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-AppAcquisitionProgress"></span>App Acquisition Progress
+ </h4>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onReceivingAppAcquiringProgress = function(percent){
+    console.log("App Acquiring:", percent);
+};
+</code></pre>
+
+<h4 id="App-Preparation-Progress" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-AppPreparationProgress"></span>App Preparation Progress
+ </h4>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onReceivingAppPreparationProgress = function(percent){
+    console.log("App Preparing:", percent);
+};
+</code></pre>
+
+<h4 id="App-Starting-Progress" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-AppStartingProgress"></span>App Starting Progress
+ </h4>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onReceivingAppStartingProgress = function(percent){
+    console.log("App Starting:", percent);
+};
+</code></pre>
+
+<p>Ideal for:</p>
+<ul>
+<li>
+<p>Custom loading screens</p>
+</li>
+<li>
+<p>Progress bars</p>
+</li>
+<li>
+<p>User feedback during startup</p>
+</li>
+</ul>
+
+<h2 id="5.-HTML-Binding-Event" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-5.HTMLBindingEvent"></span>5. HTML Binding Event
+ </h2>
+<h4 id="onHtmlBind" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-onHtmlBind"></span>onHtmlBind
+ </h4>
+<p>Triggered once HTML and streaming UI are fully bound.</p>
+<pre><code class="language-javascript">e3ds_controller.callbacks.onHtmlBind = function(){
+    console.log("onHtmlBind");
+};
+</code></pre>
+
+<p>Useful when:</p>
+<ul>
+<li>
+<p>Initializing UI overlays</p>
+</li>
+<li>
+<p>Binding custom buttons</p>
+</li>
+<li>
+<p>Performing final setup</p>
+</li>
+</ul>
+
+<h2 id="6.-Stream-Control-Functions" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-6.StreamControlFunctions"></span>6. Stream Control Functions
+ </h2>
+<p>The SDK also exposes several helpful runtime control utilities.</p>
+
+<h4 id="Terminate-Stream" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-TerminateStream"></span>Terminate Stream
+ </h4>
+<p>Stops the current streaming session.</p>
+<pre><code class="language-javascript">e3ds_controller.terminate();
+</code></pre>
+
+<p>Use when:</p>
+<ul>
+<li>
+<p>User exits experience</p>
+</li>
+<li>
+<p>Navigating away from page</p>
+</li>
+<li>
+<p>Handling shutdown logic</p>
+</li>
+</ul>
+
+<h4 id="Control-Video-Quality" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-ControlVideoQuality"></span>Control Video Quality
+ </h4>
+<p>Allows manual control of quality bitrate.</p>
+<pre><code class="language-javascript">e3ds_controller.setQualityPoint(value);
+// Acceptable values: 1 - 51
+</code></pre>
+
+<p><strong>Note:</strong></p>
+<ul>
+<li>
+<p>Lower value → higher quality</p>
+</li>
+<li>
+<p>Higher value → lower quality</p>
+</li>
+</ul>
+
+<p><strong>Quality Values</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Quality</p>
+</th>
+<th>
+<p>Value</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Low</p>
+</td>
+<td>
+<p>51</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Medium</p>
+</td>
+<td>
+<p>34</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>High</p>
+</td>
+<td>
+<p>17</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Ultra</p>
+</td>
+<td>
+<p>1</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<p><strong>Recommendations</strong></p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Scenario</p>
+</th>
+<th>
+<p>Recommended Quality</p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Public internet users</p>
+</td>
+<td>
+<p>Medium or High</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Enterprise / client demos</p>
+</td>
+<td>
+<p>High</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Internal / LAN usage</p>
+</td>
+<td>
+<p>Ultra</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Detected network instability</p>
+</td>
+<td>
+<p>Medium or Low</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<p>Good for:</p>
+<ul>
+<li>
+<p>Low bandwidth users</p>
+</li>
+<li>
+<p>Performance optimization</p>
+</li>
+</ul>
+
+<h4 id="Set-Stream-Volume" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-SetStreamVolume"></span>Set Stream Volume
+ </h4>
+<pre><code class="language-javascript">e3ds_controller.setVolume(value);
+// 0 to 1
+</code></pre>
+
+<h4 id="Capture-Screenshot" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-CaptureScreenshot"></span>Capture Screenshot
+ </h4>
+<pre><code>e3ds_controller.captureScreenShot();
+</code></pre>
+
+<h4 id="Toggle-Fullscreen" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-ToggleFullscreen"></span>Toggle Fullscreen
+ </h4>
+<pre><code>e3ds_controller.toggleFullscreen();
+</code></pre>
+
+<h4 id="Send-Message-to-Unreal" style=""><span id="RuntimeEvents&amp;amp;UtilityFunctions-SendMessagetoUnreal"></span>Send Message to Unreal
+ </h4>
+<p>Allows sending structured messages to Unreal Engine.</p>
+<pre><code>e3ds_controller.sendToUnreal(descriptor);
+</code></pre>
+
+<p>Typical usage:</p>
+<ul>
+<li>
+<p>Game commands</p>
+</li>
+<li>
+<p>UI interactions</p>
+</li>
+<li>
+<p>Custom remote controls</p>
+</li>
+</ul>

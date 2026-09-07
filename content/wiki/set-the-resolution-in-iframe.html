@@ -1,0 +1,107 @@
+<p>When <strong>Dynamic Resolution</strong> is enabled, the stream resolution automatically adjusts to match the iFrame’s width and height.</p>
+<p>While this ensures responsive behavior across devices, it may reduce perceived visual quality on mobile devices because:</p>
+<ul>
+<li>
+<p>Mobile screens are physically smaller</p>
+</li>
+<li>
+<p>The iFrame dimensions are smaller</p>
+</li>
+<li>
+<p>The resulting stream resolution is reduced accordingly</p>
+</li>
+</ul>
+<p>If consistent visual quality is required across devices, this behavior can be overridden.</p>
+<p>This guide explains the available resolution modes and the recommended approaches for maintaining consistent video quality.</p>
+
+<h2 id="Resolution-Modes" style=""><span id="SettheResolutioninIframe-ResolutionModes"></span>Resolution Modes
+ </h2>
+<p>To configure resolution settings, follow the <a href="https://docs.eagle3dstreaming.com/wiki/set-a-browser-resolution-from-the-new-control-pane" rel="external noreferrer">resolution setup guide</a> in the Control Panel.</p>
+<p>You will find two available resolution options:</p>
+<ul>
+<li>
+<p><strong>Dynamic Resolution</strong></p>
+</li>
+<li>
+<p><strong>Custom Resolution</strong></p>
+</li>
+</ul>
+
+<h2 id="Dynamic-Resolution" style=""><span id="SettheResolutioninIframe-DynamicResolution"></span>Dynamic Resolution
+ </h2>
+<p>Dynamic Resolution automatically:</p>
+<ul>
+<li>
+<p>Matches the iFrame size</p>
+</li>
+<li>
+<p>Adapts to desktop, tablet, and mobile screens</p>
+</li>
+<li>
+<p>Optimizes bandwidth usage</p>
+</li>
+</ul>
+<p><strong>Limitation</strong></p>
+<p>On mobile devices, smaller viewport size results in lower stream resolution, which may reduce image clarity.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 1. App resolution adjusted to Laptop screen" decoding="async" loading="lazy" src="/images/image-20240402-153703-97d524.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 1. App resolution adjusted to Laptop screen</em></span>
+</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 2. App resolution adjusted to Mobile screen" decoding="async" loading="lazy" src="/images/image-20240402-153931-be587e.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 2. App resolution adjusted to Mobile screen</em></span>
+</figcaption>
+</figure>
+
+</div>
+
+<h2 id="When-Should-You-Override-Dynamic-Resolution?" style=""><span id="SettheResolutioninIframe-WhenShouldYouOverrideDynamicResolution?"></span>When Should You Override Dynamic Resolution?
+ </h2>
+<p>You should consider overriding Dynamic Resolution if:</p>
+<ul>
+<li>
+<p>Your application requires consistent visual sharpness across devices</p>
+</li>
+<li>
+<p>Mobile users report reduced image clarity</p>
+</li>
+<li>
+<p>Branding or visual fidelity is a priority</p>
+</li>
+</ul>
+
+<h2 id="Two-Recommended-Approaches" style=""><span id="SettheResolutioninIframe-TwoRecommendedApproaches"></span>Two Recommended Approaches
+ </h2>
+<h3 id="Option-1.-Set-Custom-Resolution-in-Control-Panel" style=""><span id="SettheResolutioninIframe-Option1.SetCustomResolutioninControlPanel"></span>Option 1. Set Custom Resolution in Control Panel
+ </h3>
+<p>Follow <a href="https://docs.eagle3dstreaming.com/wiki/set-a-browser-resolution-from-the-new-control-pane" rel="external noreferrer">this doc</a> to set custom resolution. This ensures consistent visual quality across both desktop and mobile devices.</p>
+
+<h3 id="Option-2.-Freeze-Resolution-from-the-Front-End" style=""><span id="SettheResolutioninIframe-Option2.FreezeResolutionfromtheFrontEnd"></span>Option 2. Freeze Resolution from the Front End
+ </h3>
+<p>You can programmatically override resolution from the parent page using:</p>
+<pre><code class="language-javascript">let obj = {
+    cmd: "freezeResolutionAt",
+    x: 1920,
+    y: 1080
+}
+
+document.getElementById("iframe_1")
+    .contentWindow
+    .postMessage(JSON.stringify(obj), "*");
+
+</code></pre>
+<p>This forces the stream to render at the specified resolution regardless of iFrame size.</p>

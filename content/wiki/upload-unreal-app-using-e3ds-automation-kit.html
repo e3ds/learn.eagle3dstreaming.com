@@ -1,0 +1,640 @@
+<p>The <strong>E3DS Automation Kit</strong> is a Node.js library designed to <strong>automate specific Eagle 3D Streaming (E3DS)</strong> operations, including uploading, registering, and testing streaming applications.</p>
+<p>It’s ideal for:</p>
+<ul>
+<li>
+<p>CI/CD pipelines</p>
+</li>
+<li>
+<p>Automated deployment scripts</p>
+</li>
+<li>
+<p>Faster build upload from local development environments</p>
+</li>
+</ul>
+<p>This guide walks you through the <strong>installation</strong>, <strong>setup</strong>, and <strong>execution</strong> process step-by-step, with visuals to make it easy for new developers to follow along.</p>
+
+<p>Follow the steps below:</p>
+<h2 id="Step-1.-Install-the-Package" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-Step1.InstallthePackage"></span>Step 1. Install the Package
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>You can find the package here:
+   <br/>
+   🔗 <a href="https://www.npmjs.com/package/e3ds-automation-kit" rel="noreferrer" target="_blank">https://www.npmjs.com/package/e3ds-automation-kit</a></p>
+</aside>
+</div>
+<p>Run the following command in your terminal:</p>
+<pre><code>npm install e3ds-automation-kit
+</code></pre>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1: Installing the E3DS Automation Kit via npm" decoding="async" loading="lazy" src="/images/image-20251112-065255-56ed84.png"/>
+
+<figcaption>Figure 1: Installing the E3DS Automation Kit via npm</figcaption>
+</figure>
+
+</div>
+
+<p>After successful installation, you’ll see confirmation messages in your terminal.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Installation completed successfully" decoding="async" loading="lazy" src="/images/image-20251112-065340-8e34d0.png"/>
+
+<figcaption>Figure 2. Installation completed successfully</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-2.-Copy-&amp;-Paste-the-Example-Code" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-Step2.Copy&amp;amp;PastetheExampleCode"></span>Step 2. Copy &amp; Paste the Example Code
+ </h2>
+<p>Create a new JavaScript file (for example, <code>index.js</code>) and paste the following code:</p>
+<pre><code class="language-javascript">const { uploadStreamingApp } = require("e3ds-automation-kit");
+
+(async () =&gt; {
+  try {
+    await uploadStreamingApp(
+      "../../Downloads/tinyApp.zip", // Path to the local file
+      "YOUR_EAGLE3D_API_KEY", // API key
+      "MyStreamingApp" // App name
+    );
+    console.log("Upload completed successfully!");
+  } catch (err) {
+    console.error("Upload failed:", err.message);
+  }
+})();
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 3. Example code snippet in your script file" decoding="async" loading="lazy" src="/images/image-20260421-054807-909850.png"/>
+
+<figcaption>Figure 3. Example code snippet in your script file</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-3.-Provide-the-Path-to-Your-.zip-File" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-Step3.ProvidethePathtoYour.zipFile"></span>Step 3. Provide the Path to Your <code>.zip</code> File
+ </h2>
+<p>Update the file path to point to your packaged <code>.zip</code> file, <strong>not the project folder</strong>, but the actual <code>.zip</code> file.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 4. Provide the Path to Your .zip File" decoding="async" loading="lazy" src="/images/image-20260421-055100-46fe9c.png"/>
+
+<figcaption>
+    Figure 4. Provide the Path to Your <code>.zip</code> File
+   </figcaption>
+</figure>
+
+</div>
+
+<h3 id="Example-Setup" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-ExampleSetup"></span>Example Setup
+ </h3>
+<p>Below is an example setup for reference:</p>
+<ul>
+<li>
+<p><code>.zip file:</code>
+<br/>
+<code>C:/Users/USER/Downloads/tinyApp.zip</code></p>
+</li>
+<li>
+<p>Script location:
+   <br/>
+<code>C:/Users/USER/Desktop/automatioKit/index.js</code></p>
+</li>
+</ul>
+
+<h4 id="Valid-Path-Formats" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-ValidPathFormats"></span>Valid Path Formats
+ </h4>
+<p>Use the table below to determine the correct path format based on your setup:</p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Type</p>
+</th>
+<th>
+<p>Example</p>
+</th>
+<th>
+<p>Works?</p>
+</th>
+<th>
+<p>Notes</p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 168px"/>
+<col style="width: 272px"/>
+<col style="width: 127px"/>
+<col style="width: 190px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p>Relative Path</p>
+</td>
+<td>
+<p><code>"../../Downloads/tinyApp.zip"</code></p>
+</td>
+<td>
+<p>✅</p>
+</td>
+<td>
+<p>Works on all systems if relative to where you run <code>node index.js</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Windows (Forward Slash)</p>
+</td>
+<td>
+<p><code>"C:/Users/USER/Downloads/tinyApp.zip"</code></p>
+</td>
+<td>
+<p>✅</p>
+</td>
+<td>
+<p>Recommended for Windows</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Windows (Escaped Backslash)</p>
+</td>
+<td>
+<p><code>"C:\\Users\\USER\\Downloads\\tinyApp.zip"</code></p>
+</td>
+<td>
+<p>✅</p>
+</td>
+<td>
+<p>Works on Windows</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Mac/Linux Path</p>
+</td>
+<td>
+<p><code>"/Users/USER/Downloads/tinyApp.zip"</code></p>
+</td>
+<td>
+<p>✅</p>
+</td>
+<td>
+<p>For macOS/Linux systems</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h4 id="Invalid-Path-Examples" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-InvalidPathExamples"></span>Invalid Path Examples
+ </h4>
+<p>Avoid the following incorrect path formats:</p>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Example</p>
+</th>
+<th>
+<p>Issue</p>
+</th>
+<th>
+<p>Why It Fails</p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 336px"/>
+<col style="width: 210px"/>
+<col style="width: 209px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p><code>"C:\Users\USER\Downloads\tinyApp.zip"</code></p>
+</td>
+<td>
+<p>Backslashes not escaped</p>
+</td>
+<td>
+<p>JavaScript treats <code>\</code> as escape characters</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>"C:/Users/USER/Downloads/"</code></p>
+</td>
+<td>
+<p>Folder instead of file</p>
+</td>
+<td>
+<p>Must point to <code>.zip</code> file</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>"./tinyApp.zip"</code> (wrong location)</p>
+</td>
+<td>
+<p>File not found</p>
+</td>
+<td>
+<p>File not in same directory as script</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>"C:/Users/USER/Downloads/tinyapp.zip"</code></p>
+</td>
+<td>
+<p>Wrong file name</p>
+</td>
+<td>
+<p>Case or name mismatch</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<h2 id="Step-4.-Add-Your-API-Key" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-Step4.AddYourAPIKey"></span>Step 4. Add Your <a href="https://docs.eagle3dstreaming.com/wiki/api-key" rel="external noreferrer">API Key</a>
+</h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>You’ll need a valid <strong>E3DS API Key</strong> to authenticate your upload.
+   <br/>
+   To find your API key, visit:
+   <br/>
+   🔗 <a href="https://docs.eagle3dstreaming.com/wiki/api-key" rel="external noreferrer">https://docs.eagle3dstreaming.com/wiki/api-key</a></p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 5. Add Your E3DS API key" decoding="async" loading="lazy" src="/images/image-20260421-055431-3c5ff3.png"/>
+
+<figcaption>Figure 5. Add Your E3DS API key</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout tip">
+<p><strong>Tip:</strong> For security, store your API key in an environment variable (e.g., <code>.env</code> file) rather than hardcoding it in the script.</p>
+</aside>
+</div>
+
+<h2 id="Step-5.-Set-the-App-Name" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-Step5.SettheAppName"></span>Step 5. Set the App Name
+ </h2>
+<p>Choose a name for your app. This name will appear in your <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer">Eagle 3D Streaming Control Panel</a> once uploaded.</p>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>⚠️ <strong>Important:</strong>
+<br/>
+   The app name should <strong>not contain any spaces or special characters</strong>. Use only <strong>letters (A–Z, a–z), numbers (0–9), or underscores (_)</strong>.</p>
+</aside>
+</div>
+
+<p><strong>Correct Example</strong></p>
+<pre><code>"MyStreamingApp"
+"My_App_01"
+"app123"
+</code></pre>
+
+<p><strong>Incorrect Examples</strong></p>
+<pre><code>"My Streaming App"   // contains spaces
+"My-App"             // contains special character (-)
+"My@App"             // contains special character (@)
+"My.App"             // contains special character (.)
+</code></pre>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 6. Provide the App Name" decoding="async" loading="lazy" src="/images/image-20260421-055525-b41855.png"/>
+
+<figcaption>Figure 6. Provide the App Name</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-6.-Run-the-Script" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-Step6.RuntheScript"></span>Step 6. Run the Script
+ </h2>
+<p>After saving the file, execute the script using Node.js.
+ <br/>
+ If your file is named <code>index.js</code>, the command is:</p>
+<pre><code>node index.js
+</code></pre>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 7. Running your upload script" decoding="async" loading="lazy" src="/images/image-20260421-055627-4dfa57.png"/>
+
+<figcaption>Figure 7. Running your upload script</figcaption>
+</figure>
+
+</div>
+
+<p>The automation kit will:</p>
+<ul>
+<li>
+<p>Validate the file path</p>
+</li>
+<li>
+<p>Request a signed upload URL</p>
+</li>
+<li>
+<p>Upload the build with progress tracking</p>
+</li>
+<li>
+<p>Poll until the stream test completes</p>
+</li>
+</ul>
+
+<h2 id="Step-7.-Upload-Successful" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-Step7.UploadSuccessful"></span>Step 7. Upload Successful
+ </h2>
+<p>Once the upload is complete and validated, you’ll see a success message:</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 8. Successful upload confirmation" decoding="async" loading="lazy" src="/images/image-20260421-060025-e8f504.png"/>
+
+<figcaption>Figure 8. Successful upload confirmation</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Step-8.-Verify-in-Control-Panel" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-Step8.VerifyinControlPanel"></span>Step 8. Verify in <a href="https://controlpanel.eagle3dstreaming.com/" rel="external noreferrer">Control Panel</a>
+</h2>
+<p>Go to your <strong>E3DS Control Panel</strong> to confirm that your Unreal app has been uploaded and registered correctly.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 9. App Uploaded Successfully" decoding="async" loading="lazy" src="/images/image-20260421-060247-5c35d7.png"/>
+
+<figcaption>Figure 9. App Uploaded Successfully</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Video-Tutorial" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-VideoTutorial"></span><strong>Video Tutorial</strong>
+</h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/3LYuGKmMRMM?si=G6LDD75cWCuixm1f" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<h2 id="Additional-Notes" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-AdditionalNotes"></span><strong>Additional Notes</strong>
+</h2>
+<ul>
+<li>
+<p>The tool automatically handles <strong>retries</strong>, <strong>progress bars</strong>, and <strong>upload verification</strong>.</p>
+</li>
+<li>
+<p>The polling process for stream testing lasts <strong>up to 10 minutes</strong>.</p>
+</li>
+<li>
+<p>Logging output is displayed in real time in your terminal.</p>
+</li>
+</ul>
+
+<h2 id="Best-Practices" style=""><span id="UploadUnrealAppUsingE3DSAutomationKit-BestPractices"></span><strong>Best Practices</strong>
+</h2>
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p><strong>Recommendation</strong></p>
+</th>
+<th>
+<p><strong>Description</strong></p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p>Use a valid API key</p>
+</td>
+<td>
+<p>Ensure your API key has proper upload permissions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Secure credentials</p>
+</td>
+<td>
+<p>Use environment variables instead of embedding secrets in code.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Version control</p>
+</td>
+<td>
+<p>Keep consistent app names and use semantic versioning.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Avoid interruptions</p>
+</td>
+<td>
+<p>Don’t terminate the process while upload or stream test is running.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Monitor tests</p>
+</td>
+<td>
+<p>Wait until stream test validation is done before triggering new uploads.</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>
+
+<hr/>
+<h2 id="Troubleshooting" style="--text-align: center"><span id="UploadUnrealAppUsingE3DSAutomationKit-Troubleshooting"></span>Troubleshooting
+ </h2>
+<hr/>
+
+<div class="theme-table" style="--width: 760px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p><strong>Issue</strong></p>
+</th>
+<th>
+<p><strong>Likely Cause</strong></p>
+</th>
+<th>
+<p><strong>Fix</strong></p>
+</th>
+</tr></thead>
+<tbody>
+
+<tr>
+<td>
+<p><code>[Uploader] Attempt 1 failed: Request failed with status code 401</code></p>
+</td>
+<td>
+<p>Invalid or incorrect API key</p>
+</td>
+<td>
+<p>Verify your API key from the <a href="https://controlpanel.eagle3dstreaming.com/developer-section" rel="external noreferrer"><strong>E3DS Control Panel</strong></a></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>Upload failed: File not found: C:\Users\USER\Downloads\tinyBpp.zip</code></p>
+</td>
+<td>
+<p>File does not exist at the specified path</p>
+</td>
+<td>
+<p>Confirm the <code>.zip</code> file exists at that location</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Path points to a folder (e.g., <code>C:/Users/USER/Downloads/</code>)</p>
+</td>
+<td>
+<p>Folder used instead of <code>.zip</code> file</p>
+</td>
+<td>
+<p>Provide the full path to the <code>.zip</code> file (must end with <code>.zip</code>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Relative path not working (e.g., <code>./tinyApp.zip</code>)</p>
+</td>
+<td>
+<p>File not in the expected directory</p>
+</td>
+<td>
+<p>Ensure the <code>.zip</code> file is in the same folder as your script or adjust the relative path correctly</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Wrong relative path (e.g., <code>../tinyApp.zip</code>)</p>
+</td>
+<td>
+<p>Incorrect directory level</p>
+</td>
+<td>
+<p>Adjust the path based on your script location (e.g., <code>../../Downloads/tinyApp.zip</code>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Windows path with single backslash (e.g., <code>C:\Users\USER\Downloads\tinyApp.zip</code>)</p>
+</td>
+<td>
+<p>JavaScript treats <code>\</code> as escape characters</p>
+</td>
+<td>
+<p>Use forward slashes (<code>C:/Users/...</code>) or double backslashes (<code>C:\\Users\\...</code>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Upload fails or app name not accepted</p>
+</td>
+<td>
+<p>App name contains spaces or special characters</p>
+</td>
+<td>
+<p>Use only letters, numbers, or underscores (e.g., <code>MyApp</code>, <code>My_App_01</code>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>Cannot find module 'e3ds-automation-kit'</code></p>
+</td>
+<td>
+<p>Package not installed</p>
+</td>
+<td>
+<p>Run <code>npm install e3ds-automation-kit</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><code>Cannot find module '...index.js'</code></p>
+</td>
+<td>
+<p>Script file not found</p>
+</td>
+<td>
+<p>Ensure <code>index.js</code> exists or run the correct file name</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>No output shown</p>
+</td>
+<td>
+<p>Script not executed properly</p>
+</td>
+<td>
+<p>Ensure Node.js is installed (<code>node -v</code>) and run <code>node index.js</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Upload retries continuously</p>
+</td>
+<td>
+<p>Network instability</p>
+</td>
+<td>
+<p>Check your internet connection (auto-retries up to 3 times)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Stream test timed out</p>
+</td>
+<td>
+<p>Large build or slow network</p>
+</td>
+<td>
+<p>Wait a few minutes and check the control panel</p>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

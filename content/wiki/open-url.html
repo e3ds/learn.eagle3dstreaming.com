@@ -1,0 +1,315 @@
+<p>This guide explains how to open an external URL in a new browser tab from an Unreal Engine application streamed to the browser using Pixel Streaming.</p>
+
+<h2 id="Video-Preview" style=""><span id="OpenaURLinaNewBrowserTab-VideoPreview"></span>Video Preview
+ </h2>
+<div data-autoscale="" data-ratio="16:9" data-service="external_content">
+<div data-placeholder="">
+<template>
+ <a href="https://youtu.be/3h0v28EDiUo" rel="noreferrer" target="_blank">
+
+</a> 
+</template>
+</div>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo URL:</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo" rel="external noreferrer"><strong>https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo/featuresPluginDemo</strong></a></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Pixel Streaming Demos (click a version to launch):</strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE53/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.3 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE54/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.4 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE55/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.5 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE56/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.6 Demo</strong></a><strong> </strong>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE57/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.7 Demo</strong></a>
+<br/>
+<a href="https://connector.eagle3dstreaming.com/v5/demo/FeaturesPluginDemo_UE58/featuresPluginDemo" rel="external noreferrer"><strong>UE 5.8 Demo</strong></a></p>
+</aside>
+</div>
+
+<p>You can open a new tab using either of the following two methods:</p>
+<h2 id="Method-1.-Using-the-E3DS-Features-Plugin-(Recommended)" style=""><span id="OpenaURLinaNewBrowserTab-Method1.UsingtheE3DSFeaturesPlugin(Recommended)"></span><strong>Method 1. Using the E3DS Features Plugin (Recommended)</strong>
+</h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>This method is easier, faster, and less error-prone. Requires <strong>no custom coding</strong>.</p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Prerequisite:</strong></p>
+<p>Before proceeding with this method, ensure you have <strong>downloaded and installed the E3DS Features Plugin</strong> in your Unreal Engine project. For detailed instructions, refer to:
+   <br/>
+<a href="/wiki/download-and-install-the-e3ds-features-plugin"><u><strong>Download and Install the E3DS Features Plugin</strong></u></a></p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<ol>
+<li>
+<p>Place the <strong>BP_E3DS_PS_Actor</strong> from the plugin content into your active level.</p>
+</li>
+<li>
+<p>From any actor, call the premade function <strong>E3DS Open URL</strong>.</p>
+</li>
+<li>
+<p>Enter your desired URL in the <strong>Url To Open</strong> field.</p>
+</li>
+</ol>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>Note: Other plugins may also provide nodes named <code>Open URL</code>. To ensure you’re using the correct one, hover over the node. The tooltip should display:</p>
+<p><em><strong>Target is BPFL E3DS PS Functions</strong></em></p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<div class="block-image" style="--width: 760px">
+<img alt="" decoding="async" loading="lazy" src="/images/image-20251203-163701-14acd1.png"/>
+</div>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>In the example above, replace the URL with any destination you want.</p>
+</aside>
+</div>
+
+<h2 id="Method-2.-Using-a-Custom-Blueprint-(Not-Recommended)" style=""><span id="OpenaURLinaNewBrowserTab-Method2.UsingaCustomBlueprint(NotRecommended)"></span>Method 2. Using a Custom Blueprint (Not <strong>Recommended</strong>)
+ </h2>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>If you’re not experienced with Blueprint development, do <strong>not</strong> use Method 2. Please use <strong>Method 1</strong> instead. Method 2 is more error-prone and increases the chance of implementation mistakes.</p>
+</aside>
+</div>
+
+<p>Follow the steps below:</p>
+<ol>
+<li>
+<p><strong>Create a new Blueprint</strong> in your project.</p>
+</li>
+<li>
+<p>Add the <strong>PixelStreamingInput</strong> component.</p>
+</li>
+</ol>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Only Blueprints that are based on the “Actor” class (or any of its child classes) can contain components.</strong>This includes Blueprints such as <strong>Actors, Pawns, Characters, and Player Controllers</strong>.</p>
+<p>Blueprint types <strong>that cannot contain components</strong> include: <strong>Widgets, GameModes, and Level Blueprints</strong>.</p>
+</aside>
+</div>
+<ol start="3">
+<li>
+<p>Create a custom event or function.</p>
+</li>
+<li>
+<p>Add a <code>Send Pixel Streaming Response</code> node.</p>
+</li>
+<li>
+<p>Send the following message as a string:</p>
+</li>
+</ol>
+<pre><code>{"cmd":"launchUrl","value":"https://www.eagle3dstreaming.com"}
+</code></pre>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>Make sure your event is getting called. To call events on Actors, their Actor object <strong>must</strong> either already be placed in the open map (by dragging the Blueprint from the Content Browser into the Level Editor window), or be spawned during playtime (using the “Spawn Actor from Class” node).</p>
+</aside>
+</div>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p>Unreal Engine also has a built-in <strong>Launch URL</strong> node, but you should not use it for Pixel Streaming. It is completely separate and does not work with streamed applications. We will provide a video soon demonstrating the differences between the two nodes.</p>
+</aside>
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Manually opening a URL from Unreal via Pixel Streaming." decoding="async" loading="lazy" src="/images/image-20250901-192911-a37b73.png"/>
+
+<figcaption>Figure 2. Manually opening a URL from Unreal via Pixel Streaming.</figcaption>
+</figure>
+
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>In the example above, replace the URL with any destination you want.</p>
+</aside>
+</div>
+
+<h2 id="Verification" style=""><span id="OpenaURLinaNewBrowserTab-Verification"></span><strong>Verification</strong>
+</h2>
+<p>To confirm that the URL trigger is working:</p>
+<ol>
+<li>
+<p>Connect to your remote editor session in your web browser by following the steps in our <a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/SFFI/pages/922255361/Remote+Control+Unreal+Editor" rel="noreferrer" target="_blank">How to test in remote editor streaming</a> documentation.</p>
+</li>
+<li>
+<p>Click inside the <strong>editor viewport</strong> to ensure it has focus.</p>
+</li>
+<li>
+<p>Press the <strong>1</strong> key on your keyboard.</p>
+</li>
+</ol>
+<h4 id="Expected-Result:" style=""><span id="OpenaURLinaNewBrowserTab-ExpectedResult:"></span>Expected Result:
+ </h4>
+<p>A new browser tab should open with the URL you specified, confirming that the Blueprint or Pixel Streaming message successfully triggered the browser to open the external URL.</p>
+
+<h2 id="Related-Live-Sessions" style=""><span id="OpenaURLinaNewBrowserTab-RelatedLiveSessions"></span><strong>Related Live Sessions</strong>
+</h2>
+<p>These YouTube Live sessions cover topics directly related to this guide:</p>
+<ul>
+<li>
+<p>Open a URL on User’s Device With a Single Node
+   <br/>
+<a href="https://youtube.com/live/M24qNWRTwpk" rel="noreferrer" target="_blank">https://youtube.com/live/M24qNWRTwpk</a></p>
+</li>
+<li>
+<p>Package the Project, Upload, and Test
+   <br/>
+<a href="https://youtube.com/live/4rRksqtgZhQ" rel="noreferrer" target="_blank">https://youtube.com/live/4rRksqtgZhQ</a></p>
+</li>
+<li>
+<p>Fixing Common Issues &amp; Testing Pixel Streaming from Mobile
+   <br/>
+<a href="https://youtube.com/live/NWv2FoD78gA" rel="noreferrer" target="_blank">https://youtube.com/live/NWv2FoD78gA</a></p>
+</li>
+</ul>
+
+<h2 id="Related-Guides" style=""><span id="OpenaURLinaNewBrowserTab-RelatedGuides"></span>Related Guides
+ </h2>
+<ul>
+<li>
+<p><a href="/wiki/blueprint-debugging">How to do blueprint debugging incase something in not working</a></p>
+</li>
+</ul>
+
+<hr/>
+
+<h2 id="Troubleshooting" style="--text-align: center"><span id="OpenaURLinaNewBrowserTab-Troubleshooting"></span><span style="--color: var(--red, #ff5630);"><strong>Troubleshooting</strong></span>
+</h2>
+
+<hr/>
+
+<div class="theme-table" style="--width: 800px;">
+
+<div class="scroll"><table><thead><tr>
+<th>
+<p>Issue</p>
+</th>
+<th>
+<p>Possible Cause</p>
+</th>
+<th>
+<p>Solution</p>
+</th>
+</tr></thead>
+<colgroup>
+<col style="width: 267px"/>
+<col style="width: 275px"/>
+<col style="width: 258px"/>
+</colgroup>
+<tbody>
+
+<tr>
+<td>
+<p>New URL does not open in a new browser tab</p>
+</td>
+<td>
+<p>Browser popup or redirect blocking</p>
+</td>
+<td>
+<ul>
+<li>
+<p>Allow popups for the streaming domain.</p>
+</li>
+<li>
+<p>Enable redirecting to new tabs in browser settings.</p>
+</li>
+<li>
+<p>Check the browser address bar for blocked popup notifications and allow them.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<p>Blueprint event is not triggered</p>
+</td>
+<td>
+<p>Actor not placed or spawned in the level</p>
+</td>
+<td>
+<p>Place the Blueprint actor in the level or spawn it at runtime using the <code>Spawn Actor from Class</code> node.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Wrong Open URL node used</p>
+</td>
+<td>
+<p>Using Unreal’s built-in <code>Launch URL</code> or another plugin’s node</p>
+</td>
+<td>
+<p>Ensure the node tooltip shows <strong>Target is BPFL E3DS PS Functions</strong>. Do not use Unreal’s built-in <code>Launch URL</code> node for Pixel Streaming.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Pixel Streaming message not received</p>
+</td>
+<td>
+<p>Incorrect message format or missing component</p>
+</td>
+<td>
+<p>Add the <code>PixelStreamingInput</code> component and ensure the message is valid JSON (e.g., <code>{"cmd":"launchUrl","value":"https://www.eagle3dstreaming.com"}</code>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Keyboard input does not trigger URL</p>
+</td>
+<td>
+<p>Browser or viewport does not have focus</p>
+</td>
+<td>
+<p>Click inside the streamed viewport before pressing the trigger key. Verify input bindings.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>Works locally but not in production</p>
+</td>
+<td>
+<p>Browser policies differ between environments</p>
+</td>
+<td>
+<ul>
+<li>
+<p>Recheck popup and redirect permissions in production browsers.</p>
+</li>
+<li>
+<p>Test with popup blockers disabled.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table></div>
+
+</div>

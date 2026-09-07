@@ -1,0 +1,12 @@
+{
+ "title": "2D image Assets",
+ "slug": "2d-image-asset",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration",
+  "edit-your-config",
+  "edit-the-advanced-options-features-of-your-config",
+  "loading-screen"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/2d-image-asset"
+}

@@ -1,0 +1,283 @@
+<p><em>Learn how to pass Commands from the new Control Panel to the App and see the changes upon initialization.</em></p>
+<h2 id="Overview"><span id="ParameterstopasstoApp(NewControlPanel)-Overview"></span>Overview
+ </h2>
+<p>In this tutorial, you should be able to pass Commands to your App from the New Control Panel’s Config “<strong>Parameters to Pass to App</strong>” then see the changes by playing the App. You will learn how to pass 1 Command from the Config then multiple Commands / Parameters.</p>
+<p>Download the Sample App we are providing in this document then Upload it on your Control Panel to prepare for the setup. Follow the instructions below.</p>
+<h2 id="Prerequisites"><span id="ParameterstopasstoApp(NewControlPanel)-Prerequisites"></span>Prerequisites
+ </h2>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em>For this document, you need :</em></p>
+<ol>
+<li>
+<p><em>Access to the </em><a href="https://newcontrolpanel.eagle3dstreaming.com/" rel="external noreferrer"><em>Control Panel</em></a><em> ;</em></p>
+</li>
+<li>
+<p><em>A </em><a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/ED/pages/294748170/Creating+an+Account" rel="noreferrer" target="_blank"><em>user Account</em></a><em>. </em></p>
+</li>
+</ol>
+</aside>
+</div>
+<h2 id="Instructions"><span id="ParameterstopasstoApp(NewControlPanel)-Instructions"></span>Instructions
+ </h2>
+<h2 id="Step-1.-Prepare-the-setup"><span id="ParameterstopasstoApp(NewControlPanel)-Step1.Preparethesetup"></span>Step 1. Prepare the setup
+ </h2>
+<h3 id="1.-Download-our-E3DSFeaturesTemplate-Project-on-your-Computer"><span id="ParameterstopasstoApp(NewControlPanel)-1.DownloadourE3DSFeaturesTemplateProjectonyourComputer"></span>1. Download our E3DSFeaturesTemplate Project on your Computer
+ </h3>
+<p>Download our <strong>E3DSFeaturestemplate</strong> UE Project, <a href="https://github.com/e3ds-ue4/E3DSFeaturesTemplate" rel="noreferrer" target="_blank"><strong>refer to this Link</strong></a> to find it.</p>
+<h3 id="2.-Upload-the-E3DSFeaturesTemplate-UE-App-on-your-Control-Panel"><span id="ParameterstopasstoApp(NewControlPanel)-2.UploadtheE3DSFeaturesTemplateUEApponyourControlPanel"></span>2. Upload the E3DSFeaturesTemplate UE App on your Control Panel
+ </h3>
+<ul>
+<li>
+<p>Access the new Control Panel from <a href="https://newcontrolpanel.eagle3dstreaming.com/" rel="external noreferrer">here</a>.</p>
+</li>
+<li>
+<p><a href="https://eagle3dstreaming.atlassian.net/wiki/spaces/ED/pages/307068929/Part+1+Preparing+to+Upload" rel="noreferrer" target="_blank"><strong>See this document</strong></a> on how to upload Apps.</p>
+</li>
+</ul>
+<h3 id="3.-Select-E3DSFeaturesTemplate-App"><span id="ParameterstopasstoApp(NewControlPanel)-3.SelectE3DSFeaturesTemplateApp"></span>3. Select E3DSFeaturesTemplate App
+ </h3>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 1. Select the App" decoding="async" loading="lazy" src="/images/image-20240330-142926%20(1)-290eb4.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 1. Select the App</em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="4.-Generate-a-new-Streaming-Link"><span id="ParameterstopasstoApp(NewControlPanel)-4.GenerateanewStreamingLink"></span>4. Generate a new Streaming Link
+ </h3>
+<p>Click ‘<strong>Create New Stream Link</strong>’.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 2. Click Create New Stream Link" decoding="async" loading="lazy" src="/images/image-20240330-143213-fb4b59.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 2. Click </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Create New Stream Link</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<p>More details on how to generate Streaming Links are <a href="/wiki/generate-a-streaming-link-for-your-app">here</a>.</p>
+<h3 id="5.-Create-a-new-Config"><span id="ParameterstopasstoApp(NewControlPanel)-5.CreateanewConfig"></span>5. Create a new Config
+ </h3>
+<p>In this example we will name the Config ‘<strong>CmdLineDemo</strong>’. Follow the steps below.</p>
+
+<ol>
+<li>
+<p>In the ‘<strong>Config Name</strong>’ dropdown, click '<strong>Add New Config</strong>'.</p>
+</li>
+</ol>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 3. Click Add New Config" decoding="async" loading="lazy" src="/images/image-20240330-143442-fef13c.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 3. Click </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Add New Config</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<ol start="2">
+<li>
+<p>Type ‘<strong>CmdLineDemo</strong>’ in the text field and click “<strong>Add”</strong>.</p>
+</li>
+</ol>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 4. Type ‘ CmdLineDemo ’. Click Add" decoding="async" loading="lazy" src="/images/image-20240330-143817-a06104.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 4. Type ‘</em></span><span style="--color: var(--gray, #97a0af);"><em><strong>CmdLineDemo</strong></em></span><span style="--color: var(--gray, #97a0af);"><em>’. Click </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Add</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+
+<p>Your Control Panel should now have the <strong>E3DSFeaturesTemplate</strong> App and a new Config for testing.</p>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em>More information on how to Edit the Config, </em><a href="/wiki/edit-your-config"><em>here</em></a><em>.</em></p>
+</aside>
+</div>
+<h2 id="Step-2.-Send-Commands-to-your-App-from-the-Control-Panel"><span id="ParameterstopasstoApp(NewControlPanel)-Step2.SendCommandstoyourAppfromtheControlPanel"></span>Step 2. Send Commands to your App from the Control Panel
+ </h2>
+<h3 id="1.-In-your-generated-Streaming-Link,-go-to-:"><span id="ParameterstopasstoApp(NewControlPanel)-1.InyourgeneratedStreamingLink,goto:"></span>1. In your generated Streaming Link, go to : 
+ </h3>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em>Go to : </em><a href="/wiki/edit-your-config">Edit Config</a><em> &gt; A</em><a href="/wiki/edit-the-advanced-options-features-of-your-config"><em>dvanced Options</em></a><em> &gt; </em><a href="/wiki/developer">Developer</a><em>.</em></p>
+</aside>
+</div>
+<h3 id="2.-Enable-Parameters-to-Pass-to-App"><span id="ParameterstopasstoApp(NewControlPanel)-2.EnableParameterstoPasstoApp"></span> 2. Enable Parameters to Pass to App
+ </h3>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 5. Enable Parameters to Pass to App" decoding="async" loading="lazy" src="/images/image-20240330-064424-ae72d0.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 5. Enable </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Parameters to Pass to App</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="3.-Add-‘-green’-in-the-text-box-and-Click-Save"><span id="ParameterstopasstoApp(NewControlPanel)-3.Add‘-green’inthetextboxandClickSave"></span>3. Add ‘<strong>-green</strong>’ in the text box and Click Save
+ </h3>
+<div data-appearance="warning" role="note">
+<aside class="callout note">
+<p><em><strong>DO NOT</strong></em><em> add the local Pixel Streaming commands in this parameters field.</em></p>
+<p><em>Such as:</em><code> -PixelStreamingIP=localhost -PixelStreamingPort=8888 </code><em>they are added Automatically by our system.</em></p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 6. Add -green in the text field. Click Save" decoding="async" loading="lazy" src="/images/image-20240330-064756-cc485a.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 6. Add </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>-green</strong></em></span><span style="--color: var(--gray, #97a0af);"><em> in the text field. Click </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Save</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="4.-Open-E3DSFeaturesTemplate"><span id="ParameterstopasstoApp(NewControlPanel)-4.OpenE3DSFeaturesTemplate"></span>4. Open E3DSFeaturesTemplate 
+ </h3>
+<p>In the Streaming Link, click Play App.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 7. Click Play App" decoding="async" loading="lazy" src="/images/image-20240330-145218-b81faa.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 7. Click</em></span><span style="--color: var(--gray, #97a0af);"><em><strong> Play App</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="5.-Run-to-the-12th-booth"><span id="ParameterstopasstoApp(NewControlPanel)-5.Runtothe12thbooth"></span>5. Run to the 12th booth
+ </h3>
+<p>UE4 has received your Command on runtime and has changed the sphere’s color to green. </p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 8. E3DSFeaturesTemplate : Sphere Сolor changed to green" decoding="async" loading="lazy" src="/images/image-20231222-132552-e185f8.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 8. E3DSFeaturesTemplate : Sphere Сolor changed to </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>green</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+
+<p>You have now learned how to Pass 1 Command to your App from the New Control Panel and how to see the changes in the App.</p>
+<h2 id="To-pass-more-parameters,-follow-the-steps-below-:"><span id="ParameterstopasstoApp(NewControlPanel)-Topassmoreparameters,followthestepsbelow:"></span>To pass more parameters, follow the steps below : 
+ </h2>
+<h3 id="1.-Go-back-to-the-“Parameters-to-Pass-to-App”-Config"><span id="ParameterstopasstoApp(NewControlPanel)-1.Gobacktothe“ParameterstoPasstoApp”Config"></span>1. Go back to the “Parameters to Pass to App” Config 
+ </h3>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em>Go back to : Streaming Link &gt; Edit Config &gt; Advanced Options &gt; Developer &gt; Parameters to Pass to App</em></p>
+</aside>
+</div>
+<h3 id="2.-Enter-‘-blue--pink--white'-in-the-text-field-and-click-save"><span id="ParameterstopasstoApp(NewControlPanel)-2.Enter‘-blue-pink-white&amp;#39;inthetextfieldandclicksave"></span>2. Enter ‘<strong>-blue -pink -white</strong>' in the text field and click save
+ </h3>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 9. Add ‘ -blue -pink -white ’ to the text field" decoding="async" loading="lazy" src="/images/image-20240330-064958-e36602.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 9. Add ‘</em></span><span style="--color: var(--gray, #97a0af);"><em><strong>-blue -pink -white</strong></em></span><span style="--color: var(--gray, #97a0af);"><em>’ to the text field</em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="3.-Open-the-E3DSFeaturesTemplate-App-and-run-to-the-12th-bay"><span id="ParameterstopasstoApp(NewControlPanel)-3.OpentheE3DSFeaturesTemplateAppandruntothe12thbay"></span>3. Open the E3DSFeaturesTemplate App and run to the 12th bay
+ </h3>
+<p>Run the game to see the changes made after inputting the commands from the Control Panel.</p>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em>UE has received the commands during runtime and has changed the colors.</em></p>
+<p><em>The sphere color changed to blue. The cone to pink and the cube to white.</em></p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 10. The sphere, cone and cube’s colors changed to blue, pink and white" decoding="async" loading="lazy" src="/images/image-20220725-195630-e3ba68.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 10. The sphere, cone and cube’s colors changed to blue, pink and white</em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="4.-Go-back-to-“Parameters-to-Pass-to-App”-text-field"><span id="ParameterstopasstoApp(NewControlPanel)-4.Gobackto“ParameterstoPasstoApp”textfield"></span>4. Go back to “Parameters to Pass to App” text field
+ </h3>
+<h3 id="5.-Enter-‘-blue--red--green’-and-click-save"><span id="ParameterstopasstoApp(NewControlPanel)-5.Enter‘-blue-red-green’andclicksave"></span>5. Enter ‘-blue -red -green’ and click save
+ </h3>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 11. Add ‘ -blue -red -green ’ into Parameters to Pass to App text field" decoding="async" loading="lazy" src="/images/image-20240330-065212-f16ca7.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 11. Add ‘</em></span><span style="--color: var(--gray, #97a0af);"><em><strong>-blue -red -green</strong></em></span><span style="--color: var(--gray, #97a0af);"><em>’ into </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>Parameters to Pass to App</strong></em></span><span style="--color: var(--gray, #97a0af);"><em> text field</em></span>
+</figcaption>
+</figure>
+
+</div>
+<h3 id="6.-Open-the-E3DSFeaturesTemplate-App-and-run-to-the-12th-bay"><span id="ParameterstopasstoApp(NewControlPanel)-6.OpentheE3DSFeaturesTemplateAppandruntothe12thbay"></span>6. Open the E3DSFeaturesTemplate App and run to the 12th bay
+ </h3>
+<p>Run the game to see the changes of colors.</p>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em>UE has received your commands during runtime.</em></p>
+<p><em>The color of the sphere changed to blue, the cone changed to green and the cube to red.</em></p>
+</aside>
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Image 12. the sphere, cone and cube’s colors changed to blue , green and red" decoding="async" loading="lazy" src="/images/image-20220725-195834-cef5ed.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);"><em>Image 12. the sphere, cone and cube’s colors changed to </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>blue</strong></em></span><span style="--color: var(--gray, #97a0af);"><em>, </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>green</strong></em></span><span style="--color: var(--gray, #97a0af);"><em> and </em></span><span style="--color: var(--gray, #97a0af);"><em><strong>red</strong></em></span>
+</figcaption>
+</figure>
+
+</div>
+
+<p>Now you know how to pass multiple Commands from the Config “<strong>Parameters to Pass to App</strong>”.</p>
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><em><strong>Pro-tip:</strong></em></p>
+<p><em>Check the </em><em><strong>UE Blueprints</strong></em><em> in our </em><a href="https://github.com/e3ds-ue4/E3DSFeaturesTemplate" rel="noreferrer" target="_blank"><em><strong>sample project</strong></em></a><em> to see how these commands are being received by UE.</em></p>
+</aside>
+</div>

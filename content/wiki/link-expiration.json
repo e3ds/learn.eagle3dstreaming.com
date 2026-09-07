@@ -1,0 +1,11 @@
+{
+ "title": "Link Expiration",
+ "slug": "link-expiration",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration",
+  "edit-your-config",
+  "edit-the-common-config-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/link-expiration"
+}

@@ -1,0 +1,227 @@
+<p>This document demonstrates a simple login flow before loading an Eagle 3D Streaming application through the E3DS SDK.</p>
+<p>This is only a demo concept. It is not a production-ready authentication system. In production, authentication should be handled securely on the server side using proper sessions, tokens, or secure cookies.</p>
+<p>This demo only shows a login page. A registration page is not included, but you can implement one based on your own requirements.</p>
+
+<h2 id="Login-System-Flow" style=""><span id="LoginIntegrationwithE3DSSDK-LoginSystemFlow"></span>Login System Flow
+ </h2>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 1. Login System Flow Diagram" decoding="async" loading="lazy" src="/images/image-20260610-150945-aad79a.png"/>
+
+<figcaption>Figure 1. Login System Flow Diagram</figcaption>
+</figure>
+
+</div>
+
+<p>The logic is structured as follows:</p>
+<ol>
+<li>
+<p>The user lands on the Login Page</p>
+</li>
+<li>
+<p>The user enters credentials</p>
+</li>
+<li>
+<p>Credentials are validated</p>
+</li>
+<li>
+<p>If valid, the user is redirected to the SDK stream page</p>
+</li>
+<li>
+<p>The SDK stream page verifies authentication before starting the stream</p>
+</li>
+<li>
+<p>If authentication fails, the user is redirected back to the login page</p>
+</li>
+<li>
+<p>If authentication succeeds, the E3DS SDK initializes and loads the stream</p>
+</li>
+</ol>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p>A simple SDK-based login integration example page:</p>
+<p><a href="https://github.com/e3ds/pixelstreaming-sdk/blob/main/login.html" rel="noreferrer" target="_blank"><strong>https://github.com/e3ds/pixelstreaming-sdk/blob/main/login.html</strong></a><strong> </strong></p>
+</aside>
+</div>
+
+<div data-appearance="info" role="note">
+<aside class="callout note">
+<p><strong>Demo Login Page:</strong> <a href="https://e3ds.github.io/pixelstreaming-sdk/login.html" rel="noreferrer" target="_blank"><strong>https://e3ds.github.io/pixelstreaming-sdk/login.html</strong></a>
+<br/></p>
+<p>Use the following demo credentials:</p>
+<p><strong>Email:</strong> <a href="mailto:demo@gmail.com" rel="external noreferrer">demo@gmail.com</a>
+<br/>
+<strong>Password:</strong> demo%#
+   <br/></p>
+<p><strong>Note:</strong> This demo login page is only for showing the basic flow. It is not a production authentication system.</p>
+</aside>
+</div>
+
+<p>Implementation Steps:</p>
+<h2 id="Step-1.-Create-a-Login-Page" style=""><span id="LoginIntegrationwithE3DSSDK-Step1.CreateaLoginPage"></span>Step 1. Create a Login Page
+ </h2>
+<p>Create a basic login form that captures the user’s email and password.</p>
+<pre><code class="language-javascript">&lt;form onsubmit="handleLogin(event)"&gt;
+        &lt;h3&gt;Login Here&lt;/h3&gt;
+
+        &lt;label for="email"&gt;Email&lt;/label&gt;
+        &lt;input type="text" placeholder="Email or Phone" id="email" name="email"&gt;
+
+        &lt;label for="password"&gt;Password&lt;/label&gt;
+        &lt;input type="password" placeholder="Password" id="password" name="password"&gt;
+
+        &lt;button type="submit"&gt;Log In&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+
+<h2 id="Step-2.-Handle-Authentication-Logic" style=""><span id="LoginIntegrationwithE3DSSDK-Step2.HandleAuthenticationLogic"></span>Step 2. Handle Authentication Logic
+ </h2>
+<p>When the user submits the login form, validate the credentials. In this demo, <code>localStorage</code> is used only to show the flow.</p>
+<pre><code class="language-javascript">function handleLogin(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // Replace this with your actual authentication logic
+    localStorage.setItem("isAuthenticated", "true");
+
+    window.location.href = "/e3ds_streaming_FE.html";
+}
+</code></pre>
+
+<h5 id="Important" style=""><span id="LoginIntegrationwithE3DSSDK-Important"></span><strong>Important</strong>
+</h5>
+<p>This example uses <code>localStorage</code> only for demonstration. Do not use this as the only authentication method in production.</p>
+<p>In production, login validation should be handled by your backend server.</p>
+
+<h2 id="Step-3.-Protect-the-SDK-Stream-Page" style=""><span id="LoginIntegrationwithE3DSSDK-Step3.ProtecttheSDKStreamPage"></span>Step 3. Protect the SDK Stream Page
+ </h2>
+<p>On the SDK stream page, for example <code>e3ds_streaming_FE.html</code>, check authentication before initializing the E3DS SDK.</p>
+<pre><code>window.onload = function () {
+    if (localStorage.getItem("isAuthenticated") !== "true") {
+        window.location.href = "/login.html";
+        return;
+    }
+
+    // Initialize the E3DS SDK only after authentication is verified
+    initializeE3DSStream();
+};
+</code></pre>
+
+<p>If the user is not authenticated, they are redirected to the login page. If authentication is valid, the SDK stream page continues loading.</p>
+
+<h2 id="Step-4.-Initialize-the-E3DS-SDK-After-Login" style=""><span id="LoginIntegrationwithE3DSSDK-Step4.InitializetheE3DSSDKAfterLogin"></span>Step 4. Initialize the E3DS SDK After Login
+ </h2>
+<p>Initialize the E3DS SDK only after the authentication check is passed.</p>
+<pre><code class="language-javascript">function initializeE3DSStream() {
+    // Your existing E3DS SDK initialization code goes here
+
+    const e3ds_controller = new E3DSController();
+
+    e3ds_controller.setConfig({
+        username: "YourE3DSUsername",
+        appName: "YourAppName",
+        configName: "YourConfigName"
+    });
+
+    e3ds_controller.start();
+}
+</code></pre>
+
+<h5 id="Note" style=""><span id="LoginIntegrationwithE3DSSDK-Note"></span><strong>Note</strong>
+</h5>
+<p>The SDK should not start before authentication is checked. This helps demonstrate how users can be redirected before the stream loads.</p>
+<p>For production, this protection should be enforced from the backend server, not only from client-side JavaScript.</p>
+
+<h2 id="Step-5.-Add-Logout-Option" style=""><span id="LoginIntegrationwithE3DSSDK-Step5.AddLogoutOption"></span>Step 5. Add Logout Option
+ </h2>
+<p>You can add a logout button to clear the demo authentication flag and redirect the user back to the login page.</p>
+<pre><code class="language-html">&lt;button onclick="logout()"&gt;Logout&lt;/button&gt;
+</code></pre>
+
+<pre><code class="language-javascript">function logout() {
+    localStorage.removeItem("isAuthenticated");
+    window.location.href = "/login.html";
+}
+</code></pre>
+
+<h2 id="Recommendation" style=""><span id="LoginIntegrationwithE3DSSDK-Recommendation"></span>Recommendation
+ </h2>
+<p>For production use, do not rely only on <code>localStorage</code>.</p>
+<p>A secure production flow should include:</p>
+<ul>
+<li>
+<p>Server-side credential validation</p>
+</li>
+<li>
+<p>Secure session or token-based authentication</p>
+</li>
+<li>
+<p>Secure cookies</p>
+</li>
+<li>
+<p>Protected SDK stream route</p>
+</li>
+<li>
+<p>Token or session expiry handling</p>
+</li>
+<li>
+<p>Logout and session cleanup</p>
+</li>
+<li>
+<p>HTTPS enabled on the website</p>
+</li>
+<li>
+<p>Backend authorization before allowing access to the stream</p>
+</li>
+</ul>
+<p>The SDK stream should only be initialized after the backend confirms that the user is authorized to access it.</p>
+
+<h2 id="Example-Repository" style=""><span id="LoginIntegrationwithE3DSSDK-ExampleRepository"></span>Example Repository
+ </h2>
+<p>A simple SDK-based login integration example:</p>
+<p><a href="https://github.com/e3ds/pixelstreaming-sdk/blob/main/login.html" rel="noreferrer" target="_blank"><strong>https://github.com/e3ds/pixelstreaming-sdk/blob/main/login.html</strong></a><strong> </strong></p>
+<p>The example includes:</p>
+<ul>
+<li>
+<p>A basic <code>login.html</code> page</p>
+</li>
+<li>
+<p>A protected SDK stream page</p>
+</li>
+</ul>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Figure 2. Login Page" decoding="async" loading="lazy" src="/images/image-20260610-173144-afcb23.png"/>
+
+<figcaption>Figure 2. Login Page</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Registration-Page" style=""><span id="LoginIntegrationwithE3DSSDK-RegistrationPage"></span>Registration Page
+ </h2>
+<p>This demo does not include a registration page.</p>
+<p>You can create a registration page based on your own system requirements, such as:</p>
+<ul>
+<li>
+<p>User sign-up</p>
+</li>
+<li>
+<p>Email verification</p>
+</li>
+<li>
+<p>Password reset</p>
+</li>
+<li>
+<p>Backend user management</p>
+</li>
+</ul>
+<p>In production, registration should also be handled securely on the server side.</p>

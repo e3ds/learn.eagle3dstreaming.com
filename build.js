@@ -75,8 +75,28 @@ const EXTRA_PAGES = [
  * it is where a new reader starts, and no sort order produces that by accident.
  */
 const NAV_GROUPS = [
+  /* Reading order, declared. Alphabetical would open the documentation with
+   * "App Configuration" and bury Getting Started in the middle - and no sort
+   * produces a sensible order by accident.
+   *
+   * Roughly: learn it, configure it, embed it, then the specialist paths, then
+   * reference. A newcomer meets these in the order they will need them.
+   *
+   * A section named here that has no pages yet is skipped, so this list can
+   * name what is coming without leaving an empty heading behind. */
   { title: "Getting started", slugs: ["getting-started"] },
   { title: "Streaming settings", slugs: ["microphone-settings", "fullscreen-button"] },
+  { title: "App configuration", slugs: ["app-configuration"] },
+  { title: "Control panel", slugs: ["control-panel-features"] },
+  { title: "Embedding", slugs: ["embed-stream-into-webpage"] },
+  { title: "Developer guides", slugs: ["development-guides"] },
+  { title: "Multiplayer", slugs: ["multiplayer-pixel-streaming"] },
+  { title: "Virtual reality", slugs: ["virtual-reality-pixel-streaming"] },
+  { title: "Linux streaming", slugs: ["linux-pixel-streaming"] },
+  { title: "System requirements", slugs: ["system-requirements"] },
+  { title: "Foundational knowledge", slugs: ["blogs-and-articles"] },
+  { title: "FAQ", slugs: ["faq-frequently-asked-questions"] },
+  { title: "What's new", slugs: ["what-s-new"] },
 ];
 
 const LEGACY_FILES = ["index.html", "microphone-settings.html", "fullscreen-button.html"];
@@ -237,6 +257,10 @@ function main() {
     const html = template
       .replace(/\{\{nav\}\}/g, navHtml(tree, p.slug))
       .replace(/\{\{breadcrumbs\}\}/g, crumbsHtml(p, tree.bySlug))
+      .replace(/\{\{ported\}\}/g, p.rewritten ? "" :
+        '<p class="ported"><strong>Not yet rewritten.</strong> This page is the '
+        + 'original wiki text in the new template. It is accurate but has not been '
+        + 'through the rewrite.</p>')
       .replace(/\{\{children\}\}/g, childrenHtml(p, tree.kids))
       .replace(/\{\{description\}\}/g, describe(body, p.title))
       .replace(/\{\{canonical\}\}/g, esc(p.source || ("https://learn.eagle3dstreaming.com/wiki/" + p.slug)))
