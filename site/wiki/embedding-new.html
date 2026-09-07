@@ -436,13 +436,13 @@
 
       <!-- 1. EMBEDDING -->
       <section class="nm-cell nm-on" data-t="embed" data-m="url">
-        <h3>Embedding it</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Getting the stream onto a page</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag yes">Available</span>
         <p>Nothing to build. Copy the streaming URL from your application in the Control Panel and send it to whoever needs it.</p>
         <pre><code>https://connector.eagle3dstreaming.com/v5/YOURNAME/YourApp/default</code></pre>
       </section>
       <section class="nm-cell" data-t="embed" data-m="iframe">
-        <h3>Embedding it</h3><p class="nm-sub">iframe</p>
+        <h3>Getting the stream onto a page</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
         <p>One tag on a page you host, so the viewer sees <em>your</em> address. <code>allowfullscreen</code> is required if you ever want fullscreen, and <code>allow</code> matters if your app uses the microphone or camera.</p>
         <pre><code>&lt;iframe id="e3ds"
@@ -451,7 +451,7 @@
   width="100%" height="100%"&gt;&lt;/iframe&gt;</code></pre>
       </section>
       <section class="nm-cell" data-t="embed" data-m="sdk">
-        <h3>Embedding it</h3><p class="nm-sub">SDK</p>
+        <h3>Getting the stream onto a page</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>The player renders into an element on your own page. Request a short-lived token, then hand it to <code>main()</code>. Full setup in <a href="/wiki/embed-stream-using-e3ds-sdk">the SDK guide</a>.</p>
         <pre><code>&lt;div id="playerUI"&gt;&lt;/div&gt;
@@ -463,19 +463,19 @@ if (result &amp;&amp; result.ok === false) showYourOwnError(result.message);</co
 
       <!-- 2. SEND -->
       <section class="nm-cell" data-t="send" data-m="url">
-        <h3>Page &rarr; Unreal</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Sending data from your page to Unreal</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag na">Not applicable</span>
         <p>There is no page of yours to send from. Anything your app needs has to come from inside it. If the surrounding page must tell the app something, that is the reason to move to an iframe &mdash; not a gap we can close here.</p>
       </section>
       <section class="nm-cell" data-t="send" data-m="iframe">
-        <h3>Page &rarr; Unreal</h3><p class="nm-sub">iframe</p>
+        <h3>Sending data from your page to Unreal</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
         <p>Post a message to the frame. The <code>cmd</code> key is required and must be exactly this &mdash; without it the frame receives the message and silently does not forward it. No error, no warning. If data is not arriving in your app, check this first.</p>
         <pre><code>document.getElementById("e3ds").contentWindow.postMessage(
   JSON.stringify({ cmd: "sendDataToUE", value: { Character: "Aurora" } }), "*");</code></pre>
       </section>
       <section class="nm-cell" data-t="send" data-m="sdk">
-        <h3>Page &rarr; Unreal</h3><p class="nm-sub">SDK</p>
+        <h3>Sending data from your page to Unreal</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>One call. <code>sendToUnreal</code> is the same function under a second name.</p>
         <pre><code>e3ds_controller.sendDataToUE({ Character: "Aurora" });</code></pre>
@@ -483,12 +483,12 @@ if (result &amp;&amp; result.ok === false) showYourOwnError(result.message);</co
 
       <!-- 3. RECEIVE -->
       <section class="nm-cell" data-t="receive" data-m="url">
-        <h3>Unreal &rarr; page</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Receiving data from Unreal in your page</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag na">Not applicable</span>
         <p>Your app can send, but there is no page of yours listening. The Unreal half is identical in all three methods &mdash; a <strong>Pixel Streaming Input</strong> component and a <strong>Send Pixel Streaming Response</strong> node &mdash; so this works the moment you host a page.</p>
       </section>
       <section class="nm-cell" data-t="receive" data-m="iframe">
-        <h3>Unreal &rarr; page</h3><p class="nm-sub">iframe</p>
+        <h3>Receiving data from Unreal in your page</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
         <p>What your Blueprint sent arrives as an ordinary message from the frame.</p>
         <pre><code>window.addEventListener("message", function (event) {
@@ -496,7 +496,7 @@ if (result &amp;&amp; result.ok === false) showYourOwnError(result.message);</co
 });</code></pre>
       </section>
       <section class="nm-cell" data-t="receive" data-m="sdk">
-        <h3>Unreal &rarr; page</h3><p class="nm-sub">SDK</p>
+        <h3>Receiving data from Unreal in your page</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>A callback. Assign it <strong>before</strong> the stream starts &mdash; one registered late has already missed whatever arrived first.</p>
         <pre><code>e3ds_controller.callbacks.onResponseFromUnreal = function (descriptor) {
@@ -506,18 +506,18 @@ if (result &amp;&amp; result.ok === false) showYourOwnError(result.message);</co
 
       <!-- 4. FULLSCREEN -->
       <section class="nm-cell" data-t="fullscreen" data-m="url">
-        <h3>Fullscreen</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Putting the stream into fullscreen</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag yes">Available</span>
         <p>Switch on <strong>Enable Fullscreen Button</strong> in your application configuration and the player shows one. Nothing to write &mdash; <a href="/fullscreen-button.html">what it does on each device</a>.</p>
       </section>
       <section class="nm-cell" data-t="fullscreen" data-m="iframe">
-        <h3>Fullscreen</h3><p class="nm-sub">iframe</p>
+        <h3>Putting the stream into fullscreen</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
         <p>There is <strong>no fullscreen message</strong> to send the frame. Instead put your own button on your page and call the browser's own Fullscreen API on the iframe element. The iframe must carry <code>allowfullscreen</code> or nothing happens.</p>
         <pre><code>document.getElementById("e3ds").requestFullscreen();</code></pre>
       </section>
       <section class="nm-cell" data-t="fullscreen" data-m="sdk">
-        <h3>Fullscreen</h3><p class="nm-sub">SDK</p>
+        <h3>Putting the stream into fullscreen</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>One call, and it handles the platform differences &mdash; including iOS, where only the video element can go fullscreen.</p>
         <pre><code>e3ds_controller.toggleFullscreen();</code></pre>
@@ -525,17 +525,17 @@ if (result &amp;&amp; result.ok === false) showYourOwnError(result.message);</co
 
       <!-- 5. BACKGROUND -->
       <section class="nm-cell" data-t="background" data-m="url">
-        <h3>Background &amp; loading</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Your logo, loading background and play screen</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag yes">Available</span>
         <p>Your logo, loading background, queue screen and play button are all configuration settings &mdash; see <a href="/wiki/loading-screen">the loading screen</a> and <a href="/wiki/branding-and-hosting">branding</a>. This is the whole of the customisation available here, and for many apps it is enough.</p>
       </section>
       <section class="nm-cell" data-t="background" data-m="iframe">
-        <h3>Background &amp; loading</h3><p class="nm-sub">iframe</p>
+        <h3>Your logo, loading background and play screen</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
         <p>The same configuration settings apply, since the frame is showing the same player. You also get a second layer: your own page around the frame, so a loading state of your own can sit over or beside it until the stream appears.</p>
       </section>
       <section class="nm-cell" data-t="background" data-m="sdk">
-        <h3>Background &amp; loading</h3><p class="nm-sub">SDK</p>
+        <h3>Your logo, loading background and play screen</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>The configuration settings still apply, and you can replace the experience outright: the progress callbacks let you build your own loading screen and show real progress rather than a spinner.</p>
         <pre><code>e3ds_controller.callbacks.onReceivingAppStartingProgress = function (percent) {
@@ -545,18 +545,18 @@ if (result &amp;&amp; result.ok === false) showYourOwnError(result.message);</co
 
       <!-- 6. RESOLUTION -->
       <section class="nm-cell" data-t="resolution" data-m="url">
-        <h3>Resolution</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Choosing the resolution the stream runs at</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag yes">Available</span>
         <p>The stream follows the size of the window, which is usually what you want. On a phone that means a smaller frame and a softer picture &mdash; correct behaviour, not a fault. There is no way to pin it from outside the app.</p>
       </section>
       <section class="nm-cell" data-t="resolution" data-m="iframe">
-        <h3>Resolution</h3><p class="nm-sub">iframe</p>
+        <h3>Choosing the resolution the stream runs at</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
         <p>Pinning works. Releasing it back to following the window has no iframe command &mdash; reload the frame to undo it.</p>
         <pre><code>post({ cmd: "freezeResolutionAt", x: 1920, y: 1080 });</code></pre>
       </section>
       <section class="nm-cell" data-t="resolution" data-m="sdk">
-        <h3>Resolution</h3><p class="nm-sub">SDK</p>
+        <h3>Choosing the resolution the stream runs at</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>Use these rather than sending a raw <code>Resolution</code> command. A raw command does change the picture &mdash; then a few seconds later the viewport watcher sends the window size again and your change is gone. Only these calls turn that watcher off.</p>
         <pre><code>e3ds_controller.setResolution(1920, 1080);
@@ -565,12 +565,12 @@ e3ds_controller.useViewportResolution();   // back to following the window</code
 
       <!-- 7. QUALITY -->
       <section class="nm-cell" data-t="quality" data-m="url">
-        <h3>Quality</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Choosing the picture quality of the stream</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag yes">Available</span>
         <p>The player's own settings panel carries a quality control. The viewer chooses; you do not.</p>
       </section>
       <section class="nm-cell" data-t="quality" data-m="iframe">
-        <h3>Quality</h3><p class="nm-sub">iframe</p>
+        <h3>Choosing the picture quality of the stream</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
         <p>A fixed point holds one setting. Adaptive lets the stream move within a range &mdash; the best picture the connection can carry at that moment.</p>
         <pre><code>post({ cmd: "setQualityPoint", value: n });
@@ -578,20 +578,21 @@ post({ cmd: "setAdaptiveQualityPoint", value: n });
 post({ cmd: "setQualityPreset", value: preset });</code></pre>
       </section>
       <section class="nm-cell" data-t="quality" data-m="sdk">
-        <h3>Quality</h3><p class="nm-sub">SDK</p>
+        <h3>Choosing the picture quality of the stream</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
+        <p>The same two choices as the iframe, as direct calls. A fixed point holds one setting whatever the connection does, which is what you want when the picture has to be predictable &mdash; a product shot, a screenshot people will keep. Adaptive gives the best picture the connection can carry moment to moment, which is what you want for everything else.</p>
         <pre><code>e3ds_controller.setQualityPoint(n);
 e3ds_controller.setAdaptiveQualityPoint(n);</code></pre>
       </section>
 
       <!-- 8. INPUT -->
       <section class="nm-cell" data-t="input" data-m="url">
-        <h3>Mouse &amp; touch</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Mouse, touch and keyboard input</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag yes">Available</span>
         <p>Mouse scheme and touch input are configuration settings. They apply for the whole session and cannot be changed while it runs.</p>
       </section>
       <section class="nm-cell" data-t="input" data-m="iframe">
-        <h3>Mouse &amp; touch</h3><p class="nm-sub">iframe</p>
+        <h3>Mouse, touch and keyboard input</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
         <p>Changeable at runtime. Hovering leaves the cursor free, which suits configurators; locked captures the pointer for camera control. The keyboard commands let a button on your page act as a key press &mdash; useful on a touch device with no keyboard.</p>
         <pre><code>post({ cmd: "switchMouseControlSchemeTo", value: scheme });
@@ -599,7 +600,7 @@ post({ cmd: "setTouchInputEnabled", value: true });
 post({ cmd: "emulateKeyboardKeyPress", value: key });</code></pre>
       </section>
       <section class="nm-cell" data-t="input" data-m="sdk">
-        <h3>Mouse &amp; touch</h3><p class="nm-sub">SDK</p>
+        <h3>Mouse, touch and keyboard input</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>Keyboard emulation has no SDK equivalent, because a page using the SDK can send real key events to the player.</p>
         <pre><code>e3ds_controller.switchMouseControlSchemeTo(scheme);
@@ -608,36 +609,38 @@ e3ds_controller.setTouchInputEnabled(true);</code></pre>
 
       <!-- 9. VOLUME -->
       <section class="nm-cell" data-t="volume" data-m="url">
-        <h3>Volume</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Controlling the volume of the stream</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag yes">Available</span>
         <p>The player's own interface carries a volume control the viewer can use. Note that every stream <a href="/wiki/audio-and-microphone">starts muted</a> until the viewer interacts with the page &mdash; that is the browser's rule, not ours.</p>
       </section>
       <section class="nm-cell" data-t="volume" data-m="iframe">
-        <h3>Volume</h3><p class="nm-sub">iframe</p>
+        <h3>Controlling the volume of the stream</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag soon">Coming</span>
         <p>Not built yet. Today there is no volume command, and your page cannot reach the video element inside the frame because it is on our domain and the browser blocks it.</p>
         <p><strong>Until it lands:</strong> send your app a value and change the sound inside Unreal &mdash; that controls the game's audio rather than the stream's &mdash; or use the SDK, where <code>setVolume()</code> already exists.</p>
       </section>
       <section class="nm-cell" data-t="volume" data-m="sdk">
-        <h3>Volume</h3><p class="nm-sub">SDK</p>
+        <h3>Controlling the volume of the stream</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
+        <p>One call, so the volume control can live in your own interface rather than the player's. It changes the <em>stream's</em> audio, which is the difference from sending a value into Unreal &mdash; that would change the game's own mix and every viewer would hear it.</p>
+        <p>Remember the stream <a href="/wiki/audio-and-microphone">starts muted</a> until the viewer interacts with the page. Setting a volume before that happens does not unmute it; the browser is holding the audio, not us.</p>
         <pre><code>e3ds_controller.setVolume(level);</code></pre>
       </section>
 
       <!-- 10. SCREENSHOTS -->
       <section class="nm-cell" data-t="shot" data-m="url">
-        <h3>Screenshots</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Capturing a screenshot of what is on screen</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag yes">Available</span>
         <p>Add the <strong>Capture Screenshot</strong> node from the E3DS Features plugin and trigger it in your Blueprint. This works in all three methods because it runs app-side &mdash; see <a href="/wiki/screenshots">screenshots</a>.</p>
       </section>
       <section class="nm-cell" data-t="shot" data-m="iframe">
-        <h3>Screenshots</h3><p class="nm-sub">iframe</p>
+        <h3>Capturing a screenshot of what is on screen</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag soon">Coming</span>
         <p>A screenshot command for the frame is not built yet.</p>
         <p><strong>Until it lands:</strong> the Blueprint route above works today and needs nothing from us, so the feature is reachable now &mdash; the trigger just lives inside your app rather than on your page.</p>
       </section>
       <section class="nm-cell" data-t="shot" data-m="sdk">
-        <h3>Screenshots</h3><p class="nm-sub">SDK</p>
+        <h3>Capturing a screenshot of what is on screen</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>Captures at Unreal's own quality rather than the stream's, so the image does not depend on the viewer's connection.</p>
         <pre><code>e3ds_controller.captureScreenShot();</code></pre>
@@ -645,18 +648,18 @@ e3ds_controller.setTouchInputEnabled(true);</code></pre>
 
       <!-- 11. SESSION -->
       <section class="nm-cell" data-t="session" data-m="url">
-        <h3>Start &amp; restart</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Starting, restarting and ending the session</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag na">Not applicable</span>
         <p>The session starts when the page is opened and ends on the rules in your configuration &mdash; idle timeout, session limit. There is nothing outside it to start or stop it from.</p>
       </section>
       <section class="nm-cell" data-t="session" data-m="iframe">
-        <h3>Start &amp; restart</h3><p class="nm-sub">iframe</p>
+        <h3>Starting, restarting and ending the session</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag soon">Coming</span>
         <p>A terminate command is not built yet.</p>
         <p><strong>Until it lands:</strong> setting <code>src</code> again is the nearest thing to a restart, and a session you want gone ends on the configuration's <a href="/wiki/session-and-access">idle timeout</a> rather than on your say-so.</p>
       </section>
       <section class="nm-cell" data-t="session" data-m="sdk">
-        <h3>Start &amp; restart</h3><p class="nm-sub">SDK</p>
+        <h3>Starting, restarting and ending the session</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>Fetch the token <strong>before</strong> ending the session, so a failed request leaves the viewer with the stream they already had. And always terminate first: <code>main()</code> builds a player into <code>#playerUI</code>, so calling it twice stacks two.</p>
         <pre><code>async function restartStream() {
@@ -670,17 +673,17 @@ e3ds_controller.setTouchInputEnabled(true);</code></pre>
 
       <!-- 12. ACCESS -->
       <section class="nm-cell" data-t="access" data-m="url">
-        <h3>Who may stream</h3><p class="nm-sub">Streaming URL</p>
+        <h3>Deciding who is allowed to start a stream</h3><p class="nm-sub">Streaming URL</p>
         <span class="nm-flag na">Not applicable</span>
         <p>Anyone with the link. You can add a password or restrict a link in the configuration &mdash; see <a href="/wiki/session-and-access">sessions and access</a> &mdash; but the link itself is what grants access, and you cannot revoke it for one person.</p>
       </section>
       <section class="nm-cell" data-t="access" data-m="iframe">
-        <h3>Who may stream</h3><p class="nm-sub">iframe</p>
+        <h3>Deciding who is allowed to start a stream</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag na">Not applicable</span>
         <p>The same. Your page can require a login before it shows the frame, but the streaming URL inside is still a working link to anyone who reads your page source.</p>
       </section>
       <section class="nm-cell" data-t="access" data-m="sdk">
-        <h3>Who may stream</h3><p class="nm-sub">SDK</p>
+        <h3>Deciding who is allowed to start a stream</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
         <p>This is the real reason to choose the SDK. The session starts from a short-lived token, so <em>your</em> backend decides who gets one, when, and for which app. Keep the API key there and the browser never holds anything reusable.</p>
       </section>
