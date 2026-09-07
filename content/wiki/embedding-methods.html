@@ -47,7 +47,10 @@
   text-transform:uppercase; padding:2px 8px; border-radius:99px; border:1px solid var(--line);
   color:var(--ink-3); margin-bottom:10px; }
 .m-avail.yes { color:var(--accent); border-color:var(--accent); }
-.m-avail.no { color:var(--ink-3); }
+.m-avail.soon { color:#9a6b00; border-color:#d8a640; }
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .m-avail.soon { color:#e0ad4a; border-color:#8a6a24; } }
+:root[data-theme="dark"] .m-avail.soon { color:#e0ad4a; border-color:#8a6a24; }
+.m-avail.design { color:var(--ink-3); }
 </style>
 
 <h2>The three methods</h2>
@@ -88,6 +91,13 @@
   methods, so you can see what it would cost you before committing to one.
 </p>
 
+<p>
+  Each answer is marked <strong>Available</strong>,
+  <strong>Coming</strong> &mdash; not built for that method yet, with what to do
+  in the meantime &mdash; or <strong>Not applicable</strong>, meaning it cannot
+  work that way at all rather than being a gap we intend to close.
+</p>
+
 <div class="m-wrap" id="m-matrix">
   <div class="m-list" role="tablist" aria-label="Task"></div>
   <div class="m-pane">
@@ -108,7 +118,7 @@
       <tr><td>Needs an API key</td><td>No</td><td>No</td><td>Yes &mdash; keep it server-side</td></tr>
       <tr><td>Who may start a session</td><td>Anyone with the link</td><td>Anyone with the link</td><td><strong>Whoever your server issues a token to</strong></td></tr>
       <tr><td>Control over the session itself</td><td>None</td><td>Reload the frame</td><td>Start, restart, end, react to every stage</td></tr>
-      <tr><td>Volume and screenshots from your page</td><td>Built-in controls</td><td><strong>Not available</strong></td><td>Yes</td></tr>
+      <tr><td>Volume and screenshots from your page</td><td>Built-in controls</td><td>Coming &mdash; workarounds today</td><td>Yes</td></tr>
     </tbody>
   </table>
 </div>
@@ -144,116 +154,116 @@
 (function () {
   var TASKS = [
     { id: "embed", label: "Getting it on screen", rows: {
-      url: { a: 1, h: "Send the link",
+      url: { a: "yes", h: "Send the link",
         p: "Nothing to build. Copy the streaming URL from your application in the Control Panel and give it to whoever needs it. It works in any modern browser, desktop or mobile.",
         code: "https://connector.eagle3dstreaming.com/v5/YOURNAME/YourApp/default" },
-      iframe: { a: 1, h: "One tag on a page you host",
+      iframe: { a: "yes", h: "One tag on a page you host",
         p: "Put the streaming URL in an iframe on your own page. Your address is what the viewer sees. <code>allow</code> matters if your app uses the microphone or camera, and <code>allowfullscreen</code> is required if you ever want fullscreen.",
         code: "&lt;iframe\n  id=\"e3ds\"\n  src=\"https://connector.eagle3dstreaming.com/v5/YOURNAME/YourApp/default\"\n  allow=\"camera;microphone\"\n  allowfullscreen\n  width=\"100%\" height=\"100%\"&gt;\n&lt;/iframe&gt;" },
-      sdk: { a: 1, h: "Get a token, then start the session",
+      sdk: { a: "yes", h: "Get a token, then start the session",
         p: "The player renders into an element on your own page. You request a short-lived token, then hand it to <code>main()</code>. See <a href=\"/wiki/embed-stream-using-e3ds-sdk\">the setup guide</a>.",
         code: "&lt;div id=\"playerUI\"&gt;&lt;/div&gt;\n\n&lt;script&gt;\nconst tokenData = await requestSessionToken();\nconst result = e3ds_controller.main(tokenData);\nif (result &amp;&amp; result.ok === false) showYourOwnError(result.message);\n&lt;\/script&gt;" } } },
 
     { id: "send", label: "Sending data to Unreal", rows: {
-      url: { a: 0, h: "Only from inside the app",
+      url: { a: "design", h: "Only from inside the app",
         p: "There is no page of yours to send from. Anything your app needs must come from within it &mdash; its own interface, or a value baked into the build. If you need the surrounding page to tell the app something, that is the reason to move to an iframe." },
-      iframe: { a: 1, h: "Post a message to the frame",
+      iframe: { a: "yes", h: "Post a message to the frame",
         p: "The <code>cmd</code> key is required and must be exactly this. Without it the frame receives the message and silently does not forward it &mdash; no error, no warning. If data is not arriving in your app, check this first.",
         code: "document.getElementById(\"e3ds\").contentWindow.postMessage(\n  JSON.stringify({ cmd: \"sendDataToUE\", value: { Character: \"Aurora\" } }),\n  \"*\"\n);" },
-      sdk: { a: 1, h: "One call",
+      sdk: { a: "yes", h: "One call",
         p: "Whatever you pass arrives in your app. <code>sendToUnreal</code> is the same function under a second name.",
         code: "e3ds_controller.sendDataToUE({ Character: \"Aurora\" });" } } },
 
     { id: "receive", label: "Receiving data from Unreal", rows: {
-      url: { a: 0, h: "Nowhere to receive it",
+      url: { a: "design", h: "Nowhere to receive it",
         p: "Your app can send, but there is no page of yours listening. The Unreal side is identical in all three methods &mdash; a <strong>Pixel Streaming Input</strong> component and a <strong>Send Pixel Streaming Response</strong> node &mdash; so this becomes available the moment you host a page." },
-      iframe: { a: 1, h: "Listen for messages from the frame",
+      iframe: { a: "yes", h: "Listen for messages from the frame",
         p: "What your Blueprint sent arrives as an ordinary <code>postMessage</code> from the frame.",
         code: "window.addEventListener(\"message\", function (event) {\n  console.log(\"From Unreal:\", event.data);\n});" },
-      sdk: { a: 1, h: "A callback",
+      sdk: { a: "yes", h: "A callback",
         p: "Assign it <strong>before</strong> the stream starts &mdash; one registered late has already missed whatever arrived first.",
         code: "e3ds_controller.callbacks.onResponseFromUnreal = function (descriptor) {\n  console.log(\"From Unreal:\", descriptor);\n};" } } },
 
     { id: "fullscreen", label: "Fullscreen", rows: {
-      url: { a: 1, h: "Switch on the built-in button",
+      url: { a: "yes", h: "Switch on the built-in button",
         p: "Enable <strong>Fullscreen Button</strong> in your application configuration and the player shows one. Nothing to write &mdash; see <a href=\"/fullscreen-button.html\">the fullscreen guide</a> for what it does on each device." },
-      iframe: { a: 1, h: "Your own button, the browser's own API",
+      iframe: { a: "yes", h: "Your own button, the browser's own API",
         p: "There is <strong>no fullscreen message</strong> to send the frame. Instead call the browser's Fullscreen API on the iframe element from your page. The iframe must carry <code>allowfullscreen</code> or nothing happens.",
         code: "document.getElementById(\"e3ds\").requestFullscreen();" },
-      sdk: { a: 1, h: "One call, platform differences handled",
+      sdk: { a: "yes", h: "One call, platform differences handled",
         p: "Including iOS, where only the video element can go fullscreen.",
         code: "e3ds_controller.toggleFullscreen();" } } },
 
     { id: "resolution", label: "Resolution", rows: {
-      url: { a: 1, h: "Follows the window",
+      url: { a: "yes", h: "Follows the window",
         p: "The stream matches the size of the window, which is usually what you want. On a phone that means a smaller frame and a softer picture &mdash; correct behaviour, not a fault. There is no way to pin it from outside the app." },
-      iframe: { a: 1, h: "Freeze it at a size",
+      iframe: { a: "yes", h: "Freeze it at a size",
         p: "Pinning works; releasing it back to the window does not have an iframe command. Reload the frame to go back to following the window.",
         code: "document.getElementById(\"e3ds\").contentWindow.postMessage(\n  JSON.stringify({ cmd: \"freezeResolutionAt\", x: 1920, y: 1080 }),\n  \"*\"\n);" },
-      sdk: { a: 1, h: "Pin it, and release it",
+      sdk: { a: "yes", h: "Pin it, and release it",
         p: "Use these rather than sending a raw <code>Resolution</code> command. A raw command does change the picture &mdash; then a few seconds later the viewport watcher sends the window size again and your change is gone. Only these calls turn that watcher off.",
         code: "e3ds_controller.setResolution(1920, 1080);\ne3ds_controller.useViewportResolution();   // back to following the window" } } },
 
     { id: "quality", label: "Quality", rows: {
-      url: { a: 1, h: "The built-in picker",
+      url: { a: "yes", h: "The built-in picker",
         p: "The player's own settings panel carries a quality control. The viewer chooses; you do not." },
-      iframe: { a: 1, h: "Three commands",
+      iframe: { a: "yes", h: "Three commands",
         p: "A fixed point holds one setting. Adaptive lets the stream move within a range &mdash; the best picture the connection can carry at that moment.",
         code: "post({ cmd: \"setQualityPoint\", value: n });\npost({ cmd: \"setAdaptiveQualityPoint\", value: n });\npost({ cmd: \"setQualityPreset\", value: preset });" },
-      sdk: { a: 1, h: "The same two, as calls",
+      sdk: { a: "yes", h: "The same two, as calls",
         code: "e3ds_controller.setQualityPoint(n);\ne3ds_controller.setAdaptiveQualityPoint(n);" } } },
 
     { id: "input", label: "Mouse, touch and keyboard", rows: {
-      url: { a: 1, h: "Set once, in the configuration",
+      url: { a: "yes", h: "Set once, in the configuration",
         p: "Mouse scheme and touch input are configuration settings. They apply for the whole session and cannot be changed while it runs." },
-      iframe: { a: 1, h: "Changeable at runtime",
+      iframe: { a: "yes", h: "Changeable at runtime",
         p: "Hovering leaves the cursor free, which suits configurators. Locked captures the pointer for camera control. The keyboard commands let a button on your page act as a key press &mdash; useful when the viewer is on a touch device with no keyboard.",
         code: "post({ cmd: \"switchMouseControlSchemeTo\", value: scheme });\npost({ cmd: \"setTouchInputEnabled\", value: true });\npost({ cmd: \"emulateKeyboardKeyPress\", value: key });" },
-      sdk: { a: 1, h: "The same, as calls",
+      sdk: { a: "yes", h: "The same, as calls",
         p: "Keyboard emulation has no SDK equivalent, because a page using the SDK can send real key events to the player.",
         code: "e3ds_controller.switchMouseControlSchemeTo(scheme);\ne3ds_controller.setTouchInputEnabled(true);" } } },
 
     { id: "volume", label: "Volume", rows: {
-      url: { a: 1, h: "The built-in control",
+      url: { a: "yes", h: "The built-in control",
         p: "The player's own interface carries a volume control the viewer can use." },
-      iframe: { a: 0, h: "Not available",
-        p: "There is no volume command, and your page cannot reach the video element inside the frame &mdash; it is on our domain, so the browser blocks it. If your page needs a volume slider, that is a reason to use the SDK. A partial alternative is to send your app a value and change the sound in Unreal, which controls the game's audio rather than the stream's." },
-      sdk: { a: 1, h: "One call",
+      iframe: { a: "soon", h: "No volume command yet",
+        p: "Not built yet &mdash; it is on the list. Today there is no volume command, and your page cannot reach the video element inside the frame, because it is on our domain and the browser blocks it. <strong>Until it lands:</strong> send your app a value and change the sound in Unreal, which controls the game's audio rather than the stream's; or use the SDK, where <code>setVolume()</code> already exists." },
+      sdk: { a: "yes", h: "One call",
         code: "e3ds_controller.setVolume(level);" } } },
 
     { id: "screenshot", label: "Screenshots", rows: {
-      url: { a: 1, h: "From inside the app",
+      url: { a: "yes", h: "From inside the app",
         p: "Add the <strong>Capture Screenshot</strong> node from the E3DS Features plugin and trigger it in your Blueprint. This works in all three methods, because it runs app-side &mdash; see <a href=\"/wiki/screenshots\">screenshots</a>." },
-      iframe: { a: 0, h: "Not from the page yet",
-        p: "There is no screenshot command for the frame. The Blueprint route above still works, so the feature is reachable &mdash; the trigger just has to live inside your app rather than on your page." },
-      sdk: { a: 1, h: "One call",
+      iframe: { a: "soon", h: "No screenshot command yet",
+        p: "Not built yet &mdash; it is on the list. <strong>Until it lands:</strong> the Blueprint route works today and needs nothing from us, so the feature is reachable now &mdash; the trigger just has to live inside your app rather than on your page." },
+      sdk: { a: "yes", h: "One call",
         p: "Captures at Unreal's own quality rather than the stream's, so the image does not depend on the viewer's connection.",
         code: "e3ds_controller.captureScreenShot();" } } },
 
     { id: "session", label: "Starting, ending and restarting", rows: {
-      url: { a: 0, h: "We handle it",
+      url: { a: "design", h: "We handle it",
         p: "The session starts when the page is opened and ends on the rules in your configuration &mdash; idle timeout, session limit. You cannot start or stop one from outside." },
-      iframe: { a: 0, h: "Reload the frame",
-        p: "The nearest thing to a restart is setting <code>src</code> again. There is no terminate command, so a session you want gone ends on the configuration's timeout, not on your say-so." },
-      sdk: { a: 1, h: "Yours to control",
+      iframe: { a: "soon", h: "Reload the frame, for now",
+        p: "A terminate command is not built yet. <strong>Until it lands:</strong> setting <code>src</code> again is the nearest thing to a restart, and a session you want gone ends on the configuration's <a href=\"/wiki/session-and-access\">idle timeout</a> rather than on your say-so." },
+      sdk: { a: "yes", h: "Yours to control",
         p: "Fetch the token <strong>before</strong> ending the session, so a failed request leaves the viewer with the stream they already had. And always terminate first: <code>main()</code> builds a player into <code>#playerUI</code>, so calling it twice stacks two.",
         code: "async function restartStream() {\n  const tokenData = await requestSessionToken();\n  if (!tokenData) return;\n\n  e3ds_controller.terminate();\n  e3ds_controller.main(tokenData);\n}" } } },
 
     { id: "progress", label: "Knowing what the stream is doing", rows: {
-      url: { a: 1, h: "Our loading screen",
+      url: { a: "yes", h: "Our loading screen",
         p: "The player shows the phases as it goes &mdash; and you can restyle that screen. See <a href=\"/wiki/loading-screen\">the loading screen</a>." },
-      iframe: { a: 0, h: "Little visibility",
-        p: "Your page can see that the frame loaded, and not much else. If you need your own loading experience, or to know why a session ended, that is the strongest reason to move to the SDK." },
-      sdk: { a: 1, h: "Eleven callbacks",
+      iframe: { a: "soon", h: "Little visibility, for now",
+        p: "Progress and end-of-session events are not forwarded to the frame yet. <strong>Until they are:</strong> your page can see that the frame loaded and little else, so if you need your own loading experience, or to know why a session ended, the SDK is the way to get it today." },
+      sdk: { a: "yes", h: "Eleven callbacks",
         p: "Acquiring, preparing and starting progress for your own loading screen; <code>onDataChannelOpen</code> when the stream is live; and <code>onRedirectingWithMessage</code> for <em>any</em> reason a session ends. Full list in <a href=\"/wiki/sdk-reference\">the SDK reference</a>.",
         code: "e3ds_controller.callbacks.onDataChannelOpen = buildMyInterface;\ne3ds_controller.callbacks.onRedirectingWithMessage = function (message) {\n  showMyEndScreen(message);\n};" } } },
 
     { id: "access", label: "Controlling who may stream", rows: {
-      url: { a: 0, h: "Anyone with the link",
+      url: { a: "design", h: "Anyone with the link",
         p: "You can add a password or restrict a link in the configuration &mdash; see <a href=\"/wiki/session-and-access\">sessions and access</a> &mdash; but the link itself is what grants access." },
-      iframe: { a: 0, h: "Anyone with the link",
+      iframe: { a: "design", h: "Anyone with the link",
         p: "The same. Your page can require a login before it shows the frame, but the streaming URL inside is still a working link if someone reads your page source." },
-      sdk: { a: 1, h: "Whoever your server gives a token to",
+      sdk: { a: "yes", h: "Whoever your server gives a token to",
         p: "This is the real reason to choose the SDK. The session starts from a short-lived token, so your own backend decides who gets one, when, and for which app. Keep the API key there and the browser never holds anything reusable." } } }
   ];
 
@@ -285,8 +295,13 @@
     });
 
     var html = "";
-    html += '<span class="m-avail ' + (r.a ? "yes" : "no") + '">'
-          + (r.a ? "Available" : "Not from your page") + "</span>";
+    /* [E3DS-METHODS-STATE] Three states, because two would lie in both
+     * directions. "Not available" on a feature we intend to ship reads as a
+     * dead end and pushes people off a method they could happily start on;
+     * "coming" on something that can never exist here - a page talking to
+     * itself when there is no page - is a promise we would never keep. */
+    var LABEL = { yes: "Available", soon: "Coming", design: "Not applicable" };
+    html += '<span class="m-avail ' + r.a + '">' + LABEL[r.a] + "</span>";
     if (r.h) html += "<h4>" + esc(r.h) + "</h4>";
     if (r.p) html += "<p>" + r.p + "</p>";
     if (r.code) html += "<pre><code>" + r.code + "</code></pre>";
