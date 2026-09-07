@@ -114,6 +114,14 @@
   footer a{color:var(--ink-3)}
 
   /* ---- the tree down the left ---------------------------------------- */
+  /* The white areas. `html` had NO background of its own, so anywhere the
+     body's background did not reach, what showed through was the browser's
+     default canvas - white, in a dark page. Painting the root as well closes
+     that gap for good, and min-height stops a short page leaving the lower part
+     of the screen unpainted. Cheap, and it removes a whole class of bug rather
+     than one instance of it. */
+  html { background: var(--ground); }
+  body { min-height: 100vh; background: var(--ground); }
   body{display:flex;align-items:flex-start}
   #e3dsNav{flex:0 0 286px;width:286px;position:sticky;top:0;height:100vh;
     overflow-y:auto;border-right:1px solid var(--line);background:var(--surface)}
@@ -140,7 +148,7 @@
   #e3dsNavToggle{display:none}
   /* Narrower than this the tree would take most of the screen, so it becomes a
      drawer instead of a column. */
-  @media (max-width:900px){
+  @media (max-width:760px){
     body{display:block}
     .wrap{max-width:none;padding:30px 20px 90px}
     #e3dsNav{position:fixed;left:0;top:0;z-index:9998;transform:translateX(-100%);
