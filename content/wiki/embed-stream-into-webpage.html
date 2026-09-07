@@ -141,6 +141,7 @@
       <button type="button" data-t="session"    aria-pressed="false"><span class="nm-step">11</span>Start &amp; restart</button>
       <button type="button" data-t="access"     aria-pressed="false"><span class="nm-step">12</span>Who may stream</button>
       <button type="button" data-t="login"      aria-pressed="false"><span class="nm-step">13</span>Login in front</button>
+      <button type="button" data-t="events"     aria-pressed="false"><span class="nm-step">14</span>Knowing what happened</button>
     </div>
 
     <div class="nm-body">
@@ -410,7 +411,7 @@ e3ds_controller.setTouchInputEnabled(true);</code></pre>
       <section class="nm-cell" data-t="login" data-m="iframe">
         <h3>Putting your own login in front of the stream</h3><p class="nm-sub">iframe</p>
         <span class="nm-flag yes">Available</span>
-        <p>Your page, your login. Authenticate however you already do, and render the <code>&lt;iframe&gt;</code> only for a signed-in visitor &mdash; see <a href="/wiki/login-integration">login integration</a>.</p>
+        <p>Your page, your login: authenticate however you already do, and render the <code>&lt;iframe&gt;</code> only for a signed-in visitor.</p>
         <aside class="callout warning">
           <p>
             <strong>This gates your page, not the stream.</strong> The streaming
@@ -425,7 +426,7 @@ e3ds_controller.setTouchInputEnabled(true);</code></pre>
       <section class="nm-cell" data-t="login" data-m="sdk">
         <h3>Putting your own login in front of the stream</h3><p class="nm-sub">SDK</p>
         <span class="nm-flag yes">Available</span>
-        <p>The same login on your page, and this time it actually holds. The session starts from a short-lived token your own server issues, so being signed in is not just what reveals the player &mdash; it is what gets you a token at all.</p>
+        <p>The same login, and this time it holds: being signed in is what <em>gets</em> a token, not just what reveals the player &mdash; and your server can refuse.</p>
         <div class="outcome">
           <strong>Your server can refuse</strong>
           <p>
@@ -436,6 +437,26 @@ e3ds_controller.setTouchInputEnabled(true);</code></pre>
             <a href="/wiki/sdk-secure-the-key">keeping your API key off the browser</a>.
           </p>
         </div>
+      </section>
+
+      <!-- 14. EVENTS -->
+      <section class="nm-cell" data-t="events" data-m="url">
+        <h3>Knowing what the stream is doing, and why it ended</h3><p class="nm-sub">Streaming URL</p>
+        <span class="nm-flag yes">Available</span>
+        <p>Our player shows the startup phases and, when a session ends, the reason. You can restyle that screen but not receive the events.</p>
+        <p><a href="/wiki/loading-screen">The loading screen</a> covers what is adjustable.</p>
+      </section>
+      <section class="nm-cell" data-t="events" data-m="iframe">
+        <h3>Knowing what the stream is doing, and why it ended</h3><p class="nm-sub">iframe</p>
+        <span class="nm-flag soon">Coming</span>
+        <p>Progress and end-of-session events are not forwarded to the frame yet, so your page can see that the frame loaded and little else.</p>
+        <p><strong>Until they are:</strong> the player shows the reason itself, inside the frame. If your own page needs to know, that is the strongest single reason to use the SDK.</p>
+      </section>
+      <section class="nm-cell" data-t="events" data-m="sdk">
+        <h3>Knowing what the stream is doing, and why it ended</h3><p class="nm-sub">SDK</p>
+        <span class="nm-flag yes">Available</span>
+        <p>Progress callbacks for your own loading screen, <code>onDataChannelOpen</code> when the stream is live, and <code>onRedirectingWithMessage</code> for any reason it ends.</p>
+        <p>All eleven are in <a href="/wiki/sdk-reference">the SDK reference</a>, and <a href="/wiki/session-end-messages">why a session ended</a> lists every message the last one can deliver &mdash; kicked, session expired, app crashed, and the rest.</p>
       </section>
     </div>
   </div>
