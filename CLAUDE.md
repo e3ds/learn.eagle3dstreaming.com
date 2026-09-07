@@ -74,12 +74,29 @@ Pages from the old wiki are **rewritten**. When moving one:
 
 ## 4. Editing
 
-Markdown, one file per page. Two ways in, in order of who is doing it:
+**Add `?edit=1` to any page.** The text becomes editable in place, a bar appears
+at the bottom, type the password, press Save. The HTML file on disk is rewritten
+and served from that moment.
 
-1. **"Edit this page"** on every rendered page, opening the GitHub web editor.
-   No setup, full history, revertible.
-2. **A visual editor at `/admin`** (Decap CMS) once the structure has settled.
-   Still writes Markdown into git — no database, no separate hosting.
+No database and no build step: the file that is served IS the file that is
+edited, so a page cannot drift from its source because there is only one of them.
+
+What protects it, since this rewrites files on a public host:
+
+| | |
+|---|---|
+| password | checked on **save**, not on view — reading is public, only writing is gated |
+| path confinement | the target must resolve inside `site/`; `../../cirrus.js` is refused |
+| `.html` only | nothing else is writable |
+| a backup first | the current file is copied to `.backups/` with a timestamp before every overwrite |
+| size cap | 2 MB, so a runaway paste cannot fill the disk |
+
+The password lives in `editor-password.txt` beside `server.js`, gitignored. If
+that file is absent **saving is disabled rather than open** — a missing secret
+must never mean "no security required".
+
+To undo a bad edit, copy the wanted file out of `.backups/` over the one in
+`site/`. Each backup is named for the page and the moment it was replaced.
 
 Nobody should ever need to write HTML to fix a typo. If they do, something here
 is wrong.
@@ -88,8 +105,9 @@ is wrong.
 
 ## 5. Hosting
 
-Static files served by nginx from `site/`. **One server block covers the whole
-tree** — there is no per-file nginx entry and there must never be one.
+`server.js` serves `site/` on port 6500 and handles the save endpoint; nginx
+proxies the domain to it. **One server block covers the whole tree** — there is
+no per-file nginx entry and there must never be one.
 
 - config: `C:/Program Files/nginx/conf/sites-enabled/learn.eagle3dstreaming.com.conf`
 - certificate: the existing wildcard `*.eagle3dstreaming.com`, so a new
