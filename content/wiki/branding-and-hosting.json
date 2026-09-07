@@ -1,0 +1,14 @@
+{
+ "title": "Branding and hosting",
+ "slug": "branding-and-hosting",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/whitelisting",
+ "rewritten": true,
+ "replaces": [
+  "whitelisting",
+  "hosting-your-website"
+ ]
+}

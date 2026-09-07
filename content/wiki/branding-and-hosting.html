@@ -1,0 +1,60 @@
+<p class="standfirst">
+  Replace our branding with yours, and put the finished page somewhere people
+  can reach it.
+</p>
+
+<h2>Whitelisting: making the stream look like yours</h2>
+
+<p>
+  By default a stream carries Eagle 3D Streaming's visuals &mdash; our logo, our
+  loading icons, our interface styling. <strong>Whitelisting</strong> replaces
+  them with yours, from the Control Panel, without touching your Unreal project.
+</p>
+
+<ul>
+  <li>Your logo in place of ours.</li>
+  <li>Your loading background, icons and styling.</li>
+  <li>A stream that looks like part of your product rather than a service
+    embedded in it.</li>
+</ul>
+
+<p>
+  This is worth doing before showing the stream to a customer. The default
+  branding tells them who built the platform, which is rarely the message you
+  are paying for.
+</p>
+
+<h2>Hosting the page</h2>
+
+<p>
+  The page that embeds your stream is an ordinary web page, and any host will
+  serve it. If you do not already have one, a static host is enough &mdash;
+  there is no server-side code unless you have added some.
+</p>
+
+<aside class="callout tip">
+  <p>
+    <strong>The quickest route is a drag-and-drop deploy.</strong> Netlify's
+    Drop, or an equivalent, takes the folder containing your
+    <code>index.html</code> and gives you a URL in a few seconds. No account
+    setup, no build configuration, nothing to learn &mdash; which makes it a
+    good way to show someone the page today and decide about real hosting later.
+  </p>
+</aside>
+
+<aside class="callout warning">
+  <p>
+    <strong>If your login or token logic runs on a server, a static host is not
+    enough.</strong> Drag-and-drop hosting serves files; it does not run code.
+    Keeping your API key out of the browser &mdash; which
+    <a href="/wiki/embed-stream-using-e3ds-sdk">you should</a> &mdash; means
+    somewhere that can execute your token request. That is a different kind of
+    hosting, and it is worth knowing before you build the page rather than
+    after.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/embed-stream-into-webpage">Back to embedding &rarr;</a>
+  <p>The two integration methods, and everything you can drive from your page.</p>
+</div>

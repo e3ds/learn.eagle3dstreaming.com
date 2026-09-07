@@ -1,9 +1,16 @@
 {
- "title": "Embed Stream Using iFrame",
+ "title": "Embed with an iframe",
  "slug": "embed-stream-using-iframe",
  "section": "Embed Stream into Webpage",
  "parents": [
   "embed-stream-into-webpage"
  ],
- "source": "https://docs.eagle3dstreaming.com/wiki/embed-stream-using-iframe"
+ "source": "https://docs.eagle3dstreaming.com/wiki/embed-stream-using-iframe",
+ "rewritten": true,
+ "replaces": [
+  "embed-e3ds-app-with-your-html-webpage",
+  "iframe-stages",
+  "embed-streaming-within-react-webpage-using-iframe",
+  "copy-a-streaming-iframe-script"
+ ]
 }

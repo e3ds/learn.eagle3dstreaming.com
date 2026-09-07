@@ -1,11 +1,106 @@
-<p>This guide explains how to seamlessly embed a Pixel Streaming session inside your webpage using iFrame script. It also covers how to enable two-way communication between your Unreal Engine application and the parent webpage when running inside an iFrame.</p>
-<p>You can follow these steps using plain HTML, but the same approach applies to any framework or frontend technology (React, Angular, Vue, etc.)</p>
+<p class="standfirst">
+  Put the stream in an iframe on your page. The Control Panel gives you the
+  script; you paste it in and talk to the frame with messages.
+</p>
 
-<div data-appearance="info" role="note">
-<aside class="callout note">
-<p><strong>Demo Project GitHub Repository: </strong><a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">https://github.com/e3ds/E3DS-Iframe-Demo</a> <strong> </strong></p>
-<p><strong>Live Demo: </strong><a href="https://iframe.eagle3dstreaming.com/" rel="external noreferrer">https://iframe.eagle3dstreaming.com/</a> <strong> </strong></p>
-</aside>
+<p>
+  The examples here are plain HTML, and the approach is identical in React,
+  Angular, Vue or anything else &mdash; an iframe is an iframe. There is a
+  <a href="https://iframe.eagle3dstreaming.com/" rel="noreferrer" target="_blank">live
+  demo</a> and its
+  <a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">source</a>.
+</p>
+
+<h2>Embed it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Copy the iframe script from the Control Panel</h3>
+    <p>
+      Choose the app, choose a configuration, and copy the streaming iframe
+      script. It already contains the URL for that app and configuration, so
+      there is nothing to assemble by hand.
+    </p>
+  </li>
+  <li>
+    <h3>Paste it into your page</h3>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;Demo&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;div&gt;
+      &lt;!-- the copied iframe script goes here --&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <p>
+      Give the iframe an <code>id</code> &mdash; everything else on this page
+      needs one to address the frame &mdash; and
+      <code>allowfullscreen</code> if you want fullscreen to work at all.
+    </p>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>Your page shows the stream, and pressing play starts the app.</p>
 </div>
 
-<p>Follow the guidance below:</p>
+<aside class="callout note">
+  <p>
+    <strong>Keyboard input needs the frame to have focus.</strong> A stream in
+    an iframe does not receive W, A, S, D until the user clicks into it, because
+    the browser sends keystrokes to whatever has focus &mdash; and on page load
+    that is your page, not the frame. If keys do nothing until the first click,
+    this is why.
+  </p>
+</aside>
+
+<h2>The five stages of a session</h2>
+
+<p>
+  The frame tells your page how far along it is, which is what lets you build
+  your own loading experience instead of ours. Each stage arrives as a message
+  you can switch on:
+</p>
+
+<pre><code class="language-javascript">case "stage1_inqueued":
+  // your code here
+  break;</code></pre>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Stage</th><th>Message</th><th>What has happened</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>stage1_inqueued</code></td><td>The viewer is queued for a machine. Your first loading screen belongs here.</td></tr>
+      <tr><td>2</td><td><code>stage2_deQueued</code></td><td>They left the queue &mdash; a machine is being arranged.</td></tr>
+      <tr><td>3</td><td><code>stage3_slotOccupied</code></td><td>A slot is theirs. The app is starting.</td></tr>
+      <tr><td>4</td><td><code>stage4_playBtnShowedUp</code></td><td>Ready to play. The browser is waiting for a click before it will start video.</td></tr>
+      <tr><td>5</td><td><code>stage5_playBtnPressed</code></td><td>The viewer pressed play; the stream is beginning.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Do not send data to your app before stage 4.</strong> The channel
+    your messages travel on does not exist until the stream is ready, so
+    anything sent earlier is discarded &mdash; silently, with no error. If your
+    first message never arrives, this is almost always why.
+  </p>
+</aside>
+
+<h2>Talking to the app</h2>
+
+<p>
+  Messages go to the frame with <code>postMessage</code>, and a message to your
+  Unreal app must carry <code>cmd: "sendDataToUE"</code> or the frame will not
+  forward it. See <a href="/wiki/sending-and-receiving-data">sending and
+  receiving data</a> for both directions, and
+  <a href="/wiki/controlling-the-stream">controlling the stream</a> for quality,
+  resolution and fullscreen.
+</p>
+
+<div class="next">
+  <a href="/wiki/sending-and-receiving-data">Send and receive data &rarr;</a>
+  <p>Two-way communication between your page and your Unreal application.</p>
+</div>
