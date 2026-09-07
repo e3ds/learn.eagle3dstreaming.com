@@ -1,0 +1,25 @@
+{
+ "title": "Plans and billing",
+ "slug": "plans-and-billing",
+ "section": "Control Panel Features",
+ "parents": [
+  "control-panel-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/core-plan-usage-billing",
+ "rewritten": true,
+ "replaces": [
+  "upgrade-to-a-paid-plan-from-your-control-panel",
+  "selecting-core-plan",
+  "upgrading-your-plan",
+  "trial-plan-usage",
+  "get-an-enterprise-plan",
+  "core-plan-usage-billing",
+  "manage-your-subscriptions",
+  "your-subscription",
+  "edit-payment-information",
+  "purchase-more-storage",
+  "minutes-streamed-limit",
+  "cancel-your-subscription-if-needed",
+  "manage-your-transactions"
+ ]
+}

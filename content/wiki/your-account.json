@@ -1,0 +1,23 @@
+{
+ "title": "Your account and team",
+ "slug": "your-account",
+ "section": "Control Panel Features",
+ "parents": [
+  "control-panel-features"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/manage-your-account",
+ "rewritten": true,
+ "replaces": [
+  "manage-your-account",
+  "manage-your-profile",
+  "update-profile-logo",
+  "change-password",
+  "delete-account",
+  "change-email-address",
+  "team-1",
+  "invite-member",
+  "remove-team-member",
+  "decline-team-invitation",
+  "access-the-team-s-control-panel"
+ ]
+}
