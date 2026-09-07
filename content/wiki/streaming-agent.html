@@ -1,0 +1,165 @@
+<p class="standfirst">
+  The E3DS Streaming Agent lets you stream your Unreal applications from your
+  own machine instead of ours. The app stays on your hardware; our platform
+  handles the connection, the link and the session.
+</p>
+
+<p>
+  Worth doing when the app cannot leave your network, when you already own
+  capable hardware, or when you want a machine reserved for one purpose.
+  Otherwise, uploading to the platform is less work and less to maintain.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li>An Eagle 3D Streaming account, for the API key.</li>
+    <li><strong>Windows 10, 11 or Server</strong>, with a GPU and a good
+      internet connection.</li>
+    <li><a href="https://www.7-zip.org/" rel="noreferrer" target="_blank">7-Zip</a>,
+      and the Unreal Engine prerequisites for the version you build with.</li>
+    <li>Disk space on <code>C:</code> &mdash; see the rule below, which is
+      easy to underestimate.</li>
+  </ul>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Work out the disk space before you start.</strong> Apps are stored
+    in <code>C:\e3ds_streaming_apps</code>, and you need:
+  </p>
+  <p>
+    <code>zipped app size + extracted app size + the largest extracted app you already have</code>
+  </p>
+  <p>
+    That third term is the one people miss. It is there because an update is
+    unpacked alongside the existing copy before it replaces it &mdash; so the
+    peak is higher than the steady state, and running out happens mid-update.
+  </p>
+</aside>
+
+<aside class="callout note">
+  <p>
+    <strong>All GPUs are supported, but not all apps run on all of them.</strong>
+    Some applications will not stream from an RTX 2080. If you are choosing
+    hardware for this, test your actual app on it before committing.
+  </p>
+</aside>
+
+<h2>Install it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Install the prerequisites</h3>
+    <p>
+      7-Zip, and the Unreal Engine prerequisites for your engine version (5.5 or
+      5.6). These are Epic's own redistributables, not ours.
+    </p>
+  </li>
+  <li>
+    <h3>Put 7-Zip on the system PATH</h3>
+    <p>
+      Control Panel &rsaquo; System and Security &rsaquo; System &rsaquo;
+      <strong>Advanced system settings</strong> &rsaquo; <strong>Environment
+      Variables</strong>. Edit <code>Path</code>, add a new entry for your 7-Zip
+      folder &mdash; usually <code>C:\Program Files\7-Zip</code> &mdash; and
+      press OK through every window.
+    </p>
+    <p><strong>Then restart the machine.</strong> The agent will not find 7-Zip until you do.</p>
+    <figure>
+      <img src="/images/image-20240521-124101-06d3d8.png" loading="lazy" decoding="async"
+           alt="Editing the system Path environment variable">
+      <figcaption>Adding 7-Zip to the Path.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Extract the agent to your C: drive</h3>
+    <p>
+      Download <code>EL.zip</code> from the Control Panel to <code>C:\</code>
+      and extract it there.
+    </p>
+  </li>
+  <li>
+    <h3>Run it once to create its configuration</h3>
+    <p>
+      Double-click <code>EL.exe</code>. It creates <code>config_EL.json</code>
+      beside itself and that is all you need from this run &mdash; close it
+      again.
+    </p>
+  </li>
+  <li>
+    <h3>Put your API key in the configuration</h3>
+    <p>
+      Get your API key from the Control Panel, open
+      <code>config_EL.json</code> in a text editor, paste the key in, and save.
+      This is what ties the machine to your account.
+    </p>
+    <figure>
+      <img src="/images/image-20240909-071935-549a3d.png" loading="lazy" decoding="async"
+           alt="The config_EL.json file with the API key field">
+      <figcaption><code>config_EL.json</code>.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Run it again, and wait</h3>
+    <p>
+      A terminal window opens. Connecting to our system takes one to two
+      minutes; you are finished when it prints
+      <strong>Ready to serve pixel streaming</strong>.
+    </p>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>
+    Your machine appears by name in the Observer, confirming our system can see
+    it. Until it does, the agent is running but not reachable, and a stream sent
+    to it will wait for a machine that never answers.
+  </p>
+</div>
+
+<h2>Start it automatically with Windows</h2>
+
+<p>
+  The agent does not install itself as a service. If the machine reboots
+  overnight, nothing brings it back unless you arrange it &mdash; and the
+  failure looks like a machine that is simply never available.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Open Task Scheduler and create a task</h3>
+    <figure>
+      <img src="/images/image-20240521-133719-df7720.png" loading="lazy" decoding="async"
+           alt="Creating a task in Windows Task Scheduler">
+      <figcaption>Task Scheduler.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Trigger: At log on, for any user</h3>
+    <figure>
+      <img src="/images/image-20240521-133954-76f13f.png" loading="lazy" decoding="async"
+           alt="Setting the trigger to At log on of any user">
+      <figcaption>At log on of any user.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Action: run <code>EL.exe</code>, with "Start in" set to its folder</h3>
+    <p>
+      <strong>The "Start in" path is required</strong>, not optional. Without it
+      the agent starts in the wrong directory and cannot find
+      <code>config_EL.json</code> &mdash; so it runs, and does nothing.
+    </p>
+    <figure>
+      <img src="/images/image-20240521-134303-f3f0b1.png" loading="lazy" decoding="async"
+           alt="Setting the action to run EL.exe with a start-in folder">
+      <figcaption>The action, with its working folder.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="next">
+  <a href="/wiki/preallocated-apps">Preallocated apps &rarr;</a>
+  <p>Keep the app running so viewers connect in seconds rather than waiting for a cold start.</p>
+</div>

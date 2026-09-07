@@ -1,0 +1,15 @@
+{
+ "title": "Stream from your own hardware",
+ "slug": "streaming-agent",
+ "section": "System Requirements",
+ "parents": [
+  "system-requirements"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/install-the-binary-el-on-your-own-hardware",
+ "rewritten": true,
+ "replaces": [
+  "e3ds-streaming-agent-setup-configuration",
+  "install-the-binary-el-on-your-own-hardware",
+  "starting-the-el-automatically-upon-every-windows-s"
+ ]
+}
