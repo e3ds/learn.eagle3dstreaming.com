@@ -7,5 +7,6 @@
  ],
  "source": "https://github.com/e3ds/pixelstreaming-sdk",
  "rewritten": true,
- "replaces": []
+ "replaces": [],
+ "order": 1
 }
