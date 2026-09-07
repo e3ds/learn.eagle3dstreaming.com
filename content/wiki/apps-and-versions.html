@@ -1,0 +1,109 @@
+<p class="standfirst">
+  Stream links, new versions, choosing which version runs, rolling back, and
+  deleting things you no longer need.
+</p>
+
+<h2>Stream links</h2>
+
+<p>
+  A <strong>stream link</strong> is the URL you share. Generate one from your
+  app in the Control Panel, then attach a
+  <a href="/wiki/app-configuration">configuration</a> to it &mdash; the settings
+  belong to the link, not to the app, so one app can have several links behaving
+  differently.
+</p>
+
+<ul>
+  <li><strong>Copy</strong> the URL to share it.</li>
+  <li><strong>Play App</strong> starts a session yourself, for testing.</li>
+  <li><strong>Delete</strong> a link when it should stop working. Anyone holding
+    a deleted link can no longer stream &mdash; which is the fastest way to
+    revoke access you have already given out.</li>
+</ul>
+
+<h2>New versions</h2>
+
+<p>
+  Use the update icon on the app, then upload the new ZIP. What happens next
+  depends on a setting you chose earlier:
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th><a href="/wiki/api-keys-and-tokens">Version control</a></th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td><strong>On</strong></td><td>A new version is added. The old one stays and can be selected.</td></tr>
+      <tr><td><strong>Off</strong></td><td>The new build replaces the old one, which is gone.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  With version control on, you can <strong>select which version runs</strong>,
+  and <strong>delete versions</strong> you no longer want. That combination is
+  what makes an update reversible.
+</p>
+
+<h2>Rolling back</h2>
+
+<p>
+  When a new build turns out to be broken, there are two ways back and they are
+  not equally safe.
+</p>
+
+<div class="choices">
+  <div class="choice pick">
+    <span class="tag">All plans</span>
+    <h3>Re-upload the previous build</h3>
+    <p>
+      Get the old build &mdash; from the old Control Panel, or from your own S3
+      storage on Enterprise &mdash; and upload it as a new version. Slower, and
+      it is a normal deployment with nothing unusual to go wrong.
+    </p>
+  </div>
+  <div class="choice">
+    <span class="tag">Enterprise only</span>
+    <h3>Rename versions on the shared drive</h3>
+    <p>
+      Delete the broken version on the VM and rename the previous one in its
+      place &mdash; delete v10, rename v9 to v10. Fast, and entirely manual.
+    </p>
+  </div>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>The manual route has no safety net.</strong> You are renaming
+    directories on live infrastructure: a mistyped name or a wrong deletion
+    takes the application down, and there is nothing to undo it with. Disable
+    the "delete old version" feature first, or the build you are rolling back to
+    may already be gone.
+  </p>
+  <p>
+    Use it when speed genuinely matters and someone competent is at the
+    keyboard. Otherwise re-upload &mdash; slower is the correct trade when the
+    alternative failure is an app that no longer exists.
+  </p>
+</aside>
+
+<div class="outcome">
+  <strong>The decision that makes rollback possible happens earlier</strong>
+  <p>
+    Both routes assume you still have the previous build. With version control
+    off, uploads overwrite &mdash; so turn it on before you need it, not after.
+  </p>
+</div>
+
+<h2>Deleting an app</h2>
+
+<p>
+  Deleting removes the application and its versions. Its stream links stop
+  working. This is not reversible, and re-uploading produces a new application
+  rather than restoring the old one &mdash; so any links you had shared stay
+  dead.
+</p>
+
+<div class="next">
+  <a href="/wiki/what-happens-when">What happens when you upload &rarr;</a>
+  <p>The six phases an upload passes through, and what a stall in each one means.</p>
+</div>
