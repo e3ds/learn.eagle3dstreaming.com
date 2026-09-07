@@ -1,0 +1,147 @@
+<p class="standfirst">
+  Testing a Linux build locally follows the same shape as Windows &mdash; run the
+  app with streaming arguments, run the signalling server, open a browser
+  &mdash; but you write the launch script yourself, and the download script often
+  needs repairing first.
+</p>
+
+<div class="prereq">
+  <strong>Before you start</strong>
+  <p>
+    All of this happens <strong>on a Linux machine</strong>. You need a project
+    <a href="/wiki/linux-build">packaged for Linux</a> with the Pixel Streaming
+    plugin enabled.
+  </p>
+</div>
+
+<h2>Step 1. Check the build runs</h2>
+
+<pre><code class="language-bash">chmod +x YourProjectName.sh
+./YourProjectName.sh</code></pre>
+
+<figure><img src="/images/image-20251124-030734-933549.png" alt="The packaged Linux app running as a desktop application" loading="lazy"></figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>If it does not open as a normal desktop app, the package is
+    invalid.</strong> Nothing further in this guide will help &mdash; fix the
+    packaging first.
+  </p>
+</aside>
+
+<h2>Step 2. Download the signalling server</h2>
+
+<p>
+  Open a terminal in
+  <code>&lt;App Folder&gt;/Samples/PixelStreaming/WebServers</code> and run:
+</p>
+
+<pre><code class="language-bash">chmod a+x get_ps_servers.sh
+./get_ps_servers.sh</code></pre>
+
+<p>
+  If that works, you will end up with <code>SignalingWebServer</code>,
+  <code>SFU</code> and friends, and you can skip to step 3.
+</p>
+
+<h3>When it says "No such file or directory"</h3>
+
+<p>
+  That message is misleading &mdash; the file is right there. It has two common
+  causes, and it is worth checking them in this order.
+</p>
+
+<ol class="steps">
+  <li>
+    <p><strong>curl may not be installed.</strong> Check, then install it if there is no output:</p>
+<pre><code class="language-bash">which curl
+sudo apt-get install --reinstall curl</code></pre>
+  </li>
+  <li>
+    <p><strong>The script may have Windows line endings.</strong> If it still fails after curl is present, convert it:</p>
+<pre><code class="language-bash">dos2unix get_ps_servers.sh
+chmod a+x get_ps_servers.sh
+./get_ps_servers.sh</code></pre>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>Why "no such file" means neither of those things literally</strong>
+  <p>
+    The shell is reporting the interpreter it cannot find, not the script. A
+    Windows carriage return at the end of the <code>#!</code> line makes the
+    interpreter name unfindable &mdash; hence a file-not-found error about a file
+    that plainly exists.
+  </p>
+</div>
+
+<h2>Step 3. Start the signalling server</h2>
+
+<p>
+  In <code>SignalingWebServer/platform_scripts/bash</code>:
+</p>
+
+<pre><code class="language-bash">./run_local.sh</code></pre>
+
+<p>Give your password if asked, and leave this terminal open.</p>
+
+<figure><img src="/images/image-20250806-044932-75ebc7.png" alt="The signalling server running in a terminal" loading="lazy"></figure>
+
+<h2>Step 4. Write a launch script</h2>
+
+<p>
+  There is no shortcut Target field on Linux, so the streaming arguments go in a
+  script of your own. In the app's root folder &mdash; the one holding the
+  <code>Engine</code> folder and the packaged <code>.sh</code> &mdash; create a
+  file and paste this, replacing the project name with yours:
+</p>
+
+<pre><code class="language-bash">#!/bin/sh
+UE_TRUE_SCRIPT_NAME=$(echo "$0" | xargs readlink -f)
+UE_PROJECT_ROOT=$(dirname "$UE_TRUE_SCRIPT_NAME")
+chmod +x "$UE_PROJECT_ROOT/YourProject/Binaries/Linux/YourProject"
+"$UE_PROJECT_ROOT/YourProject/Binaries/Linux/YourProject" YourProject \
+  -log -AudioMixer -PixelStreamingIP=localhost -PixelStreamingPort=8888 -RenderOffScreen "$@"</code></pre>
+
+<p>
+  Those are the same arguments the Windows shortcut carries. In
+  <code>vim</code>, save and quit with <code>:wq</code>.
+</p>
+
+<h2>Step 5. Run it</h2>
+
+<pre><code class="language-bash">chmod a+x YourNewFile.sh
+./YourNewFile.sh</code></pre>
+
+<figure><img src="/images/image-20250806-053933-e87a8c.png" alt="The app started through the launch script" loading="lazy"></figure>
+
+<h2>Step 6. Open it in a browser</h2>
+
+<p>
+  On the same machine, go to <code>localhost</code> and press
+  <strong>CLICK TO START</strong>.
+</p>
+
+<figure><img src="/images/image-20250806-054256-b5b838.png" alt="The Linux app streaming in a local browser" loading="lazy"></figure>
+
+<h2>From another device on the network</h2>
+
+<p>Find the machine's address and open it from the other device:</p>
+
+<pre><code class="language-bash">hostname -I</code></pre>
+
+<pre><code>http://&lt;your-ip-address&gt;</code></pre>
+
+<aside class="callout note">
+  <p>
+    <strong>Same network only.</strong> Reaching it from outside needs a static
+    address and firewall work, which is a different exercise from testing a build
+    &mdash; and at that point uploading to the platform is less effort than doing
+    it yourself.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/linux-upload-and-stream">Upload a Linux build &rarr;</a>
+  <p>Once it streams locally, the platform setting that matters most.</p>
+</div>

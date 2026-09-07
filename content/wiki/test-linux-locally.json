@@ -1,0 +1,14 @@
+{
+ "title": "A Linux build",
+ "slug": "test-linux-locally",
+ "section": "Developer Guides",
+ "parents": [
+  "test-locally"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/testing-linux-app-locally-using-epics-signaling-se",
+ "rewritten": true,
+ "replaces": [
+  "testing-linux-app-locally-using-epics-signaling-se"
+ ],
+ "order": 3
+}

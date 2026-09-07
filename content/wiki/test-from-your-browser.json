@@ -1,0 +1,14 @@
+{
+ "title": "From your own browser",
+ "slug": "test-from-your-browser",
+ "section": "Developer Guides",
+ "parents": [
+  "test-locally"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/testing-app-from-computer-browser",
+ "rewritten": true,
+ "replaces": [
+  "testing-app-from-computer-browser"
+ ],
+ "order": 1
+}

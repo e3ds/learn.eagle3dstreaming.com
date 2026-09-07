@@ -1,0 +1,128 @@
+<p class="standfirst">
+  Testing a VR build locally has one requirement the others do not: the page must
+  be served over HTTPS, because browsers will not hand WebXR to an insecure page.
+</p>
+
+<div class="prereq">
+  <strong>Before you start</strong>
+  <p>
+    A packaged Windows build of a
+    <a href="/wiki/vr-project-setup">VR-configured project</a>, and a headset on
+    the same network as the machine. Everything up to the last step happens on
+    the computer; only the final step happens in the headset.
+  </p>
+</div>
+
+<h2>Step 1. Download the signalling server</h2>
+
+<pre><code>&lt;Packaged Folder&gt;\Windows\&lt;YourProject&gt;\Samples\PixelStreaming\WebServers\get_ps_servers.bat</code></pre>
+
+<p>Run it, let the terminal finish downloading, and let it close itself.</p>
+
+<h2>Step 2. Turn on HTTPS</h2>
+
+<p>
+  In the <code>SignalingWebServer</code> folder, open <code>config.json</code>
+  and set:
+</p>
+
+<pre><code class="language-json">"useHttps": true</code></pre>
+
+<figure><img src="/images/image-20250805-023749-8eb678.png" alt="Setting useHttps to true in config.json" loading="lazy"></figure>
+
+<div class="outcome">
+  <strong>This step is not optional for VR</strong>
+  <p>
+    WebXR &mdash; the browser API that puts the stream into the headset &mdash;
+    is only available on a secure page. Over plain HTTP the stream still works as
+    a flat picture, and the XR button simply never appears. If you get that far
+    and cannot find the button, this is why.
+  </p>
+</div>
+
+<h2>Step 3. Add the certificate</h2>
+
+<p>
+  HTTPS needs a certificate. Download
+  <a href="https://drive.google.com/file/d/1LCybgOh9b_5cKKr42metG-mmSNFw2iMJ/view?usp=sharing">the certificate ZIP</a>
+  and extract it into the <code>SignalingWebServer</code> folder.
+</p>
+
+<figure><img src="/images/image-20250805-025111-7f0530.png" alt="The extracted certificate folder contents" loading="lazy"></figure>
+
+<aside class="callout note">
+  <p>
+    <strong>The headset browser will warn you about this certificate.</strong>
+    It is self-signed and not issued for your machine's address, so that warning
+    is expected. Accept it and continue &mdash; this is a local test, not
+    something you would put in front of a viewer.
+  </p>
+</aside>
+
+<h2>Step 4. Start the signalling server</h2>
+
+<pre><code>&lt;...&gt;\SignalingWebServer\platform_scripts\cmd\run_local.bat</code></pre>
+
+<p>
+  On newer Unreal versions this is <code>Start.bat</code>. Leave the terminal
+  open.
+</p>
+
+<h2>Step 5. Launch the app with VR arguments</h2>
+
+<p>
+  Make a shortcut to your <code>.exe</code>, open <strong>Properties</strong>,
+  and append to the <strong>Target</strong> field:
+</p>
+
+<pre><code>-log -AudioMixer -PixelStreamingIP=localhost -PixelStreamingPort=8888 -RenderOffScreen -AllowPixelStreamingCommands -PixelStreamingEnableHMD -ResX=1920 -ResY=1080</code></pre>
+
+<figure><img src="/images/image-20241228-153439-53e343.png" alt="The VR streaming arguments in the shortcut Target field" loading="lazy"></figure>
+
+<p>
+  <code>-PixelStreamingEnableHMD</code> is what makes it a VR stream. The
+  resolution flags matter too:
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>"Encoder pending resolution exceeds device max capabilities"</strong>
+    means the <code>-ResX=1920 -ResY=1080</code> flags are missing. A VR app
+    renders two eyes, so the frame it hands the encoder is far wider than a flat
+    app's &mdash; without a cap it exceeds what the encoder will accept and the
+    stream never starts.
+  </p>
+</aside>
+
+<p>Run the shortcut, and leave its terminal open too.</p>
+
+<h2>Step 6. Open it in the headset</h2>
+
+<ol class="steps">
+  <li><p>On the computer, run <code>ipconfig</code> and copy the IPv4 address.</p></li>
+  <li>
+    <p>
+      In the headset's browser, go to that address <strong>over
+      HTTPS</strong> &mdash; for example <code>https://192.168.1.25</code>.
+      Accept the certificate warning.
+    </p>
+  </li>
+  <li><p>Press the <strong>XR</strong> button to enter immersive mode.</p></li>
+</ol>
+
+<div class="outcome">
+  <strong>You should be inside your app</strong>
+  <p>
+    If instead you see a plain server page with no stream, the build was packaged
+    without Pixel Streaming enabled &mdash; the same failure as
+    <a href="/wiki/test-from-your-browser">the flat local test</a>. If you see
+    the stream but no XR button, HTTPS is not actually on.
+  </p>
+</div>
+
+<figure><img src="/images/image-20241020-074102-280542.png" alt="The signalling server page shown when Pixel Streaming was not enabled" loading="lazy"></figure>
+
+<div class="next">
+  <a href="/wiki/virtual-reality-pixel-streaming">VR Pixel Streaming &rarr;</a>
+  <p>What VR streaming needs on the project side, and what it costs.</p>
+</div>

@@ -1,0 +1,14 @@
+{
+ "title": "From another device",
+ "slug": "test-on-another-device",
+ "section": "Developer Guides",
+ "parents": [
+  "test-locally"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/test-your-application-remotely-same-network",
+ "rewritten": true,
+ "replaces": [
+  "test-your-application-remotely-same-network"
+ ],
+ "order": 2
+}
