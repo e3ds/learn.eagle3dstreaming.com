@@ -309,41 +309,69 @@ linking out to a schema dump. Raised 2026-09-07. Not started.
 ## 10. State of the migration
 
 The old wiki held **302 published pages, 117,620 words, 1,394 images (~211 MB)**,
-five levels deep. Everything is on this site; the rewrite proceeds by section.
+five levels deep. **The rewrite is finished except for release notes.**
+
+302 Confluence pages became **97 written pages**, with **275 redirect stubs**
+covering the old URLs. Verified at each commit: 0 missing images, 0 broken
+internal `/wiki/` links, 0 remaining `atlassian.net` links.
 
 **A page that has not been rewritten says so, in a banner.** That disappears
 when its fragment is marked `"rewritten": true`.
 
-| section | rewritten | still ported |
-|---|---|---|
-| (top level) | 3 | 6 |
-| App Configuration | 4 | **done** |
-| Control Panel Features | 0 | 60 |
-| Developer Guides | 0 | 43 |
-| Embed Stream into Webpage | 7 | **done** |
-| Foundational knowledge | 0 | 20 |
-| Getting Started | 5 | **done** |
-| Linux Pixel Streaming | 3 | **done** |
-| Multiplayer Pixel Streaming | 0 | 39 |
-| System Requirements | 7 | **done** |
-| Virtual Reality Pixel Streaming | 2 | **done** |
-| What's New | 0 | 3 |
+| section | ported pages in | written pages out | state |
+|---|---|---|---|
+| Getting Started | 18 | 6 | done |
+| System Requirements | 12 | 6 | done |
+| App Configuration | 43 | 6 | done |
+| Embed Stream into Webpage | 40 | 8 | done |
+| Virtual Reality | — | 2 | done |
+| Linux Pixel Streaming | — | 3 | done |
+| Foundational knowledge | 20 | 6 | done |
+| Control Panel Features | 60 | 12 | done |
+| Developer Guides | 43 | 30 | done |
+| Multiplayer Pixel Streaming | 39 | 8 | done |
+| FAQ | 1 | 1 | done |
+| What's New | 3 | shell only | **awaiting content from the user** |
 
 **Merging is the point, not a side effect.** The wiki has one page per action,
 which is how a reader ends up opening three pages to discover they needed one.
-Roughly: 18 Getting Started pages became 6, 40 Embedding pages became 8, 43 App
-Configuration pages became 6, 12 System Requirements became 6.
+The largest reductions: Multiplayer's 39 pages were four parallel tutorial
+tracks repeating the same packaging/upload/play steps under different slugs -
+they collapsed to 8. Developer Guides' feature pages merged by decision rather
+than by topic (open-url + redirect-to-a-new-url became one page because
+*choosing between them* is the content).
 
 **Every merged-away slug keeps working.** Each rewritten fragment lists what it
 `replaces`, and `build.js` writes a static redirect stub per old slug -
 canonical link, meta refresh, and a visible line so nobody wonders where they
 landed.
 
-**Still to do beyond the page rewrite:**
+### What is left
 
-- **What's New has no dates.** It cannot become a release feed until someone
-  supplies roughly when each entry shipped; a crawl cannot recover it.
+- **What's New is a deliberate shell.** `content/wiki/what-s-new.html` states
+  the supported Unreal range and links the three legacy notes. It contains **no
+  generated entries by explicit instruction** - the user decides what is exposed
+  and writes the wording; the three older notes
+  (`new-control-panel-release-note`, `new-payment-system-release-note`,
+  `new-features-released-in-the-new-control-panel`) are untouched and still show
+  the "not yet rewritten" banner. Do not invent entries here.
 - **The Swagger API reference** at `agw.eaglepixelstreaming.com/api-docs`
   (see section 9).
-- **The two hand-written guides** (microphone, fullscreen) are still standalone
-  HTML with their own CSS rather than fragments in the template.
+- **The two hand-written guides** (`microphone-settings.html`,
+  `fullscreen-button.html`) are still standalone HTML at the site root with
+  their own CSS rather than fragments in the template. Pages link to them as
+  `/microphone-settings.html`, **not** `/wiki/...` - four links had that wrong
+  and were fixed on 2026-09-07.
+
+### Corrections made during the rewrite, worth not re-introducing
+
+- `what-happens-when.html` originally said "Do not enable Pixel Streaming
+  Plugin 2" absolutely. That is wrong for UE 5.7+, where PSP2 streams (but
+  still never supports browser↔Unreal communication). Corrected to point at
+  `plugin-compatibility`, which carries the matrix.
+- The FAQ's old "trial lasts 7 days" answer contradicts the current
+  usage-based trial documented on `plans-and-billing`. The FAQ now links there
+  instead of restating a figure.
+- The multiplayer packaging failure ("Unknown Error" on a Launcher engine
+  build) was buried at step 7 of the old page. It is now the first thing
+  `multiplayer-package` says, because it is the wall everyone hits.
