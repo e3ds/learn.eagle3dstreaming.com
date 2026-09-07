@@ -1,0 +1,19 @@
+{
+ "title": "Build the project",
+ "slug": "multiplayer-build-a-project",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/create-a-multiplayer-desktop-game-application",
+ "rewritten": true,
+ "replaces": [
+  "add-a-server-module-in-the-project",
+  "add-multiplayer-functionality-in-single-player-gam",
+  "convert-the-project-into-a-c-project",
+  "create-a-multiplayer-desktop-game-application",
+  "make-a-single-player-game",
+  "summary-of-create-a-multiplayer-desktop-game-appli"
+ ],
+ "order": 1
+}

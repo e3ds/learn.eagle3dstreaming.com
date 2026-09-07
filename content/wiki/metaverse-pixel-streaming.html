@@ -1,118 +1,53 @@
-<p><strong>Metaverse Pixel Streaming</strong> follows the same Pixel Streaming workflow as Multiplayer Streaming.</p>
-<p>Any Unreal Engine application built as a persistent, shared virtual world can be uploaded and streamed directly without additional configuration.</p>
-<p>If your metaverse build supports:</p>
-<ul>
-<li>
-<p>Multiple concurrent users</p>
-</li>
-<li>
-<p>Shared world state</p>
-</li>
-</ul>
-<p>it is compatible with Pixel Streaming on Eagle 3D Streaming.</p>
-<p>For setup and deployment details, refer to:
- <br/>
-<a href="https://docs.eagle3dstreaming.com/wiki/getting-started-with-multiplayer-streaming" rel="external noreferrer"><strong>Getting Started with Multiplayer Streaming</strong></a></p>
+<p class="standfirst">
+  A metaverse app is a long-running multiplayer app. There is no separate
+  pipeline for it &mdash; the same upload, launch and streaming path applies.
+</p>
 
-<h2 id="Metaverse-vs-Multiplayer-Streaming" style=""><span id="MetaversePixelStreaming-MetaversevsMultiplayerStreaming"></span>Metaverse vs Multiplayer Streaming
- </h2>
-<div class="theme-table" style="--width: 760px;">
+<p>
+  If your Unreal project supports <strong>multiple concurrent users</strong> in a
+  <strong>shared world state</strong>, it can be uploaded and streamed with no
+  additional configuration. Follow
+  <a href="/wiki/multiplayer-pixel-streaming">the multiplayer path</a>.
+</p>
 
-<div class="scroll"><table><thead><tr>
-<th>
-<p>Aspect</p>
-</th>
-<th>
-<p>Multiplayer Streaming</p>
-</th>
-<th>
-<p>Metaverse Streaming</p>
-</th>
-</tr></thead>
-<tbody>
+<h2>Where the difference actually lies</h2>
 
-<tr>
-<td>
-<p>Experience type</p>
-</td>
-<td>
-<p>Session-based</p>
-</td>
-<td>
-<p>Persistent world</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Session lifetime</p>
-</td>
-<td>
-<p>Match / session-based</p>
-</td>
-<td>
-<p>Long-running or always-on</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>World persistence</p>
-</td>
-<td>
-<p>Limited</p>
-</td>
-<td>
-<p>Core requirement</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>User identity</p>
-</td>
-<td>
-<p>Player-centric</p>
-</td>
-<td>
-<p>Avatar-centric</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Social interaction</p>
-</td>
-<td>
-<p>During gameplay</p>
-</td>
-<td>
-<p>Continuous</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Backend complexity</p>
-</td>
-<td>
-<p>Moderate</p>
-</td>
-<td>
-<p>Higher</p>
-</td>
-</tr>
-<tr>
-<td>
-<p>Pixel Streaming flow</p>
-</td>
-<td>
-<p>Standard</p>
-</td>
-<td>
-<p>Same as Multiplayer</p>
-</td>
-</tr>
-</tbody>
-</table></div>
-
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Multiplayer</th><th>Metaverse</th></tr></thead>
+    <tbody>
+      <tr><td>Experience</td><td>Session-based</td><td>A persistent world</td></tr>
+      <tr><td>Lifetime</td><td>A match or a session</td><td>Long-running, often always on</td></tr>
+      <tr><td>World persistence</td><td>Limited</td><td>The core requirement</td></tr>
+      <tr><td>Identity</td><td>Player-centric</td><td>Avatar-centric</td></tr>
+      <tr><td>Social interaction</td><td>During play</td><td>Continuous</td></tr>
+      <tr><td>Backend complexity</td><td>Moderate</td><td>Higher</td></tr>
+      <tr><td>Pixel Streaming</td><td>Standard</td><td><strong>Identical</strong></td></tr>
+    </tbody>
+  </table>
 </div>
 
-<h2 id="Summary" style=""><span id="MetaversePixelStreaming-Summary"></span>Summary
- </h2>
-<p>Metaverse experiences are treated as <strong>long-running multiplayer applications</strong>. The same upload, launch, and Pixel Streaming pipeline applies.</p>
+<div class="outcome">
+  <strong>Every difference is in your application, not in the streaming</strong>
+  <p>
+    Persistence, avatar identity and continuous social state are things your
+    backend maintains. Pixel Streaming's job &mdash; render on a server, deliver
+    video, carry input back &mdash; is the same either way.
+  </p>
+</div>
+
+<aside class="callout note">
+  <p>
+    <strong>The one thing worth planning for is the always-on part.</strong> A
+    persistent world means servers that run continuously rather than for the
+    length of a match, which is a
+    <a href="/wiki/capacity-and-regions">capacity</a> and
+    <a href="/wiki/plans-and-billing">cost</a> question rather than a technical
+    one. Work it out before launch rather than after the first month's usage.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/multiplayer-pixel-streaming">Multiplayer Pixel Streaming &rarr;</a>
+  <p>The path to follow, since it is the same one.</p>
+</div>

@@ -1,0 +1,106 @@
+<p class="standfirst">
+  With the Server Scaling plugin, a client asks the platform which server to use
+  and joins it on launch. No IP address, no port, no console.
+</p>
+
+<div class="outcome">
+  <strong>Why the manual route does not survive contact with real players</strong>
+  <p>
+    A server's address is assigned when it starts, so it is different every time.
+    Typing it into a console is fine while you are testing and impossible for a
+    viewer &mdash; especially on a phone, where there is no console to open. This
+    plugin is what turns a working multiplayer project into a usable one.
+  </p>
+</div>
+
+<div class="prereq">
+  <strong>Before you start</strong>
+  <p>
+    A project that already
+    <a href="/wiki/multiplayer-build-a-project">has its server module</a>, and an
+    <a href="/wiki/api-keys-and-tokens">API key</a>.
+  </p>
+</div>
+
+<h2>Step 1. Install the plugin</h2>
+
+<p>
+  Download it from
+  <a href="https://www.fab.com/listings/a66b7bdb-6a36-4f19-be9f-e96c6b143aa9">Fab</a>
+  or <a href="https://github.com/e3ds-ue4/MpServerScaling">GitHub</a>, and extract
+  it into a <code>Plugins</code> folder at your project root &mdash; creating that
+  folder if it is not there.
+</p>
+
+<figure><img src="/images/image-20260302-052640-d83795.png" alt="The plugin extracted into the project's Plugins folder" loading="lazy"></figure>
+
+<p>
+  Open the project in the E3DS engine build, enable <strong>Pixel
+  Streaming</strong> under <strong>Edit &rarr; Plugins</strong>, and restart.
+</p>
+
+<h2>Step 2. Configure the sample actor</h2>
+
+<ol class="steps">
+  <li>
+    <p>In the Content Drawer, go to <strong>Plugins &rarr; Multiplayer Server Scaling System Content &rarr; Samples</strong> and open <strong>BP_E3DSMPS_SampleActor</strong>.</p>
+    <figure><img src="/images/image-20260302-053858-ff5c8e.png" alt="The plugin's Samples content folder" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>In the Details panel, under <strong>User Info</strong>, fill in four fields:</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>API Key</td><td>From <a href="/wiki/api-keys-and-tokens">API management</a> in the Control Panel.</td></tr>
+          <tr><td>Dedicated Server App Name</td><td>The name of your uploaded server app &mdash; for example <code>MyProjectServer</code>.</td></tr>
+          <tr><td>Server Version</td><td>The version, for example <code>1</code>.</td></tr>
+          <tr><td>Command Line</td><td><code>1</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure><img src="/images/image-20260302-054457-fe6505.png" alt="The User Info fields configured on the sample actor" loading="lazy"></figure>
+  </li>
+  <li><p><strong>Compile and save.</strong></p></li>
+</ol>
+
+<aside class="callout warning">
+  <p>
+    <strong>The server app name has to match what you uploaded.</strong> It is
+    how the plugin asks for the right server. A name that does not match returns
+    nothing to join, and the client sits there apparently connecting &mdash; the
+    same symptom as a server that is simply not running.
+  </p>
+</aside>
+
+<h2>Step 3. Put the actor in the map</h2>
+
+<p>
+  Drag <strong>BP_E3DSMPS_SampleActor</strong> into your level, then select it and
+  confirm the Details panel shows the same values you set on the Blueprint.
+</p>
+
+<figure><img src="/images/image-20260302-055156-596231.png" alt="Checking the placed actor's configuration in the level" loading="lazy"></figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>Check the placed instance, not just the Blueprint.</strong> A placed
+    actor keeps its own copies of these values, so an instance dropped into the
+    level before you filled the fields in still carries the blanks. This is worth
+    thirty seconds because the failure looks exactly like a wrong API key.
+  </p>
+</aside>
+
+<h2>Then package and upload as usual</h2>
+
+<p>
+  <a href="/wiki/multiplayer-package">Package both builds</a> and
+  <a href="/wiki/multiplayer-upload">upload them</a>. When a player opens the
+  streaming URL now, the client finds its server and joins &mdash; including from
+  a mobile browser, which the manual route could never support.
+</p>
+
+<div class="next">
+  <a href="/wiki/multiplayer-upload-from-editor">Upload from the editor &rarr;</a>
+  <p>Packaging and uploading both builds without leaving Unreal.</p>
+</div>

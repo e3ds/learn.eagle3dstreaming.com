@@ -1,0 +1,20 @@
+{
+ "title": "Start the server and play",
+ "slug": "multiplayer-play",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/start-the-server",
+ "rewritten": true,
+ "replaces": [
+  "play-the-game",
+  "play-the-multiplayer-game",
+  "playing-the-multiplayer-game",
+  "running-the-multiplayer-game-app-in-your-pc",
+  "start-sever-automatically-and-play-the-game",
+  "start-the-server",
+  "summary-of-automatically-joining-the-server"
+ ],
+ "order": 4
+}

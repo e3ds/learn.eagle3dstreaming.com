@@ -1,0 +1,23 @@
+{
+ "title": "Package both builds",
+ "slug": "multiplayer-package",
+ "section": "Multiplayer Pixel Streaming",
+ "parents": [
+  "multiplayer-pixel-streaming"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/package-the-server-build",
+ "rewritten": true,
+ "replaces": [
+  "enable-pixel-streaming-plugin",
+  "package-the-game-build",
+  "package-the-multiplayer-project",
+  "package-the-server-build",
+  "packaging-game-build",
+  "packaging-multiplayer-project",
+  "packaging-server-build",
+  "packaging-the-game-build",
+  "packaging-the-multiplayer-project",
+  "packaging-the-server-build"
+ ],
+ "order": 2
+}

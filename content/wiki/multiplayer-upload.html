@@ -1,0 +1,68 @@
+<p class="standfirst">
+  Both builds go to the Control Panel, but to different places: the server to
+  <strong>Multiplayer Server Apps</strong>, the game to Applications like any
+  other app.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>Server and game must be packaged from the same state of the
+    project.</strong> They speak to each other, and a game built after a change
+    the server does not have will connect and then behave incorrectly. Upload
+    them as a pair, every time &mdash; not just when the change looked
+    server-related.
+  </p>
+</aside>
+
+<h2>The server</h2>
+
+<ol class="steps">
+  <li>
+    <p>In the folder you packaged the server into, open <strong>WindowsServer</strong>, select everything in it, and ZIP it.</p>
+    <figure><img src="/images/image-20241218-160552-891cb4.png" alt="Zipping the contents of the WindowsServer folder" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>In the Control Panel, go to <strong>Multiplayer Server Apps</strong> &mdash; not the ordinary Applications list.</p>
+    <figure><img src="/images/image-20260409-142308-08d493.png" alt="The Multiplayer Server Apps section of the Control Panel" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Choose <strong>Add Applications</strong> and browse to the ZIP.</p>
+  </li>
+  <li>
+    <p><strong>Name it exactly as the <code>.exe</code> at the root of the ZIP.</strong></p>
+    <figure><img src="/images/image-20241218-161041-3b8a4e.png" alt="Naming the server app to match its executable" loading="lazy"></figure>
+  </li>
+  <li>
+    <p>Upload.</p>
+    <figure><img src="/images/image-20260409-142451-993ee9.png" alt="The server app uploaded and listed" loading="lazy"></figure>
+  </li>
+</ol>
+
+<aside class="callout warning">
+  <p>
+    <strong>The name must match the executable.</strong> That is how the platform
+    finds what to launch. A mismatched name uploads without complaint and then
+    fails to start a server, with nothing in the Control Panel connecting the two
+    facts.
+  </p>
+</aside>
+
+<h2>The game</h2>
+
+<p>Same shape, ordinary destination.</p>
+
+<ol class="steps">
+  <li><p>In the folder you packaged the game into, open <strong>Windows</strong>, select everything, and ZIP it.</p></li>
+  <li><p>In the Control Panel, choose <strong>Add Application</strong> and browse to that ZIP.</p></li>
+  <li><p>Name it to match the <code>.exe</code> at the root of the ZIP, and upload.</p></li>
+</ol>
+
+<p>
+  It then goes through
+  <a href="/wiki/what-happens-when">the six upload phases</a> like any other app.
+</p>
+
+<div class="next">
+  <a href="/wiki/multiplayer-play">Start the server and play &rarr;</a>
+  <p>Getting two people into the same world.</p>
+</div>

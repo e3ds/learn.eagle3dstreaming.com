@@ -1,0 +1,96 @@
+<p class="standfirst">
+  With the Automation Tools plugin, one click packages both builds, compresses
+  them, and uploads them &mdash; instead of two packaging runs, two ZIPs and two
+  browser uploads.
+</p>
+
+<div class="prereq">
+  <strong>Before you start</strong>
+  <p>
+    The <a href="/wiki/automation-tools-plugin">Automation Tools plugin</a>
+    extracted into your project's <code>Plugins</code> folder, Pixel Streaming
+    enabled, 7-Zip installed, and the
+    <a href="/wiki/multiplayer-package">E3DS engine build</a> &mdash; the binary
+    Launcher engine cannot produce a server, with or without this plugin.
+  </p>
+</div>
+
+<h2>Configure it</h2>
+
+<p>
+  <strong>Edit &rarr; Project Settings &rarr; Plugins &rarr; E3DS Automation Tools
+  Settings.</strong>
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Setting</th><th>What to put in it</th></tr></thead>
+    <tbody>
+      <tr><td>Path to E3DS Executable</td><td>The <code>EL_AT.exe</code> you get from the <strong>Download E3DS Automation Tool Executable</strong> button on this same page.</td></tr>
+      <tr><td>Path to 7Z.exe</td><td>Your 7-Zip installation.</td></tr>
+      <tr><td>API Key</td><td><strong>Get E3DS API Key</strong> generates one; paste it back into the field. Sign in first if prompted.</td></tr>
+      <tr><td>E3DS Streaming App Name</td><td>Letters and numbers only &mdash; no dots, no spaces.</td></tr>
+      <tr><td>Packaging Mode</td><td>Development or Shipping. See below.</td></tr>
+      <tr><td>Do Dedicated Server Build</td><td><strong>Enable this.</strong> Without it you get only the game build.</td></tr>
+      <tr><td>E3DS Dedicated Server App Name</td><td>The same name you used for the server application.</td></tr>
+      <tr><td>Launch Streaming App URL on Completion</td><td>Opens the stream in your browser as soon as the upload finishes.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<figure><img src="/images/image-20250508-041634-d8497f.png" alt="The Do Dedicated Server Build option enabled in project settings" loading="lazy"></figure>
+
+<aside class="callout note">
+  <p>
+    <strong>Reusing an app name creates a new version rather than a second
+    app.</strong> That is usually what you want when iterating &mdash; and it
+    means a typo in the name silently creates a separate application instead of
+    updating the one you meant.
+  </p>
+</aside>
+
+<h3>Development or Shipping</h3>
+
+<div class="outcome">
+  <strong>Choose Development the first few times</strong>
+  <p>
+    Development packaging is slower but shows the output log while it runs;
+    Shipping is faster and shows nothing. When something goes wrong, that log is
+    the only thing that tells you what &mdash; so pay the time until the pipeline
+    is known to work, then switch.
+  </p>
+</div>
+
+<h2>Run it</h2>
+
+<p>
+  Click the E3DS icon in the toolbar and choose <strong>Launch E3DS Automation
+  Tool</strong>. A command prompt opens; packaging runs, then upload. After a few
+  minutes it reports both the server app and the game app uploaded.
+</p>
+
+<figure><img src="/images/image-20250508-044158-cf9482.png" alt="The automation tool reporting a completed upload" loading="lazy"></figure>
+
+<aside class="callout tip">
+  <p>
+    <strong>Package manually once before relying on this.</strong> The plugin
+    hides packaging behind one click, which is the point &mdash; and also means a
+    packaging error arrives with much less context. Doing it by hand once proves
+    the project itself is sound, so anything that fails afterwards is the
+    pipeline rather than the build.
+  </p>
+</aside>
+
+<h3>If the upload fails</h3>
+
+<ul>
+  <li><strong>Not enough disk space</strong> where the packaged folder lives &mdash; two builds plus their archives need room.</li>
+  <li><strong>A setting above is wrong</strong> &mdash; most often a path or the API key.</li>
+  <li><strong>You are on the binary engine from the Epic Launcher</strong>, which cannot build a dedicated server at all.</li>
+  <li><strong>Visual Studio is not properly set up</strong> for Unreal.</li>
+</ul>
+
+<div class="next">
+  <a href="/wiki/multiplayer-play">Start the server and play &rarr;</a>
+  <p>Both builds are uploaded &mdash; now get players into them.</p>
+</div>
