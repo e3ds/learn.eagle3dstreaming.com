@@ -1,7 +1,7 @@
 <p class="standfirst">
-  The Frontend SDK puts the stream directly in your page and handles the parts
-  you would otherwise write yourself: token generation, authentication, the
-  connection, and starting the stream.
+  The SDK puts the stream directly in your page and hands you the session in
+  JavaScript &mdash; you start it, drive it and end it. It handles the token,
+  the authentication, the connection and the player.
 </p>
 
 <aside class="callout warning">
@@ -17,14 +17,13 @@
 </aside>
 
 <div class="prereq">
-  <h2>Before you begin</h2>
-  <ul>
-    <li>An app uploaded and streaming from the Control Panel.</li>
-    <li>Your <strong>Streaming API key</strong> &mdash; and read the warning
-      below, because there is more than one kind of key.</li>
-    <li>Your username, and the app and configuration names exactly as the
-      Control Panel shows them.</li>
-  </ul>
+  <strong>Before you begin</strong>
+  <p>
+    An app uploaded and streaming from the Control Panel; your <strong>Streaming
+    API key</strong> &mdash; read the warning below, because there is more than
+    one kind of key; and your username plus the app and configuration names
+    exactly as the Control Panel shows them, capitalisation included.
+  </p>
 </div>
 
 <h2>Start from the sample, not from scratch</h2>
@@ -45,23 +44,45 @@
   downloading anything.
 </p>
 
+<h2>What is in it</h2>
+
+<pre><code>sdk/
+├── index.html                     the page itself
+├── css/style.css                  styles the demo's buttons only
+└── scripts/
+    ├── config.js                  the only file you must edit
+    ├── session-token.js           gets a token, starts the session
+    ├── stream-callbacks.js        every callback, documented
+    ├── demo-controls.js           the demo's buttons
+    └── dist/e3dsCore.min_ns.js    the SDK itself (generated, never edit)</code></pre>
+
+<p>
+  Carry <code>config.js</code>, <code>session-token.js</code>,
+  <code>stream-callbacks.js</code> and <code>dist/</code> into your own project.
+  <code>index.html</code> and <code>demo-controls.js</code> are references rather
+  than things to copy.
+</p>
+
 <h2>Configure it</h2>
 
 <p>
-  Everything you need to change is in <code>tokenManager.js</code>, which
-  generates and manages the token that authorises a session.
+  Everything you need to change is in <code>scripts/config.js</code>. It is the
+  only file you have to edit to get the demo running against your own app.
 </p>
 
 <div class="scroll">
   <table>
-    <thead><tr><th>Field</th><th>Set it to</th></tr></thead>
+    <thead><tr><th>Setting</th><th>Set it to</th></tr></thead>
     <tbody>
-      <tr><td><code>streamingApiKey</code></td><td>Your <strong>Streaming</strong> API key.</td></tr>
-      <tr><td><code>clientUserName</code></td><td>Your username on the platform.</td></tr>
-      <tr><td><code>tokenExpiryDuration</code></td><td>How long a token stays valid.</td></tr>
-      <tr><td><code>domain</code></td><td><code>connector.eagle3dstreaming.com</code></td></tr>
-      <tr><td><code>appName</code></td><td>The application to embed, named as in the Control Panel.</td></tr>
-      <tr><td><code>configurationName</code></td><td>Which of its configurations to use.</td></tr>
+      <tr><td><code>STREAMING_API_KEY</code></td><td>Your <strong>Streaming</strong> API key.</td></tr>
+      <tr><td><code>clientUserName</code></td><td>Identifies the person watching. In a real integration, your own logged-in user's id.</td></tr>
+      <tr><td><code>tokenExpiryMs</code></td><td>How long the token stays valid, in milliseconds. <code>60000</code> is a good default &mdash; it only has to last long enough to start the session.</td></tr>
+      <tr><td><code>application.domain</code></td><td>The connector your account was given, for example <code>connector.eagle3dstreaming.com</code>.</td></tr>
+      <tr><td><code>application.userName</code></td><td>The account that owns the app.</td></tr>
+      <tr><td><code>application.appName</code></td><td>The app's name, exactly as the Control Panel shows it.</td></tr>
+      <tr><td><code>application.configurationName</code></td><td>Which stored configuration to launch.</td></tr>
+      <tr><td><code>application.version</code></td><td>A specific version, or <code>"latest"</code>.</td></tr>
+      <tr><td><code>configurationToOverride</code></td><td>Per-session overrides of that stored configuration. Applies to this session only and does not change the saved one; leave it empty to use the Control Panel's settings as they are.</td></tr>
     </tbody>
   </table>
 </div>
@@ -86,26 +107,92 @@
   </p>
 </aside>
 
+<h2>Serve it over HTTP</h2>
+
+<p>
+  The demo has to be served, not opened from disk. Browsers block the requests
+  it makes from a <code>file:///</code> address.
+</p>
+
+<pre><code class="language-bash">python -m http.server 8000     # or:  npx serve .     # or:  php -S localhost:8000</code></pre>
+
+<h2>Script order is not arbitrary</h2>
+
+<pre><code class="language-html">&lt;script defer src="./scripts/dist/e3dsCore.min_ns.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/config.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/stream-callbacks.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/demo-controls.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/session-token.js"&gt;&lt;/script&gt;</code></pre>
+
+<div class="outcome">
+  <strong>Two rules, and breaking one of them fails silently</strong>
+  <p>
+    The <strong>SDK loads first</strong>, because everything after it refers to
+    <code>e3ds_controller</code> &mdash; move it and you get
+    <code>e3ds_controller is not defined</code>, which at least says so.
+    <strong><code>session-token.js</code> loads last</strong>, because it starts
+    the stream: a callback registered after the stream has started has already
+    missed whatever fired first. That one produces no error at all &mdash; just
+    callbacks that never run.
+  </p>
+</div>
+
+<p>
+  Your page also needs a <code>&lt;div id="playerUI"&gt;&lt;/div&gt;</code> for
+  the player to render into.
+</p>
+
+<h2>Keep your key off the browser</h2>
+
+<p>
+  Anything in a web page can be read by anyone who visits it. The demo puts the
+  key in <code>config.js</code> because it is a demo, and that is fine for a
+  local experiment or an internal trial. It is not fine for a public site:
+  <strong>the API key does not expire, and it can be used to start sessions
+  billed to your account.</strong>
+</p>
+
+<p>
+  The fix is one change. Keep the key on your own server, and let the browser
+  receive only the token:
+</p>
+
+<pre><code>Browser                Your server              Eagle 3D Streaming
+   │  "I'd like to stream" │                            │
+   ├──────────────────────▶│  API key + app details     │
+   │                       ├───────────────────────────▶│
+   │                       │        short-lived token   │
+   │   just the token      │◀───────────────────────────┤
+   │◀──────────────────────┤                            │
+   │  start the session with that token                 │
+   ├───────────────────────────────────────────────────▶│</code></pre>
+
+<p>
+  Point <code>requestSessionToken()</code> in
+  <code>scripts/session-token.js</code> at your own endpoint instead of ours.
+  Nothing else in the demo changes. The <strong>token</strong> is safe to send to
+  the browser &mdash; it expires in about a minute and covers a single session.
+  The <strong>key</strong> is not.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>If you have ever committed a real API key to a public repository,
+    treat it as compromised</strong> and issue a new one from the Control Panel.
+  </p>
+</aside>
+
 <h2>Moving it into your own application</h2>
 
 <p>
-  Once the sample streams your app: load the SDK, and call
-  <code>e3ds_controller.main()</code> with the token data. From there,
+  Once the sample streams your app: load the SDK, call
+  <code>e3ds_controller.main()</code> with the token data, and build your
+  interface when <code>onDataChannelOpen</code> fires. From there,
   <a href="/wiki/sending-and-receiving-data">send and receive data</a> and
   <a href="/wiki/controlling-the-stream">control the stream</a>.
 </p>
 
-<aside class="callout tip">
-  <p>
-    <strong>Your API key should not reach the browser in production.</strong>
-    The sample keeps it in a JavaScript file because it is a sample &mdash;
-    anyone who opens developer tools can read it. In a real integration the
-    token request belongs on your server, so the key stays there and the browser
-    only ever receives a short-lived token.
-  </p>
-</aside>
-
 <div class="next">
-  <a href="/wiki/controlling-the-stream">Control the stream &rarr;</a>
-  <p>Quality, resolution, fullscreen, and the callbacks that tell you what is happening.</p>
+  <a href="/wiki/sdk-reference">SDK reference &rarr;</a>
+  <p>Every call and callback, what <code>main()</code> returns when the payload is incomplete, and how to restart without stacking two players.</p>
 </div>

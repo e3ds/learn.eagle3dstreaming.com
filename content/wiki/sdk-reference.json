@@ -1,0 +1,11 @@
+{
+ "title": "SDK reference",
+ "slug": "sdk-reference",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-using-e3ds-sdk"
+ ],
+ "source": "https://github.com/e3ds/pixelstreaming-sdk",
+ "rewritten": true,
+ "replaces": []
+}

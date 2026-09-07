@@ -54,7 +54,7 @@ const IMAGE_BASE = "/images/";
 const EXTRA_PAGES = [
   { slug: "microphone-settings", title: "Microphone settings",
     url: "/microphone-settings.html", parents: [] },
-  { slug: "fullscreen-button", title: "Fullscreen button",
+  { slug: "fullscreen-button", title: "Fullscreen",
     url: "/fullscreen-button.html", parents: [] },
 ];
 
