@@ -1,0 +1,14 @@
+{
+ "title": "Patching an app",
+ "slug": "patches",
+ "section": "Developer Guides",
+ "parents": [
+  "development-guides"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/patch-creation-testing-guide-for-unreal-engine-app",
+ "rewritten": true,
+ "replaces": [
+  "patch-creation-testing-guide-for-unreal-engine-app"
+ ],
+ "order": 50
+}

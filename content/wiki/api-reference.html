@@ -1,1 +1,37 @@
-<p>The API Reference provides detailed information about the available endpoints for integrating with Eagle services. These APIs allow you to monitor system status, retrieve analytics data, and manage key functionalities programmatically.</p>
+<p class="standfirst">
+  Eagle 3D Streaming's HTTP APIs: check whether the service is up, and pull
+  streaming analytics into your own systems.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>API</th><th>Answers</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/wiki/health-check-api">Health check</a></td><td>Is the streaming service working right now?</td></tr>
+      <tr><td><a href="/wiki/analytics-api">Analytics</a></td><td>Who streamed what, for how long, over a date range?</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="prereq">
+  <strong>Both need an API key</strong>
+  <p>
+    Generated from the Control Panel &mdash; see
+    <a href="/wiki/api-keys-and-tokens">API keys and tokens</a>. Treat it as a
+    credential: it is sent in the request body, so it must not appear in
+    front-end code a viewer can read.
+  </p>
+</div>
+
+<aside class="callout note">
+  <p>
+    <strong>Uploading is a separate mechanism.</strong> If what you want to
+    automate is getting builds onto the platform, that is the
+    <a href="/wiki/automation-kit">Automation Kit</a>, not these endpoints.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/health-check-api">Health check API &rarr;</a>
+  <p>One call, three possible answers.</p>
+</div>

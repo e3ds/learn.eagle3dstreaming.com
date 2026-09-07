@@ -1,0 +1,68 @@
+<p class="standfirst">
+  Change a project, build a patch from it, prove the patch works locally, then
+  upload it.
+</p>
+
+<div class="prereq">
+  <strong>Before you start</strong>
+  <p>
+    <a href="/wiki/patch-launch-profiles">Both launch profiles</a> configured. If
+    you want a project already set up for this, there is a
+    <a href="https://drive.google.com/file/d/1YIfy7XVdDbDIxCQ9lcLw9Lsz6UyDDItb/view?usp=drive_link">patch-prepared project</a>
+    to start from.
+  </p>
+</div>
+
+<ol class="steps">
+  <li>
+    <p><strong>Make your change</strong> in Unreal &mdash; edit the level or a Blueprint, add an object, whatever the update is &mdash; and save everything.</p>
+  </li>
+  <li>
+    <p><strong>Build the patch.</strong> Open <strong>Platforms &rarr; Project Launcher</strong>, select your patch profile, and click <strong>Launch</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Collect the file.</strong> It appears at:</p>
+<pre><code>Saved\StagedBuilds\Windows\[ProjectName]\Content\Paks</code></pre>
+  </li>
+</ol>
+
+<h2>Test it locally first</h2>
+
+<p>
+  Copy the generated <code>.pak</code> into the <code>Content\Paks</code> folder
+  of your <em>base</em> game, and run the base game. Your change should be there.
+</p>
+
+<div class="outcome">
+  <strong>This is the step worth not skipping</strong>
+  <p>
+    It takes a minute and it separates two very different problems: a patch that
+    was built wrong, and a patch that was uploaded wrong. Finding out after
+    upload leaves you guessing between them.
+  </p>
+</div>
+
+<h2>Upload it</h2>
+
+<p>
+  Upload the base game normally, through
+  <a href="/wiki/upload-from-the-control-panel">the Control Panel</a>. The patch
+  goes to a separate URL you construct yourself &mdash;
+  <a href="/wiki/apply-a-patch">the patch upload URL</a>.
+</p>
+
+<p>Then play the app online and confirm the change is live.</p>
+
+<aside class="callout tip">
+  <p>
+    <strong>If the app runs but shows the old content, the patch is not being
+    picked up.</strong> Check the naming and the ordering &mdash; patches apply
+    in sequence, and one that sorts before an existing patch will be overridden
+    by it rather than ignored outright.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/apps-and-versions">Applications and versions &rarr;</a>
+  <p>The other way to ship a change: a new version of the whole build.</p>
+</div>

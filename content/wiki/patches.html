@@ -1,0 +1,49 @@
+<p class="standfirst">
+  Ship a change to a live app by uploading a small patch file instead of the
+  whole build again.
+</p>
+
+<h2>Why patch at all</h2>
+
+<p>
+  A packaged Unreal build is large. Re-uploading it for a changed material or a
+  moved object means sending gigabytes to replace a few megabytes of content, and
+  waiting out
+  <a href="/wiki/what-happens-when">the whole upload sequence</a> each time.
+</p>
+
+<p>
+  A patch is a <code>.pak</code> file holding only what changed. It sits on top of
+  the base build, and the app loads both.
+</p>
+
+<div class="outcome">
+  <strong>What patching buys, and what it costs</strong>
+  <p>
+    You get much smaller, much faster updates. You pay for it with a versioning
+    scheme you have to keep straight yourself &mdash; every patch is built
+    against a specific base version, and getting that wrong produces an app that
+    does not run rather than an error message.
+  </p>
+</div>
+
+<h2>The three stages</h2>
+
+<ol>
+  <li><a href="/wiki/apply-a-patch"><strong>Try it on a demo app</strong></a> &mdash; upload a prepared build and a ready-made patch, so you see the mechanism work before your own project is involved.</li>
+  <li><a href="/wiki/patch-launch-profiles"><strong>Set up the launch profiles</strong></a> &mdash; one for the base build, one for patches. This is the part that has to be right.</li>
+  <li><a href="/wiki/create-a-patch"><strong>Make and upload your own patch</strong></a>.</li>
+</ol>
+
+<aside class="callout warning">
+  <p>
+    <strong>Never remove the base game's <code>.pak</code> file.</strong> A patch
+    is an addition, not a replacement &mdash; without the base pak the app will
+    not run at all. This is the single most common way to break a patched build.
+  </p>
+</aside>
+
+<div class="next">
+  <a href="/wiki/apply-a-patch">Try it on a demo app &rarr;</a>
+  <p>The fastest way to see what patching actually does.</p>
+</div>

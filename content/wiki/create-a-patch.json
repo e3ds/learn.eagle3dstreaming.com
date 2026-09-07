@@ -1,0 +1,14 @@
+{
+ "title": "Make your own patch",
+ "slug": "create-a-patch",
+ "section": "Developer Guides",
+ "parents": [
+  "patches"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/modify-project-and-create-your-own-patch-file",
+ "rewritten": true,
+ "replaces": [
+  "modify-project-and-create-your-own-patch-file"
+ ],
+ "order": 3
+}

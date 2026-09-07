@@ -1,0 +1,14 @@
+{
+ "title": "Launch profiles",
+ "slug": "patch-launch-profiles",
+ "section": "Developer Guides",
+ "parents": [
+  "patches"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/creating-custom-launch-profiles-in-project-launche",
+ "rewritten": true,
+ "replaces": [
+  "creating-custom-launch-profiles-in-project-launche"
+ ],
+ "order": 2
+}

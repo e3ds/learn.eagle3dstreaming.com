@@ -1,0 +1,115 @@
+<p class="standfirst">
+  A Node.js package that uploads a packaged build, registers it, and waits for the
+  stream test &mdash; so a deployment can be a step in a script rather than a
+  person at a browser.
+</p>
+
+<div class="outcome">
+  <strong>Two ways to automate an upload</strong>
+  <p>
+    The <a href="/wiki/automation-tools-plugin">Automation Tools plugin</a> works
+    from inside Unreal, which suits a developer packaging by hand. The Automation
+    Kit works from a script, which is what you want in a CI/CD pipeline where
+    nobody is watching.
+  </p>
+</div>
+
+<h2>Install</h2>
+
+<pre><code class="language-bash">npm install e3ds-automation-kit</code></pre>
+
+<p>
+  The package is on
+  <a href="https://www.npmjs.com/package/e3ds-automation-kit">npm</a>.
+</p>
+
+<h2>The script</h2>
+
+<pre><code class="language-javascript">const { uploadStreamingApp } = require("e3ds-automation-kit");
+
+(async () =&gt; {
+  try {
+    await uploadStreamingApp(
+      "../../Downloads/tinyApp.zip",  // path to the .zip
+      process.env.E3DS_API_KEY,       // your API key
+      "MyStreamingApp"                // app name
+    );
+    console.log("Upload completed successfully!");
+  } catch (err) {
+    console.error("Upload failed:", err.message);
+  }
+})();</code></pre>
+
+<pre><code class="language-bash">node index.js</code></pre>
+
+<p>Which then validates the path, requests a signed upload URL, uploads with progress, and polls until the stream test finishes.</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>Do not hard-code the API key.</strong> It authorises uploads to your
+    account, and a script with a key in it ends up in version control. Read it
+    from an environment variable, as above &mdash; particularly in CI, where the
+    key belongs in the pipeline's secret store.
+  </p>
+</aside>
+
+<h2>The path argument</h2>
+
+<p>
+  Most failures here are the path, so it is worth getting right first time. It
+  must point at the <strong>.zip file itself</strong>, not the folder holding it
+  and not the project directory.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Form</th><th>Example</th><th>Works</th></tr></thead>
+    <tbody>
+      <tr><td>Relative to where you run <code>node</code></td><td><code>"../../Downloads/tinyApp.zip"</code></td><td>Yes</td></tr>
+      <tr><td>Windows, forward slashes</td><td><code>"C:/Users/USER/Downloads/tinyApp.zip"</code></td><td>Yes &mdash; the easiest on Windows</td></tr>
+      <tr><td>Windows, escaped backslashes</td><td><code>"C:\Users\USER\Downloads\tinyApp.zip"</code></td><td>Yes</td></tr>
+      <tr><td>macOS or Linux</td><td><code>"/Users/USER/Downloads/tinyApp.zip"</code></td><td>Yes</td></tr>
+      <tr><td>Windows, single backslashes</td><td><code>"C:\Users\USER\Downloads\tinyApp.zip"</code></td><td><strong>No</strong> &mdash; JavaScript reads <code>\</code> as an escape character</td></tr>
+      <tr><td>A folder</td><td><code>"C:/Users/USER/Downloads/"</code></td><td><strong>No</strong> &mdash; must end in <code>.zip</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>The app name argument</h2>
+
+<p>
+  Letters, numbers and underscores only. No spaces, no hyphens, no dots, no other
+  punctuation.
+</p>
+
+<pre><code class="language-javascript">"MyStreamingApp"    // fine
+"My_App_01"         // fine
+"app123"            // fine
+
+"My Streaming App"  // space
+"My-App"            // hyphen
+"My@App"            // symbol
+"My.App"            // dot</code></pre>
+
+<p>This is the name that appears in your Control Panel once the upload lands.</p>
+
+<h2>When it fails</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td><code>Cannot find module 'e3ds-automation-kit'</code></td><td>Not installed in this project</td><td><code>npm install e3ds-automation-kit</code></td></tr>
+      <tr><td><code>Cannot find module '...index.js'</code></td><td>Wrong filename or wrong directory</td><td>Run the file that exists, from where it exists.</td></tr>
+      <tr><td>No output at all</td><td>Node did not run</td><td>Check <code>node -v</code> works.</td></tr>
+      <tr><td>Upload rejected on the name</td><td>Spaces or symbols in the app name</td><td>Letters, numbers, underscores.</td></tr>
+      <tr><td>It retries repeatedly</td><td>Unstable connection</td><td>It retries up to three times on its own. If all three fail, the network is the problem.</td></tr>
+      <tr><td>Stream test times out</td><td>Large build, slow link</td><td>Not necessarily a failure &mdash; check the Control Panel, where the upload may still be progressing.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="next">
+  <a href="/wiki/apps-and-versions">Applications and versions &rarr;</a>
+  <p>What happens to the build once it arrives.</p>
+</div>

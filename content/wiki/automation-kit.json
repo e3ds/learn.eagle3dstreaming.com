@@ -1,0 +1,15 @@
+{
+ "title": "Automation Kit",
+ "slug": "automation-kit",
+ "section": "Developer Guides",
+ "parents": [
+  "api-reference"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/upload-unreal-app-using-e3ds-automation-kit",
+ "rewritten": true,
+ "replaces": [
+  "app-upload-automation",
+  "upload-unreal-app-using-e3ds-automation-kit"
+ ],
+ "order": 3
+}

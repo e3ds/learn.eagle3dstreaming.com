@@ -1,0 +1,14 @@
+{
+ "title": "Try it on a demo app",
+ "slug": "apply-a-patch",
+ "section": "Developer Guides",
+ "parents": [
+  "patches"
+ ],
+ "source": "https://docs.eagle3dstreaming.com/wiki/upload-demo-app-and-apply-pre-made-patch",
+ "rewritten": true,
+ "replaces": [
+  "upload-demo-app-and-apply-pre-made-patch"
+ ],
+ "order": 1
+}
