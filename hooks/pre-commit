@@ -1,0 +1,68 @@
+#!/bin/sh
+# [E3DS-LEARN-HOOK] Runs before every commit.
+#
+#   1. rebuilds the site, so committed output can never lag its sources
+#   2. refuses the commit if any picture is referenced by nothing
+#
+# WHY IT BLOCKS RATHER THAN DELETING. A hook that quietly deletes files is a
+# hook that eventually deletes the wrong one - and a picture removed by a bad
+# match is gone silently, leaving a page that shows a broken image nobody
+# notices for months. Refusing costs one command; deleting wrongly costs a
+# picture. So the hook reports and stops, and a person types the delete.
+#
+# INSTALLED VIA core.hooksPath, not .git/hooks, so it is tracked in the repo and
+# a fresh clone gets it. start-local.bat sets that; to do it by hand:
+#
+#     git config core.hooksPath hooks
+#
+# To commit past it deliberately - a work-in-progress branch, say:
+#
+#     git commit --no-verify
+#
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "  pre-commit: node is not on PATH - skipping the build and prune check."
+  exit 0
+fi
+
+# ---------------------------------------------------------------- 1. rebuild
+# Committing a source without its regenerated page leaves the two disagreeing,
+# and the next person cannot tell which is right.
+echo "  pre-commit: rebuilding..."
+if ! node build.js >/dev/null 2>&1; then
+  echo ""
+  echo "  BUILD FAILED - commit stopped."
+  echo "  Run 'node build.js' to see why."
+  echo ""
+  exit 1
+fi
+
+# Anything the build regenerated goes into THIS commit. Without this the commit
+# captures the sources and leaves the rebuilt pages as a stray change that gets
+# swept into whatever is committed next.
+git add site/ 2>/dev/null || true
+
+# ------------------------------------------------------- 2. unused pictures
+ORPHANS=$(node prune-images.js 2>/dev/null | grep -E "^  ORPHANED" | awk '{print $2}')
+
+if [ -n "$ORPHANS" ] && [ "$ORPHANS" -gt 0 ] 2>/dev/null; then
+  echo ""
+  node prune-images.js 2>/dev/null | sed -n '2,6p'
+  echo ""
+  echo "  COMMIT STOPPED - $ORPHANS pictures are referenced by nothing."
+  echo ""
+  echo "  Committing them puts bytes in the history for ever that no page uses."
+  echo "  Remove them and commit again:"
+  echo ""
+  echo "      node prune-images.js --delete"
+  echo ""
+  echo "  Or, if this is deliberate:  git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+echo "  pre-commit: build is current, no unused pictures."
+exit 0
