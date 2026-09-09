@@ -153,6 +153,43 @@ once to regenerate it with markers, then edit again.
 
 ---
 
+## Pictures and disk space
+
+**Nothing is uploaded until you press Save.** Adding a picture puts it in the
+page as a `blob:` URL that lives only in your browser tab; Save uploads the ones
+still present and swaps in the real URLs. Add a picture, change your mind and
+delete it, and its bytes never leave the browser.
+
+If any upload fails, the whole save is refused rather than publishing a page
+whose pictures point at a tab's memory — a `blob:` URL is meaningless anywhere
+else, so that picture would be permanently broken with no file to restore.
+
+### Pictures nothing points at
+
+Uploads still accumulate: replace a screenshot and the old one stays on disk,
+because nothing counts references.
+
+```
+node build.js
+node prune-images.js              # what would go, and how much space
+node prune-images.js --delete     # actually remove them
+```
+
+It reports before it removes anything, and deleting requires `--delete` typed
+out. Always run `build.js` first — pruning against a stale build can delete a
+picture a new page has only just started using.
+
+> As of 2026-09-09, **1,175 of 1,400 images (263 MB of 318 MB) were referenced
+> by nothing at all** — pulled in by the wiki migration for pages that were
+> later merged away. That is most of this repository's size serving no page.
+
+**Deleting them does not shrink the repository on GitHub.** Git keeps every
+version of every file ever committed, so the bytes stay in history and a clone
+still downloads them. Removing them properly means rewriting history with
+`git filter-repo` and force-pushing, which invalidates every existing clone.
+That is a decision to take deliberately, and the earlier it is taken the
+cheaper it is.
+
 ## Rebuild after editing
 
 ```

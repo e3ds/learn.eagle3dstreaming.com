@@ -204,20 +204,11 @@ const EDITOR = `
    * base64 copy of the picture inside the HTML - so the paste is intercepted
    * before the browser can act on it. */
 
-  function uploadImage(file) {
-    var pw = document.getElementById("e3dsEditPw").value;
-    if (!pw) { msg.textContent = "Enter the password first, then add the picture."; return null; }
-    msg.textContent = "Uploading " + (file.name || "image") + "\\u2026";
-    return fetch("/_edit/upload", {
-      method: "POST",
-      headers: {
-        "Content-Type": file.type || "application/octet-stream",
-        "x-e3ds-password": pw,
-        "x-e3ds-filename": file.name || "screenshot",
-      },
-      body: file,
-    }).then(function (r) { return r.json(); });
-  }
+  /* The immediate per-picture upload that used to live here is gone - see
+   * [E3DS-LEARN-DEFER-UPLOAD] below. Uploading is now done once, at Save, by
+   * uploadPendingImages(), and only for pictures still present in the page.
+   * Leaving a second upload path here would be an easy way to reintroduce the
+   * orphan problem without noticing. */
 
   /* [E3DS-LEARN-CARET] Remember where the cursor was, because pressing a button
    * destroys it.
@@ -275,42 +266,106 @@ const EDITOR = `
     return "appended";
   }
 
+  /* [E3DS-LEARN-DEFER-UPLOAD] Nothing reaches the disk until Save.
+   *
+   * Uploading the moment a picture is chosen meant every abandoned attempt left
+   * a file behind for ever: add ten screenshots, delete nine, change your mind
+   * and close the tab, and all ten are still on the server with nothing
+   * pointing at them. There is no reference counting and no cleanup, so the
+   * folder only ever grows.
+   *
+   * So a picture now goes into the page as a blob: URL, which exists only in
+   * this tab's memory, and the File is held here against that URL. Save uploads
+   * exactly the ones still present in the page, and swaps the blob: URLs for
+   * real ones. Delete a picture before saving and its bytes never left the
+   * browser.
+   *
+   * THE ONE THING THAT MUST NOT HAPPEN: a blob: URL reaching the saved HTML. It
+   * is meaningless outside this tab, so the picture would be permanently broken
+   * and the file would not exist to restore. uploadPendingImages() therefore
+   * fails the whole save rather than letting one through - see its guard. */
+  var pending = {};    /* blob: URL -> File, for pictures not yet uploaded */
+
   function addImage(file) {
-    var p = uploadImage(file);
-    if (!p) return;
-    p.then(function (j) {
-      if (!j.ok) { msg.textContent = "Not added: " + j.error; return; }
+    if (!file) return;
 
-      /* One question, used twice. The caption is what a reader sees and the alt
-       * text is what a search engine and a screen reader get - asking twice for
-       * the same sentence would just teach people to skip it. */
-      var caption = window.prompt(
-        "Describe this picture in a few words.\\n\\n" +
-        "It appears under the image, and is also what search engines and screen " +
-        "readers read. Leave it empty for a picture that carries no meaning.", "") || "";
+    /* One question, used twice. The caption is what a reader sees and the alt
+     * text is what a search engine and a screen reader get - asking twice for
+     * the same sentence would just teach people to skip it. */
+    var caption = window.prompt(
+      "Describe this picture in a few words.\\n\\n" +
+      "It appears under the image, and is also what search engines and screen " +
+      "readers read. Leave it empty for a picture that carries no meaning.", "") || "";
 
-      var esc = function (t) {
-        return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-      };
-      var html = caption
-        ? '<figure class="e3dsFig"><img src="' + j.url + '" alt="' + esc(caption) + '">' +
-          "<figcaption>" + esc(caption) + "</figcaption></figure>"
-        : '<figure class="e3dsFig"><img src="' + j.url + '" alt=""></figure>';
+    var esc = function (t) {
+      return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    };
 
-      var where = insertAtCaret(html);
-      if (where === "appended") {
-        /* Says where it went. Silently putting it somewhere other than asked
-         * is how a picture gets lost at the bottom of a long page. */
-        msg.textContent = "Added at the end of the page - click where you want it "
-          + "next time. Press Save to keep it.";
-        var added = target.querySelector('img[src="' + j.url + '"]');
-        if (added && added.scrollIntoView) added.scrollIntoView({ block: "center" });
-      } else if (where) {
-        msg.textContent = "Added " + j.url + " - press Save to keep it.";
-      } else {
-        msg.textContent = "Could not place the picture. It is uploaded at " + j.url;
-      }
-    }).catch(function (e) { msg.textContent = "Not added: " + e.message; });
+    var tempUrl = URL.createObjectURL(file);
+    pending[tempUrl] = file;
+
+    var html = caption
+      ? '<figure class="e3dsFig"><img src="' + tempUrl + '" alt="' + esc(caption) + '">' +
+        "<figcaption>" + esc(caption) + "</figcaption></figure>"
+      : '<figure class="e3dsFig"><img src="' + tempUrl + '" alt=""></figure>';
+
+    var where = insertAtCaret(html);
+    if (where === "appended") {
+      /* Says where it went. Silently putting it somewhere other than asked is
+       * how a picture gets lost at the bottom of a long page. */
+      msg.textContent = "Added at the end of the page - click where you want it "
+        + "next time. Nothing is uploaded until you press Save.";
+      var added = target.querySelector('img[src="' + tempUrl + '"]');
+      if (added && added.scrollIntoView) added.scrollIntoView({ block: "center" });
+    } else if (where) {
+      msg.textContent = "Added - nothing is uploaded until you press Save.";
+    } else {
+      /* It could not be placed, so it is not in the page and must not be kept
+       * against a save. Released here rather than left to leak. */
+      delete pending[tempUrl];
+      URL.revokeObjectURL(tempUrl);
+      msg.textContent = "Could not place the picture. Click where you want it, then try again.";
+    }
+  }
+
+  /* [E3DS-LEARN-DEFER-UPLOAD] Upload only what is still in the page, then swap
+   * each blob: URL for the real one. Returns a promise that REJECTS if anything
+   * fails, so the caller abandons the save rather than writing a page whose
+   * pictures point at this tab's memory. */
+  function uploadPendingImages(pw) {
+    var imgs = [].slice.call(target.querySelectorAll('img[src^="blob:"]'));
+    if (!imgs.length) return Promise.resolve(0);
+
+    msg.textContent = "Uploading " + imgs.length + " picture"
+      + (imgs.length === 1 ? "" : "s") + "\\u2026";
+
+    return imgs.reduce(function (chain, img) {
+      return chain.then(function (done) {
+        var file = pending[img.src];
+        if (!file) {
+          /* In the page but not in this tab's map - it cannot be uploaded and
+           * must not be saved as a blob: URL. */
+          throw new Error("a picture could not be matched to its file - "
+            + "reload the page and add it again");
+        }
+        return fetch("/_edit/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": file.type || "application/octet-stream",
+            "x-e3ds-password": pw,
+            "x-e3ds-filename": file.name || "screenshot",
+          },
+          body: file,
+        }).then(function (r) { return r.json(); }).then(function (j) {
+          if (!j || !j.ok) throw new Error((j && j.error) || "upload failed");
+          var old = img.src;
+          img.src = j.url;
+          delete pending[old];
+          URL.revokeObjectURL(old);
+          return done + 1;
+        });
+      });
+    }, Promise.resolve(0));
   }
 
   target.addEventListener("paste", function (e) {
@@ -341,10 +396,30 @@ const EDITOR = `
     var pw = document.getElementById("e3dsEditPw").value;
     if (!pw) { msg.textContent = "Enter the password first."; return; }
 
+    /* [E3DS-LEARN-DEFER-UPLOAD] Pictures go up now, not when they were chosen,
+     * and only the ones still in the page. Anything added and then deleted
+     * never leaves the browser. */
+    try {
+      var n = await uploadPendingImages(pw);
+      if (n) msg.textContent = "Uploaded " + n + " picture"
+        + (n === 1 ? "" : "s") + ", saving\\u2026";
+    } catch (e) {
+      msg.textContent = "Not saved - " + e.message;
+      return;
+    }
+
     /* Take a copy of the document, strip the editing machinery out of THAT
      * rather than out of the live page, so the page keeps working while the
      * save is in flight and a failed save leaves nothing half-removed. */
     var clone = document.documentElement.cloneNode(true);
+
+    /* A blob: URL is meaningless outside this tab. If one survived the upload
+     * step, saving would publish a permanently broken picture whose file does
+     * not exist anywhere - worse than refusing. */
+    if (clone.querySelector('img[src^="blob:"]')) {
+      msg.textContent = "Not saved - a picture did not upload. Nothing has been changed.";
+      return;
+    }
     /* Only the editing machinery is stripped. The navigation is part of the
      * page on disk and must survive a save - it is not stripped, and it sits
      * outside .wrap so editing cannot reach it either. */
