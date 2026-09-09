@@ -1,3 +1,334 @@
+<!doctype html>
+<!-- [E3DS-LEARN-TEMPLATE] The shell every generated page is poured into.
+     Edit this once and all pages follow on the next `node build.js`.
+     Placeholders: Why a session ended A stream can end for many reasons, and every one of them reaches your page the same way: one callback, one string. Below is what that string can be, each entry closed until you want it. <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages" class="on" aria-current="page">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button> <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep crumbMoreSep">/</span><button type="button" class="crumbMore" aria-label="Show the levels in between" onclick="this.closest('.crumbs').classList.add('crumbsOpen')">&hellip;</button><span class="sep mid">/</span><a class="mid" href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a><span class="sep">/</span><span class="here">Why a session ended</span></nav> Why a session ended
+                   <p class="standfirst">
+  A stream can end for many reasons, and every one of them reaches your page the
+  same way: one callback, one string. Below is what that string can be, each
+  entry closed until you want it.
+</p>
+
+<h2>The callback</h2>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onRedirectingWithMessage = function (message) {
+    showMyEndScreen(message);
+};</code></pre>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th></th></tr></thead>
+    <tbody>
+      <tr><td><strong>When it fires</strong></td><td>Any time the session ends, for any of the reasons below.</td></tr>
+      <tr><td><strong><code>message</code></strong></td><td>A single string, written for a person to read. It is the <em>reason</em>, already phrased &mdash; not a code, not an object.</td></tr>
+      <tr><td><strong>Assign it</strong></td><td>Before the stream starts. In the sample that is why <code>session-token.js</code> loads last.</td></tr>
+      <tr><td><strong>Returns</strong></td><td>Nothing. It is a notification, not a veto &mdash; by the time it fires the machine is already released.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout note">
+  <p>
+    <strong>These come from us, not from Unreal.</strong> None of it originates
+    in your application or travels over the data channel. They are generated by
+    our signalling server, the Control Panel and the session accounting, and they
+    arrive even when your app has already stopped &mdash; which is the point.
+  </p>
+</aside>
+
+<aside class="callout warning">
+  <p>
+    <strong>Show the string. Do not parse it.</strong> Several of these have a
+    duration, a machine name or a username spliced in, so the exact text is often
+    unique to that one session. Wording changes, and entries are added. Write it
+    with <code>textContent</code>, never <code>innerHTML</code>.
+  </p>
+</aside>
+
+<h2>What the message can be</h2>
+
+<p>
+  Scan the titles; open the one you need.
+</p>
+
+<details class="msg">
+  <summary><span class="n">1</span><span class="t">You kicked the viewer out</span><span class="s">You have been kicked out</span></summary>
+  <div class="body">
+    <p>
+      The Control Panel lists every session running on your account and lets you
+      end any one of them.
+    </p>
+    <figure>
+      <img src="/images/image-20241101-155015-2043ee.png" alt="The Utilities item in the Control Panel sidebar" loading="lazy">
+      <figcaption>Open <strong>Utilities</strong> from the sidebar.</figcaption>
+    </figure>
+    <figure>
+      <img src="/images/image-20241101-165720-8359ac.png" alt="The Kick Player button beside a running session" loading="lazy">
+      <figcaption><strong>Kick Player</strong> ends that session immediately.</figcaption>
+    </figure>
+    <figure>
+      <img src="/images/image-20241101-170104-fc916b.png" alt="The session list after the kick, with that row gone" loading="lazy">
+      <figcaption>The row disappears &mdash; the machine is released at once.</figcaption>
+    </figure>
+    <p>
+      On our own player this draws a "session has ended" screen. In an SDK
+      integration nothing is drawn for you: the message arrives at the callback
+      and the viewer sees whatever you build from it.
+    </p>
+    <div class="outcome">
+      <strong>The only ending you can produce on demand</strong>
+      <p>
+        Which makes it how you test your end-of-session screen. Start a session,
+        kick it from <a href="/wiki/monitoring-sessions">Utilities</a>, and watch
+        your screen appear from a real event rather than from calling the
+        callback by hand.
+      </p>
+    </div>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">2</span><span class="t">The session reached its time limit</span><span class="s">Session lasted for &lt;duration&gt;. Session expired.</span></summary>
+  <div class="body">
+    <p>
+      You set a maximum session length in the application configuration. When a
+      session reaches it, it ends &mdash; during perfectly normal use, with
+      nothing wrong. Set an hour and this arrives after an hour.
+    </p>
+    <p>
+      Where the setting lives, and what else governs how long a session runs:
+      <a href="/wiki/session-and-access">sessions and access</a>.
+    </p>
+    <aside class="callout tip">
+      <p>
+        <strong>The duration is part of the text</strong>, so this message is
+        never twice the same. Show it: "your session lasted 58 minutes" explains
+        itself, where "Session expired" alone reads as a fault.
+      </p>
+    </aside>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">3</span><span class="t">The viewer went idle</span><span class="s">You have been disconnected due to inactivity.</span></summary>
+  <div class="body">
+    <p>
+      AFK &mdash; away from keyboard. The session watches for input, and when
+      none arrives for long enough it warns the viewer with a countdown. If they
+      still do nothing, it ends and this message is delivered.
+    </p>
+    <p>
+      Enable it and set the two timings under <strong>Logout after
+      inactivity</strong> in your application configuration &mdash; see
+      <a href="/wiki/session-and-access">sessions and access</a>. There are two
+      values, and they do different jobs:
+    </p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Setting</th><th>What it controls</th></tr></thead>
+        <tbody>
+          <tr><td>Warning timeout</td><td>How long without input before the viewer is warned. The countdown appears; any input cancels it and nothing ends.</td></tr>
+          <tr><td>Close timeout</td><td>How long the countdown runs. Reach the end of it and the session closes.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="outcome">
+      <strong>This is the setting that stops idle sessions costing you money</strong>
+      <p>
+        A forgotten tab consumes <a href="/wiki/plans-and-billing">minutes</a>
+        and holds a <a href="/wiki/capacity-and-regions">concurrent slot</a> at
+        exactly the same rate as somebody using it. Of everything in this list,
+        this is the one ending you should <em>want</em> to happen.
+      </p>
+    </div>
+    <aside class="callout note">
+      <p>
+        <strong>It is a disconnect, not a crash</strong>, and the wording says so
+        &mdash; "disconnected due to inactivity" is safe to show a viewer as it
+        stands, unlike most of the entries below it. Offering a "start again"
+        button beside it is usually all this case needs.
+      </p>
+    </aside>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">4</span><span class="t">Your application crashed</span><span class="s">App Crashed</span></summary>
+  <div class="body">
+    <p>
+      The Unreal application stopped unexpectedly. The session ends because there
+      is nothing left to stream.
+    </p>
+    <p>
+      This one is about your build rather than the platform, so it is the entry
+      worth acting on rather than displaying. Common causes are memory and GPU
+      limits &mdash; see <a href="/wiki/system-requirements">the hardware
+      budget</a> and <a href="/wiki/optimise-your-app">optimise your app</a>.
+    </p>
+    <div class="outcome">
+      <strong>Log this one, whatever else you do</strong>
+      <p>
+        A crash your viewer sees and you do not hear about is the worst case in
+        this list. Send it to your own logging in the callback, so a pattern
+        across sessions is visible to you rather than only to whoever hit it.
+      </p>
+    </div>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">5</span><span class="t">A meeting host closed the meeting</span><span class="s">Host's Streaming Closed</span></summary>
+  <div class="body">
+    <p>
+      In a <a href="/wiki/meeting-links">meeting</a> the host's session is the
+      one that matters. When the host leaves, every guest ends with this.
+      Expected behaviour, not a fault.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">6</span><span class="t">The link expired</span><span class="s">Url Expired</span></summary>
+  <div class="body">
+    <p>
+      The streaming link itself carried a lifetime and it has passed. See
+      <a href="/wiki/session-and-access">sessions and access</a> for where link
+      expiry is set.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">7</span><span class="t">The machine is not online</span><span class="s">The machine "&lt;name&gt;" is not currently online…</span></summary>
+  <div class="body">
+    <p>
+      A specific machine was requested and it is switched off, or the name does
+      not match. Relevant when you run
+      <a href="/wiki/streaming-agent">your own GPU</a>; the name is the one you
+      gave that agent.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">8</span><span class="t">No machine is free</span><span class="s">The requested exe launcher is currently busy…</span></summary>
+  <div class="body">
+    <p>
+      Every machine that could run your app is occupied. Nothing is broken and
+      nothing needs fixing in your integration &mdash; it is a capacity
+      condition, and trying again shortly usually succeeds.
+    </p>
+    <p>
+      If it is constant rather than occasional, see
+      <a href="/wiki/capacity-and-regions">capacity and regions</a> and
+      <a href="/wiki/preallocated-apps">preallocation</a>.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">9</span><span class="t">The account cannot stream</span><span class="s">User &lt;name&gt; not found · no subscription · expired · maxUserLimit</span></summary>
+  <div class="body">
+    <p>Four messages, one cause: the account rather than the viewer.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Message</th><th>Means</th></tr></thead>
+        <tbody>
+          <tr><td><code>User &lt;name&gt; not found. Please register from…</code></td><td>No such account &mdash; almost always a typo in <code>userName</code>.</td></tr>
+          <tr><td><code>User &lt;name&gt; does not have an active subscription…</code></td><td>The account has no plan.</td></tr>
+          <tr><td><code>User &lt;name&gt; subscription expired. Please renew…</code></td><td>The plan lapsed. <a href="/wiki/plans-and-billing">Plans and billing</a>.</td></tr>
+          <tr><td><code>User &lt;name&gt; has reached maxUserLimit of &lt;n&gt;</code></td><td>Your <a href="/wiki/capacity-and-regions">concurrent-user limit</a> is full.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="callout warning">
+      <p>
+        <strong>These are about you, and they are shown to your viewer.</strong>
+        Somebody who came to look at your product is told your subscription
+        expired, or shown your username and an internal limit name. They can do
+        nothing about it. On a public integration this is the strongest single
+        reason to replace the default screen with your own wording.
+      </p>
+    </aside>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">10</span><span class="t">The password was wrong</span><span class="s">You did not enter the correct password…</span></summary>
+  <div class="body">
+    <p>
+      A password-protected link, answered incorrectly. See
+      <a href="/wiki/session-and-access">sessions and access</a>.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">11</span><span class="t">The token did not verify</span><span class="s">Token verification: &lt;reason&gt;</span></summary>
+  <div class="body">
+    <p>
+      The session token was rejected &mdash; expired before it was used,
+      malformed, or issued for a different application. Most often a token that
+      sat too long between being fetched and being handed to
+      <code>main()</code>.
+    </p>
+    <p>
+      <a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a>
+      covers where tokens come from and how long they last.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">12</span><span class="t">The Unreal version is not supported</span><span class="s">Your application is running on UE4.27…</span></summary>
+  <div class="body">
+    <p>
+      The build is on Unreal 4.27, which the platform no longer supports.
+      Upgrading to 5.1 or later is the only fix &mdash; see
+      <a href="/wiki/plugin-compatibility">supported versions</a>.
+    </p>
+  </div>
+</details>
+
+<div class="outcome">
+  <strong>More will be added</strong>
+  <p>
+    New endings arrive as the platform changes, through this same callback, with
+    wording you have not seen. This page is kept up to date &mdash; and a screen
+    that shows whatever string it is given needs no update at all, which is the
+    whole argument for not branching on the text.
+  </p>
+</div>
+
+<h2>A shape that handles all of them</h2>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onRedirectingWithMessage = function (message) {
+    // 1. Keep it. Several of these describe an account, capacity or crash
+    //    problem that you need to know about, not your viewer.
+    sendToMyLogging({ event: "session_ended", message: message });
+
+    // 2. Show something. The platform's wording is a reasonable default;
+    //    substitute your own where you can do better.
+    myEndScreen.querySelector(".detail").textContent = message;
+    myEndScreen.style.display = "flex";
+
+    // 3. Offer the only action that exists.
+    myEndScreen.querySelector("button").onclick = () => location.reload();
+};</code></pre>
+
+<div class="next">
+  <a href="/wiki/custom-screens">Custom screens &rarr;</a>
+  <p>Building the screen this message goes into, and the other screens around it.</p>
+</div>
+  {{source}} -->
+<!-- [E3DS-LEARN-DOCTYPE] The doctype is not decoration.
+     Without it a browser renders in QUIRKS MODE, an emulation of pre-standards
+     behaviour where the box model, percentage heights and background
+     propagation from <body> to the canvas all differ from what the CSS below
+     assumes. Every page here was a bare fragment - no doctype, no <html>, no
+     <head>, no <body> - and produced a half-white page on 2026-09-09.
+     Browsers accept a fragment silently, so nothing ever reported it. -->
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Why a session ended — Eagle 3D Streaming</title>
@@ -336,6 +667,9 @@
   }
   /* NAV-CSS:END */
 </style>
+</head>
+<body>
+
 
 <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages" class="on" aria-current="page">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
 
@@ -674,3 +1008,5 @@
     <p>Eagle 3D Streaming</p>
   </footer>
 </div>
+</body>
+</html>

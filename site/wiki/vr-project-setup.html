@@ -1,3 +1,216 @@
+<!doctype html>
+<!-- [E3DS-LEARN-TEMPLATE] The shell every generated page is poured into.
+     Edit this once and all pages follow on the next `node build.js`.
+     Placeholders: Set up a VR project Create a VR project, configure it for streaming, fix the two problems the Unreal template ships with, and package it ready to upload. Before you begin Unreal Engine 5.5. Not another version &amp;mdash; see why . Visual Studio configured for Unreal. <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup" class="on" aria-current="page">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button> <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality streaming</a><span class="sep">/</span><span class="here">Set up a VR project</span></nav> Set up a VR project
+                   <p class="standfirst">
+  Create a VR project, configure it for streaming, fix the two problems the
+  Unreal template ships with, and package it ready to upload.
+</p>
+
+<div class="prereq">
+  <h2>Before you begin</h2>
+  <ul>
+    <li><strong>Unreal Engine 5.5.</strong> Not another version &mdash; see
+      <a href="/wiki/virtual-reality-pixel-streaming">why</a>.</li>
+    <li>Visual Studio configured for Unreal. Packaging fails without it, and the
+      failure does not say so clearly.</li>
+    <li>A headset for testing. We have verified Quest 2 and Quest 3.</li>
+  </ul>
+</div>
+
+<h2>Create the project</h2>
+
+<p>
+  In Unreal Editor, create a new project, choose <strong>Virtual Reality</strong>
+  under <strong>Games</strong>, name it and press <strong>Create</strong>.
+</p>
+
+<figure>
+  <img src="/images/image-20241113-145313-12df92.png" loading="lazy" decoding="async"
+       alt="Choosing the Virtual Reality template in the Unreal project browser">
+  <figcaption>The Virtual Reality template.</figcaption>
+</figure>
+
+<h2>Configure the plugins</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>One plugin goes on and one goes off.</strong> Pixel Streaming is
+    enabled; <strong>OpenXR is disabled</strong>. Disabling OpenXR in a VR
+    project reads like a mistake, which is why it is the step people skip.
+    Streaming will not work correctly with it left on.
+  </p>
+</aside>
+
+<ol class="steps">
+  <li>
+    <h3>Open Edit &rsaquo; Plugins</h3>
+    <figure>
+      <img src="/images/image-20241113-150350-d6109e.png" loading="lazy" decoding="async"
+           alt="The Plugins entry in Unreal's Edit menu">
+      <figcaption>Edit &rsaquo; Plugins.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Search "Pixel Streaming" and enable it</h3>
+    <figure>
+      <img src="/images/image-20241113-150707-1c6a68.png" loading="lazy" decoding="async"
+           alt="Enabling the Pixel Streaming plugin">
+      <figcaption>Pixel Streaming: on.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Search "OpenXR" and disable it</h3>
+    <figure>
+      <img src="/images/image-20241113-150947-a9da69.png" loading="lazy" decoding="async"
+           alt="Disabling the OpenXR plugin">
+      <figcaption>OpenXR: off.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Restart, then dismiss the popup that follows</h3>
+    <figure>
+      <img src="/images/image-20241113-151157-6047d4.png" loading="lazy" decoding="async"
+           alt="Restarting the editor to apply plugin changes">
+      <figcaption>Restart Now.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>Clean up the template</h2>
+
+<p>
+  Two things in Unreal's VR template need attention before it will stream
+  properly.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Delete <code>B_Asset Guideline</code> from the Content Drawer</h3>
+    <p>It is a guide asset for people working in the editor, and has no place in a streamed build.</p>
+    <figure>
+      <img src="/images/image-20241113-151942-67b71d.png" loading="lazy" decoding="async"
+           alt="Deleting the asset guideline blueprint from the Content Drawer">
+      <figcaption>Removing the guideline asset.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Open <code>VRPawn</code>, then compile and save</h3>
+    <figure>
+      <img src="/images/image-20241113-152125-8e71f6.png" loading="lazy" decoding="async"
+           alt="Opening VRPawn in the Content Drawer">
+      <figcaption>VRPawn, compiled and saved.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2>Fix the player spawning in the floor</h2>
+
+<p>
+  The template's player starts partly below the ground, and returns there after
+  every teleport. The cause is worth knowing, because it explains why moving the
+  Player Start is the fix: <strong>teleportation moves the
+  <em>centre</em> of the player to the target</strong>, without accounting for
+  the collision capsule &mdash; so the lower half of the capsule ends up inside
+  the floor.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Raise the Player Start along Z</h3>
+    <p>
+      Select the <strong>Player Start</strong> actor in your level and move it
+      up until the collision capsule clears the ground. In the stock template
+      about <strong>+110 units</strong> is enough. Aim for standing on the
+      ground &mdash; neither sunk into it nor floating above it.
+    </p>
+    <figure>
+      <img src="/images/image-20250803-090357-83ac3d.png" loading="lazy" decoding="async"
+           alt="The Player Start actor showing the Bad Size warning">
+      <figcaption>Before: the capsule intersects the floor.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Check the warning has gone</h3>
+    <p>
+      Unreal draws a red <strong>Bad Size</strong> label on a Player Start whose
+      capsule is obstructed. When your offset is right, that label disappears
+      &mdash; which makes this the rare fix you can confirm without launching
+      anything.
+    </p>
+    <figure>
+      <img src="/images/image-20250803-090714-6b2bfd.png" loading="lazy" decoding="async"
+           alt="The Player Start actor with the warning cleared">
+      <figcaption>After: the warning is gone.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<aside class="callout note">
+  <p>
+    <strong>The Player Start shows the capsule of your game mode's default pawn
+    class</strong>, not of whatever pawn you happen to have selected. If the
+    warning behaves strangely, check that the game mode names the pawn you
+    actually spawn.
+  </p>
+</aside>
+
+<h2>Package it</h2>
+
+<ol class="steps">
+  <li>
+    <h3>Platforms &rsaquo; Windows &rsaquo; Package Project</h3>
+    <p>Choose an <strong>empty</strong> folder for the output.</p>
+    <figure>
+      <img src="/images/image-20241115-035205-3684e7.png" loading="lazy" decoding="async"
+           alt="Packaging the project for Windows">
+      <figcaption>Packaging for Windows.</figcaption>
+    </figure>
+  </li>
+  <li>
+    <h3>Watch the output if it fails</h3>
+    <p>
+      Press <strong>Show Output Logs</strong>. The most common cause of a
+      packaging failure is Visual Studio not being configured for Unreal, which
+      the log will say and the dialog will not.
+    </p>
+  </li>
+  <li>
+    <h3>Zip the contents of the Windows folder</h3>
+    <p>
+      Select everything <em>inside</em> it and compress that &mdash; not the
+      folder itself, which buries the <code>.exe</code> a level too deep.
+    </p>
+    <figure>
+      <img src="/images/image-20241115-040211-9da98c.png" loading="lazy" decoding="async"
+           alt="Creating the ZIP from the packaged Windows folder">
+      <figcaption>The ZIP you upload.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<div class="outcome">
+  <strong>You now have</strong>
+  <p>
+    A ZIP ready to upload. Test it locally with a headset first, then upload it
+    exactly like any other application.
+  </p>
+</div>
+
+<div class="next">
+  <a href="/wiki/upload-from-the-control-panel">Upload it &rarr;</a>
+  <p>Then open the app's streaming URL in the headset's browser.</p>
+</div>
+  {{source}} -->
+<!-- [E3DS-LEARN-DOCTYPE] The doctype is not decoration.
+     Without it a browser renders in QUIRKS MODE, an emulation of pre-standards
+     behaviour where the box model, percentage heights and background
+     propagation from <body> to the canvas all differ from what the CSS below
+     assumes. Every page here was a bare fragment - no doctype, no <html>, no
+     <head>, no <body> - and produced a half-white page on 2026-09-09.
+     Browsers accept a fragment silently, so nothing ever reported it. -->
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Set up a VR project — Eagle 3D Streaming</title>
@@ -336,6 +549,9 @@
   }
   /* NAV-CSS:END */
 </style>
+</head>
+<body>
+
 
 <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup" class="on" aria-current="page">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
 
@@ -556,3 +772,5 @@
     <p>Eagle 3D Streaming</p>
   </footer>
 </div>
+</body>
+</html>

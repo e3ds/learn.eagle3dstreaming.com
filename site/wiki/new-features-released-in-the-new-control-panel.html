@@ -1,3 +1,370 @@
+<!doctype html>
+<!-- [E3DS-LEARN-TEMPLATE] The shell every generated page is poured into.
+     Edit this once and all pages follow on the next `node build.js`.
+     Placeholders: New Features New additions to Eagle 3D Streaming Control Panel (V 1.0.8). Edit Payment Information - (APR 16, 2024) ✅ Feature added to the Manage Account Tab in the Control Panel homepage. <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel" class="on" aria-current="page">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button> <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/what-s-new">What's new</a><span class="sep">/</span><span class="here">New Features</span></nav> New Features
+                   <p>New additions to Eagle 3D Streaming Control Panel (V 1.0.8).</p>
+<h2 id="Edit-Payment-Information---(APR-16,-2024)-✅"><span id="NewFeatures-EditPaymentInformation-(APR16,2024)✅"></span>Edit Payment Information - (APR 16, 2024) ✅
+ </h2>
+<p>Feature added to the <strong>Manage Account</strong> Tab in the Control Panel homepage.</p>
+<p>Update your payment details with the new <strong>Edit</strong> button in the <strong>Payment Information</strong> section for swift and efficient changes to your default card details.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Edit Payment Information" decoding="async" loading="lazy" src="/images/image-20240418-154141%20(1)-fa9804.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Edit Payment Information</span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="Minutes-Streamed-Limit---(APR-16,-2024)-✅"><span id="NewFeatures-MinutesStreamedLimit-(APR16,2024)✅"></span>Minutes Streamed Limit - (APR 16, 2024) ✅
+ </h2>
+<p>Feature added to the <strong>Manage Account</strong> Tab in the Control Panel homepage.</p>
+<p>Introducing the <strong>Minutes Streamed Limit</strong> toggle under the <strong>Subscriptions</strong> Tab.</p>
+<p>This Feature allows to set a Streaming Minute Cap to restrict the monthly usage.</p>
+<p>Customize your Pixel Streaming experience with a minimum limit of <strong>100 minutes </strong>for<strong> </strong>the cost of<strong> 10$</strong>.</p>
+<p>See <a href="/wiki/minutes-streamed-limit">this document</a> for more details.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Minutes Streamed Limit Feature" decoding="async" loading="lazy" src="/images/image-20240418-154531%20(1)-765d6d.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Minutes Streamed Limit Feature</span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="500-GB-Storage---(APR-18,-2024)-✅"><span id="NewFeatures-500GBStorage-(APR18,2024)✅"></span>500 GB Storage - (APR 18, 2024) ✅
+ </h2>
+<p>More Storage added to be selected from the drop down of <strong>Edit Storage</strong> under the <strong>Subscriptions</strong> Tab in the <strong>Manage Account </strong>Section of the Control Panel.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Up to 500 GB of storage" decoding="async" loading="lazy" src="/images/image-20240419-065102%20(1)%20(1)-ebabd3.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Up to 500 GB of storage </span>
+</figcaption>
+</figure>
+
+</div>
+<p>Get up to <strong>500 GB</strong> storage for your big sized Apps for the price of <strong>10$</strong> / <strong>10 GB.</strong></p>
+<p>To purchase more Storage, refer to <a href="/wiki/purchase-more-storage">this document</a>.</p>
+<h2 id="Subscription-without-CC---(May-24,-2024)-✅"><span id="NewFeatures-SubscriptionwithoutCC-(May24,2024)✅"></span>Subscription without CC - (May 24, 2024) ✅
+ </h2>
+<p>Happy to announce the release of the <strong>Subscription without CC</strong> Feature to allow our customers that are on a different Payment method than the Credit Card to <strong>FINALLY</strong> <strong>access to the Control Panel</strong> without entering any Payment information!</p>
+<p>Feature obtainable <strong>ONLY</strong> by reaching out to <a href="https://support.eagle3dstreaming.com/" rel="external noreferrer">Support</a> to get the special access to the Control panel.</p>
+<p>More details in.</p>
+<h2 id="Demo-App---(-June-14,-2024)-✅"><span id="NewFeatures-DemoApp-(June14,2024)✅"></span>Demo App - ( June 14, 2024) ✅
+ </h2>
+<p>Introducing the <strong>Demo App</strong>!</p>
+<p>This is exclusive to the New subscribers of Eagle 3D Platform.</p>
+<p>Once you create a new user Account and Login to the Control Panel, the <strong>Demo App</strong> also called <strong>E3DSFeaturesTemplate</strong> is there ready to be streamed as a demo.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Demo App" decoding="async" loading="lazy" src="/images/image-20260702-063848-bc619e.png"/>
+
+<figcaption>Demo App</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Documentation-icons---(-June,-2024)-✅"><span id="NewFeatures-Documentationicons-(June,2024)✅"></span>Documentation icons - ( June, 2024) ✅
+ </h2>
+<p>We are excited to introduce a new <strong>documentation icon</strong> feature across the Eagle 3D Streaming Control Panel. This feature enhances user guidance by offering in-app tutorials and streamlined access to feature documentation.</p>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li>
+<p><strong>Blue Documentation Icons</strong>: These icons now appear next to each configuration option in the <strong>Streaming Links</strong>, <strong>Meeting Links</strong>, and <strong>Account Management</strong> pages.</p>
+</li>
+<li>
+<p><strong>Feature-Specific Guides</strong>: Clicking on any blue icon instantly redirects users to a detailed tutorial, offering step-by-step instructions for that specific feature in the Control Panel.</p>
+</li>
+</ul>
+<p>The addition of these icons simplifies the learning process for both new and existing users, making it easier to navigate and utilize all the advanced configuration features offered in the Control Panel.</p>
+<p>This update provides users with immediate support and guidance, ensuring a smooth experience while managing streaming and meeting links or handling account settings.</p>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Edit Config page" decoding="async" loading="lazy" src="/images/image-20240731-101312-a120f8.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Edit Config page</span>
+</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Account Management page" decoding="async" loading="lazy" src="/images/image-20240731-101841-b00123.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Account Management page</span>
+</figcaption>
+</figure>
+
+</div>
+
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Streaming Links page" decoding="async" loading="lazy" src="/images/image-20240731-101931-86d6d6.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Streaming Links page</span>
+</figcaption>
+</figure>
+
+</div>
+
+<h2 id="Console-Commands-to-Pass-to-Unreal-App---(June-26,-2024)-✅"><span id="NewFeatures-ConsoleCommandstoPasstoUnrealApp-(June26,2024)✅"></span>Console Commands to Pass to Unreal App - (June 26, 2024) ✅
+ </h2>
+<p>Announcing the release of : ‘<strong>Console Commands to Pass to Unreal App</strong>’.</p>
+<p>It is possible now to type your Console Commands from the Control Panel and have your App execute them in the game.</p>
+<p>Feature useful for Shipping Builds where you can’t insert Commands manually!</p>
+<p>Find more details in <a href="/wiki/console-command-to-pass-to-unreal-app">this document</a>.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Console CMDs to Pass to Unreal App" decoding="async" loading="lazy" src="/images/image-20240731-103203-e0ca13.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Console CMDs to Pass to Unreal App</span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="Enable-Browser-Microphone---(July-10,-2024)-✅"><span id="NewFeatures-EnableBrowserMicrophone-(July10,2024)✅"></span>Enable Browser Microphone - (July 10, 2024) ✅
+ </h2>
+<p><strong>Feature Overview:</strong> The newly added <strong>Enable Browser Microphone</strong> option in the Eagle 3D Streaming Control Panel allows the application to receive captured microphone data directly from the user’s browser. This feature enhances user interaction while streaming, making it possible to utilize microphone input real time.</p>
+<p><strong>Location:</strong> This feature is accessible under the <strong>Advanced Options </strong>section within the <strong>UI </strong>tab of the configuration settings.</p>
+<p><strong>Key Capabilities:</strong></p>
+<ul>
+<li>
+<p><strong>Browser Integration:</strong> Users can enable or disable the microphone input captured from their browser, streamlining communication during live streams.</p>
+</li>
+<li>
+<p><strong>Privacy Control:</strong> By default, the feature is toggled off, ensuring that microphone access is only granted with user consent.</p>
+</li>
+<li>
+<p><strong>Use Case:</strong> Ideal for Microphone enabled Unreal Engine applications.</p>
+</li>
+</ul>
+<p><strong>Impact:</strong> This addition simplifies the setup for users needing real-time audio communication directly through their browser.</p>
+<p>More details are in <a href="/wiki/browser-microphone"><strong>this document</strong></a>.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Enable Browser Microphone" decoding="async" loading="lazy" src="/images/image-20241011-064813-140d0a.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Enable Browser Microphone</span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="Upload-Sequence---(August-2,-2024)-[mediaInline]"><span id="NewFeatures-UploadSequence-(August2,2024)"></span>Upload Sequence - (August 2, 2024) <span class="theme-inline-image"> <span class="inline-image" data-emoji="true"> <img alt="check mark" decoding="async" loading="lazy" src="/images/atlassian-check_mark-7679f8.png"/> </span> </span>
+</h2>
+<p>We are very excited to introduce our new addition to the Control Panel: <strong>The Upload Sequence</strong>.</p>
+<p>It is a sequence of tests conducted on your App while uploading it on the Control Panel to make sure it is ready to Launch and has the requirements for the streaming from Eagle 3D Platform.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Upload Sequence" decoding="async" loading="lazy" src="/images/image-20240708-150322-77d72a.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Upload Sequence</span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="Notification---(August-2,-2024)-[mediaInline]"><span id="NewFeatures-Notification-(August2,2024)"></span>Notification - (August 2, 2024) <span class="theme-inline-image"> <span class="inline-image" data-emoji="true"> <img alt="check mark" decoding="async" loading="lazy" src="/images/atlassian-check_mark-7679f8.png"/> </span> </span>
+</h2>
+<p><strong>Overview:</strong></p>
+<p>The Notification system has been introduced in the Control Panel to provide real-time updates and actionable alerts within the user interface. This feature allows users to receive system-wide updates without leaving the Control Panel.</p>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li>
+<p><strong>Real-Time Notifications</strong>: Users will receive immediate alerts about system events, including app upload status, streaming usage, and other critical updates.</p>
+</li>
+<li>
+<p><strong>Message Types</strong>: Supports both plain text messages and clickable notifications that include relevant links for quick access.</p>
+</li>
+<li>
+<p><strong>User Management</strong>: Notifications can be dismissed individually or cleared entirely via the <strong>Clear All </strong>option.</p>
+</li>
+</ul>
+<p><strong>Improvements:</strong></p>
+<ul>
+<li>
+<p>Enhanced user awareness of system events through non-intrusive alerts.</p>
+</li>
+<li>
+<p>Streamlined interaction by allowing users to quickly navigate to related pages or resources using embedded links.</p>
+</li>
+</ul>
+<p>More details in <a href="/wiki/notification">this document</a>.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Notification" decoding="async" loading="lazy" src="/images/image-20240805-093851-7473da.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Notification</span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="Analytics---(September-30,-2024)-[mediaInline]"><span id="NewFeatures-Analytics-(September30,2024)"></span>Analytics - (September 30, 2024) <span class="theme-inline-image"> <span class="inline-image" data-emoji="true"> <img alt="check mark" decoding="async" loading="lazy" src="/images/atlassian-check_mark-7679f8.png"/> </span> </span>
+</h2>
+<p>We’re excited to introduce the new <strong>Analytics</strong> feature in the Eagle 3D Streaming Control Panel, featuring an updated UI and enhanced UX for a more intuitive experience in managing your streaming data.</p>
+<p><strong>Key Features:</strong></p>
+<ul>
+<li>
+<p><strong>Redesigned UI</strong>: The interface now offers a clean, structured layout for session data, including:</p>
+<ul>
+<li>
+<p>App name</p>
+</li>
+<li>
+<p>Video start/stop times</p>
+</li>
+<li>
+<p>Session duration</p>
+</li>
+<li>
+<p>Location (city/country)</p>
+</li>
+<li>
+<p>Browser and OS details</p>
+</li>
+<li>
+<p>Total sessions and total stream time displayed for quick insights</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Dynamic Visual Insights</strong>:</p>
+<ul>
+<li>
+<p>Interactive <strong>bar and pie charts</strong> with a drop-down filter to select and visualize data by <strong>App Name</strong>, <strong>City</strong>, <strong>Country</strong>, <strong>Browser</strong>, or <strong>OS</strong>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Advanced Filtering and Search</strong>:</p>
+<ul>
+<li>
+<p>Apply filters and search within the data table for targeted analysis.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>CSV Export</strong>:</p>
+<ul>
+<li>
+<p>Export Analytics data to CSV for external analysis or reporting.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Improved Performance</strong>:</p>
+<ul>
+<li>
+<p>Faster data retrieval and real-time updates ensure users always have access to current insights.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>This release delivers a user-friendly Analytics experience with enhanced UI, advanced filtering options, flexible data visualization, and seamless CSV export capabilities.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Detailed Session Overview" decoding="async" loading="lazy" src="/images/image-20241011-054350-40475a.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Detailed Session Overview</span>
+</figcaption>
+</figure>
+
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Data Representation" decoding="async" loading="lazy" src="/images/image-20241011-054454-4b750d.png"/>
+
+<figcaption>
+<span style="--color: var(--gray, #97a0af);">Data Representation</span>
+</figcaption>
+</figure>
+
+</div>
+<h2 id="The-Side-Panel---(October-10,-2024)-[mediaInline]"><span id="NewFeatures-TheSidePanel-(October10,2024)"></span>The Side Panel - (October 10, 2024) <span class="theme-inline-image"> <span class="inline-image" data-emoji="true"> <img alt="check mark" decoding="async" loading="lazy" src="/images/atlassian-check_mark-7679f8.png"/> </span> </span>
+</h2>
+<p>We are excited to announce the addition of a <strong>Side Panel</strong> in the Eagle3D Streaming Control Panel. This new feature provides streamlined navigation and improved access to key tools such as <strong>UE Apps </strong>(which displays the apps layout and the Control Panel’s interface), our Flexible <strong>Plans</strong>, <strong>Analytics</strong> and a <strong>Logout</strong> option, all within a clean and intuitive interface.</p>
+<p><strong>Feature Highlights:</strong></p>
+<ul>
+<li>
+<p>The Side Panel enhances the user experience by offering a consolidated view of the primary sections.</p>
+</li>
+<li>
+<p>Users can now easily <strong>expand</strong> or <strong>collapse</strong> the Side Panel using the button located at the top-right corner.</p>
+</li>
+<li>
+<p>This update allows for quicker access to frequently used options while maintaining a clutter-free interface when collapsed.</p>
+</li>
+</ul>
+<p>This new feature also sets the foundation for <strong>future growth</strong> and the integration of <strong>new services</strong> as we continue to expand and improve the Eagle3D Streaming platform.</p>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Expanded Side Panel" decoding="async" loading="lazy" src="/images/image-20260702-064052-3285b5.png"/>
+
+<figcaption>Expanded Side Panel</figcaption>
+</figure>
+
+</div>
+<div class="theme-block-image">
+
+<figure>
+
+<img alt="Collapsed Side Panel" decoding="async" loading="lazy" src="/images/image-20260702-064119-d59a96.png"/>
+
+<figcaption>Collapsed Side Panel</figcaption>
+</figure>
+
+</div>
+  {{source}} -->
+<!-- [E3DS-LEARN-DOCTYPE] The doctype is not decoration.
+     Without it a browser renders in QUIRKS MODE, an emulation of pre-standards
+     behaviour where the box model, percentage heights and background
+     propagation from <body> to the canvas all differ from what the CSS below
+     assumes. Every page here was a bare fragment - no doctype, no <html>, no
+     <head>, no <body> - and produced a half-white page on 2026-09-09.
+     Browsers accept a fragment silently, so nothing ever reported it. -->
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>New Features — Eagle 3D Streaming</title>
@@ -336,6 +703,9 @@
   }
   /* NAV-CSS:END */
 </style>
+</head>
+<body>
+
 
 <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel" class="on" aria-current="page">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
 
@@ -710,3 +1080,5 @@
     <p>Eagle 3D Streaming</p>
   </footer>
 </div>
+</body>
+</html>

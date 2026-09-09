@@ -391,13 +391,20 @@ function main() {
     for (const old of p.replaces || []) {
       const to = "/wiki/" + p.slug;
       const stub = [
+        /* [E3DS-LEARN-DOCTYPE] Same reason as template.html - a stub without
+         * a doctype renders in quirks mode too, and these are real pages a
+         * crawler will fetch. */
+        '<!doctype html>',
+        '<html lang="en"><head>',
         '<meta charset="utf-8">',
         '<meta name="robots" content="noindex,nofollow">',
         '<link rel="canonical" href="https://learn.eagle3dstreaming.com' + to + '">',
         '<meta http-equiv="refresh" content="0; url=' + to + '">',
         "<title>Moved &mdash; " + esc(p.title) + "</title>",
+        "</head><body>",
         '<p style="font:16px/1.6 system-ui,sans-serif;padding:40px">This page is now part of '
           + '<a href="' + to + '">' + esc(p.title) + "</a>.</p>",
+        '</body></html>',
       ].join("\n");
       fs.writeFileSync(path.join(OUT, old + ".html"), stub + "\n", "utf8");
       stubs++;
@@ -432,6 +439,69 @@ function main() {
   const llmsPath = path.join(ROOT, "site", "llms.txt");
   if (LAUNCHED) fs.writeFileSync(llmsPath, llms.join("\n") + "\n", "utf8");
   else if (fs.existsSync(llmsPath)) fs.unlinkSync(llmsPath);
+
+  /* [E3DS-LEARN-SITEMAP] sitemap.xml, regenerated on every build.
+   *
+   * WHAT GOES IN IT, and this is the whole decision: ONLY pages whose canonical
+   * link points at themselves.
+   *
+   * Most pages here do not. 348 of them point at a different page - the wiki
+   * was consolidated, so `2d-image-asset` and `2d-video-asset` both canonical
+   * to `loading-screen` - and another 95 still defer to
+   * docs.eagle3dstreaming.com while that remains the public site. Listing any
+   * of those would be a contradiction: the sitemap would say "index this" while
+   * the page itself says "no, index that other one". Google resolves the
+   * contradiction by ignoring the sitemap entry, so the only thing it achieves
+   * is noise.
+   *
+   * So the file starts small and GROWS ON ITS OWN as pages are finalised and
+   * their canonicals are pointed at themselves. Nothing has to be remembered.
+   *
+   * lastmod comes from the source file's mtime, not from the build time. Using
+   * the build time would restamp all 376 pages on every build and tell a
+   * crawler that everything changed, which trains it to ignore the field.
+   *
+   * WRITTEN EVEN WHILE NOINDEX. It is inert - robots.txt disallows everything
+   * and every page carries a noindex meta - so it costs nothing now and is
+   * correct the moment those come off. A sitemap that has to be remembered at
+   * launch is a sitemap that gets forgotten at launch.
+   */
+  const SITE_ORIGIN = "https://learn.eagle3dstreaming.com";
+  const smUrls = [];
+  for (const p of pages) {
+    const url = SITE_ORIGIN + "/wiki/" + p.slug;
+    const canonical = p.source || url;
+    /* Self-canonical only. A page pointing elsewhere is not the copy to index. */
+    if (canonical !== url) continue;
+    let lastmod = null;
+    try {
+      const src = p.file && fs.existsSync(p.file) ? p.file
+        : path.join(OUT, p.slug + ".html");
+      lastmod = fs.statSync(src).mtime.toISOString().slice(0, 10);
+    } catch (e) { /* no date is better than a wrong one - the tag is optional */ }
+    smUrls.push({ url, lastmod });
+  }
+  /* The hand-written pages are always the real thing at their own address. */
+  for (const f of LEGACY_FILES) {
+    const slug = f.replace(/\.html$/, "");
+    const url = SITE_ORIGIN + (slug === "index" ? "/" : "/" + slug);
+    let lastmod = null;
+    try { lastmod = fs.statSync(path.join(OUT, f)).mtime.toISOString().slice(0, 10); }
+    catch (e) { }
+    smUrls.push({ url, lastmod });
+  }
+
+  const sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    .concat(smUrls.map((u) => "  <url><loc>" + u.url + "</loc>"
+      + (u.lastmod ? "<lastmod>" + u.lastmod + "</lastmod>" : "") + "</url>"))
+    .concat(["</urlset>"]).join("\n") + "\n";
+  /* At the SITE ROOT, not in OUT (which is site/wiki). A sitemap may only list
+   * URLs at or below its own directory, so one served from /wiki/ could never
+   * cover the hand-written pages at the root. */
+  fs.writeFileSync(path.join(ROOT, "site", "sitemap.xml"), sitemap, "utf8");
+  console.log("  sitemap.xml: " + smUrls.length + " self-canonical pages listed of "
+    + (pages.length + LEGACY_FILES.length));
 
   console.log("  " + written + " pages written (" + pages.length + " from fragments, "
     + LEGACY_FILES.length + " hand-written)");
