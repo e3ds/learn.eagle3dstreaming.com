@@ -319,7 +319,13 @@ function main() {
    * {{content}}, and every page ships a second hidden copy of both inside it.
    * It is build instructions, not page content, so it never belongs in output. */
   const template = fs.readFileSync(path.join(ROOT, "template.html"), "utf8")
-    .replace(/^\s*<!--[\s\S]*?E3DS-LEARN-TEMPLATE[\s\S]*?-->\s*/, "");
+    /* NOT anchored to the start of the file. It was `/^\s*<!--.../`, which
+     * broke the moment the doctype was added above the comment on 2026-09-09:
+     * the comment stopped matching, survived into every page, and its
+     * placeholder list - which names {{content}} and {{nav}} - was then
+     * substituted, so each page carried a second hidden copy of its own body.
+     * The comment's position is not what identifies it; its marker is. */
+    .replace(/\s*<!--[\s\S]*?E3DS-LEARN-TEMPLATE[\s\S]*?-->\s*/, "\n");
   const pages = readPages();
   if (!pages.length) {
     console.log("  no content in content/wiki - nothing to build");

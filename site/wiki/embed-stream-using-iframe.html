@@ -1,114 +1,4 @@
 <!doctype html>
-<!-- [E3DS-LEARN-TEMPLATE] The shell every generated page is poured into.
-     Edit this once and all pages follow on the next `node build.js`.
-     Placeholders: Embed with an iframe Put the stream in an iframe on your page. The Control Panel gives you the script; you paste it in and talk to the frame with messages. The examples here are plain HTML, and the approach is identical in React, Angular, Vue or anything else &amp;mdash; an iframe is an iframe. <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe" class="on" aria-current="page">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button> <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><span class="here">Embed with an iframe</span></nav> Embed with an iframe
-                   <p class="standfirst">
-  Put the stream in an iframe on your page. The Control Panel gives you the
-  script; you paste it in and talk to the frame with messages.
-</p>
-
-<p>
-  The examples here are plain HTML, and the approach is identical in React,
-  Angular, Vue or anything else &mdash; an iframe is an iframe. There is a
-  <a href="https://iframe.eagle3dstreaming.com/" rel="noreferrer" target="_blank">live
-  demo</a> and its
-  <a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">source</a>.
-</p>
-
-<h2>Embed it</h2>
-
-<ol class="steps">
-  <li>
-    <h3>Copy the iframe script from the Control Panel</h3>
-    <p>
-      Choose the app, choose a configuration, and copy the streaming iframe
-      script. It already contains the URL for that app and configuration, so
-      there is nothing to assemble by hand.
-    </p>
-  </li>
-  <li>
-    <h3>Paste it into your page</h3>
-<pre><code class="language-html">&lt;html&gt;
-  &lt;head&gt;&lt;title&gt;Demo&lt;/title&gt;&lt;/head&gt;
-  &lt;body&gt;
-    &lt;div&gt;
-      &lt;!-- the copied iframe script goes here --&gt;
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-    <p>
-      Give the iframe an <code>id</code> &mdash; everything else on this page
-      needs one to address the frame &mdash; and
-      <code>allowfullscreen</code> if you want fullscreen to work at all.
-    </p>
-  </li>
-</ol>
-
-<div class="outcome">
-  <strong>You will know it worked when</strong>
-  <p>Your page shows the stream, and pressing play starts the app.</p>
-</div>
-
-<aside class="callout note">
-  <p>
-    <strong>Keyboard input needs the frame to have focus.</strong> A stream in
-    an iframe does not receive W, A, S, D until the user clicks into it, because
-    the browser sends keystrokes to whatever has focus &mdash; and on page load
-    that is your page, not the frame. If keys do nothing until the first click,
-    this is why.
-  </p>
-</aside>
-
-<h2>The five stages of a session</h2>
-
-<p>
-  The frame tells your page how far along it is, which is what lets you build
-  your own loading experience instead of ours. Each stage arrives as a message
-  you can switch on:
-</p>
-
-<pre><code class="language-javascript">case "stage1_inqueued":
-  // your code here
-  break;</code></pre>
-
-<div class="scroll">
-  <table>
-    <thead><tr><th>Stage</th><th>Message</th><th>What has happened</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td><code>stage1_inqueued</code></td><td>The viewer is queued for a machine. Your first loading screen belongs here.</td></tr>
-      <tr><td>2</td><td><code>stage2_deQueued</code></td><td>They left the queue &mdash; a machine is being arranged.</td></tr>
-      <tr><td>3</td><td><code>stage3_slotOccupied</code></td><td>A slot is theirs. The app is starting.</td></tr>
-      <tr><td>4</td><td><code>stage4_playBtnShowedUp</code></td><td>Ready to play. The browser is waiting for a click before it will start video.</td></tr>
-      <tr><td>5</td><td><code>stage5_playBtnPressed</code></td><td>The viewer pressed play; the stream is beginning.</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<aside class="callout warning">
-  <p>
-    <strong>Do not send data to your app before stage 4.</strong> The channel
-    your messages travel on does not exist until the stream is ready, so
-    anything sent earlier is discarded &mdash; silently, with no error. If your
-    first message never arrives, this is almost always why.
-  </p>
-</aside>
-
-<h2>Talking to the app</h2>
-
-<p>
-  Messages go to the frame with <code>postMessage</code>, and a message to your
-  Unreal app must carry <code>cmd: "sendDataToUE"</code> or the frame will not
-  forward it. See <a href="/wiki/sending-and-receiving-data">sending and
-  receiving data</a> for both directions, and
-  <a href="/wiki/controlling-the-stream">controlling the stream</a> for quality,
-  resolution and fullscreen.
-</p>
-
-<div class="next">
-  <a href="/wiki/sending-and-receiving-data">Send and receive data &rarr;</a>
-  <p>Two-way communication between your page and your Unreal application.</p>
-</div>
-  {{source}} -->
 <!-- [E3DS-LEARN-DOCTYPE] The doctype is not decoration.
      Without it a browser renders in QUIRKS MODE, an emulation of pre-standards
      behaviour where the box model, percentage heights and background
@@ -466,6 +356,7 @@
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><span class="here">Embed with an iframe</span></nav>
   
   <h1>Embed with an iframe</h1>
+  <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
   Put the stream in an iframe on your page. The Control Panel gives you the
   script; you paste it in and talk to the frame with messages.
@@ -573,6 +464,7 @@
   <p>Two-way communication between your page and your Unreal application.</p>
 </div>
 
+  <!-- E3DS-CONTENT:END -->
   
   <!-- Every source page carried its own copy of this. Once, here, instead:
        sixteen copies is sixteen places to update a support link. -->
