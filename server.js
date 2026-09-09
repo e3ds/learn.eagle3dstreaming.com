@@ -219,18 +219,60 @@ const EDITOR = `
     }).then(function (r) { return r.json(); });
   }
 
+  /* [E3DS-LEARN-CARET] Remember where the cursor was, because pressing a button
+   * destroys it.
+   *
+   * THE BUG THIS FIXES. "Add picture" opens a file dialog. Clicking the button
+   * moves focus to the button, and opening the dialog takes it out of the page
+   * entirely - so by the time the upload finishes there is no caret inside the
+   * editable region any more. The picture uploaded correctly and then had
+   * nowhere to go, so nothing appeared and it read as a broken button.
+   *
+   * Pasting never hit this: the caret is still exactly where you left it, which
+   * is why one route worked and the other did not.
+   *
+   * So the caret is recorded as it moves, and restored before inserting. */
+  var savedRange = null;
+
+  function rememberCaret() {
+    var sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
+    var r = sel.getRangeAt(0);
+    /* Only a caret inside the editable region is worth keeping - a selection in
+     * the toolbar or the navigation is not a place a picture can go. */
+    if (target.contains(r.commonAncestorContainer)) savedRange = r.cloneRange();
+  }
+
+  target.addEventListener("mouseup", rememberCaret);
+  target.addEventListener("keyup", rememberCaret);
+
   /* Insert where the cursor is. execCommand is old, but it is the one call that
    * puts markup at the caret inside a contenteditable and leaves a working undo
    * behind it; the Range fallback covers browsers that have dropped it. */
   function insertAtCaret(html) {
+    /* Put the caret back first, or execCommand has nothing to act on. */
+    if (savedRange) {
+      var sel0 = window.getSelection();
+      if (sel0) { sel0.removeAllRanges(); sel0.addRange(savedRange); }
+      if (target.focus) target.focus();
+    }
+
     if (document.execCommand && document.execCommand("insertHTML", false, html)) return true;
+
     var sel = window.getSelection();
-    if (!sel || !sel.rangeCount) return false;
-    var range = sel.getRangeAt(0);
-    range.deleteContents();
-    var frag = range.createContextualFragment(html);
-    range.insertNode(frag);
-    return true;
+    var range = (sel && sel.rangeCount) ? sel.getRangeAt(0) : null;
+    if (range && target.contains(range.commonAncestorContainer)) {
+      range.deleteContents();
+      range.insertNode(range.createContextualFragment(html));
+      return true;
+    }
+
+    /* Never lose a picture that has already been uploaded. If the caret cannot
+     * be recovered at all - a page nobody has clicked into yet - put it at the
+     * end rather than reporting a failure and leaving an orphaned file on the
+     * server with no way to reach it. */
+    target.appendChild(document.createRange().createContextualFragment(html));
+    return "appended";
   }
 
   function addImage(file) {
@@ -255,10 +297,18 @@ const EDITOR = `
           "<figcaption>" + esc(caption) + "</figcaption></figure>"
         : '<figure class="e3dsFig"><img src="' + j.url + '" alt=""></figure>';
 
-      if (insertAtCaret(html)) {
+      var where = insertAtCaret(html);
+      if (where === "appended") {
+        /* Says where it went. Silently putting it somewhere other than asked
+         * is how a picture gets lost at the bottom of a long page. */
+        msg.textContent = "Added at the end of the page - click where you want it "
+          + "next time. Press Save to keep it.";
+        var added = target.querySelector('img[src="' + j.url + '"]');
+        if (added && added.scrollIntoView) added.scrollIntoView({ block: "center" });
+      } else if (where) {
         msg.textContent = "Added " + j.url + " - press Save to keep it.";
       } else {
-        msg.textContent = "Click where you want the picture first, then add it.";
+        msg.textContent = "Could not place the picture. It is uploaded at " + j.url;
       }
     }).catch(function (e) { msg.textContent = "Not added: " + e.message; });
   }
@@ -275,7 +325,13 @@ const EDITOR = `
   });
 
   var picker = document.getElementById("e3dsEditFile");
-  document.getElementById("e3dsEditImg").onclick = function () { picker.click(); };
+  var imgBtn = document.getElementById("e3dsEditImg");
+
+  /* [E3DS-LEARN-CARET] mousedown, not click. It fires BEFORE focus leaves the
+   * page, which is the last moment the caret still exists - by the time click
+   * runs, the button already has focus and the selection is gone. */
+  imgBtn.addEventListener("mousedown", rememberCaret);
+  imgBtn.onclick = function () { picker.click(); };
   picker.onchange = function () {
     if (picker.files && picker.files[0]) addImage(picker.files[0]);
     picker.value = "";
