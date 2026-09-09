@@ -9,3 +9,7 @@ learn.log
 *.bak
 
 node_modules/
+
+# Timestamped copies the editor writes before overwriting a page. Runtime
+# state, not history - git already keeps the history.
+.backups/
