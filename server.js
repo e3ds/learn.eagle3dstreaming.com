@@ -288,7 +288,13 @@ const EDITOR = `
 `;
 
 function send(res, code, body, type) {
-  res.writeHead(code, { "Content-Type": type || "text/plain; charset=utf-8" });
+  /* [E3DS-LEARN-CACHE] no-store rather than no-cache here: this path carries
+   * the editor-injected HTML and error pages, which are assembled per request
+   * and must never be reused for anyone. */
+  res.writeHead(code, {
+    "Content-Type": type || "text/plain; charset=utf-8",
+    "Cache-Control": "no-store",
+  });
   res.end(body);
 }
 
@@ -430,10 +436,73 @@ const server = http.createServer((req, res) => {
       html = html.includes("</body>") ? html.replace("</body>", EDITOR + "</body>") : html + EDITOR;
       return send(res, 200, html, type);
     }
-    res.writeHead(200, { "Content-Type": type });
-    res.end(buf);
+    /* [E3DS-LEARN-CACHE] Revalidated on every request; body re-sent only when
+     * the bytes actually changed. */
+    e3dsSendCached(req, res, buf, type);
   });
 });
+
+/* [E3DS-LEARN-CACHE] Never serve a stale page, and never re-send an unchanged one.
+ *
+ * WHAT WAS WRONG. Responses carried no cache headers at all - no Cache-Control,
+ * no ETag, no Last-Modified. A browser given no instructions does not skip
+ * caching; it applies HEURISTIC caching and keeps the response for as long as
+ * it likes. So an edit here reached anyone in a fresh incognito window and did
+ * not reach a returning visitor, possibly for days. Reported 2026-09-09: normal
+ * Chrome showed a broken half-rendered page while incognito was perfect.
+ *
+ * The stakes are higher than one page looking wrong. Documentation that
+ * silently serves an old version to the people who read it most is worse than
+ * documentation that is merely out of date, because nobody can tell which they
+ * are looking at.
+ *
+ * WHY no-cache AND NOT no-store. They sound similar and behave completely
+ * differently:
+ *
+ *   no-store   never keep it. Every visit re-downloads every byte. Correct,
+ *              and needlessly slow for a docs site.
+ *   no-cache   keep it, but ALWAYS ask before using it. With an ETag the ask
+ *              costs one round trip and a 304 with no body.
+ *
+ * So the site stays fast for repeat visitors and cannot go stale. A returning
+ * reader gets 304s for everything unchanged and the new bytes for anything
+ * edited, on the first load, with no hard refresh.
+ *
+ * WHY NOT max-age ON ASSETS. The usual optimisation is a long max-age for
+ * static files, but that is only safe when their NAMES change with their
+ * contents. Nothing here is content-hashed - images are plain names under
+ * assets/images - so a cached image would outlive its replacement exactly the
+ * way the HTML did. If asset hashing is added later, those files can take
+ * `immutable, max-age=31536000` and this comment is the reason it would then
+ * be safe.
+ *
+ * The ETag is a strong hash of the exact bytes sent, so it changes when a file
+ * changes and only then.
+ */
+function e3dsEtagFor(buf) {
+  return '"' + require("crypto").createHash("sha1").update(buf).digest("base64") + '"';
+}
+
+/* Returns true when it has already answered with a 304. */
+function e3dsSendCached(req, res, buf, type) {
+  const etag = e3dsEtagFor(buf);
+
+  /* Revalidation. The browser sends back the ETag it holds; if it still
+   * matches, the body is not sent again. */
+  if (req.headers["if-none-match"] === etag) {
+    res.writeHead(304, { "ETag": etag, "Cache-Control": "no-cache" });
+    res.end();
+    return true;
+  }
+
+  res.writeHead(200, {
+    "Content-Type": type,
+    "ETag": etag,
+    "Cache-Control": "no-cache",
+  });
+  res.end(buf);
+  return false;
+}
 
 server.listen(PORT, () => {
   console.log("[E3DS-LEARN] serving " + ROOT + " on :" + PORT);

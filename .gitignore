@@ -1,9 +1,11 @@
+# The editor password. It gates writing to the live docs site, and it has no
+# business in a repository that will get a remote later.
 editor-password.txt
-.backups/
-node_modules/
 
-# runtime log, not source
+# Runtime log, appended to on every start by learn_launcher.bat.
 learn.log
 
-# the crawled mirror lives in the scratchpad, not the repo
-docs-mirror/
+# Backups taken before an edit, not history.
+*.bak
+
+node_modules/

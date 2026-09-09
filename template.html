@@ -1,7 +1,17 @@
+<!doctype html>
 <!-- [E3DS-LEARN-TEMPLATE] The shell every generated page is poured into.
      Edit this once and all pages follow on the next `node build.js`.
      Placeholders: {{title}} {{description}} {{nav}} {{breadcrumbs}} {{h1}}
                    {{content}} {{children}} {{source}} -->
+<!-- [E3DS-LEARN-DOCTYPE] The doctype is not decoration.
+     Without it a browser renders in QUIRKS MODE, an emulation of pre-standards
+     behaviour where the box model, percentage heights and background
+     propagation from <body> to the canvas all differ from what the CSS below
+     assumes. Every page here was a bare fragment - no doctype, no <html>, no
+     <head>, no <body> - and produced a half-white page on 2026-09-09.
+     Browsers accept a fragment silently, so nothing ever reported it. -->
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{title}} — Eagle 3D Streaming</title>
@@ -340,6 +350,9 @@
   }
   /* NAV-CSS:END */
 </style>
+</head>
+<body>
+
 
 {{nav}}
 
@@ -361,3 +374,5 @@
     <p>Eagle 3D Streaming</p>
   </footer>
 </div>
+</body>
+</html>
