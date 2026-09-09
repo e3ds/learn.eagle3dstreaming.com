@@ -108,6 +108,44 @@ function password() {
 
 /* Resolve inside ROOT or not at all. realpath is not used because the file may
  * not exist yet; the resolved prefix check is what matters. */
+/* [E3DS-LEARN-SAVE-SOURCE] Where an edit has to land so it is not thrown away.
+ *
+ * site/wiki/<slug>.html is BUILD OUTPUT. build.js regenerates it from
+ * content/wiki/<slug>.html on every run, so writing only to the output means
+ * the next build erases the edit - silently, and long enough after the fact
+ * that it reads as the editor being broken rather than the build doing its job.
+ *
+ * So a wiki page is written in BOTH places: the output so the change is visible
+ * immediately without running a build, and the source so the next build
+ * reproduces it. The two cannot drift, because the source is extracted from the
+ * very bytes being written to the output.
+ *
+ * The three hand-written pages at the site root have no separate source - the
+ * file in site/ IS the source, and build.js only replaces their nav block - so
+ * for those this returns null and the existing single write is correct.
+ */
+const CONTENT_BEGIN = "<!-- E3DS-CONTENT:BEGIN";
+const CONTENT_END = "<!-- E3DS-CONTENT:END -->";
+
+function sourceFileFor(absOutputPath) {
+  const wikiDir = path.join(ROOT, "wiki") + path.sep;
+  if (!absOutputPath.startsWith(wikiDir)) return null;      /* hand-written */
+  const slug = path.basename(absOutputPath, ".html");
+  return path.join(__dirname, "content", "wiki", slug + ".html");
+}
+
+/* The body between the markers, or null when they are absent - an older page
+ * built before the markers existed, which must not be half-written. */
+function contentFragmentOf(html) {
+  const b = html.indexOf(CONTENT_BEGIN);
+  if (b === -1) return null;
+  const bEnd = html.indexOf("-->", b);
+  if (bEnd === -1) return null;
+  const e = html.indexOf(CONTENT_END, bEnd);
+  if (e === -1) return null;
+  return html.slice(bEnd + 3, e).trim() + "\n";
+}
+
 function safePath(urlPath) {
   const clean = decodeURIComponent(String(urlPath).split("?")[0]);
   const rel = clean === "/" ? "index.html" : clean.replace(/^\/+/, "");
@@ -397,7 +435,35 @@ const server = http.createServer((req, res) => {
         const name = path.basename(abs, ".html") + "." + stamp + ".html";
         if (fs.existsSync(abs)) fs.copyFileSync(abs, path.join(BACKUPS, name));
         fs.writeFileSync(abs, o.html, "utf8");
-        return send(res, 200, JSON.stringify({ ok: true, backup: name }), "application/json");
+
+        /* [E3DS-LEARN-SAVE-SOURCE] And back to the source, or the next build
+         * undoes what was just saved. */
+        let savedSource = null;
+        const srcFile = sourceFileFor(abs);
+        if (srcFile) {
+          const fragment = contentFragmentOf(o.html);
+          if (fragment === null) {
+            /* Refusing is the safe answer: the output is already written and
+             * correct, and writing a guess into the source would corrupt the
+             * page on the next build. Says so plainly rather than reporting a
+             * clean save. */
+            return send(res, 200, JSON.stringify({ ok: true, backup: name,
+              warning: "Saved to the page, but its content markers are missing, "
+                + "so the source could not be updated - run node build.js once "
+                + "to regenerate this page with markers, then edit again." }),
+              "application/json");
+          }
+          if (fs.existsSync(srcFile)) {
+            fs.copyFileSync(srcFile, path.join(BACKUPS,
+              "content." + path.basename(srcFile, ".html") + "." + stamp + ".html"));
+          }
+          fs.mkdirSync(path.dirname(srcFile), { recursive: true });
+          fs.writeFileSync(srcFile, fragment, "utf8");
+          savedSource = path.relative(__dirname, srcFile);
+        }
+
+        return send(res, 200, JSON.stringify({ ok: true, backup: name,
+          source: savedSource }), "application/json");
       } catch (e) {
         return send(res, 500, JSON.stringify({ ok: false, error: String(e.message) }), "application/json");
       }

@@ -1,107 +1,4 @@
 <!doctype html>
-<!-- [E3DS-LEARN-TEMPLATE] The shell every generated page is poured into.
-     Edit this once and all pages follow on the next `node build.js`.
-     Placeholders: Audio and microphone Two audio behaviours surprise people: every stream starts muted, and turning on the microphone can stop a stream from starting at all. Both come from the browser, not from your app. <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone" class="on" aria-current="page">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button> <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep crumbMoreSep">/</span><button type="button" class="crumbMore" aria-label="Show the levels in between" onclick="this.closest('.crumbs').classList.add('crumbsOpen')">&hellip;</button><span class="sep mid">/</span><a class="mid" href="/wiki/development-guides">Developer guides</a><span class="sep">/</span><a href="/wiki/performance-optimization">Input and performance</a><span class="sep">/</span><span class="here">Audio and microphone</span></nav> Audio and microphone
-                   <p class="standfirst">
-  Two audio behaviours surprise people: every stream starts muted, and turning on
-  the microphone can stop a stream from starting at all. Both come from the
-  browser, not from your app.
-</p>
-
-<h2>Why the stream starts muted</h2>
-
-<p>
-  Chrome, Edge, Firefox and Safari all refuse to play sound on a page the visitor
-  has not interacted with. Video may start on its own; audio may not. Pixel
-  Streaming runs in a browser, so it lives under that rule like any other page.
-</p>
-
-<div class="outcome">
-  <strong>It fixes itself on the first click</strong>
-  <p>
-    Any genuine interaction unmutes it &mdash; the play button, a click inside
-    the streaming area, or a control in your own interface. Nothing to configure,
-    and no change to your Unreal project. This is also why the
-    <a href="/wiki/streaming-interface">play button</a> exists rather than being
-    something we could remove.
-  </p>
-</div>
-
-<aside class="callout note">
-  <p>
-    <strong>The audio was never missing.</strong> Your app has been producing it
-    all along; the browser was simply not letting it out. Anyone reporting "no
-    sound" who has not yet clicked anything is seeing this and nothing else.
-  </p>
-</aside>
-
-<h2>When the microphone stops the stream</h2>
-
-<p>
-  If <strong>Microphone</strong> is enabled in your
-  <a href="/wiki/app-configuration">app configuration</a>, the browser asks the
-  viewer for permission when the page loads. Until that is answered, there is no
-  microphone to attach &mdash; and the session waits.
-</p>
-
-<figure>
-  <img src="/images/Screenshot%202026-05-19%20214856-c643a9.png" alt="A stream that failed to start" loading="lazy">
-  <figcaption>What the viewer sees: the stream hangs during start-up, then fails after a few minutes.</figcaption>
-</figure>
-
-<p>Four situations produce that, and only the first is a deliberate choice:</p>
-
-<ul>
-  <li>The viewer clicked <strong>Block</strong> on the permission prompt.</li>
-  <li>The viewer ignored the prompt and carried on waiting.</li>
-  <li>The browser is set to block permission pop-ups, so no prompt ever appeared.</li>
-  <li>Microphone access is disabled in the browser's settings for that site.</li>
-</ul>
-
-<figure>
-  <img src="/images/image-20260519-160928-656d17.png" alt="The browser microphone permission prompt" loading="lazy">
-  <figcaption>The prompt that has to be answered.</figcaption>
-</figure>
-
-<aside class="callout warning">
-  <p>
-    <strong>The failure does not name the microphone.</strong> The viewer sees a
-    stream that would not start, several minutes after the fact, with nothing
-    pointing at a permission they dismissed. If a stream hangs at start-up and
-    the microphone is enabled, check this before anything else.
-  </p>
-</aside>
-
-<h3>Fixing it in the browser</h3>
-
-<ol class="steps">
-  <li><p>On the streaming page, click the lock or settings icon beside the address bar.</p></li>
-  <li>
-    <p>Open <strong>Site settings</strong>.</p>
-    <figure><img src="/images/image-20260520-055639-f505a8.png" alt="Opening site settings from the address bar" loading="lazy"></figure>
-  </li>
-  <li>
-    <p>Set <strong>Microphone</strong> to <strong>Allow</strong>, and make sure pop-ups and redirects are not blocked &mdash; that is what suppresses the prompt in the first place.</p>
-    <figure><img src="/images/image-20260520-060346-b1a872.png" alt="Allowing microphone access for the site" loading="lazy"></figure>
-  </li>
-  <li><p>Reload the stream.</p></li>
-</ol>
-
-<div class="outcome">
-  <strong>If your app does not use the microphone, turn the setting off</strong>
-  <p>
-    An app with the microphone enabled that never listens to it gains nothing and
-    inherits a whole class of start-up failure &mdash; one that depends on the
-    viewer's browser settings, which you cannot see or control. Leave it off
-    unless something in your app actually reads audio input.
-  </p>
-</div>
-
-<div class="next">
-  <a href="/microphone-settings.html">Microphone settings &rarr;</a>
-  <p>The configuration side: enabling it, and what your app receives.</p>
-</div>
-  {{source}} -->
 <!-- [E3DS-LEARN-DOCTYPE] The doctype is not decoration.
      Without it a browser renders in QUIRKS MODE, an emulation of pre-standards
      behaviour where the box model, percentage heights and background
@@ -459,6 +356,7 @@
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep crumbMoreSep">/</span><button type="button" class="crumbMore" aria-label="Show the levels in between" onclick="this.closest('.crumbs').classList.add('crumbsOpen')">&hellip;</button><span class="sep mid">/</span><a class="mid" href="/wiki/development-guides">Developer guides</a><span class="sep">/</span><a href="/wiki/performance-optimization">Input and performance</a><span class="sep">/</span><span class="here">Audio and microphone</span></nav>
   
   <h1>Audio and microphone</h1>
+  <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
   Two audio behaviours surprise people: every stream starts muted, and turning on
   the microphone can stop a stream from starting at all. Both come from the
@@ -559,6 +457,7 @@
   <p>The configuration side: enabling it, and what your app receives.</p>
 </div>
 
+  <!-- E3DS-CONTENT:END -->
   
   <!-- Every source page carried its own copy of this. Once, here, instead:
        sixteen copies is sixteen places to update a support link. -->

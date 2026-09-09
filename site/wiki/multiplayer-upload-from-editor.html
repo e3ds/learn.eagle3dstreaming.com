@@ -1,104 +1,4 @@
 <!doctype html>
-<!-- [E3DS-LEARN-TEMPLATE] The shell every generated page is poured into.
-     Edit this once and all pages follow on the next `node build.js`.
-     Placeholders: Upload from the editor With the Automation Tools plugin, one click packages both builds, compresses them, and uploads them &amp;mdash; instead of two packaging runs, two ZIPs and two browser uploads. <aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor" class="on" aria-current="page">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button> <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/multiplayer-pixel-streaming">Multiplayer Pixel Streaming</a><span class="sep">/</span><span class="here">Upload from the editor</span></nav> Upload from the editor
-                   <p class="standfirst">
-  With the Automation Tools plugin, one click packages both builds, compresses
-  them, and uploads them &mdash; instead of two packaging runs, two ZIPs and two
-  browser uploads.
-</p>
-
-<div class="prereq">
-  <strong>Before you start</strong>
-  <p>
-    The <a href="/wiki/automation-tools-plugin">Automation Tools plugin</a>
-    extracted into your project's <code>Plugins</code> folder, Pixel Streaming
-    enabled, 7-Zip installed, and the
-    <a href="/wiki/multiplayer-package">E3DS engine build</a> &mdash; the binary
-    Launcher engine cannot produce a server, with or without this plugin.
-  </p>
-</div>
-
-<h2>Configure it</h2>
-
-<p>
-  <strong>Edit &rarr; Project Settings &rarr; Plugins &rarr; E3DS Automation Tools
-  Settings.</strong>
-</p>
-
-<div class="scroll">
-  <table>
-    <thead><tr><th>Setting</th><th>What to put in it</th></tr></thead>
-    <tbody>
-      <tr><td>Path to E3DS Executable</td><td>The <code>EL_AT.exe</code> you get from the <strong>Download E3DS Automation Tool Executable</strong> button on this same page.</td></tr>
-      <tr><td>Path to 7Z.exe</td><td>Your 7-Zip installation.</td></tr>
-      <tr><td>API Key</td><td><strong>Get E3DS API Key</strong> generates one; paste it back into the field. Sign in first if prompted.</td></tr>
-      <tr><td>E3DS Streaming App Name</td><td>Letters and numbers only &mdash; no dots, no spaces.</td></tr>
-      <tr><td>Packaging Mode</td><td>Development or Shipping. See below.</td></tr>
-      <tr><td>Do Dedicated Server Build</td><td><strong>Enable this.</strong> Without it you get only the game build.</td></tr>
-      <tr><td>E3DS Dedicated Server App Name</td><td>The same name you used for the server application.</td></tr>
-      <tr><td>Launch Streaming App URL on Completion</td><td>Opens the stream in your browser as soon as the upload finishes.</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<figure><img src="/images/image-20250508-041634-d8497f.png" alt="The Do Dedicated Server Build option enabled in project settings" loading="lazy"></figure>
-
-<aside class="callout note">
-  <p>
-    <strong>Reusing an app name creates a new version rather than a second
-    app.</strong> That is usually what you want when iterating &mdash; and it
-    means a typo in the name silently creates a separate application instead of
-    updating the one you meant.
-  </p>
-</aside>
-
-<h3>Development or Shipping</h3>
-
-<div class="outcome">
-  <strong>Choose Development the first few times</strong>
-  <p>
-    Development packaging is slower but shows the output log while it runs;
-    Shipping is faster and shows nothing. When something goes wrong, that log is
-    the only thing that tells you what &mdash; so pay the time until the pipeline
-    is known to work, then switch.
-  </p>
-</div>
-
-<h2>Run it</h2>
-
-<p>
-  Click the E3DS icon in the toolbar and choose <strong>Launch E3DS Automation
-  Tool</strong>. A command prompt opens; packaging runs, then upload. After a few
-  minutes it reports both the server app and the game app uploaded.
-</p>
-
-<figure><img src="/images/image-20250508-044158-cf9482.png" alt="The automation tool reporting a completed upload" loading="lazy"></figure>
-
-<aside class="callout tip">
-  <p>
-    <strong>Package manually once before relying on this.</strong> The plugin
-    hides packaging behind one click, which is the point &mdash; and also means a
-    packaging error arrives with much less context. Doing it by hand once proves
-    the project itself is sound, so anything that fails afterwards is the
-    pipeline rather than the build.
-  </p>
-</aside>
-
-<h3>If the upload fails</h3>
-
-<ul>
-  <li><strong>Not enough disk space</strong> where the packaged folder lives &mdash; two builds plus their archives need room.</li>
-  <li><strong>A setting above is wrong</strong> &mdash; most often a path or the API key.</li>
-  <li><strong>You are on the binary engine from the Epic Launcher</strong>, which cannot build a dedicated server at all.</li>
-  <li><strong>Visual Studio is not properly set up</strong> for Unreal.</li>
-</ul>
-
-<div class="next">
-  <a href="/wiki/multiplayer-play">Start the server and play &rarr;</a>
-  <p>Both builds are uploaded &mdash; now get players into them.</p>
-</div>
-  {{source}} -->
 <!-- [E3DS-LEARN-DOCTYPE] The doctype is not decoration.
      Without it a browser renders in QUIRKS MODE, an emulation of pre-standards
      behaviour where the box model, percentage heights and background
@@ -456,6 +356,7 @@
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/multiplayer-pixel-streaming">Multiplayer Pixel Streaming</a><span class="sep">/</span><span class="here">Upload from the editor</span></nav>
   
   <h1>Upload from the editor</h1>
+  <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
   With the Automation Tools plugin, one click packages both builds, compresses
   them, and uploads them &mdash; instead of two packaging runs, two ZIPs and two
@@ -553,6 +454,7 @@
   <p>Both builds are uploaded &mdash; now get players into them.</p>
 </div>
 
+  <!-- E3DS-CONTENT:END -->
   
   <!-- Every source page carried its own copy of this. Once, here, instead:
        sixteen copies is sixteen places to update a support link. -->
