@@ -1,0 +1,358 @@
+<p class="standfirst">
+  A stream captures whichever microphone the operating system calls the default.
+  Two commands let your own page offer the viewer a proper picker and switch the
+  device mid-session, without dropping the stream.
+</p>
+
+<p>
+  Without this, the only way a viewer can change input device is the browser's
+  padlock menu or the operating system's sound settings. For anyone who is not
+  comfortable in browser settings that may as well not exist &mdash; so the
+  picker belongs on your page, where your users already are.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>This is an iframe feature.</strong> An SDK page shares a document
+    with the player and does not hit either of the two walls below, so the SDK
+    has no equivalent call today. If you need one, ask &mdash; the
+    implementation already exists.
+  </p>
+</aside>
+
+<h2>Why your page cannot do this itself</h2>
+
+<p>
+  It is worth seeing the two walls before the commands make sense. Both come
+  from the same thing: the stream runs in an iframe on a different origin.
+</p>
+
+<pre><code>      YOUR PAGE              |          THE IFRAME
+     (your origin)           |     (the stream's origin)
+                             |
+  enumerateDevices()         |   enumerateDevices()
+        |                    |         |
+        v                    |         v
+  deviceId "a1b2c3..."    X  |   deviceId "z9y8x7..."
+  valid HERE only       cannot         valid THERE only
+                        cross  |
+                             |
+  RTCPeerConnection        X  |   RTCPeerConnection
+  (unreachable)         cannot         (the live session)
+                         reach |
+                             |
+                  cross-origin boundary</code></pre>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Wall</th><th>What it means</th><th>The command that solves it</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>A <code>deviceId</code> is <strong>scoped to the origin</strong> that produced it</td>
+        <td>Ids your page collects are meaningless inside the frame</td>
+        <td><code>getMicDevices</code> &mdash; the list must come from in there</td>
+      </tr>
+      <tr>
+        <td>The iframe is <strong>cross-origin</strong></td>
+        <td>Your page cannot reach the <code>MediaStream</code> or the peer connection at all</td>
+        <td><code>setMicDevice</code> &mdash; the swap must happen in there</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Reloading the iframe is not a workaround.</strong> It tears down the
+    WebRTC session, puts the viewer back in the queue, and still lands on the
+    system default device. It costs a session and does not even work.
+  </p>
+</aside>
+
+<h2>The order things have to happen in</h2>
+
+<p>
+  This is the part that catches people. <strong>You cannot get a useful device
+  list before the browser has granted the microphone</strong>, and the browser
+  only grants it when something asks &mdash; which the player does when the
+  session connects, not when your page loads.
+</p>
+
+<pre><code> YOUR PAGE            THE PLAYER              THE BROWSER
+     |                    |                        |
+     | (1) page loads     |                        |
+     |     iframe.src set |                        |
+     |-------------------&gt;|                        |
+     |                    |                        |
+     |  X asking now is too early: no permission   |
+     |    yet, and no audio track to swap          |
+     |                    |                        |
+     |                    | (2) session connects   |
+     |                    |     getUserMedia(audio)|
+     |                    |-----------------------&gt;|
+     |                    |                        |
+     |                    |          +-------------+------+
+     |                    |          | "Allow microphone?" |
+     |                    |          +-------------+------+
+     |                    |                        |
+     |                    |&lt;-----------------------|
+     |                    |   granted, default mic |
+     |                    |                        |
+     | (3) stream.playing |                        |
+     |&lt;-------------------|                        |
+     |                    |                        |
+     | (4) getMicDevices  |                        |
+     |-------------------&gt;| enumerateDevices()     |
+     |                    |-----------------------&gt;|
+     |                    |&lt;-----------------------|
+     |   micDevices       |    ids AND labels      |
+     |&lt;-------------------|                        |
+     |                    |                        |
+     | (5) viewer picks one                        |
+     |     setMicDevice { deviceId }               |
+     |-------------------&gt;| getUserMedia(deviceId) |
+     |                    |-----------------------&gt;|
+     |                    |&lt;-----------------------|
+     |                    | sender.replaceTrack()  |
+     |                    | oldTrack.stop()        |
+     |   micDeviceChanged |                        |
+     |&lt;-------------------|  no renegotiation:     |
+     |                    |  the session stays up  |</code></pre>
+
+<aside class="callout tip">
+  <p>
+    <strong>Ask at step 4, not before.</strong> The simplest rule that works:
+    build your microphone controls when <code>stream.playing</code> arrives.
+  </p>
+</aside>
+
+<h2>What happens if you ask too early</h2>
+
+<p>
+  Neither command throws. Both answer &mdash; and the answer tells you which
+  wall you hit, which is why it is worth reading rather than ignoring.
+</p>
+
+<h3>getMicDevices before permission</h3>
+
+<pre><code>                +------------------------------+
+ getMicDevices  | Has the browser granted the  |
+       |        | microphone yet?              |
+       v        +--------------+---------------+
+                   no          |          yes
+           +-------------------+-------------------+
+           v                                       v
+  devices: [                            devices: [
+    { deviceId: "...",                    { deviceId: "...",
+      label: "" }                           label: "Headset (Realtek)" }
+  ]                                     ]
+
+  the devices are REAL;                 what you want
+  only the NAMES are withheld</code></pre>
+
+<p>
+  <strong>An empty <code>label</code> is not an error.</strong> Browsers withhold
+  device names until the microphone has been granted once. The devices are real
+  and their ids work; the names appear the moment permission is given. Number
+  them and say so, rather than rendering a column of blank rows.
+</p>
+
+<h3>setMicDevice before there is a session</h3>
+
+<pre><code>                +------------------------------+
+ setMicDevice   | Is there an audio sender on  |
+       |        | the live connection?         |
+       v        +--------------+---------------+
+                   no          |          yes
+           +-------------------+-------------------+
+           v                                       v
+  ok: false                              getUserMedia({ deviceId })
+  error: "no audio sender -                        |
+    is the microphone enabled           +----------+----------+
+    for this app?"                      v                     v
+                                  ok: true              ok: false
+  You asked before the             deviceId, label       error: "..."
+  session was up, or
+  "Enable Browser Microphone"     swapped live,         see the table
+  is off in the dashboard         session intact        below</code></pre>
+
+<h2>Reading the reply</h2>
+
+<p>
+  <code>error</code> carries the browser's own error <strong>name</strong>,
+  because the cases call for four different messages on your side.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th><code>error</code></th><th>What happened</th><th>What to tell the viewer</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>NotAllowedError</code></td>
+        <td>The viewer has refused the microphone for this site</td>
+        <td>"Allow the microphone in the padlock menu beside the address bar." Nothing on the page can override this.</td>
+      </tr>
+      <tr>
+        <td><code>OverconstrainedError</code></td>
+        <td>The chosen device is no longer there</td>
+        <td>"That microphone was disconnected." Re-list and let them pick again.</td>
+      </tr>
+      <tr>
+        <td><code>NotFoundError</code></td>
+        <td>There is no matching input device</td>
+        <td>Re-list.</td>
+      </tr>
+      <tr>
+        <td><code>NotReadableError</code></td>
+        <td>The device exists but another application has it</td>
+        <td>"Close whatever else is using the microphone and try again."</td>
+      </tr>
+      <tr>
+        <td><code>no audio sender&hellip;</code></td>
+        <td>There is no audio track on the connection to swap</td>
+        <td>You asked before the session was up, or the app is not configured with <strong>Enable Browser Microphone</strong>.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  On success you get back the <code>deviceId</code> <em>as the browser resolved
+  it</em>, plus the device's <code>label</code> &mdash; so your picker can
+  confirm what it actually got rather than what it asked for.
+</p>
+
+<h2>Switching does not restart the stream</h2>
+
+<pre><code>     before                setMicDevice              after
+  +------------+                                 +------------+
+  | RTCPeerConn|                                 | RTCPeerConn|
+  |  +------+  |    sender.replaceTrack(new)     |  +------+  |
+  |  |sender|--+--&gt; default mic  ==========&gt;     |  |sender|--+--&gt; chosen mic
+  |  +------+  |                                 |  +------+  |
+  +------------+     no renegotiation            +------------+
+                     no re-queue
+   same session ------ no reconnect ------------&gt; same session</code></pre>
+
+<p>
+  <code>replaceTrack()</code> swaps the outgoing track on an established sender
+  without renegotiating, so the call continues uninterrupted. The old track is
+  stopped <strong>after</strong> the new one is acquired and swapped in &mdash;
+  any other order means a device that has been unplugged since the list was
+  built costs the viewer the microphone they still had.
+</p>
+
+<h2>Devices appearing and disappearing</h2>
+
+<p>
+  The player watches the browser's <code>devicechange</code> event and re-sends
+  <code>micDevices</code> on its own when the machine's inputs change. Plug in a
+  headset mid-session and your picker refreshes without anyone pressing
+  anything.
+</p>
+
+<aside class="callout note">
+  <p>
+    <strong>So <code>micDevices</code> can arrive unprompted.</strong> Handle it
+    as "here is the current list", not as "here is the answer to the question
+    you just asked".
+  </p>
+</aside>
+
+<h2>The whole exchange</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Direction</th><th>Message</th></tr></thead>
+    <tbody>
+      <tr><td>page &rarr; frame</td><td><code>{ cmd: "getMicDevices" }</code></td></tr>
+      <tr><td>frame &rarr; page</td><td><code>{ type: "micDevices", ok: true, devices: [{ deviceId, label, isActive }] }</code></td></tr>
+      <tr><td>page &rarr; frame</td><td><code>{ cmd: "setMicDevice", deviceId: "&lt;id from micDevices&gt;" }</code></td></tr>
+      <tr><td>frame &rarr; page</td><td><code>{ type: "micDeviceChanged", ok: true, deviceId, label }</code></td></tr>
+      <tr><td>frame &rarr; page</td><td><code>{ type: "micDeviceChanged", ok: false, error, message }</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>A working page</h2>
+
+<pre><code class="language-javascript">const frame = document.getElementById("streamFrame");
+
+function send(message) {
+  frame.contentWindow.postMessage(JSON.stringify(message), "*");
+}
+
+window.addEventListener("message", (event) =&gt; {
+  const data = event.data;
+  if (!data || !data.type) return;
+
+  // Build the controls only once the video is playing - before that the
+  // labels are empty and there is no track to swap.
+  if (data.type === "stream.playing") {
+    send({ cmd: "getMicDevices" });
+  }
+
+  // Can also arrive unprompted, when a device is plugged in or removed.
+  if (data.type === "micDevices") {
+    const select = document.getElementById("micPicker");
+    select.innerHTML = "";
+    data.devices.forEach((device, i) =&gt; {
+      const option = document.createElement("option");
+      option.value = device.deviceId;
+      option.textContent = device.label || `Microphone ${i + 1}`;
+      option.selected = device.isActive;
+      select.appendChild(option);
+    });
+  }
+
+  if (data.type === "micDeviceChanged") {
+    if (data.ok) showStatus(`Now using ${data.label}`);
+    else showStatus(describe(data.error));
+  }
+});
+
+document.getElementById("micPicker").addEventListener("change", (e) =&gt; {
+  send({ cmd: "setMicDevice", deviceId: e.target.value });
+});</code></pre>
+
+<h2>Before any of this works</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Requirement</th><th>Where</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>The <code>&lt;iframe&gt;</code> carries <code>allow="microphone"</code></td>
+        <td>Your page's HTML. Read only when the frame's document loads &mdash; changing it later means reassigning <code>src</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Enable Browser Microphone</strong> is on</td>
+        <td>The app's configuration in the Control Panel. Without it there is no audio sender to swap a track on.</td>
+      </tr>
+      <tr>
+        <td>The viewer allows the microphone when asked</td>
+        <td>The browser. If they refuse, only they can undo it.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong><code>allow</code> is not the same as permission.</strong> The
+    attribute says whether <em>your page</em> is willing to share the microphone
+    with the frame. It does not decide whether the <em>browser</em> will grant
+    it &mdash; that is the viewer's own choice for your site. The two failures
+    look identical from the outside, so show the browser's current answer next
+    to your picker: <code>navigator.permissions.query({ name: "microphone" })</code>.
+  </p>
+</aside>
+
+<div class="next">
+  <p>
+    A complete working example, including the picker and a log of every message
+    in both directions, is in the
+    <a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">iframe
+    demo</a> &mdash; see its README under <strong>Microphone</strong>.
+  </p>
+</div>

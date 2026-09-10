@@ -56,7 +56,7 @@
       <tr>
         <td>iframe</td>
         <td><code>{ cmd: "freezeResolutionAt", x: 1920, y: 1080 }</code></td>
-        <td>&mdash;</td>
+        <td><code>{ cmd: "useViewportResolution" }</code></td>
       </tr>
     </tbody>
   </table>
@@ -100,7 +100,15 @@
 
 <h2>Mouse behaviour</h2>
 
-<pre><code class="language-javascript">e3ds_controller.switchMouseControlSchemeTo(scheme);</code></pre>
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Call</th></tr></thead>
+    <tbody>
+      <tr><td>SDK</td><td><code>e3ds_controller.switchMouseControlSchemeTo(scheme)</code></td></tr>
+      <tr><td>iframe</td><td><code>{ cmd: "switchMouseControlSchemeTo", value: scheme }</code></td></tr>
+    </tbody>
+  </table>
+</div>
 
 <p>
   Two schemes. <strong>Hovering</strong> leaves the cursor free, which suits
@@ -109,18 +117,102 @@
   is what most games expect. Choose per app, or offer both.
 </p>
 
+<aside class="callout warning">
+  <p>
+    <strong>The value is <code>"HoveringMouse"</code> or
+    <code>"LockedMouse"</code>.</strong> Anything else &mdash; including the
+    obvious <code>"Hovering"</code> and <code>"Locked"</code> &mdash; is
+    accepted and does nothing at all. There is no error.
+  </p>
+</aside>
+
+<aside class="callout note">
+  <p>
+    <strong>Switching to Locked does not lock the pointer.</strong> A browser
+    only grants pointer lock from inside a real click on the video, so the lock
+    lands on the viewer's <em>next</em> click on the stream &mdash; which is
+    indistinguishable from a button that did nothing. The platform sends a
+    <code>notice</code> event saying so; show it, or say the same thing in your
+    own words.
+  </p>
+</aside>
+
+<h2>Sending keys to the app</h2>
+
+<p>
+  For an on-screen control that should behave like a key press &mdash; a
+  touch-screen movement pad, an action button, a menu shortcut.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What</th><th>iframe command</th></tr></thead>
+    <tbody>
+      <tr><td>Press and release together</td><td><code>{ cmd: "emulateKeyboardKeyPress", value: "M" }</code></td></tr>
+      <tr><td>Hold down</td><td><code>{ cmd: "emulateKeyboardKeyDown", value: "W" }</code></td></tr>
+      <tr><td>Release</td><td><code>{ cmd: "emulateKeyboardKeyUp", value: "W" }</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  Any single letter or digit works, as do <code>Space</code>,
+  <code>Enter</code>, <code>Escape</code>, <code>Tab</code>,
+  <code>Backspace</code>, <code>Shift</code>, <code>Control</code>,
+  <code>Alt</code> and the four arrows. The reply is a
+  <code>keyEmulated</code> event saying whether the key was recognised.
+</p>
+
+<p>
+  <strong>Press and hold are different things.</strong> Press is a down and an up
+  together, which is what a menu or an action key wants. Hold leaves the key down
+  until you release it, which is what movement wants &mdash; and a single button
+  that does both cannot hold anything.
+</p>
+
 <h2>Sound, touch and screenshots</h2>
 
 <div class="scroll">
   <table>
-    <thead><tr><th>What</th><th>SDK call</th></tr></thead>
+    <thead><tr><th>What</th><th>SDK call</th><th>iframe command</th></tr></thead>
     <tbody>
-      <tr><td>Volume</td><td><code>setVolume(level)</code></td></tr>
-      <tr><td>Touch input on or off</td><td><code>setTouchInputEnabled(enabled)</code></td></tr>
-      <tr><td>Capture a frame</td><td><code>captureScreenShot()</code></td></tr>
-      <tr><td>End the session</td><td><code>terminate()</code></td></tr>
+      <tr><td>Volume</td><td><code>setVolume(level)</code></td><td><code>{ cmd: "setVolume", value: level }</code></td></tr>
+      <tr><td>Touch input on or off</td><td><code>setTouchInputEnabled(enabled)</code></td><td><code>{ cmd: "setTouchInputEnabled", value: enabled }</code></td></tr>
+      <tr><td>Capture a frame</td><td><code>captureScreenShot()</code></td><td><code>{ cmd: "captureScreenShot" }</code></td></tr>
+      <tr><td>End the session</td><td><code>terminate()</code></td><td><code>{ cmd: "ForceEndSession" }</code></td></tr>
+      <tr><td>Which device is watching</td><td>&mdash;</td><td><code>{ cmd: "getDeviceInfo" }</code></td></tr>
+      <tr><td>Which app is streaming</td><td>&mdash;</td><td><code>{ cmd: "getAppInfo" }</code></td></tr>
     </tbody>
   </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>From an iframe, your page saves the screenshot &mdash; the frame
+    cannot.</strong> A browser refuses a download started inside a cross-origin
+    iframe that has no click of its own, and the click was on your button, not
+    in the frame. Nothing is logged when this happens, which makes it a
+    confusing failure to chase.
+  </p>
+  <p>
+    So the frame paints the picture and hands it back as a
+    <code>screenshot</code> event carrying a PNG data URL. Your page &mdash;
+    which is top level, and has no such restriction &mdash; saves it:
+  </p>
+<pre><code class="language-javascript">if (data.type === "screenshot" &amp;&amp; data.ok) {
+  const link = document.createElement("a");
+  link.href = data.dataUrl;
+  link.download = data.fileName;
+  link.click();
+}</code></pre>
+</aside>
+
+<div class="next">
+  <p>
+    <strong>Letting the viewer choose a microphone</strong> takes two more
+    commands and has an order you have to respect &mdash; see
+    <a href="/wiki/choose-the-microphone">Choose the microphone</a>.
+  </p>
 </div>
 
 <h2>Knowing what the stream is doing</h2>
