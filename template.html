@@ -218,6 +218,47 @@
     text-decoration:none}
   .next p{margin:4px 0 0;color:var(--ink-2);font-size:15.5px}
 
+  /* [E3DS-SECTION-DETAILS] A whole SECTION that folds, for a long page.
+
+     Different job from .msg below, which folds one entry in a catalogue. This
+     folds a chapter, so a page that has grown past what anyone will scroll
+     becomes a contents list you can open in place.
+
+     WHY THE HEADING STAYS AN h2 INSIDE THE SUMMARY. The document outline, the
+     crawler and anything generating a table of contents all read headings. Put
+     a div there instead and the page loses its structure to save a fold. An h2
+     in a summary is valid, and this is what it is for.
+
+     WHY NATIVE details AND NOT SCRIPT. It works with scripting off, every word
+     is in the HTML whether the panel is open or shut - so nothing is hidden
+     from a crawler - and most browsers open a closed panel when Ctrl+F finds
+     text inside it.
+
+     Add `open` to the one or two sections a first-time reader must not miss.
+     If every section is open the fold has bought nothing; if none are, the page
+     looks empty. */
+  .sect{border-top:1px solid var(--line);margin:0}
+  .sect>summary{cursor:pointer;list-style:none;display:flex;gap:14px;
+    align-items:baseline;padding:18px 0}
+  .sect>summary::-webkit-details-marker{display:none}
+  .sect>summary::after{content:"+";margin-left:auto;flex:0 0 auto;
+    color:var(--ink-3);font-family:Archivo,Arial,sans-serif;font-size:20px;
+    line-height:1}
+  .sect[open]>summary::after{content:"\2212"}
+  .sect>summary:hover::after{color:var(--ink)}
+  .sect>summary h2{margin:0;font-size:20px;flex:0 0 auto}
+  .sect>summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
+  .sect>.body{padding:0 0 22px}
+  .sect>.body>:first-child{margin-top:0}
+  /* The first heading inside an open section must not fight its own summary. */
+  .sect>.body>h3:first-child{margin-top:4px}
+
+  @media (max-width:640px){
+    .sect>summary{flex-direction:column;gap:3px;align-items:flex-start}
+    .sect>summary::after{position:absolute;right:0}
+    .sect>summary{position:relative;padding-right:28px}
+  }
+
   /* [E3DS-DETAILS] Collapsible entries, for pages that are a catalogue rather
      than an argument. Native <details>, so it works with scripting off, every
      word is still in the HTML for crawlers, and Ctrl+F finds text inside a

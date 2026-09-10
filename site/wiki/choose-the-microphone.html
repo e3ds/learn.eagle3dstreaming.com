@@ -214,6 +214,47 @@
     text-decoration:none}
   .next p{margin:4px 0 0;color:var(--ink-2);font-size:15.5px}
 
+  /* [E3DS-SECTION-DETAILS] A whole SECTION that folds, for a long page.
+
+     Different job from .msg below, which folds one entry in a catalogue. This
+     folds a chapter, so a page that has grown past what anyone will scroll
+     becomes a contents list you can open in place.
+
+     WHY THE HEADING STAYS AN h2 INSIDE THE SUMMARY. The document outline, the
+     crawler and anything generating a table of contents all read headings. Put
+     a div there instead and the page loses its structure to save a fold. An h2
+     in a summary is valid, and this is what it is for.
+
+     WHY NATIVE details AND NOT SCRIPT. It works with scripting off, every word
+     is in the HTML whether the panel is open or shut - so nothing is hidden
+     from a crawler - and most browsers open a closed panel when Ctrl+F finds
+     text inside it.
+
+     Add `open` to the one or two sections a first-time reader must not miss.
+     If every section is open the fold has bought nothing; if none are, the page
+     looks empty. */
+  .sect{border-top:1px solid var(--line);margin:0}
+  .sect>summary{cursor:pointer;list-style:none;display:flex;gap:14px;
+    align-items:baseline;padding:18px 0}
+  .sect>summary::-webkit-details-marker{display:none}
+  .sect>summary::after{content:"+";margin-left:auto;flex:0 0 auto;
+    color:var(--ink-3);font-family:Archivo,Arial,sans-serif;font-size:20px;
+    line-height:1}
+  .sect[open]>summary::after{content:"\2212"}
+  .sect>summary:hover::after{color:var(--ink)}
+  .sect>summary h2{margin:0;font-size:20px;flex:0 0 auto}
+  .sect>summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
+  .sect>.body{padding:0 0 22px}
+  .sect>.body>:first-child{margin-top:0}
+  /* The first heading inside an open section must not fight its own summary. */
+  .sect>.body>h3:first-child{margin-top:4px}
+
+  @media (max-width:640px){
+    .sect>summary{flex-direction:column;gap:3px;align-items:flex-start}
+    .sect>summary::after{position:absolute;right:0}
+    .sect>summary{position:relative;padding-right:28px}
+  }
+
   /* [E3DS-DETAILS] Collapsible entries, for pages that are a catalogue rather
      than an argument. Native <details>, so it works with scripting off, every
      word is still in the HTML for crawlers, and Ctrl+F finds text inside a
@@ -379,7 +420,9 @@
   </p>
 </aside>
 
-<h2>Why your page cannot do this itself</h2>
+<details class="sect">
+  <summary><h2>Why your page cannot do this itself</h2><span class="hint">Two walls, and each one needs one of the two commands</span></summary>
+  <div class="body">
 
 <p>
   It is worth seeing the two walls before the commands make sense. Both come
@@ -428,7 +471,12 @@
   </p>
 </aside>
 
-<h2>The order things have to happen in</h2>
+  </div>
+</details>
+
+<details class="sect" open>
+  <summary><h2>The order things have to happen in</h2><span class="hint">The mistake everyone makes first, in one diagram</span></summary>
+  <div class="body">
 
 <p>
   This is the part that catches people. <strong>You cannot get a useful device
@@ -485,7 +533,12 @@
   </p>
 </aside>
 
-<h2>What happens if you ask too early</h2>
+  </div>
+</details>
+
+<details class="sect">
+  <summary><h2>What happens if you ask too early</h2><span class="hint">What each command answers before permission is granted</span></summary>
+  <div class="body">
 
 <p>
   Neither command throws. Both answer &mdash; and the answer tells you which
@@ -501,19 +554,38 @@
                    no          |          yes
            +-------------------+-------------------+
            v                                       v
-  devices: [                            devices: [
-    { deviceId: "...",                    { deviceId: "...",
-      label: "" }                           label: "Headset (Realtek)" }
-  ]                                     ]
+  permissionGranted: false              permissionGranted: true
+  deviceCount: 1                        devices: [
+  devices: []                             { deviceId: "z9y8...",
+                                            label: "Headset (Realtek)",
+  the browser answered with ONE            isActive: true }
+  placeholder - deviceId "",            ]
+  label "" - which is not a
+  device, so it is not listed           what you want</code></pre>
 
-  the devices are REAL;                 what you want
-  only the NAMES are withheld</code></pre>
+<aside class="callout warning">
+  <p>
+    <strong>Before permission, <code>enumerateDevices()</code> returns one entry
+    with an empty <code>deviceId</code> and an empty <code>label</code>.</strong>
+    It is a placeholder meaning "there is at least one microphone and you may not
+    know anything about it" &mdash; not a device. Render it as a choice and your
+    viewer picks something that can never work.
+  </p>
+  <p>
+    So the reply tells you directly: <code>permissionGranted</code> says whether
+    the list is real, and <code>deviceCount</code> says whether there is anything
+    there at all. An <strong>id</strong> is what makes an entry usable, so that
+    is what decides &mdash; not the label, which some browsers still withhold
+    even after permission is granted.
+  </p>
+</aside>
 
 <p>
-  <strong>An empty <code>label</code> is not an error.</strong> Browsers withhold
-  device names until the microphone has been granted once. The devices are real
-  and their ids work; the names appear the moment permission is given. Number
-  them and say so, rather than rendering a column of blank rows.
+  The two empty lists mean different things and need different words on your
+  page. <code>permissionGranted: false</code> with a non-zero
+  <code>deviceCount</code> means "allow the microphone, then list again" &mdash;
+  there is something to do, and it is not on your page. No devices at all means
+  there is no microphone, and no amount of allowing will produce one.
 </p>
 
 <h3>setMicDevice before there is a session</h3>
@@ -535,7 +607,12 @@
   "Enable Browser Microphone"     swapped live,         see the table
   is off in the dashboard         session intact        below</code></pre>
 
-<h2>Reading the reply</h2>
+  </div>
+</details>
+
+<details class="sect">
+  <summary><h2>Reading the reply</h2><span class="hint">Four error names, and a different sentence for each</span></summary>
+  <div class="body">
 
 <p>
   <code>error</code> carries the browser's own error <strong>name</strong>,
@@ -581,7 +658,12 @@
   confirm what it actually got rather than what it asked for.
 </p>
 
-<h2>Switching does not restart the stream</h2>
+  </div>
+</details>
+
+<details class="sect">
+  <summary><h2>Switching does not restart the stream</h2><span class="hint">replaceTrack, and why the old track is stopped last</span></summary>
+  <div class="body">
 
 <pre><code>     before                setMicDevice              after
   +------------+                                 +------------+
@@ -601,7 +683,12 @@
   built costs the viewer the microphone they still had.
 </p>
 
-<h2>Devices appearing and disappearing</h2>
+  </div>
+</details>
+
+<details class="sect">
+  <summary><h2>Devices appearing and disappearing</h2><span class="hint">A headset plugged in mid-session refreshes your picker</span></summary>
+  <div class="body">
 
 <p>
   The player watches the browser's <code>devicechange</code> event and re-sends
@@ -618,7 +705,12 @@
   </p>
 </aside>
 
-<h2>The whole exchange</h2>
+  </div>
+</details>
+
+<details class="sect">
+  <summary><h2>The whole exchange</h2><span class="hint">Every message, both directions</span></summary>
+  <div class="body">
 
 <div class="scroll">
   <table>
@@ -633,7 +725,12 @@
   </table>
 </div>
 
-<h2>A working page</h2>
+  </div>
+</details>
+
+<details class="sect">
+  <summary><h2>A working page</h2><span class="hint">Copy this</span></summary>
+  <div class="body">
 
 <pre><code class="language-javascript">const frame = document.getElementById("streamFrame");
 
@@ -674,7 +771,12 @@ document.getElementById("micPicker").addEventListener("change", (e) =&gt; {
   send({ cmd: "setMicDevice", deviceId: e.target.value });
 });</code></pre>
 
-<h2>Before any of this works</h2>
+  </div>
+</details>
+
+<details class="sect">
+  <summary><h2>Before any of this works</h2><span class="hint">Three things that must be true, and one that is not yours to set</span></summary>
+  <div class="body">
 
 <div class="scroll">
   <table>
@@ -706,6 +808,9 @@ document.getElementById("micPicker").addEventListener("change", (e) =&gt; {
     to your picker: <code>navigator.permissions.query({ name: "microphone" })</code>.
   </p>
 </aside>
+
+  </div>
+</details>
 
 <div class="next">
   <p>
