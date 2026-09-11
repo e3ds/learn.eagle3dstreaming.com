@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="Letting someone choose which microphone a stream uses takes two commands, not one. This page explains why, in order, from the beginning.">
+<meta name="description" content="You have embedded an Eagle 3D Streaming page in an &amp;lt;iframe&amp;gt; on your own website, and you want your visitor to be able to choose which microphone it captures. That takes two commands, not one. This page explains why, in order, from the beginning.">
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
      AT LAUNCH: remove the robots meta and point canonical back here. -->
@@ -399,8 +399,10 @@
   <h1>How the microphone is chosen</h1>
   <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
-  Letting someone choose which microphone a stream uses takes two commands, not
-  one. This page explains why, in order, from the beginning.
+  You have embedded an Eagle 3D Streaming page in an <code>&lt;iframe&gt;</code>
+  on your own website, and you want your visitor to be able to choose which
+  microphone it captures. That takes two commands, not one. This page explains
+  why, in order, from the beginning.
 </p>
 
 <style>
@@ -432,11 +434,13 @@
   .fig .dev { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.4; }
 </style>
 
-<h2>1. There are two pages, not one</h2>
+<h2>1. Two websites, not one</h2>
 
 <p>
-  When you embed a stream, your visitor is looking at <strong>two web
-  pages</strong> at once. Yours, and ours inside it.
+  An <code>&lt;iframe&gt;</code> embed puts two web pages on screen at once, and
+  they belong to <strong>two different websites</strong>: yours, and Eagle 3D
+  Streaming's inside it. That second part matters more than it sounds, and
+  everything below follows from it.
 </p>
 
 <figure class="fig">
@@ -451,8 +455,8 @@
   <text class="sub" x="250" y="176">inside your &lt;iframe&gt;</text>
 </svg>
 <figcaption>
-  Two pages, two different web addresses. A browser treats them as two separate
-  websites that happen to be on screen together.
+  Two different web addresses, so two different websites. A browser keeps them
+  apart even though they are on screen together.
 </figcaption>
 </figure>
 
@@ -464,12 +468,19 @@
   surprising yet.
 </p>
 
-<h2>3. But each page calls them by different names</h2>
+<h2>3. But each website calls them by different names</h2>
 
 <p>
-  Every microphone has an <strong>id</strong> &mdash; that is how a page says
-  <em>use this one</em>. The catch is that a browser gives each page its
-  <strong>own</strong> ids for the very same microphones.
+  Every microphone has an <strong>id</strong> &mdash; that is how code says
+  <em>use this one</em>. The catch is that a browser gives each
+  <strong>website</strong> its own ids for the very same microphones.
+</p>
+
+<p>
+  Per website, not per page: two pages on your own site share the same ids, so
+  you can pass one between them freely. It is only crossing to a different
+  website &mdash; which is exactly what the <code>&lt;iframe&gt;</code> does
+  &mdash; that the ids stop meaning anything.
 </p>
 
 <figure class="fig">
@@ -499,18 +510,20 @@
   <text class="sub" x="360" y="320" text-anchor="middle">two different websites</text>
 </svg>
 <figcaption>
-  Microphone 1 is <code>ID1</code> to your page and <code>ID3</code> to ours.
-  Browsers do this deliberately, so that two websites cannot compare ids to
-  work out that they are looking at the same visitor.
+  Microphone 1 is <code>ID1</code> to your website and <code>ID3</code> to Eagle
+  3D Streaming's. Browsers do this deliberately, so that two websites cannot
+  compare ids to work out they are looking at the same visitor.
 </figcaption>
 </figure>
 
-<h2>4. So your ids are no use to us</h2>
+<h2>4. So your ids are no use to the Eagle 3D page</h2>
 
 <p>
-  This is the whole problem. If your page looks up its own microphones and sends
-  us <code>ID1</code>, we have never heard of <code>ID1</code>. We know
-  <code>ID3</code> and <code>ID4</code>. The message arrives and means nothing.
+  This is the whole problem. Say your page looks up its own microphones and
+  sends <code>ID1</code> across, meaning <em>capture this microphone and send
+  its audio through the stream</em>. The Eagle 3D page has never heard of
+  <code>ID1</code>. It knows those two microphones as <code>ID3</code> and
+  <code>ID4</code>. The message arrives, and there is nothing it can do with it.
 </p>
 
 <figure class="fig">
@@ -527,7 +540,7 @@
   <path class="wire" d="M428 84 L436 90 L428 96"/>
   <line x1="340" y1="76" x2="372" y2="104" stroke="var(--warn)" stroke-width="2.6"/>
   <line x1="372" y1="76" x2="340" y2="104" stroke="var(--warn)" stroke-width="2.6"/>
-  <text class="bad" x="356" y="64" text-anchor="middle">ID1? never heard of it</text>
+  <text class="bad" x="356" y="64" text-anchor="middle">ID1? not one of mine</text>
   <text class="sub" x="356" y="152" text-anchor="middle">ids do not travel between websites</text>
 </svg>
 <figcaption>
@@ -535,11 +548,12 @@
 </figcaption>
 </figure>
 
-<h2>5. So ask us for our list first</h2>
+<h2>5. So ask the Eagle 3D page for its list first</h2>
 
 <p>
-  Send <code>getMicDevices</code>. We reply with <strong>our</strong> ids &mdash;
-  the ones we will recognise when you send one back.
+  Send <code>getMicDevices</code>. The reply carries the ids
+  <strong>that page</strong> uses &mdash; the ones it will recognise when you
+  send one back, together with a readable name for each.
 </p>
 
 <figure class="fig">
@@ -561,11 +575,11 @@
   <text class="monoBig" x="366" y="150" text-anchor="middle">{ type: "micDevices", devices: [</text>
   <text class="mono" x="366" y="170" text-anchor="middle">{ deviceId: "ID3", label: "microphone 1" },</text>
   <text class="mono" x="366" y="190" text-anchor="middle">{ deviceId: "ID4", label: "microphone 2" } ] }</text>
-  <text class="good" x="366" y="224" text-anchor="middle">now you hold ids we understand</text>
+  <text class="good" x="366" y="224" text-anchor="middle">now you hold ids the Eagle 3D page issued</text>
 </svg>
 <figcaption>
-  The reply carries our ids and a readable name for each, so you have something
-  to show and something we will recognise.
+  Now your page holds ids the Eagle 3D page issued: something to show your
+  visitor, and something that will be understood when it goes back.
 </figcaption>
 </figure>
 
@@ -573,8 +587,8 @@
 
 <p>
   How you choose is entirely yours. A dropdown, a settings screen, or nothing on
-  screen at all &mdash; your code can simply pick one. Whichever it is, send us
-  back the id <em>we</em> gave you.
+  screen at all &mdash; your code can simply pick one. Whichever it is, send back
+  an id from the list you were given.
 </p>
 
 <figure class="fig">
@@ -597,17 +611,18 @@
   <text class="good" x="366" y="198" text-anchor="middle">microphone 2 is now the one being used</text>
 </svg>
 <figcaption>
-  <code>ID4</code> came from us, so we know exactly which microphone it means.
+  <code>ID4</code> came from the Eagle 3D page, so that page knows exactly which
+  microphone it means.
 </figcaption>
 </figure>
 
-<h2>7. We take it from there</h2>
+<h2>7. Eagle 3D Streaming takes it from there</h2>
 
 <p>
-  Once we have the id, that is the end of your part. We capture that microphone
-  and send its audio over WebRTC to your Unreal application &mdash;
-  <strong>without restarting the stream</strong>. The picture does not flicker
-  and the session is not re-queued.
+  Once that id arrives, your part is done. Eagle 3D Streaming captures that
+  microphone and sends its audio over WebRTC to your Unreal application
+  &mdash; <strong>without restarting the stream</strong>. The picture does not
+  flicker and the visitor is not put back in the queue.
 </p>
 
 <figure class="fig">
@@ -636,7 +651,7 @@
 </svg>
 <figcaption>
   Your page sends a string and receives a string. The audio goes from the
-  microphone into our page and straight on to your app.
+  microphone into the Eagle 3D page and straight on to your app.
 </figcaption>
 </figure>
 
@@ -646,11 +661,11 @@
   <table>
     <thead><tr><th>Direction</th><th>Message</th></tr></thead>
     <tbody>
-      <tr><td>your page &rarr; us</td><td><code>{ cmd: "getMicDevices" }</code></td></tr>
-      <tr><td>us &rarr; your page</td><td><code>{ type: "micDevices", ok: true, devices: [{ deviceId, label, isActive }] }</code></td></tr>
-      <tr><td>your page &rarr; us</td><td><code>{ cmd: "setMicDevice", deviceId: "&lt;one of ours&gt;" }</code></td></tr>
-      <tr><td>us &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: true, deviceId, label }</code></td></tr>
-      <tr><td>us &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: false, error, message }</code></td></tr>
+      <tr><td>your page &rarr; the Eagle 3D page</td><td><code>{ cmd: "getMicDevices" }</code></td></tr>
+      <tr><td>the Eagle 3D page &rarr; your page</td><td><code>{ type: "micDevices", ok: true, devices: [{ deviceId, label, isActive }] }</code></td></tr>
+      <tr><td>your page &rarr; the Eagle 3D page</td><td><code>{ cmd: "setMicDevice", deviceId: "&lt;an id from that list&gt;" }</code></td></tr>
+      <tr><td>the Eagle 3D page &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: true, deviceId, label }</code></td></tr>
+      <tr><td>the Eagle 3D page &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: false, error, message }</code></td></tr>
     </tbody>
   </table>
 </div>
@@ -681,9 +696,10 @@
 <aside class="callout warning">
   <p>
     <strong>If the list comes back empty</strong>, the microphone has not been
-    allowed for our page &mdash; which is a separate thing from allowing it for
-    yours. See <a href="/wiki/choose-the-microphone">Choose the microphone</a>
-    under <em>When the permission is the problem</em>.
+    allowed for the Eagle 3D website &mdash; which is a separate thing from
+    allowing it for yours, for the same reason the ids are separate. See
+    <a href="/wiki/choose-the-microphone">Choose the microphone</a> under
+    <em>When the permission is the problem</em>.
   </p>
 </aside>
 
