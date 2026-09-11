@@ -381,3 +381,102 @@ landed.
 - The multiplayer packaging failure ("Unknown Error" on a Launcher engine
   build) was buried at step 7 of the old page. It is now the first thing
   `multiplayer-package` says, because it is the wall everyone hits.
+
+## SEO a writer can edit, per page — `[E3DS-LEARN-SEO]`
+
+Press **SEO** in the editor bar (`?edit=1`, password required) and the panel
+edits the page's title, description, keywords, canonical, link-preview image
+and indexing.
+
+### It edits the SIDECAR, not the page
+
+`content/wiki/<slug>.json`, not `site/wiki/<slug>.html`. Meta tags written into
+the built page would last until the next `node build.js` and no longer — the
+same trap `[E3DS-LEARN-SAVE-SOURCE]` already documents for body text. So the
+panel says **"Saved. Run node build.js to rebuild the page with it."** rather
+than implying the page changed.
+
+The save **merges**. `title`, `slug`, `section`, `parents`, `order`, `source`
+and everything else are untouched: rewriting the file wholesale would make an
+SEO edit capable of silently unparenting a page or moving it out of its section.
+
+### Every field is optional, and every fallback is what the build already did
+
+There are 100 pages in `content/wiki` and **none of them had any of these
+fields**. Anything that changed their output would have been a hundred silent
+changes from a feature nobody had used. Verified by diffing a built page before
+and after: the only difference is the new Open Graph block, which is *added*
+markup. The meta description is byte-identical.
+
+| field | when empty |
+|---|---|
+| `seoTitle` | `<title>` = `"<Page title> — Eagle 3D Streaming"`, as before |
+| `description` | the generated first sentence, as before |
+| `keywords` | **no tag at all** — an empty keywords tag declares the page is about nothing |
+| `canonical` | `source` (the old docs URL), as before |
+| `ogTitle` / `ogDescription` | follow the two above |
+| `ogImage` | **omitted**, and the Twitter card drops to `summary` — claiming `summary_large_image` with no image renders a blank space where the picture should be |
+| `index` | **`noindex,nofollow`** |
+
+### INDEXING IS OPT-IN, PER PAGE, AND STAYS OFF BY DEFAULT
+
+The hardcoded `<meta name="robots" content="noindex,nofollow">` is now
+`{{robots}}` — **but it still resolves to noindex for every page** unless that
+page's JSON has `"index": true`. That was deliberate: making a page indexable is
+*publishing* it, and doing that to a hundred unreviewed pages as a side effect
+of adding an editor would be the opposite of what was asked.
+
+It is written as an opt-**in** so a typo, a missing field or a malformed value
+all fail the safe way — hidden, not published.
+
+**The launch checklist in `site/robots.txt` still applies and is still the thing
+to follow.** This only lets one page be opened up early, deliberately. The panel
+says so, in the warning beside the checkbox: ticking it does **not** remove the
+site-wide block in `robots.txt`.
+
+### Two traps found while building this, both worth keeping
+
+1. **`describe()` used to escape its own output.** That was right while it was
+   the only source of the description. The moment a writer could supply one too,
+   one path was escaped and the other was not — and escaping at the substitution
+   to cover the raw one **double-escaped** the generated one: `&mdash;` shipped
+   as `&amp;mdash;` and rendered as literal text. `describe()` now returns raw
+   text and escaping happens once, at the point of use.
+2. **The build substitutes placeholders inside HTML comments too.** A comment
+   that mentioned `{{robots}}` by name got a real `<meta>` tag substituted into
+   it. The template's comment now describes the placeholder without naming it.
+   (`[E3DS-LEARN-TEMPLATE]` already documents the related trap of the comment
+   itself surviving into output.)
+
+### The slug is treated as hostile
+
+It arrives from the browser, and it becomes a file path that is read and then
+written. One path segment, `^[a-z0-9][a-z0-9-]*$`, or the request is refused —
+without it, `../../editor-password` is a file read and a file write. The
+password is required to **read** as well as to write: most values are visible in
+the page's own head, but `index` and an unpublished canonical say what is
+*planned* rather than what is shipped, on a site that is deliberately not public.
+
+Every save backs the sidecar up to `.backups/meta.<slug>.<stamp>.json`, matching
+the existing content-save behaviour.
+
+### VERIFIED
+
+Against a second instance on port 6511 (the live one on 6500 left alone), with
+the real password:
+
+- wrong password → 403; `../../editor-password` and `a/b` → refused as not a
+  slug; unknown page → 404 naming the missing file
+- save → merge confirmed: the seven pre-existing keys survived untouched
+- `index: false` is stored as **absent**, not `false`
+- an emptied field is **removed**, not stored as `""` — and after clearing every
+  field the built page is byte-identical to before this change existed
+- opting one page in produced `index,follow` on **that page only**; the other
+  102 stayed `noindex,nofollow`
+- `ogImage` set → `twitter:card` became `summary_large_image`
+- the editor script parses, and the injected editor carries the panel
+- the live site was restarted and serves 200 locally and publicly
+
+**NOT verified:** nobody has clicked through the panel in a browser — the
+endpoints were driven directly. The test page's sidecar was restored to its
+exact original bytes afterwards, so no test content remains.

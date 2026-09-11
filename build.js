@@ -310,7 +310,70 @@ function describe(body, title) {
   const cut = text.slice(0, 300);
   const stop = cut.lastIndexOf(". ");
   const out = (stop > 80 ? cut.slice(0, stop + 1) : cut.slice(0, 155)).trim();
-  return esc(out || title);
+  /* [E3DS-LEARN-SEO] RAW, not escaped. It used to esc() here, which was correct
+   * while this was the only source of the description and went straight into
+   * the template. It stopped being correct the moment a writer could supply one
+   * too: that one arrives raw, so one path was escaped and the other was not,
+   * and escaping at the substitution to cover the raw one double-escaped this
+   * one - "&mdash;" shipped as "&amp;mdash;" and rendered as literal text in
+   * search results. Escaping belongs at the point of use, once. */
+  return out || title;
+}
+
+/* [E3DS-LEARN-SEO] The SEO a writer can set per page, and what happens when
+ * they have not set it.
+ *
+ * EVERY FIELD IS OPTIONAL AND EVERY FALLBACK IS TODAY'S BEHAVIOUR. There are a
+ * hundred pages in content/wiki and not one of them has any of these fields, so
+ * anything that changed their output would be a hundred silent changes made by
+ * a feature nobody had used yet. Run the build before and after this commit and
+ * the only difference in the existing pages is the Open Graph block, which is
+ * new markup rather than a changed value.
+ *
+ * WHY A DESCRIPTION IS WORTH TYPING even though one is generated. describe()
+ * takes the first sentence or so of the body, which is written to be read
+ * AFTER the heading, in context. On a search results page it appears with no
+ * heading and no context, and first sentences like "This is done from the
+ * Developer section." are useless there. The generated one is a floor, not a
+ * target.
+ *
+ * ROBOTS DEFAULTS TO noindex,nofollow - see the note in template.html. Turning
+ * a page's indexing on is publishing it.
+ */
+function seoOf(p, body) {
+  const description = (p.description || "").trim() || describe(body, p.title);
+
+  /* The <title> is the single highest-value SEO field on a page and the one
+   * most often left as the H1. The default keeps the site suffix, because a
+   * result reading just "Overview" tells a searcher nothing about whose
+   * overview it is. */
+  const seoTitle = (p.seoTitle || "").trim() || (p.title + " \u2014 Eagle 3D Streaming");
+
+  /* Omitted entirely when empty. An empty keywords tag is not neutral - it is a
+   * declaration that the page is about nothing. */
+  const keywords = (p.keywords || "").trim()
+    ? '<meta name="keywords" content="' + esc(p.keywords.trim()) + '">'
+    : "";
+
+  /* noindex unless the page explicitly says index. Written as an opt-IN rather
+   * than an opt-out so that a typo, a missing field or a malformed JSON value
+   * all fail the safe way - hidden, not published. */
+  const robots = p.index === true
+    ? '<meta name="robots" content="index,follow">'
+    : '<meta name="robots" content="noindex,nofollow">';
+
+  const ogTitle = (p.ogTitle || "").trim() || (p.seoTitle || "").trim() || p.title;
+  const ogDescription = (p.ogDescription || "").trim() || description;
+
+  /* summary_large_image only when there IS an image. Claiming a large image
+   * card without one gets the page rendered as a small card with a blank space
+   * where the picture should be. */
+  const ogImage = (p.ogImage || "").trim()
+    ? '<meta property="og:image" content="' + esc(p.ogImage.trim()) + '">'
+    : "";
+  const twitterCard = (p.ogImage || "").trim() ? "summary_large_image" : "summary";
+
+  return { description, seoTitle, keywords, robots, ogTitle, ogDescription, ogImage, twitterCard };
 }
 
 function main() {
@@ -339,6 +402,10 @@ function main() {
     let body = p.body;
     if (IMAGE_BASE !== "/images/") body = body.split('src="/images/').join('src="' + IMAGE_BASE);
 
+    /* [E3DS-LEARN-SEO] Computed once, after the image rewrite, because the
+     * generated description is taken from the body. */
+    const seo = seoOf(p, body);
+
     const html = template
       .replace(/\{\{nav\}\}/g, navHtml(tree, p.slug))
       .replace(/\{\{breadcrumbs\}\}/g, crumbsHtml(p, tree.bySlug))
@@ -347,8 +414,22 @@ function main() {
         + 'original wiki text in the new template. It is accurate but has not been '
         + 'through the rewrite.</p>')
       .replace(/\{\{children\}\}/g, childrenHtml(p, tree.kids))
-      .replace(/\{\{description\}\}/g, describe(body, p.title))
-      .replace(/\{\{canonical\}\}/g, esc(p.source || ("https://learn.eagle3dstreaming.com/wiki/" + p.slug)))
+      .replace(/\{\{description\}\}/g, esc(seo.description))
+      /* [E3DS-LEARN-SEO] An explicit canonical wins. The default still points at
+       * p.source - the page on the OLD docs site - which is correct only while
+       * that site is the public one: it tells search engines the old copy is the
+       * real one. At launch that inverts, and a page that has been launched
+       * early needs to say so per page rather than waiting for the site-wide
+       * change. */
+      .replace(/\{\{canonical\}\}/g, esc((p.canonical || "").trim()
+        || p.source || ("https://learn.eagle3dstreaming.com/wiki/" + p.slug)))
+      .replace(/\{\{seoTitle\}\}/g, esc(seo.seoTitle))
+      .replace(/\{\{keywords\}\}/g, seo.keywords)
+      .replace(/\{\{robots\}\}/g, seo.robots)
+      .replace(/\{\{ogTitle\}\}/g, esc(seo.ogTitle))
+      .replace(/\{\{ogDescription\}\}/g, esc(seo.ogDescription))
+      .replace(/\{\{ogImage\}\}/g, seo.ogImage)
+      .replace(/\{\{twitterCard\}\}/g, seo.twitterCard)
       .replace(/\{\{slug\}\}/g, p.slug)
       .replace(/\{\{title\}\}/g, esc(p.title))
       .replace(/\{\{h1\}\}/g, esc(p.title))

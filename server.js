@@ -146,6 +146,35 @@ function contentFragmentOf(html) {
   return html.slice(bEnd + 3, e).trim() + "\n";
 }
 
+/* [E3DS-LEARN-SEO] A page's metadata lives beside its content, in
+ * content/wiki/<slug>.json, and that is what the SEO panel edits.
+ *
+ * NOT the built page. Writing meta tags into site/wiki/<slug>.html would last
+ * exactly until the next `node build.js`, which regenerates every page from the
+ * source - the same trap [E3DS-LEARN-SAVE-SOURCE] already documents for body
+ * text. The sidecar is the thing the build reads, so the sidecar is the thing
+ * to change.
+ *
+ * The fields are the ones build.js understands. Anything else in the JSON -
+ * title, slug, section, parents, order, source - is left exactly as it was:
+ * this endpoint MERGES, it does not replace. Rewriting the file wholesale would
+ * make an SEO edit capable of silently unparenting a page or moving it out of
+ * its section, which is not what anybody pressing "Save SEO" is asking for.
+ */
+const SEO_FIELDS = [
+  "seoTitle", "description", "keywords", "canonical",
+  "ogTitle", "ogDescription", "ogImage", "index",
+];
+
+/* The slug comes from the browser, so it is treated as hostile: one path
+ * segment, no dots, no separators. Without this, "../../editor-password" is a
+ * file read and then a file write. */
+function sidecarFor(slug) {
+  const clean = String(slug == null ? "" : slug).trim();
+  if (!clean || !/^[a-z0-9][a-z0-9-]*$/i.test(clean)) return null;
+  return path.join(__dirname, "content", "wiki", clean + ".json");
+}
+
 function safePath(urlPath) {
   const clean = decodeURIComponent(String(urlPath).split("?")[0]);
   const rel = clean === "/" ? "index.html" : clean.replace(/^\/+/, "");
@@ -170,11 +199,94 @@ const EDITOR = `
   #e3dsEditBar .msg{opacity:.8}
   body.e3ds-editing [contenteditable="true"]{outline:2px dashed #5fc2bc;outline-offset:4px}
   body{padding-bottom:70px}
+
+  /* [E3DS-LEARN-SEO] */
+  #e3dsSeoPanel{position:fixed;right:14px;bottom:62px;z-index:99999;width:min(440px,calc(100vw - 28px));
+    max-height:min(74vh,720px);overflow:auto;background:#161c1b;color:#e8eeec;
+    border:1px solid #3c4846;border-top:2px solid #5fc2bc;border-radius:8px;
+    padding:14px 16px;font:13px/1.5 system-ui,sans-serif;box-shadow:0 10px 40px rgba(0,0,0,.45)}
+  #e3dsSeoPanel h3{margin:0 0 4px;font-size:14px}
+  #e3dsSeoPanel .hint{opacity:.7;font-size:11.5px;margin:0 0 12px}
+  #e3dsSeoPanel label{display:block;margin:11px 0 3px;font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;opacity:.72}
+  #e3dsSeoPanel input,#e3dsSeoPanel textarea{width:100%;box-sizing:border-box;font:inherit;
+    padding:6px 8px;border-radius:5px;border:1px solid #3c4846;background:#0f1413;color:#e8eeec}
+  #e3dsSeoPanel textarea{resize:vertical;min-height:58px}
+  #e3dsSeoPanel .sub{font-size:11px;opacity:.62;margin-top:3px}
+  #e3dsSeoPanel .row{display:flex;gap:8px;align-items:center;margin-top:14px}
+  #e3dsSeoPanel .warn{margin-top:12px;padding:8px 10px;border-radius:5px;
+    background:#3a2a16;border:1px solid #6b4a1f;font-size:11.5px;line-height:1.45}
+  #e3dsSeoPanel .count{float:right;opacity:.6;font-size:10.5px;text-transform:none;letter-spacing:0}
+  #e3dsSeoPanel .count.over{color:#ffab70;opacity:1}
 </style>
+<!-- [E3DS-LEARN-SEO] Hidden until asked for. The bar is for writing; this is
+     for the handful of moments when somebody is thinking about how the page
+     looks in a search result or a shared link. -->
+<div id="e3dsSeoPanel" hidden>
+  <h3>SEO for this page</h3>
+  <p class="hint">Leave a field empty and the build fills it in for you. The
+    grey text in each box is what it would use.</p>
+
+  <label>Page title <span class="count" id="e3dsSeoTitleCount"></span></label>
+  <input id="e3dsSeoTitle" placeholder="">
+  <div class="sub">What a search result shows as its headline. Around 60
+    characters before Google trims it.</div>
+
+  <label>Description <span class="count" id="e3dsSeoDescCount"></span></label>
+  <textarea id="e3dsSeoDesc" placeholder=""></textarea>
+  <div class="sub">The grey sentence under the headline. The generated one is
+    the page's first sentence, which was written to be read after a heading -
+    on a results page there is no heading, so this is usually worth typing.
+    Around 155 characters.</div>
+
+  <label>Keywords</label>
+  <input id="e3dsSeoKeywords" placeholder="left empty - no keywords tag">
+  <div class="sub">Comma separated. Google ignores this tag; some internal and
+    third-party search tools still read it. Empty is a fine answer.</div>
+
+  <label>Canonical URL</label>
+  <input id="e3dsSeoCanonical" placeholder="">
+  <div class="sub">Which copy of this page is the real one. It currently points
+    at the old docs site, which is correct while that site is the public one.</div>
+
+  <label>Share image (og:image)</label>
+  <input id="e3dsSeoOgImage" placeholder="left empty - no picture in link previews">
+  <div class="sub">Full URL of the picture shown when the link is pasted into
+    Slack, LinkedIn or a message. 1200x630 works everywhere.</div>
+
+  <label>Share title</label>
+  <input id="e3dsSeoOgTitle" placeholder="">
+  <label>Share description</label>
+  <textarea id="e3dsSeoOgDesc" placeholder=""></textarea>
+  <div class="sub">Only set these if the link preview should read differently
+    from the search result. Otherwise they follow the two fields above.</div>
+
+  <div class="row">
+    <input type="checkbox" id="e3dsSeoIndex" style="width:auto">
+    <label for="e3dsSeoIndex" style="margin:0;text-transform:none;letter-spacing:0;font-size:13px;opacity:1">
+      Let search engines index this page
+    </label>
+  </div>
+  <div class="warn">
+    Every page on this site is <strong>hidden from search engines</strong> while
+    the rewrite is in progress - see <code>site/robots.txt</code>. Ticking this
+    publishes <em>this one page</em> to Google. It does not remove the site-wide
+    block in <code>robots.txt</code>, which would still have to be dealt with at
+    launch.
+  </div>
+
+  <div class="row">
+    <button class="primary" id="e3dsSeoSave">Save SEO</button>
+    <button id="e3dsSeoClose">Close</button>
+    <span class="msg" id="e3dsSeoMsg" style="flex:1;opacity:.8"></span>
+  </div>
+</div>
+
 <div id="e3dsEditBar">
   <strong>Editing</strong>
   <span class="msg" id="e3dsEditMsg">Click any text to change it, or paste a screenshot.</span>
   <span style="flex:1"></span>
+  <button id="e3dsEditSeo" title="Title, description and link-preview settings for this page">SEO</button>
   <button id="e3dsEditImg" title="Or just paste a screenshot into the page">Add picture</button>
   <input id="e3dsEditFile" type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
   <input id="e3dsEditPw" type="password" placeholder="password" autocomplete="current-password">
@@ -191,6 +303,109 @@ const EDITOR = `
 
   document.getElementById("e3dsEditCancel").onclick = function () {
     location.href = location.pathname;
+  };
+
+  /* ---- SEO ------------------------------------------------------------
+   *
+   * [E3DS-LEARN-SEO] Edits content/wiki/<slug>.json, not the page in front of
+   * you. The page is regenerated from that file by the build, so a meta tag
+   * written into the HTML here would survive until the next build and no
+   * longer - the same trap the body text already documents.
+   *
+   * The PLACEHOLDERS are read out of the live page's own head. That is the
+   * honest way round: an empty box with the generated value greyed behind it
+   * says "nothing is set, and this is what you get" - whereas pre-filling the
+   * box with the generated text would make the first Save freeze it, quietly
+   * detaching the description from a body that is still being edited.
+   */
+  var seoPanel = document.getElementById("e3dsSeoPanel");
+  var seoMsg = document.getElementById("e3dsSeoMsg");
+  var slug = (location.pathname.split("/").pop() || "").replace(/\.html$/, "");
+
+  function seoField(id) { return document.getElementById(id); }
+  function metaOf(sel, attr) {
+    var el = document.querySelector(sel);
+    return el ? (el.getAttribute(attr || "content") || "") : "";
+  }
+
+  /* Counts, so "around 60 characters" is something you can see rather than
+   * something you have to judge. Over the limit is flagged, never blocked -
+   * a longer title is sometimes the right call. */
+  function wire(inputId, countId, limit) {
+    var el = seoField(inputId), out = seoField(countId);
+    if (!el || !out) return;
+    function upd() {
+      var n = (el.value || el.placeholder || "").length;
+      out.textContent = n + " / " + limit;
+      out.className = "count" + (n > limit ? " over" : "");
+    }
+    el.addEventListener("input", upd);
+    upd();
+  }
+
+  function seoShow(values) {
+    seoField("e3dsSeoTitle").placeholder = document.title || "";
+    seoField("e3dsSeoDesc").placeholder = metaOf('meta[name="description"]');
+    seoField("e3dsSeoCanonical").placeholder = metaOf('link[rel="canonical"]', "href");
+    seoField("e3dsSeoOgTitle").placeholder = metaOf('meta[property="og:title"]');
+    seoField("e3dsSeoOgDesc").placeholder = metaOf('meta[property="og:description"]');
+
+    seoField("e3dsSeoTitle").value = values.seoTitle || "";
+    seoField("e3dsSeoDesc").value = values.description || "";
+    seoField("e3dsSeoKeywords").value = values.keywords || "";
+    seoField("e3dsSeoCanonical").value = values.canonical || "";
+    seoField("e3dsSeoOgImage").value = values.ogImage || "";
+    seoField("e3dsSeoOgTitle").value = values.ogTitle || "";
+    seoField("e3dsSeoOgDesc").value = values.ogDescription || "";
+    seoField("e3dsSeoIndex").checked = values.index === true;
+
+    wire("e3dsSeoTitle", "e3dsSeoTitleCount", 60);
+    wire("e3dsSeoDesc", "e3dsSeoDescCount", 155);
+  }
+
+  document.getElementById("e3dsEditSeo").onclick = async function () {
+    var pw = document.getElementById("e3dsEditPw").value;
+    if (!pw) { msg.textContent = "Type the password first, then press SEO."; return; }
+    seoMsg.textContent = "Loading...";
+    seoPanel.hidden = false;
+    try {
+      var r = await fetch("/_edit/seo/get", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw, slug: slug })
+      });
+      var d = await r.json();
+      if (!d.ok) { seoMsg.textContent = d.error || "Could not load."; return; }
+      seoShow(d.seo || {});
+      seoMsg.textContent = "";
+    } catch (e) { seoMsg.textContent = "Could not load: " + e.message; }
+  };
+
+  document.getElementById("e3dsSeoClose").onclick = function () { seoPanel.hidden = true; };
+
+  document.getElementById("e3dsSeoSave").onclick = async function () {
+    var pw = document.getElementById("e3dsEditPw").value;
+    if (!pw) { seoMsg.textContent = "Password?"; return; }
+    seoMsg.textContent = "Saving...";
+    try {
+      var r = await fetch("/_edit/seo/save", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          password: pw, slug: slug,
+          seo: {
+            seoTitle: seoField("e3dsSeoTitle").value,
+            description: seoField("e3dsSeoDesc").value,
+            keywords: seoField("e3dsSeoKeywords").value,
+            canonical: seoField("e3dsSeoCanonical").value,
+            ogImage: seoField("e3dsSeoOgImage").value,
+            ogTitle: seoField("e3dsSeoOgTitle").value,
+            ogDescription: seoField("e3dsSeoOgDesc").value,
+            index: seoField("e3dsSeoIndex").checked
+          }
+        })
+      });
+      var d = await r.json();
+      seoMsg.textContent = d.ok ? (d.note || "Saved.") : (d.error || "Save failed.");
+    } catch (e) { seoMsg.textContent = "Save failed: " + e.message; }
   };
 
   /* ---- Pictures -------------------------------------------------------
@@ -529,6 +744,100 @@ const server = http.createServer((req, res) => {
       }
     });
 
+    return;
+  }
+
+  /* [E3DS-LEARN-SEO] Read and write one page's SEO fields. */
+  if (req.method === "POST"
+      && (req.url === "/_edit/seo/get" || req.url === "/_edit/seo/save")) {
+    const saving = req.url === "/_edit/seo/save";
+    let body = "";
+    req.on("data", (d) => {
+      body += d;
+      if (body.length > MAX_BYTES) { req.destroy(); }
+    });
+    req.on("end", () => {
+      let o;
+      try { o = JSON.parse(body); }
+      catch (e) { return send(res, 400, JSON.stringify({ ok: false, error: "bad JSON" }), "application/json"); }
+
+      const pw = password();
+      if (!pw) {
+        return send(res, 503, JSON.stringify({ ok: false,
+          error: "editing is disabled - no editor-password.txt on the server" }), "application/json");
+      }
+      /* The password is required to READ as well as to write. The values are
+       * not secret in themselves - most of them are visible in the page's own
+       * head - but `index` and an unpublished canonical say what is planned
+       * rather than what is shipped, and this endpoint is on a site that is
+       * deliberately not public yet. */
+      if (String(o.password || "") !== pw) {
+        return send(res, 403, JSON.stringify({ ok: false, error: "wrong password" }), "application/json");
+      }
+
+      const file = sidecarFor(o.slug);
+      if (!file) {
+        return send(res, 400, JSON.stringify({ ok: false,
+          error: "that page name does not look like a wiki slug" }), "application/json");
+      }
+      if (!fs.existsSync(file)) {
+        return send(res, 404, JSON.stringify({ ok: false,
+          error: "no content/wiki/" + path.basename(file) + " - only wiki pages "
+            + "built from a source fragment have SEO fields to edit" }), "application/json");
+      }
+
+      let meta;
+      try { meta = JSON.parse(fs.readFileSync(file, "utf8")); }
+      catch (e) {
+        return send(res, 500, JSON.stringify({ ok: false,
+          error: "could not read " + path.basename(file) + ": " + e.message }), "application/json");
+      }
+
+      if (!saving) {
+        const out = {};
+        /* Absent stays absent rather than becoming "". The panel shows the
+         * generated fallback as a placeholder when a field is empty, and it can
+         * only tell "nothing set, using the generated one" from "deliberately
+         * blank" if this does not invent a value. */
+        for (const k of SEO_FIELDS) if (meta[k] !== undefined) out[k] = meta[k];
+        return send(res, 200, JSON.stringify({ ok: true, slug: o.slug, seo: out }), "application/json");
+      }
+
+      const incoming = (o.seo && typeof o.seo === "object") ? o.seo : {};
+      for (const k of SEO_FIELDS) {
+        if (!(k in incoming)) continue;
+        if (k === "index") {
+          /* Only ever true or absent. Storing `false` would look like a
+           * decision that had been made, when it is the default for every page
+           * on this site. */
+          if (incoming.index === true) meta.index = true;
+          else delete meta.index;
+          continue;
+        }
+        const v = String(incoming[k] == null ? "" : incoming[k]).trim();
+        /* An emptied field is REMOVED, not stored as "". That is what puts a
+         * page back on the generated description instead of pinning it to an
+         * empty string - which would ship <meta name="description" content="">
+         * and is worse than having no tag at all. */
+        if (v) meta[k] = v; else delete meta[k];
+      }
+
+      try {
+        fs.mkdirSync(BACKUPS, { recursive: true });
+        const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+        fs.copyFileSync(file, path.join(BACKUPS,
+          "meta." + path.basename(file, ".json") + "." + stamp + ".json"));
+        fs.writeFileSync(file, JSON.stringify(meta, null, 1) + "\n", "utf8");
+      } catch (e) {
+        return send(res, 500, JSON.stringify({ ok: false, error: String(e.message) }), "application/json");
+      }
+
+      /* Said plainly, because it is the one thing that surprises people: the
+       * sidecar is saved, and the PAGE does not change until the build runs. */
+      return send(res, 200, JSON.stringify({ ok: true,
+        saved: path.relative(__dirname, file),
+        note: "Saved. Run node build.js to rebuild the page with it." }), "application/json");
+    });
     return;
   }
 

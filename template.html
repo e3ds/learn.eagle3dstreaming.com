@@ -2,6 +2,8 @@
 <!-- [E3DS-LEARN-TEMPLATE] The shell every generated page is poured into.
      Edit this once and all pages follow on the next `node build.js`.
      Placeholders: {{title}} {{description}} {{nav}} {{breadcrumbs}} {{h1}}
+     [E3DS-LEARN-SEO]: {{seoTitle}} {{keywords}} {{robots}} {{ogTitle}}
+                       {{ogDescription}} {{ogImage}} {{twitterCard}}
                    {{content}} {{children}} {{source}} -->
 <!-- [E3DS-LEARN-DOCTYPE] The doctype is not decoration.
      Without it a browser renders in QUIRKS MODE, an emulation of pre-standards
@@ -14,16 +16,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{title}} — Eagle 3D Streaming</title>
+<title>{{seoTitle}}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
 <meta name="description" content="{{description}}">
+{{keywords}}
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
-     AT LAUNCH: remove the robots meta and point canonical back here. -->
-<meta name="robots" content="noindex,nofollow">
+     AT LAUNCH: remove the robots meta and point canonical back here.
+
+     [E3DS-LEARN-SEO] The robots tag below is filled in per page now rather than
+     hardcoded - but it still RESOLVES to noindex,nofollow for every page unless
+     that page's own JSON opts in.  (The placeholder is deliberately not named
+     inside this comment: the build substitutes placeholders everywhere in the
+     file, comments included, so writing it here would put a second meta tag in
+     the output.)
+     The default was left exactly as it was on purpose: making a page indexable
+     is publishing it, and doing that to a hundred unreviewed pages as a side
+     effect of adding an editor would be the opposite of what was asked. The
+     launch checklist in site/robots.txt still applies and is still the thing to
+     follow; this only means a single page can be opened up early, deliberately,
+     by someone who has read that checklist. -->
+{{robots}}
 <link rel="canonical" href="{{canonical}}">
+
+<!-- [E3DS-LEARN-SEO] What a link to this page looks like when somebody shares
+     it - in Slack, on LinkedIn, in a message. Without these, every share of
+     every page falls back to whatever the crawler can scrape, which is usually
+     the nav and no picture at all. og:image is omitted rather than pointed at a
+     placeholder: a broken image in a preview looks worse than no image. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Eagle 3D Streaming">
+<meta property="og:title" content="{{ogTitle}}">
+<meta property="og:description" content="{{ogDescription}}">
+<meta property="og:url" content="{{canonical}}">
+{{ogImage}}
+<meta name="twitter:card" content="{{twitterCard}}">
+<meta name="twitter:title" content="{{ogTitle}}">
+<meta name="twitter:description" content="{{ogDescription}}">
 
 <style>
   :root{

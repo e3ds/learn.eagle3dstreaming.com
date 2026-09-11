@@ -15,11 +15,40 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
 <meta name="description" content="document.documentElement.className += &quot; nmJS&quot;; Putting a stream inside your own website. There are three ways to do it, they differ in how much you build rather than in what you can have, and choosing is the first thing to do &amp;mdash; so it is what this page is for. The old SDK no longer works.">
+
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
-     AT LAUNCH: remove the robots meta and point canonical back here. -->
+     AT LAUNCH: remove the robots meta and point canonical back here.
+
+     [E3DS-LEARN-SEO] The robots tag below is filled in per page now rather than
+     hardcoded - but it still RESOLVES to noindex,nofollow for every page unless
+     that page's own JSON opts in.  (The placeholder is deliberately not named
+     inside this comment: the build substitutes placeholders everywhere in the
+     file, comments included, so writing it here would put a second meta tag in
+     the output.)
+     The default was left exactly as it was on purpose: making a page indexable
+     is publishing it, and doing that to a hundred unreviewed pages as a side
+     effect of adding an editor would be the opposite of what was asked. The
+     launch checklist in site/robots.txt still applies and is still the thing to
+     follow; this only means a single page can be opened up early, deliberately,
+     by someone who has read that checklist. -->
 <meta name="robots" content="noindex,nofollow">
 <link rel="canonical" href="https://docs.eagle3dstreaming.com/wiki/embed-stream-into-webpage">
+
+<!-- [E3DS-LEARN-SEO] What a link to this page looks like when somebody shares
+     it - in Slack, on LinkedIn, in a message. Without these, every share of
+     every page falls back to whatever the crawler can scrape, which is usually
+     the nav and no picture at all. og:image is omitted rather than pointed at a
+     placeholder: a broken image in a preview looks worse than no image. -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Eagle 3D Streaming">
+<meta property="og:title" content="Embedding">
+<meta property="og:description" content="document.documentElement.className += &quot; nmJS&quot;; Putting a stream inside your own website. There are three ways to do it, they differ in how much you build rather than in what you can have, and choosing is the first thing to do &amp;mdash; so it is what this page is for. The old SDK no longer works.">
+<meta property="og:url" content="https://docs.eagle3dstreaming.com/wiki/embed-stream-into-webpage">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Embedding">
+<meta name="twitter:description" content="document.documentElement.className += &quot; nmJS&quot;; Putting a stream inside your own website. There are three ways to do it, they differ in how much you build rather than in what you can have, and choosing is the first thing to do &amp;mdash; so it is what this page is for. The old SDK no longer works.">
 
 <style>
   :root{
