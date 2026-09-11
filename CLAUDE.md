@@ -58,6 +58,12 @@ page by page — but it does have to be re-run when a page is added.
 
 ## 3. Rewriting, not copying
 
+> **Writing rules live in [`CLAUDE-WRITING.md`](CLAUDE-WRITING.md).** Read it
+> before writing or rewriting a page. Every rule in it comes from a real
+> correction on a real page - pronouns, the page/website distinction, figures as
+> SVG rather than ASCII, where to stop before engineering detail, and the rest.
+> This section is the short version; that file is the one to follow.
+
 Pages from the old wiki are **rewritten**. When moving one:
 
 - **Say what the reader gets, not what the field is called.** "Stops the app's
