@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="A stream captures whichever microphone the operating system calls the default. Two commands let your own page offer the viewer a proper picker and switch the device mid-session, without dropping the stream.">
+<meta name="description" content="An embedded Eagle 3D Streaming page captures whichever microphone the operating system calls the default. Two commands let your own page offer the viewer a proper picker and switch device mid-session, without dropping the stream.">
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
      AT LAUNCH: remove the robots meta and point canonical back here. -->
@@ -399,9 +399,9 @@
   <h1>Choose the microphone</h1>
   <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
-  A stream captures whichever microphone the operating system calls the default.
-  Two commands let your own page offer the viewer a proper picker and switch the
-  device mid-session, without dropping the stream.
+  An embedded Eagle 3D Streaming page captures whichever microphone the operating
+  system calls the default. Two commands let your own page offer the viewer a
+  proper picker and switch device mid-session, without dropping the stream.
 </p>
 
 <p>
@@ -413,66 +413,23 @@
 
 <aside class="callout note">
   <p>
-    <strong>This is an iframe feature.</strong> An SDK page shares a document
-    with the player and does not hit either of the two walls below, so the SDK
-    has no equivalent call today. If you need one, ask &mdash; the
+    <strong>This is an iframe feature.</strong> An SDK page and the player share
+    one document and one website, so the ids never have to cross anything and
+    the SDK has no equivalent call today. If you need one, ask &mdash; the
     implementation already exists.
   </p>
 </aside>
 
-<details class="sect">
-  <summary><h2>Why your page cannot do this itself</h2><span class="hint">Two walls, and each one needs one of the two commands</span></summary>
-  <div class="body">
-
-<p>
-  It is worth seeing the two walls before the commands make sense. Both come
-  from the same thing: the stream runs in an iframe on a different origin.
-</p>
-
-<pre><code>      YOUR PAGE              |          THE IFRAME
-     (your origin)           |     (the stream's origin)
-                             |
-  enumerateDevices()         |   enumerateDevices()
-        |                    |         |
-        v                    |         v
-  deviceId "a1b2c3..."    X  |   deviceId "z9y8x7..."
-  valid HERE only       cannot         valid THERE only
-                        cross  |
-                             |
-  RTCPeerConnection        X  |   RTCPeerConnection
-  (unreachable)         cannot         (the live session)
-                         reach |
-                             |
-                  cross-origin boundary</code></pre>
-
-<div class="scroll">
-  <table>
-    <thead><tr><th>Wall</th><th>What it means</th><th>The command that solves it</th></tr></thead>
-    <tbody>
-      <tr>
-        <td>A <code>deviceId</code> is <strong>scoped to the origin</strong> that produced it</td>
-        <td>Ids your page collects are meaningless inside the frame</td>
-        <td><code>getMicDevices</code> &mdash; the list must come from in there</td>
-      </tr>
-      <tr>
-        <td>The iframe is <strong>cross-origin</strong></td>
-        <td>Your page cannot reach the <code>MediaStream</code> or the peer connection at all</td>
-        <td><code>setMicDevice</code> &mdash; the swap must happen in there</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<aside class="callout warning">
+<aside class="callout note">
   <p>
-    <strong>Reloading the iframe is not a workaround.</strong> It tears down the
-    WebRTC session, puts the viewer back in the queue, and still lands on the
-    system default device. It costs a session and does not even work.
+    <strong>New to this?</strong> Start with
+    <a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a>
+    &mdash; it explains, in order and with diagrams, why two commands are needed
+    and what each message carries. This page is what you need once you are
+    building it: when to ask, what the answers mean, and what to do when it does
+    not work.
   </p>
 </aside>
-
-  </div>
-</details>
 
 <details class="sect" open>
   <summary><h2>The order things have to happen in</h2><span class="hint">The mistake everyone makes first, in one diagram</span></summary>
@@ -481,8 +438,8 @@
 <p>
   This is the part that catches people. <strong>You cannot get a useful device
   list before the browser has granted the microphone</strong>, and the browser
-  only grants it when something asks &mdash; which the player does when the
-  session connects, not when your page loads.
+  only grants it when something asks &mdash; which the Eagle 3D page does when
+  the session connects, not when your page loads.
 </p>
 
 <pre><code> YOUR PAGE            THE PLAYER              THE BROWSER
@@ -687,7 +644,7 @@
 </details>
 
 <details class="sect">
-  <summary><h2>How to check it actually worked</h2><span class="hint">One row on the stream's own panel settles it</span></summary>
+  <summary><h2>How to check it actually worked</h2><span class="hint">One row on the Eagle 3D page's own panel settles it</span></summary>
   <div class="body">
 
 <p>
@@ -698,9 +655,9 @@
 </p>
 
 <p>
-  <strong>The stream's own information panel settles it.</strong> Open it with
-  the <strong>i</strong> button on the stream's control bar and find the
-  <strong>Microphone</strong> block. Its last row is <strong>Device</strong>,
+  <strong>The Eagle 3D page has an information panel that settles it.</strong>
+  Open it with the <strong>i</strong> button on the stream's control bar and
+  find the <strong>Microphone</strong> block. Its last row is <strong>Device</strong>,
   and it is read live from the track the connection is actually sending:
 </p>
 
@@ -775,16 +732,15 @@
 <aside class="callout warning">
   <p>
     <strong>Two websites are involved, and each has its own microphone
-    permission.</strong> Your page, and the stream inside the iframe, which is a
-    different origin. The padlock you can see belongs to <em>your page</em>. The
-    site being refused may be the <em>stream's</em>, and you cannot see that one
-    from the address bar.
+    permission.</strong> Yours, and Eagle 3D Streaming's inside the iframe. The padlock you can see belongs to <em>your website</em>. The
+    one being refused may be <em>Eagle 3D Streaming's</em>, and that never
+    appears in the address bar.
   </p>
   <p>
     This is the single most confusing thing about microphones in an embedded
     stream: a padlock reading <strong>allowed</strong> and a log reading
     <strong>denied</strong> are not a contradiction. They are two correct
-    statements about two different sites.
+    statements about two different websites.
   </p>
 </aside>
 
@@ -806,9 +762,9 @@
     </p>
   </li>
   <li>
-    <h3>Reset the stream's site</h3>
+    <h3>Reset the Eagle 3D website</h3>
     <p>
-      This is the one people miss, because it is never in the address bar. In
+      The one people miss, because it never appears in the address bar. In
       Chrome, go straight to it:
     </p>
 <pre><code>chrome://settings/content/siteDetails?site=https://&lt;your-connector&gt;.eagle3dstreaming.com</code></pre>
@@ -834,7 +790,7 @@
     <tbody>
       <tr>
         <td>Chrome, Edge</td>
-        <td>Padlock &rarr; Site settings &rarr; Reset permissions. For the stream's own site, use the <code>chrome://settings/content/siteDetails?site=</code> address above.</td>
+        <td>Padlock &rarr; Site settings &rarr; Reset permissions. For the Eagle 3D website, use the <code>chrome://settings/content/siteDetails?site=</code> address above.</td>
       </tr>
       <tr>
         <td>Firefox</td>
@@ -865,7 +821,7 @@
     <tbody>
       <tr>
         <td>No <strong>Microphone</strong> row in the padlock menu at all, and "No usage data" in site settings</td>
-        <td>The browser never recorded a request. It refused before prompting &mdash; so there is nothing to reset on that site, and the cause is elsewhere.</td>
+        <td>The browser never recorded a request. It refused before prompting &mdash; so there is nothing to reset on that website, and the cause is elsewhere.</td>
       </tr>
       <tr>
         <td>Padlock says allowed, the stream says not granted</td>
@@ -883,26 +839,6 @@
         <td><code>micDeviceChanged: no audio sender</code></td>
         <td>The session connected before the microphone was allowed, so it has no track to switch. Restart the stream.</td>
       </tr>
-    </tbody>
-  </table>
-</div>
-
-  </div>
-</details>
-
-<details class="sect">
-  <summary><h2>The whole exchange</h2><span class="hint">Every message, both directions</span></summary>
-  <div class="body">
-
-<div class="scroll">
-  <table>
-    <thead><tr><th>Direction</th><th>Message</th></tr></thead>
-    <tbody>
-      <tr><td>page &rarr; frame</td><td><code>{ cmd: "getMicDevices" }</code></td></tr>
-      <tr><td>frame &rarr; page</td><td><code>{ type: "micDevices", ok: true, devices: [{ deviceId, label, isActive }] }</code></td></tr>
-      <tr><td>page &rarr; frame</td><td><code>{ cmd: "setMicDevice", deviceId: "&lt;id from micDevices&gt;" }</code></td></tr>
-      <tr><td>frame &rarr; page</td><td><code>{ type: "micDeviceChanged", ok: true, deviceId, label }</code></td></tr>
-      <tr><td>frame &rarr; page</td><td><code>{ type: "micDeviceChanged", ok: false, error, message }</code></td></tr>
     </tbody>
   </table>
 </div>
