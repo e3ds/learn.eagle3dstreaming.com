@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="A stream can end for many reasons, and every one of them reaches your page the same way: one callback, one string. Below is what that string can be, each entry closed until you want it.">
+<meta name="description" content="A stream can end for many reasons, and every one of them reaches your page the same way: one callback, one string. Below is every value that string can currently take, each entry closed until you want it.">
 
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
@@ -43,12 +43,12 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Eagle 3D Streaming">
 <meta property="og:title" content="Why a session ended">
-<meta property="og:description" content="A stream can end for many reasons, and every one of them reaches your page the same way: one callback, one string. Below is what that string can be, each entry closed until you want it.">
+<meta property="og:description" content="A stream can end for many reasons, and every one of them reaches your page the same way: one callback, one string. Below is every value that string can currently take, each entry closed until you want it.">
 <meta property="og:url" content="https://docs.eagle3dstreaming.com/wiki/streaming-app-monitor">
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Why a session ended">
-<meta name="twitter:description" content="A stream can end for many reasons, and every one of them reaches your page the same way: one callback, one string. Below is what that string can be, each entry closed until you want it.">
+<meta name="twitter:description" content="A stream can end for many reasons, and every one of them reaches your page the same way: one callback, one string. Below is every value that string can currently take, each entry closed until you want it.">
 
 <style>
   :root{
@@ -429,8 +429,10 @@
   <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
   A stream can end for many reasons, and every one of them reaches your page the
-  same way: one callback, one string. Below is what that string can be, each
-  entry closed until you want it.
+  same way: one callback, one string. Below is every value that string can
+  currently take, each entry closed until you want it.
+  <strong>This page is the single list</strong> &mdash; the iframe and web SDK
+  guides both point here rather than keeping copies that would drift.
 </p>
 
 <h2>The callback</h2>
@@ -723,6 +725,175 @@
     whole argument for not branching on the text.
   </p>
 </div>
+
+<details class="msg">
+  <summary><span class="n">13</span><span class="t">The viewer never pressed play</span><span class="s">Disconnected due to not pressing play Button</span></summary>
+  <div class="body">
+    <p>
+      The stream was ready and waiting, and nobody started it. After three
+      minutes the session is given up and the machine released.
+    </p>
+    <p>
+      This one is worth telling apart from the idle timeout. The idle timeout is
+      about somebody who <em>was</em> watching and stopped; this is about somebody
+      who never began &mdash; they opened the page, saw the play button, and left
+      or never noticed it. A run of these is usually a problem with the poster
+      image or the button, not with your application.
+    </p>
+    <div class="outcome">
+      <strong>It does not happen when autoplay is on</strong>
+      <p>
+        With <strong>Autoplay</strong> enabled there is no button to press, so
+        this ending cannot occur. Seeing it means the viewer was being asked to
+        start the stream themselves.
+      </p>
+    </div>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">14</span><span class="t">Your own page ended the session</span><span class="s">Session Ended</span></summary>
+  <div class="body">
+    <p>
+      Something asked for the session to stop: your page calling the SDK's or the
+      iframe bridge's end-session command, or your application asking for it from
+      inside Unreal.
+    </p>
+    <p>
+      So this is the one ending you caused on purpose, and the message is
+      deliberately plain because only you know why. If your page has a
+      &ldquo;finish&rdquo; button, put your own wording on screen rather than
+      showing this.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">15</span><span class="t">The browser could not reach us</span><span class="s">Websocket connection to signalling server failed.</span></summary>
+  <div class="body">
+    <p>
+      The page could not open its connection to the signalling server, after ten
+      attempts. Nothing about your application was reached, so nothing about your
+      application caused it.
+    </p>
+    <p>
+      Almost always the viewer's network: a corporate firewall or a captive
+      portal blocking WebSocket connections. Worth saying so in your own wording,
+      because a viewer reading the default text has no idea it is their side.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">16</span><span class="t">The viewer dismissed the password box</span><span class="s">password cancled</span></summary>
+  <div class="body">
+    <p>
+      The application is password protected and the viewer pressed cancel instead
+      of entering one. Distinct from getting it wrong &mdash; see
+      <a href="#" onclick="return false;">the wrong-password entry</a> above,
+      which fires when the countdown runs out.
+    </p>
+    <aside class="callout note">
+      <p>
+        <strong>The wording has a typo, and it is quoted here exactly as it is
+        sent.</strong> That is deliberate: this page describes what your code
+        actually receives. It is one more reason not to match on the text.
+      </p>
+    </aside>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">17</span><span class="t">The build has no executable</span><span class="s">Invalid App. No exe found in any subdirectories</span></summary>
+  <div class="body">
+    <p>
+      The upload arrived and unpacked, but no runnable <code>.exe</code> was
+      found anywhere inside it. Nothing was ever launched.
+    </p>
+    <p>
+      A packaging problem, not a streaming one, and it will happen on every
+      attempt until the build is replaced. Usually the archive contains the
+      project folder rather than the packaged output, or the packaging step
+      failed and produced only its intermediate files.
+    </p>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">18</span><span class="t">An old SDK version</span><span class="s">this old sdk not suppoted anymore</span></summary>
+  <div class="body">
+    <p>
+      The page connected using a version of the web SDK that is no longer
+      accepted. Update to the current SDK; no configuration change will help.
+    </p>
+    <aside class="callout note">
+      <p>
+        Quoted as sent, typo included, for the same reason as above.
+      </p>
+    </aside>
+  </div>
+</details>
+
+<details class="msg">
+  <summary><span class="n">19</span><span class="t">A message arrived malformed</span><span class="s">info is missing</span></summary>
+  <div class="body">
+    <p>
+      Not a reason a session ends &mdash; a fault. The platform sent an
+      end-of-session message whose text was missing, and this is the placeholder
+      shown in its place.
+    </p>
+    <div class="outcome">
+      <strong>If you see this, tell us</strong>
+      <p>
+        It means the real reason was lost on the way to you, so neither you nor
+        the viewer can act on it. It is worth logging with the session id
+        attached &mdash; that is what lets it be traced back to whatever failed
+        to fill it in.
+      </p>
+    </div>
+  </div>
+</details>
+
+<h2>Where these come from, and why the list grows</h2>
+
+<p>
+  Every one of them passes through a single function in the player, which fires
+  the callback and the iframe event together. That is why the two integrations
+  see exactly the same set: there is one list, not two.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Raised by</th><th>Which ones</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>The page itself</strong></td>
+        <td>The play-button timeout, your own end-session call, the websocket
+            failure, both password endings, the link expiry, the token check.</td>
+      </tr>
+      <tr>
+        <td><strong>Our signalling server</strong></td>
+        <td>Kicks, every account and subscription ending, no free machine, a
+            named machine offline, the host closing a meeting, the unsupported
+            engine version, the old SDK.</td>
+      </tr>
+      <tr>
+        <td><strong>The machine running your app</strong></td>
+        <td>The crash, and the missing executable.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>This list is not closed.</strong> Endings get added as the platform
+    grows, and the wording of existing ones is changed when it can be made
+    clearer. Anything you build has to keep working when a message it has never
+    seen arrives &mdash; which is the practical reason behind the rule at the top
+    of this page: show the string, never parse it.
+  </p>
+</aside>
 
 <h2>A shape that handles all of them</h2>
 
