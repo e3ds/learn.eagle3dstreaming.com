@@ -287,6 +287,66 @@
 </details>
 
 <details class="sect">
+  <summary><h2>How to check it actually worked</h2><span class="hint">One row on the stream's own panel settles it</span></summary>
+  <div class="body">
+
+<p>
+  <code>micDeviceChanged: ok</code> says the command succeeded. It does not, by
+  itself, prove the audio being sent to your app now comes from the device the
+  viewer picked &mdash; a dropdown that changed its own label would look
+  identical.
+</p>
+
+<p>
+  <strong>The stream's own information panel settles it.</strong> Open it with
+  the <strong>i</strong> button on the stream's control bar and find the
+  <strong>Microphone</strong> block. Its last row is <strong>Device</strong>,
+  and it is read live from the track the connection is actually sending:
+</p>
+
+<pre><code>track.getSettings().deviceId   // the sender's CURRENT track</code></pre>
+
+<p>
+  Switch device and that row changes. That is the verification &mdash; it is
+  the media layer reporting on itself, not the page repeating what it asked for.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Row</th><th>After a successful switch</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Device</strong></td><td><strong>changes</strong> to a different id &mdash; this is the one that matters</td></tr>
+      <tr><td>Track</td><td>stays <code>live</code> &mdash; <code>replaceTrack</code> does not renegotiate</td></tr>
+      <tr><td>Packets sent</td><td>keeps climbing, no reset &mdash; the session never dropped</td></tr>
+      <tr><td>Permission</td><td>stays <code>granted</code></td></tr>
+      <tr><td>Sample rate, Channels, Echo cancellation</td><td>may change, if the new device reports different settings</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Do not try to match that id against anything.</strong> A
+    <code>deviceId</code> is origin-scoped and randomised per origin, so the
+    value shown here will not match the one in your own page's dropdown, nor
+    anything your operating system shows. Only the fact that it <em>changed</em>
+    is meaningful.
+  </p>
+</aside>
+
+<aside class="callout note">
+  <p>
+    <strong>If the reply says ok and Device does not change</strong>, that is
+    worth reporting: it would mean the confirmation is optimistic and the track
+    did not really swap. Everything else staying steady while that one row moves
+    is what a working switch looks like.
+  </p>
+</aside>
+
+  </div>
+</details>
+
+<details class="sect">
   <summary><h2>Devices appearing and disappearing</h2><span class="hint">A headset plugged in mid-session refreshes your picker</span></summary>
   <div class="body">
 
