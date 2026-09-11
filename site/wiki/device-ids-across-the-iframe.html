@@ -10,11 +10,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Why device ids do not cross the iframe — Eagle 3D Streaming</title>
+<title>How the microphone is chosen — Eagle 3D Streaming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="Your page and the stream are two different websites. Each one sees the same microphones under different ids &amp;mdash; so an id your page collects means nothing inside the stream. This is why choosing a microphone takes two commands instead of one.">
+<meta name="description" content="Letting someone choose which microphone a stream uses takes two commands, not one. This page explains why, in order, from the beginning.">
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
      AT LAUNCH: remove the robots meta and point canonical back here. -->
@@ -391,26 +391,24 @@
 <body>
 
 
-<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/javascript-sdk-guide">JavaScript SDK: the complete guide</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe" class="on" aria-current="page">Why device ids do not cross the iframe</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><a href="/wiki/streaming-interface">The streaming interface</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Embed with the SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li></ul></details></li><li><a href="/wiki/javascript-sdk-guide">JavaScript SDK: the complete guide</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe" class="on" aria-current="page">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
 
 <div class="wrap">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><span class="here">Why device ids do not cross the iframe</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><span class="here">How the microphone is chosen</span></nav>
   
-  <h1>Why device ids do not cross the iframe</h1>
+  <h1>How the microphone is chosen</h1>
   <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
-  Your page and the stream are two different websites. Each one sees the same
-  microphones under <strong>different ids</strong> &mdash; so an id your page
-  collects means nothing inside the stream. This is why choosing a microphone
-  takes two commands instead of one.
+  Letting someone choose which microphone a stream uses takes two commands, not
+  one. This page explains why, in order, from the beginning.
 </p>
 
 <style>
-  /* Figures are SVG so they stay sharp and keep their proportions at any zoom
-     or window size. Colours come from the page's own tokens, so the drawings
-     follow the light and dark themes rather than fighting them. */
+  /* SVG, so the figures stay sharp and keep their proportions at any zoom or
+     window size, and take their colours from the page's own tokens so they
+     follow the light and dark themes. */
   .fig { margin: 26px 0; }
-  .fig svg { display: block; width: 100%; height: auto; max-width: 760px; margin: 0 auto; }
+  .fig svg { display: block; width: 100%; height: auto; max-width: 720px; margin: 0 auto; }
   .fig figcaption {
     max-width: var(--measure);
     margin: 10px auto 0;
@@ -422,9 +420,10 @@
   .fig .box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
   .fig .boxAlt { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
   .fig .ttl { fill: var(--ink); font: 600 14px Archivo, Arial, sans-serif; }
-  .fig .sub { fill: var(--ink-3); font: 11.5px ui-monospace, SFMono-Regular, Menlo, monospace; }
-  .fig .lbl { fill: var(--ink-2); font: 12.5px Archivo, Arial, sans-serif; }
-  .fig .mono { fill: var(--ink-2); font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .fig .sub { fill: var(--ink-3); font: 11.5px Archivo, Arial, sans-serif; }
+  .fig .lbl { fill: var(--ink-2); font: 13px Archivo, Arial, sans-serif; }
+  .fig .mono { fill: var(--ink-2); font: 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .fig .monoBig { fill: var(--ink); font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .fig .good { fill: var(--tip); font: 600 12.5px Archivo, Arial, sans-serif; }
   .fig .bad  { fill: var(--warn); font: 600 12.5px Archivo, Arial, sans-serif; }
   .fig .wire { stroke: var(--ink-3); stroke-width: 1.4; fill: none; }
@@ -433,267 +432,266 @@
   .fig .dev { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.4; }
 </style>
 
-<h2>The two websites</h2>
+<h2>1. There are two pages, not one</h2>
 
 <p>
-  An embedded stream always involves two sites. Throughout this page:
-</p>
-
-<div class="scroll">
-  <table>
-    <thead><tr><th></th><th>Which site</th><th>What it does</th></tr></thead>
-    <tbody>
-      <tr>
-        <td><strong>Your page</strong></td>
-        <td>your own domain &mdash; the page holding the <code>&lt;iframe&gt;</code></td>
-        <td>Shows your interface. Never touches the audio.</td>
-      </tr>
-      <tr>
-        <td><strong>The stream</strong></td>
-        <td><code>connector.eagle3dstreaming.com</code> &mdash; inside the iframe</td>
-        <td>Captures the microphone and feeds it to your Unreal app over WebRTC.</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<h2>The same microphone, two different ids</h2>
-
-<figure class="fig">
-<svg viewBox="0 0 760 330" role="img" aria-label="One computer with two microphones. Your page and connector.eagle3dstreaming.com each see the same two microphones under completely different identifiers.">
-  <!-- devices -->
-  <rect class="dev" x="300" y="12" width="160" height="34" rx="6"/>
-  <text class="lbl" x="380" y="34" text-anchor="middle">Headset microphone</text>
-  <rect class="dev" x="300" y="54" width="160" height="34" rx="6"/>
-  <text class="lbl" x="380" y="76" text-anchor="middle">Built-in microphone</text>
-  <text class="sub" x="380" y="106" text-anchor="middle">one computer, two microphones</text>
-
-  <!-- wires down to each site -->
-  <path class="wire" d="M300 70 L160 70 L160 130"/>
-  <path class="wire" d="M460 70 L600 70 L600 130"/>
-
-  <!-- your page -->
-  <rect class="box" x="30" y="130" width="260" height="150" rx="8"/>
-  <text class="ttl" x="50" y="158">Your page</text>
-  <text class="sub" x="50" y="176">your-site.example.com</text>
-  <text class="mono" x="50" y="212">Headset  →  "a1b2c3…"</text>
-  <text class="mono" x="50" y="234">Built-in →  "d4e5f6…"</text>
-  <text class="sub" x="50" y="262">ids valid only here</text>
-
-  <!-- the stream -->
-  <rect class="box" x="470" y="130" width="260" height="150" rx="8"/>
-  <text class="ttl" x="490" y="158">The stream</text>
-  <text class="sub" x="490" y="176">connector.eagle3dstreaming.com</text>
-  <text class="mono" x="490" y="212">Headset  →  "z9y8x7…"</text>
-  <text class="mono" x="490" y="234">Built-in →  "w6v5u4…"</text>
-  <text class="sub" x="490" y="262">ids valid only here</text>
-
-  <!-- the boundary -->
-  <path class="dash" d="M380 122 L380 300"/>
-  <text class="sub" x="380" y="318" text-anchor="middle">cross-origin boundary</text>
-
-  <!-- the crossed arrow -->
-  <path class="wire" d="M300 205 L444 205"/>
-  <path class="wire" d="M436 199 L444 205 L436 211"/>
-  <line x1="365" y1="192" x2="395" y2="218" stroke="var(--warn)" stroke-width="2.4"/>
-  <line x1="395" y1="192" x2="365" y2="218" stroke="var(--warn)" stroke-width="2.4"/>
-  <text class="bad" x="380" y="182" text-anchor="middle">means nothing over here</text>
-</svg>
-<figcaption>
-  Both sites can see both microphones. Neither can use the other's ids. Browsers
-  randomise a <code>deviceId</code> per origin on purpose, so that two sites
-  cannot compare notes to recognise the same visitor.
-</figcaption>
-</figure>
-
-<aside class="callout note">
-  <p>
-    <strong>Labels are not a way round it.</strong> The human-readable name is
-    the same string on both sides, so matching by name looks tempting. It is not
-    reliable: labels are empty until the microphone has been granted, they are
-    not unique &mdash; two identical headsets produce two identical names &mdash;
-    and they change with the operating system's language. The id is the only
-    dependable handle.
-  </p>
-</aside>
-
-<h2>So the list has to come from the stream</h2>
-
-<p>
-  If your page builds a dropdown from its own enumeration, it will offer
-  <code>a1b2c3…</code>, send that across, and the stream will not recognise it.
-  The only workable order is: <strong>ask the stream for its own ids, show
-  those, send one back.</strong>
+  When you embed a stream, your visitor is looking at <strong>two web
+  pages</strong> at once. Yours, and ours inside it.
 </p>
 
 <figure class="fig">
-<svg viewBox="0 0 760 400" role="img" aria-label="Message exchange: your page sends getMicDevices, the stream replies with micDevices, the viewer picks one, your page sends setMicDevice with that id, and the stream replies micDeviceChanged.">
-  <rect class="box" x="40" y="14" width="240" height="40" rx="8"/>
-  <text class="ttl" x="160" y="39" text-anchor="middle">Your page</text>
-  <rect class="box" x="480" y="14" width="240" height="40" rx="8"/>
-  <text class="ttl" x="600" y="39" text-anchor="middle">The stream</text>
+<svg viewBox="0 0 720 250" role="img" aria-label="Your page contains an iframe, and inside that iframe is the Eagle 3D page.">
+  <rect class="box" x="40" y="20" width="640" height="200" rx="10"/>
+  <text class="ttl" x="64" y="50">Your page</text>
+  <text class="sub" x="64" y="70">your-site.example.com</text>
 
-  <path class="dash" d="M160 58 L160 384"/>
-  <path class="dash" d="M600 58 L600 384"/>
-
-  <!-- 1 -->
-  <path class="wireAcc" d="M160 100 L588 100"/>
-  <path class="wireAcc" d="M580 94 L588 100 L580 106"/>
-  <text class="mono" x="374" y="92" text-anchor="middle">{ cmd: "getMicDevices" }</text>
-
-  <!-- 2 -->
-  <path class="wire" d="M600 150 L172 150"/>
-  <path class="wire" d="M180 144 L172 150 L180 156"/>
-  <text class="mono" x="386" y="142" text-anchor="middle">{ type: "micDevices", devices: [ … ] }</text>
-  <text class="sub" x="386" y="168" text-anchor="middle">each with the stream's own deviceId, its label, and isActive</text>
-
-  <!-- viewer picks -->
-  <rect class="boxAlt" x="60" y="196" width="200" height="34" rx="6"/>
-  <text class="lbl" x="160" y="218" text-anchor="middle">the viewer picks one</text>
-
-  <!-- 3 -->
-  <path class="wireAcc" d="M160 268 L588 268"/>
-  <path class="wireAcc" d="M580 262 L588 268 L580 274"/>
-  <text class="mono" x="374" y="260" text-anchor="middle">{ cmd: "setMicDevice", deviceId: "z9y8x7…" }</text>
-  <text class="sub" x="374" y="286" text-anchor="middle">an id the stream issued, so the stream recognises it</text>
-
-  <!-- 4 -->
-  <path class="wire" d="M600 336 L172 336"/>
-  <path class="wire" d="M180 330 L172 336 L180 342"/>
-  <text class="mono" x="386" y="328" text-anchor="middle">{ type: "micDeviceChanged", ok: true, label: "…" }</text>
-  <text class="good" x="386" y="360" text-anchor="middle">the session never drops</text>
+  <rect class="boxAlt" x="230" y="92" width="420" height="102" rx="8"/>
+  <text class="ttl" x="250" y="124">The Eagle 3D page</text>
+  <text class="sub" x="250" y="144">connector.eagle3dstreaming.com</text>
+  <text class="sub" x="250" y="176">inside your &lt;iframe&gt;</text>
 </svg>
 <figcaption>
-  Four messages, all of them ordinary <code>postMessage</code> traffic across the
-  iframe boundary. Your page never handles audio &mdash; it passes a short string.
+  Two pages, two different web addresses. A browser treats them as two separate
+  websites that happen to be on screen together.
 </figcaption>
 </figure>
 
-<h2>The commands</h2>
+<h2>2. The computer has two microphones</h2>
+
+<p>
+  Say the visitor's computer has two: <strong>microphone 1</strong> and
+  <strong>microphone 2</strong>. Both pages can see both of them. Nothing
+  surprising yet.
+</p>
+
+<h2>3. But each page calls them by different names</h2>
+
+<p>
+  Every microphone has an <strong>id</strong> &mdash; that is how a page says
+  <em>use this one</em>. The catch is that a browser gives each page its
+  <strong>own</strong> ids for the very same microphones.
+</p>
+
+<figure class="fig">
+<svg viewBox="0 0 720 330" role="img" aria-label="Microphone 1 and microphone 2. Your page knows them as ID1 and ID2. The Eagle 3D page knows the same two microphones as ID3 and ID4.">
+  <rect class="dev" x="270" y="12" width="180" height="36" rx="6"/>
+  <text class="lbl" x="360" y="36" text-anchor="middle">microphone 1</text>
+  <rect class="dev" x="270" y="56" width="180" height="36" rx="6"/>
+  <text class="lbl" x="360" y="80" text-anchor="middle">microphone 2</text>
+  <text class="sub" x="360" y="110" text-anchor="middle">the same two microphones, all along</text>
+
+  <path class="wire" d="M270 74 L150 74 L150 132"/>
+  <path class="wire" d="M450 74 L570 74 L570 132"/>
+
+  <rect class="box" x="30" y="132" width="270" height="150" rx="8"/>
+  <text class="ttl" x="52" y="160">Your page</text>
+  <text class="mono" x="52" y="196">microphone 1  =  ID1</text>
+  <text class="mono" x="52" y="222">microphone 2  =  ID2</text>
+  <text class="sub" x="52" y="256">these names work only here</text>
+
+  <rect class="box" x="420" y="132" width="270" height="150" rx="8"/>
+  <text class="ttl" x="442" y="160">The Eagle 3D page</text>
+  <text class="mono" x="442" y="196">microphone 1  =  ID3</text>
+  <text class="mono" x="442" y="222">microphone 2  =  ID4</text>
+  <text class="sub" x="442" y="256">these names work only here</text>
+
+  <path class="dash" d="M360 124 L360 300"/>
+  <text class="sub" x="360" y="320" text-anchor="middle">two different websites</text>
+</svg>
+<figcaption>
+  Microphone 1 is <code>ID1</code> to your page and <code>ID3</code> to ours.
+  Browsers do this deliberately, so that two websites cannot compare ids to
+  work out that they are looking at the same visitor.
+</figcaption>
+</figure>
+
+<h2>4. So your ids are no use to us</h2>
+
+<p>
+  This is the whole problem. If your page looks up its own microphones and sends
+  us <code>ID1</code>, we have never heard of <code>ID1</code>. We know
+  <code>ID3</code> and <code>ID4</code>. The message arrives and means nothing.
+</p>
+
+<figure class="fig">
+<svg viewBox="0 0 720 180" role="img" aria-label="Your page sends ID1 to the Eagle 3D page, which does not recognise it.">
+  <rect class="box" x="30" y="46" width="240" height="88" rx="8"/>
+  <text class="ttl" x="52" y="76">Your page</text>
+  <text class="mono" x="52" y="108">sends ID1</text>
+
+  <rect class="box" x="450" y="46" width="240" height="88" rx="8"/>
+  <text class="ttl" x="472" y="76">The Eagle 3D page</text>
+  <text class="mono" x="472" y="108">knows ID3, ID4</text>
+
+  <path class="wire" d="M270 90 L436 90"/>
+  <path class="wire" d="M428 84 L436 90 L428 96"/>
+  <line x1="340" y1="76" x2="372" y2="104" stroke="var(--warn)" stroke-width="2.6"/>
+  <line x1="372" y1="76" x2="340" y2="104" stroke="var(--warn)" stroke-width="2.6"/>
+  <text class="bad" x="356" y="64" text-anchor="middle">ID1? never heard of it</text>
+  <text class="sub" x="356" y="152" text-anchor="middle">ids do not travel between websites</text>
+</svg>
+<figcaption>
+  Sending your own ids across cannot work, no matter how the message is shaped.
+</figcaption>
+</figure>
+
+<h2>5. So ask us for our list first</h2>
+
+<p>
+  Send <code>getMicDevices</code>. We reply with <strong>our</strong> ids &mdash;
+  the ones we will recognise when you send one back.
+</p>
+
+<figure class="fig">
+<svg viewBox="0 0 720 250" role="img" aria-label="Your page sends the getMicDevices command. The Eagle 3D page replies with a micDevices message listing ID3 for microphone 1 and ID4 for microphone 2.">
+  <rect class="box" x="30" y="18" width="240" height="44" rx="8"/>
+  <text class="ttl" x="150" y="46" text-anchor="middle">Your page</text>
+  <rect class="box" x="450" y="18" width="240" height="44" rx="8"/>
+  <text class="ttl" x="570" y="46" text-anchor="middle">The Eagle 3D page</text>
+
+  <path class="dash" d="M150 66 L150 234"/>
+  <path class="dash" d="M570 66 L570 234"/>
+
+  <path class="wireAcc" d="M150 108 L558 108"/>
+  <path class="wireAcc" d="M550 102 L558 108 L550 114"/>
+  <text class="monoBig" x="354" y="100" text-anchor="middle">{ cmd: "getMicDevices" }</text>
+
+  <path class="wire" d="M570 174 L162 174"/>
+  <path class="wire" d="M170 168 L162 174 L170 180"/>
+  <text class="monoBig" x="366" y="150" text-anchor="middle">{ type: "micDevices", devices: [</text>
+  <text class="mono" x="366" y="170" text-anchor="middle">{ deviceId: "ID3", label: "microphone 1" },</text>
+  <text class="mono" x="366" y="190" text-anchor="middle">{ deviceId: "ID4", label: "microphone 2" } ] }</text>
+  <text class="good" x="366" y="224" text-anchor="middle">now you hold ids we understand</text>
+</svg>
+<figcaption>
+  The reply carries our ids and a readable name for each, so you have something
+  to show and something we will recognise.
+</figcaption>
+</figure>
+
+<h2>6. Pick one, and send that id back</h2>
+
+<p>
+  How you choose is entirely yours. A dropdown, a settings screen, or nothing on
+  screen at all &mdash; your code can simply pick one. Whichever it is, send us
+  back the id <em>we</em> gave you.
+</p>
+
+<figure class="fig">
+<svg viewBox="0 0 720 220" role="img" aria-label="Your page sends setMicDevice with deviceId ID4, and the Eagle 3D page confirms with micDeviceChanged ok true for ID4.">
+  <rect class="box" x="30" y="18" width="240" height="44" rx="8"/>
+  <text class="ttl" x="150" y="46" text-anchor="middle">Your page</text>
+  <rect class="box" x="450" y="18" width="240" height="44" rx="8"/>
+  <text class="ttl" x="570" y="46" text-anchor="middle">The Eagle 3D page</text>
+
+  <path class="dash" d="M150 66 L150 204"/>
+  <path class="dash" d="M570 66 L570 204"/>
+
+  <path class="wireAcc" d="M150 110 L558 110"/>
+  <path class="wireAcc" d="M550 104 L558 110 L550 116"/>
+  <text class="monoBig" x="354" y="102" text-anchor="middle">{ cmd: "setMicDevice", deviceId: "ID4" }</text>
+
+  <path class="wire" d="M570 170 L162 170"/>
+  <path class="wire" d="M170 164 L162 170 L170 176"/>
+  <text class="monoBig" x="366" y="162" text-anchor="middle">{ type: "micDeviceChanged", ok: true, deviceId: "ID4" }</text>
+  <text class="good" x="366" y="198" text-anchor="middle">microphone 2 is now the one being used</text>
+</svg>
+<figcaption>
+  <code>ID4</code> came from us, so we know exactly which microphone it means.
+</figcaption>
+</figure>
+
+<h2>7. We take it from there</h2>
+
+<p>
+  Once we have the id, that is the end of your part. We capture that microphone
+  and send its audio over WebRTC to your Unreal application &mdash;
+  <strong>without restarting the stream</strong>. The picture does not flicker
+  and the session is not re-queued.
+</p>
+
+<figure class="fig">
+<svg viewBox="0 0 720 190" role="img" aria-label="Audio flows from the chosen microphone into the Eagle 3D page and on to your Unreal application. Your page exchanges short messages only and never carries audio.">
+  <rect class="dev" x="20" y="72" width="140" height="48" rx="6"/>
+  <text class="lbl" x="90" y="101" text-anchor="middle">microphone 2</text>
+
+  <rect class="box" x="240" y="72" width="220" height="48" rx="6"/>
+  <text class="lbl" x="350" y="101" text-anchor="middle">The Eagle 3D page</text>
+
+  <rect class="box" x="540" y="72" width="160" height="48" rx="6"/>
+  <text class="lbl" x="620" y="101" text-anchor="middle">your Unreal app</text>
+
+  <path class="wireAcc" d="M160 96 L232 96"/>
+  <path class="wireAcc" d="M224 90 L232 96 L224 102"/>
+  <path class="wireAcc" d="M460 96 L532 96"/>
+  <path class="wireAcc" d="M524 90 L532 96 L524 102"/>
+  <text class="sub" x="496" y="86" text-anchor="middle">WebRTC</text>
+
+  <rect class="boxAlt" x="240" y="16" width="220" height="36" rx="6"/>
+  <text class="lbl" x="350" y="39" text-anchor="middle">Your page</text>
+  <path class="dash" d="M350 52 L350 70"/>
+  <text class="sub" x="478" y="44" text-anchor="start">short messages only</text>
+
+  <text class="bad" x="350" y="172" text-anchor="middle">the audio never passes through your page</text>
+</svg>
+<figcaption>
+  Your page sends a string and receives a string. The audio goes from the
+  microphone into our page and straight on to your app.
+</figcaption>
+</figure>
+
+<h2>The four messages, together</h2>
 
 <div class="scroll">
   <table>
     <thead><tr><th>Direction</th><th>Message</th></tr></thead>
     <tbody>
-      <tr><td>your page &rarr; the stream</td><td><code>{ cmd: "getMicDevices" }</code></td></tr>
-      <tr><td>the stream &rarr; your page</td><td><code>{ type: "micDevices", ok: true, devices: [{ deviceId, label, isActive }] }</code></td></tr>
-      <tr><td>your page &rarr; the stream</td><td><code>{ cmd: "setMicDevice", deviceId: "&lt;an id from micDevices&gt;" }</code></td></tr>
-      <tr><td>the stream &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: true, deviceId, label }</code></td></tr>
-      <tr><td>the stream &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: false, error, message }</code></td></tr>
+      <tr><td>your page &rarr; us</td><td><code>{ cmd: "getMicDevices" }</code></td></tr>
+      <tr><td>us &rarr; your page</td><td><code>{ type: "micDevices", ok: true, devices: [{ deviceId, label, isActive }] }</code></td></tr>
+      <tr><td>your page &rarr; us</td><td><code>{ cmd: "setMicDevice", deviceId: "&lt;one of ours&gt;" }</code></td></tr>
+      <tr><td>us &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: true, deviceId, label }</code></td></tr>
+      <tr><td>us &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: false, error, message }</code></td></tr>
     </tbody>
   </table>
 </div>
 
-<aside class="callout tip">
-  <p>
-    <code>micDevices</code> can also arrive <strong>unprompted</strong>, when a
-    microphone is plugged in or removed. Treat it as "here is the current list",
-    not only as the answer to a question you asked.
-  </p>
-</aside>
-
-<h2>What the stream does with the id</h2>
-
 <p>
-  Three steps, and the order of the last two matters more than it looks.
+  All four are ordinary <code>postMessage</code> traffic across the iframe
+  boundary, the same as every other command.
 </p>
 
-<pre><code class="language-javascript">// inside connector.eagle3dstreaming.com, never on your page
-const stream   = await navigator.mediaDevices.getUserMedia({
-                   audio: { deviceId: { exact: chosenId } }
-                 });
-const newTrack = stream.getAudioTracks()[0];
-
-await sender.replaceTrack(newTrack);   // swap the outgoing track
-oldTrack.stop();                        // stop the old one LAST</code></pre>
-
-<figure class="fig">
-<svg viewBox="0 0 760 210" role="img" aria-label="The peer connection keeps its sender; only the track feeding it is replaced, so no renegotiation happens and the session continues.">
-  <rect class="box" x="30" y="40" width="280" height="120" rx="8"/>
-  <text class="ttl" x="50" y="68">Before</text>
-  <rect class="boxAlt" x="50" y="86" width="120" height="40" rx="6"/>
-  <text class="lbl" x="110" y="111" text-anchor="middle">sender</text>
-  <path class="wire" d="M170 106 L282 106"/>
-  <path class="wire" d="M274 100 L282 106 L274 112"/>
-  <text class="sub" x="226" y="96" text-anchor="middle">built-in</text>
-
-  <rect class="box" x="450" y="40" width="280" height="120" rx="8"/>
-  <text class="ttl" x="470" y="68">After</text>
-  <rect class="boxAlt" x="470" y="86" width="120" height="40" rx="6"/>
-  <text class="lbl" x="530" y="111" text-anchor="middle">sender</text>
-  <path class="wireAcc" d="M590 106 L702 106"/>
-  <path class="wireAcc" d="M694 100 L702 106 L694 112"/>
-  <text class="sub" x="646" y="96" text-anchor="middle">headset</text>
-
-  <path class="wireAcc" d="M320 100 L440 100"/>
-  <path class="wireAcc" d="M432 94 L440 100 L432 106"/>
-  <text class="mono" x="380" y="88" text-anchor="middle">replaceTrack</text>
-  <text class="good" x="380" y="124" text-anchor="middle">same sender</text>
-  <text class="good" x="380" y="142" text-anchor="middle">same session</text>
-  <text class="sub" x="380" y="192" text-anchor="middle">no renegotiation &middot; no reconnect &middot; no queue</text>
-</svg>
-<figcaption>
-  The peer connection keeps its sender; only the track feeding it changes. That
-  is why switching device does not drop the call.
-</figcaption>
-</figure>
-
-<aside class="callout warning">
+<aside class="callout tip">
   <p>
-    <strong>Stop the old track last, never first.</strong> Acquire, swap, then
-    stop. Any other order means a device that has been unplugged since the list
-    was built costs the viewer the microphone they still had.
+    <code>micDevices</code> can also arrive <strong>without being asked for</strong>,
+    when a microphone is plugged in or unplugged. Treat it as "here is the
+    current list" rather than only as a reply.
   </p>
 </aside>
 
-<h2>Where the audio actually goes</h2>
-
-<figure class="fig">
-<svg viewBox="0 0 760 180" role="img" aria-label="Audio flows from the microphone into the stream's document and on to the Unreal application. Your page only exchanges short messages and never carries audio.">
-  <rect class="dev" x="20" y="64" width="130" height="48" rx="6"/>
-  <text class="lbl" x="85" y="93" text-anchor="middle">microphone</text>
-
-  <rect class="box" x="230" y="64" width="220" height="48" rx="6"/>
-  <text class="lbl" x="340" y="93" text-anchor="middle">the stream (iframe)</text>
-
-  <rect class="box" x="560" y="64" width="180" height="48" rx="6"/>
-  <text class="lbl" x="650" y="93" text-anchor="middle">your Unreal app</text>
-
-  <path class="wireAcc" d="M150 88 L222 88"/>
-  <path class="wireAcc" d="M214 82 L222 88 L214 94"/>
-  <path class="wireAcc" d="M450 88 L552 88"/>
-  <path class="wireAcc" d="M544 82 L552 88 L544 94"/>
-  <text class="sub" x="501" y="78" text-anchor="middle">WebRTC</text>
-
-  <rect class="boxAlt" x="230" y="12" width="220" height="34" rx="6"/>
-  <text class="lbl" x="340" y="34" text-anchor="middle">your page</text>
-  <path class="dash" d="M340 46 L340 62"/>
-  <text class="sub" x="470" y="40" text-anchor="start">short messages only</text>
-  <text class="bad" x="340" y="160" text-anchor="middle">audio never passes through your page</text>
-</svg>
-<figcaption>
-  Your page sends a string and receives a string. The audio goes from the
-  microphone into the stream's own document and straight on to your app.
-</figcaption>
-</figure>
+<aside class="callout note">
+  <p>
+    <strong>Why not match on the name instead of the id?</strong> The label is
+    the same text on both sides, so it looks like a shortcut. It is not a safe
+    one: labels are empty until the microphone has been allowed, two identical
+    devices produce two identical names, and the wording changes with the
+    computer's language. The id is the only dependable handle.
+  </p>
+</aside>
 
 <aside class="callout warning">
   <p>
-    <strong>This is why granting the microphone on your page is not enough on
-    its own.</strong> Your page never carries the audio. The stream's own site
-    has to be able to open the microphone, and a permission belongs to one
-    origin at a time. If the list comes back empty, see
-    <a href="/wiki/choose-the-microphone">Choose the microphone</a> under
-    <em>When the permission is the problem</em>.
+    <strong>If the list comes back empty</strong>, the microphone has not been
+    allowed for our page &mdash; which is a separate thing from allowing it for
+    yours. See <a href="/wiki/choose-the-microphone">Choose the microphone</a>
+    under <em>When the permission is the problem</em>.
   </p>
 </aside>
 
 <div class="next">
   <p>
-    <a href="/wiki/choose-the-microphone">Choose the microphone</a> &mdash; the
-    order things must happen in, what each command answers before permission is
-    granted, how to check a switch really happened, and what to do when it does
-    not.
+    <a href="/wiki/choose-the-microphone">Choose the microphone</a> &mdash; when
+    to ask, what the answers mean before permission is granted, and how to check
+    that a switch really took effect.
   </p>
 </div>
 
