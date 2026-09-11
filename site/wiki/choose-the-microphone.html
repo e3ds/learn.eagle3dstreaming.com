@@ -769,6 +769,128 @@
 </details>
 
 <details class="sect">
+  <summary><h2>When the permission is the problem</h2><span class="hint">Reset both sites, then hard reload &mdash; in that order</span></summary>
+  <div class="body">
+
+<aside class="callout warning">
+  <p>
+    <strong>Two websites are involved, and each has its own microphone
+    permission.</strong> Your page, and the stream inside the iframe, which is a
+    different origin. The padlock you can see belongs to <em>your page</em>. The
+    site being refused may be the <em>stream's</em>, and you cannot see that one
+    from the address bar.
+  </p>
+  <p>
+    This is the single most confusing thing about microphones in an embedded
+    stream: a padlock reading <strong>allowed</strong> and a log reading
+    <strong>denied</strong> are not a contradiction. They are two correct
+    statements about two different sites.
+  </p>
+</aside>
+
+<h3>The fix that resolves most of it</h3>
+
+<p>
+  Reset the permissions for <strong>both</strong> sites, then <strong>hard
+  reload</strong>. Both steps, in that order &mdash; a reset does nothing to the
+  page already open, because the permission was read when it loaded. Resetting
+  without reloading looks exactly like the reset not working.
+</p>
+
+<ol class="steps">
+  <li>
+    <h3>Reset your own page</h3>
+    <p>
+      Click the padlock beside the address bar &rarr; <strong>Site
+      settings</strong> &rarr; <strong>Reset permissions</strong>.
+    </p>
+  </li>
+  <li>
+    <h3>Reset the stream's site</h3>
+    <p>
+      This is the one people miss, because it is never in the address bar. In
+      Chrome, go straight to it:
+    </p>
+<pre><code>chrome://settings/content/siteDetails?site=https://&lt;your-connector&gt;.eagle3dstreaming.com</code></pre>
+    <p>
+      The connector hostname is the first part of your stream URL. Set
+      <strong>Microphone</strong> to <strong>Allow</strong>, or press
+      <strong>Reset permissions</strong> to start clean.
+    </p>
+  </li>
+  <li>
+    <h3>Hard reload</h3>
+    <p>
+      <strong>Ctrl</strong>+<strong>Shift</strong>+<strong>R</strong>, or
+      <strong>Cmd</strong>+<strong>Shift</strong>+<strong>R</strong> on a Mac.
+      Then allow the microphone when asked.
+    </p>
+  </li>
+</ol>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Browser</th><th>Where the reset is</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Chrome, Edge</td>
+        <td>Padlock &rarr; Site settings &rarr; Reset permissions. For the stream's own site, use the <code>chrome://settings/content/siteDetails?site=</code> address above.</td>
+      </tr>
+      <tr>
+        <td>Firefox</td>
+        <td>Padlock &rarr; Clear cookies and site data, or Settings &rarr; Privacy &amp; Security &rarr; Permissions &rarr; Microphone &rarr; Settings.</td>
+      </tr>
+      <tr>
+        <td>Safari</td>
+        <td>Safari &rarr; Settings for This Website, or Settings &rarr; Websites &rarr; Microphone.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout note">
+  <p>
+    <strong>Try this first, before anything else.</strong> Most reports that
+    begin "the microphone is allowed but the stream says it is not" end here.
+    It costs a minute, and it rules out the entire class of problem before you
+    start reading logs.
+  </p>
+</aside>
+
+<h3>What each symptom means</h3>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What you see</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>No <strong>Microphone</strong> row in the padlock menu at all, and "No usage data" in site settings</td>
+        <td>The browser never recorded a request. It refused before prompting &mdash; so there is nothing to reset on that site, and the cause is elsewhere.</td>
+      </tr>
+      <tr>
+        <td>Padlock says allowed, the stream says not granted</td>
+        <td>Two different sites. Reset and allow the <em>stream's</em> origin as well.</td>
+      </tr>
+      <tr>
+        <td><code>NotAllowedError</code> with no prompt ever shown</td>
+        <td>Refused by policy or by a previous decision, not by the viewer just now.</td>
+      </tr>
+      <tr>
+        <td>Devices listed but all unnamed</td>
+        <td>Permission has not been granted yet in that document. The devices are real; the names are withheld.</td>
+      </tr>
+      <tr>
+        <td><code>micDeviceChanged: no audio sender</code></td>
+        <td>The session connected before the microphone was allowed, so it has no track to switch. Restart the stream.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  </div>
+</details>
+
+<details class="sect">
   <summary><h2>The whole exchange</h2><span class="hint">Every message, both directions</span></summary>
   <div class="body">
 
