@@ -1,0 +1,298 @@
+<p class="standfirst">
+  Your page and the stream are two different websites. Each one sees the same
+  microphones under <strong>different ids</strong> &mdash; so an id your page
+  collects means nothing inside the stream. This is why choosing a microphone
+  takes two commands instead of one.
+</p>
+
+<style>
+  /* Figures are SVG so they stay sharp and keep their proportions at any zoom
+     or window size. Colours come from the page's own tokens, so the drawings
+     follow the light and dark themes rather than fighting them. */
+  .fig { margin: 26px 0; }
+  .fig svg { display: block; width: 100%; height: auto; max-width: 760px; margin: 0 auto; }
+  .fig figcaption {
+    max-width: var(--measure);
+    margin: 10px auto 0;
+    color: var(--ink-3);
+    font-size: 14.5px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .fig .box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+  .fig .boxAlt { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+  .fig .ttl { fill: var(--ink); font: 600 14px Archivo, Arial, sans-serif; }
+  .fig .sub { fill: var(--ink-3); font: 11.5px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .fig .lbl { fill: var(--ink-2); font: 12.5px Archivo, Arial, sans-serif; }
+  .fig .mono { fill: var(--ink-2); font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .fig .good { fill: var(--tip); font: 600 12.5px Archivo, Arial, sans-serif; }
+  .fig .bad  { fill: var(--warn); font: 600 12.5px Archivo, Arial, sans-serif; }
+  .fig .wire { stroke: var(--ink-3); stroke-width: 1.4; fill: none; }
+  .fig .wireAcc { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+  .fig .dash { stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 6 5; fill: none; }
+  .fig .dev { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.4; }
+</style>
+
+<h2>The two websites</h2>
+
+<p>
+  An embedded stream always involves two sites. Throughout this page:
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>Which site</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Your page</strong></td>
+        <td>your own domain &mdash; the page holding the <code>&lt;iframe&gt;</code></td>
+        <td>Shows your interface. Never touches the audio.</td>
+      </tr>
+      <tr>
+        <td><strong>The stream</strong></td>
+        <td><code>connector.eagle3dstreaming.com</code> &mdash; inside the iframe</td>
+        <td>Captures the microphone and feeds it to your Unreal app over WebRTC.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>The same microphone, two different ids</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 760 330" role="img" aria-label="One computer with two microphones. Your page and connector.eagle3dstreaming.com each see the same two microphones under completely different identifiers.">
+  <!-- devices -->
+  <rect class="dev" x="300" y="12" width="160" height="34" rx="6"/>
+  <text class="lbl" x="380" y="34" text-anchor="middle">Headset microphone</text>
+  <rect class="dev" x="300" y="54" width="160" height="34" rx="6"/>
+  <text class="lbl" x="380" y="76" text-anchor="middle">Built-in microphone</text>
+  <text class="sub" x="380" y="106" text-anchor="middle">one computer, two microphones</text>
+
+  <!-- wires down to each site -->
+  <path class="wire" d="M300 70 L160 70 L160 130"/>
+  <path class="wire" d="M460 70 L600 70 L600 130"/>
+
+  <!-- your page -->
+  <rect class="box" x="30" y="130" width="260" height="150" rx="8"/>
+  <text class="ttl" x="50" y="158">Your page</text>
+  <text class="sub" x="50" y="176">your-site.example.com</text>
+  <text class="mono" x="50" y="212">Headset  →  "a1b2c3…"</text>
+  <text class="mono" x="50" y="234">Built-in →  "d4e5f6…"</text>
+  <text class="sub" x="50" y="262">ids valid only here</text>
+
+  <!-- the stream -->
+  <rect class="box" x="470" y="130" width="260" height="150" rx="8"/>
+  <text class="ttl" x="490" y="158">The stream</text>
+  <text class="sub" x="490" y="176">connector.eagle3dstreaming.com</text>
+  <text class="mono" x="490" y="212">Headset  →  "z9y8x7…"</text>
+  <text class="mono" x="490" y="234">Built-in →  "w6v5u4…"</text>
+  <text class="sub" x="490" y="262">ids valid only here</text>
+
+  <!-- the boundary -->
+  <path class="dash" d="M380 122 L380 300"/>
+  <text class="sub" x="380" y="318" text-anchor="middle">cross-origin boundary</text>
+
+  <!-- the crossed arrow -->
+  <path class="wire" d="M300 205 L444 205"/>
+  <path class="wire" d="M436 199 L444 205 L436 211"/>
+  <line x1="365" y1="192" x2="395" y2="218" stroke="var(--warn)" stroke-width="2.4"/>
+  <line x1="395" y1="192" x2="365" y2="218" stroke="var(--warn)" stroke-width="2.4"/>
+  <text class="bad" x="380" y="182" text-anchor="middle">means nothing over here</text>
+</svg>
+<figcaption>
+  Both sites can see both microphones. Neither can use the other's ids. Browsers
+  randomise a <code>deviceId</code> per origin on purpose, so that two sites
+  cannot compare notes to recognise the same visitor.
+</figcaption>
+</figure>
+
+<aside class="callout note">
+  <p>
+    <strong>Labels are not a way round it.</strong> The human-readable name is
+    the same string on both sides, so matching by name looks tempting. It is not
+    reliable: labels are empty until the microphone has been granted, they are
+    not unique &mdash; two identical headsets produce two identical names &mdash;
+    and they change with the operating system's language. The id is the only
+    dependable handle.
+  </p>
+</aside>
+
+<h2>So the list has to come from the stream</h2>
+
+<p>
+  If your page builds a dropdown from its own enumeration, it will offer
+  <code>a1b2c3…</code>, send that across, and the stream will not recognise it.
+  The only workable order is: <strong>ask the stream for its own ids, show
+  those, send one back.</strong>
+</p>
+
+<figure class="fig">
+<svg viewBox="0 0 760 400" role="img" aria-label="Message exchange: your page sends getMicDevices, the stream replies with micDevices, the viewer picks one, your page sends setMicDevice with that id, and the stream replies micDeviceChanged.">
+  <rect class="box" x="40" y="14" width="240" height="40" rx="8"/>
+  <text class="ttl" x="160" y="39" text-anchor="middle">Your page</text>
+  <rect class="box" x="480" y="14" width="240" height="40" rx="8"/>
+  <text class="ttl" x="600" y="39" text-anchor="middle">The stream</text>
+
+  <path class="dash" d="M160 58 L160 384"/>
+  <path class="dash" d="M600 58 L600 384"/>
+
+  <!-- 1 -->
+  <path class="wireAcc" d="M160 100 L588 100"/>
+  <path class="wireAcc" d="M580 94 L588 100 L580 106"/>
+  <text class="mono" x="374" y="92" text-anchor="middle">{ cmd: "getMicDevices" }</text>
+
+  <!-- 2 -->
+  <path class="wire" d="M600 150 L172 150"/>
+  <path class="wire" d="M180 144 L172 150 L180 156"/>
+  <text class="mono" x="386" y="142" text-anchor="middle">{ type: "micDevices", devices: [ … ] }</text>
+  <text class="sub" x="386" y="168" text-anchor="middle">each with the stream's own deviceId, its label, and isActive</text>
+
+  <!-- viewer picks -->
+  <rect class="boxAlt" x="60" y="196" width="200" height="34" rx="6"/>
+  <text class="lbl" x="160" y="218" text-anchor="middle">the viewer picks one</text>
+
+  <!-- 3 -->
+  <path class="wireAcc" d="M160 268 L588 268"/>
+  <path class="wireAcc" d="M580 262 L588 268 L580 274"/>
+  <text class="mono" x="374" y="260" text-anchor="middle">{ cmd: "setMicDevice", deviceId: "z9y8x7…" }</text>
+  <text class="sub" x="374" y="286" text-anchor="middle">an id the stream issued, so the stream recognises it</text>
+
+  <!-- 4 -->
+  <path class="wire" d="M600 336 L172 336"/>
+  <path class="wire" d="M180 330 L172 336 L180 342"/>
+  <text class="mono" x="386" y="328" text-anchor="middle">{ type: "micDeviceChanged", ok: true, label: "…" }</text>
+  <text class="good" x="386" y="360" text-anchor="middle">the session never drops</text>
+</svg>
+<figcaption>
+  Four messages, all of them ordinary <code>postMessage</code> traffic across the
+  iframe boundary. Your page never handles audio &mdash; it passes a short string.
+</figcaption>
+</figure>
+
+<h2>The commands</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Direction</th><th>Message</th></tr></thead>
+    <tbody>
+      <tr><td>your page &rarr; the stream</td><td><code>{ cmd: "getMicDevices" }</code></td></tr>
+      <tr><td>the stream &rarr; your page</td><td><code>{ type: "micDevices", ok: true, devices: [{ deviceId, label, isActive }] }</code></td></tr>
+      <tr><td>your page &rarr; the stream</td><td><code>{ cmd: "setMicDevice", deviceId: "&lt;an id from micDevices&gt;" }</code></td></tr>
+      <tr><td>the stream &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: true, deviceId, label }</code></td></tr>
+      <tr><td>the stream &rarr; your page</td><td><code>{ type: "micDeviceChanged", ok: false, error, message }</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout tip">
+  <p>
+    <code>micDevices</code> can also arrive <strong>unprompted</strong>, when a
+    microphone is plugged in or removed. Treat it as "here is the current list",
+    not only as the answer to a question you asked.
+  </p>
+</aside>
+
+<h2>What the stream does with the id</h2>
+
+<p>
+  Three steps, and the order of the last two matters more than it looks.
+</p>
+
+<pre><code class="language-javascript">// inside connector.eagle3dstreaming.com, never on your page
+const stream   = await navigator.mediaDevices.getUserMedia({
+                   audio: { deviceId: { exact: chosenId } }
+                 });
+const newTrack = stream.getAudioTracks()[0];
+
+await sender.replaceTrack(newTrack);   // swap the outgoing track
+oldTrack.stop();                        // stop the old one LAST</code></pre>
+
+<figure class="fig">
+<svg viewBox="0 0 760 210" role="img" aria-label="The peer connection keeps its sender; only the track feeding it is replaced, so no renegotiation happens and the session continues.">
+  <rect class="box" x="30" y="40" width="280" height="120" rx="8"/>
+  <text class="ttl" x="50" y="68">Before</text>
+  <rect class="boxAlt" x="50" y="86" width="120" height="40" rx="6"/>
+  <text class="lbl" x="110" y="111" text-anchor="middle">sender</text>
+  <path class="wire" d="M170 106 L282 106"/>
+  <path class="wire" d="M274 100 L282 106 L274 112"/>
+  <text class="sub" x="226" y="96" text-anchor="middle">built-in</text>
+
+  <rect class="box" x="450" y="40" width="280" height="120" rx="8"/>
+  <text class="ttl" x="470" y="68">After</text>
+  <rect class="boxAlt" x="470" y="86" width="120" height="40" rx="6"/>
+  <text class="lbl" x="530" y="111" text-anchor="middle">sender</text>
+  <path class="wireAcc" d="M590 106 L702 106"/>
+  <path class="wireAcc" d="M694 100 L702 106 L694 112"/>
+  <text class="sub" x="646" y="96" text-anchor="middle">headset</text>
+
+  <path class="wireAcc" d="M320 100 L440 100"/>
+  <path class="wireAcc" d="M432 94 L440 100 L432 106"/>
+  <text class="mono" x="380" y="88" text-anchor="middle">replaceTrack</text>
+  <text class="good" x="380" y="124" text-anchor="middle">same sender</text>
+  <text class="good" x="380" y="142" text-anchor="middle">same session</text>
+  <text class="sub" x="380" y="192" text-anchor="middle">no renegotiation &middot; no reconnect &middot; no queue</text>
+</svg>
+<figcaption>
+  The peer connection keeps its sender; only the track feeding it changes. That
+  is why switching device does not drop the call.
+</figcaption>
+</figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>Stop the old track last, never first.</strong> Acquire, swap, then
+    stop. Any other order means a device that has been unplugged since the list
+    was built costs the viewer the microphone they still had.
+  </p>
+</aside>
+
+<h2>Where the audio actually goes</h2>
+
+<figure class="fig">
+<svg viewBox="0 0 760 180" role="img" aria-label="Audio flows from the microphone into the stream's document and on to the Unreal application. Your page only exchanges short messages and never carries audio.">
+  <rect class="dev" x="20" y="64" width="130" height="48" rx="6"/>
+  <text class="lbl" x="85" y="93" text-anchor="middle">microphone</text>
+
+  <rect class="box" x="230" y="64" width="220" height="48" rx="6"/>
+  <text class="lbl" x="340" y="93" text-anchor="middle">the stream (iframe)</text>
+
+  <rect class="box" x="560" y="64" width="180" height="48" rx="6"/>
+  <text class="lbl" x="650" y="93" text-anchor="middle">your Unreal app</text>
+
+  <path class="wireAcc" d="M150 88 L222 88"/>
+  <path class="wireAcc" d="M214 82 L222 88 L214 94"/>
+  <path class="wireAcc" d="M450 88 L552 88"/>
+  <path class="wireAcc" d="M544 82 L552 88 L544 94"/>
+  <text class="sub" x="501" y="78" text-anchor="middle">WebRTC</text>
+
+  <rect class="boxAlt" x="230" y="12" width="220" height="34" rx="6"/>
+  <text class="lbl" x="340" y="34" text-anchor="middle">your page</text>
+  <path class="dash" d="M340 46 L340 62"/>
+  <text class="sub" x="470" y="40" text-anchor="start">short messages only</text>
+  <text class="bad" x="340" y="160" text-anchor="middle">audio never passes through your page</text>
+</svg>
+<figcaption>
+  Your page sends a string and receives a string. The audio goes from the
+  microphone into the stream's own document and straight on to your app.
+</figcaption>
+</figure>
+
+<aside class="callout warning">
+  <p>
+    <strong>This is why granting the microphone on your page is not enough on
+    its own.</strong> Your page never carries the audio. The stream's own site
+    has to be able to open the microphone, and a permission belongs to one
+    origin at a time. If the list comes back empty, see
+    <a href="/wiki/choose-the-microphone">Choose the microphone</a> under
+    <em>When the permission is the problem</em>.
+  </p>
+</aside>
+
+<div class="next">
+  <p>
+    <a href="/wiki/choose-the-microphone">Choose the microphone</a> &mdash; the
+    order things must happen in, what each command answers before permission is
+    granted, how to check a switch really happened, and what to do when it does
+    not.
+  </p>
+</div>

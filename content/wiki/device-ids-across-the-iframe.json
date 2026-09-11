@@ -1,0 +1,10 @@
+{
+ "title": "Why device ids do not cross the iframe",
+ "slug": "device-ids-across-the-iframe",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage"
+ ],
+ "rewritten": true,
+ "order": 5
+}
