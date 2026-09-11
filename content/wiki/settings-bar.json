@@ -1,0 +1,11 @@
+{
+ "title": "The settings bar, button by button",
+ "slug": "settings-bar",
+ "section": "App Configuration",
+ "parents": [
+  "streaming-interface"
+ ],
+ "rewritten": true,
+ "order": 1,
+ "description": "Every control a viewer sees on top of your stream: what each button does, where the bar sits, how to move it, and why a button can be switched on and still not appear."
+}

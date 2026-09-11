@@ -1,0 +1,370 @@
+<p class="standfirst">
+  Every button a viewer sees on top of your stream, what each one does, where the
+  bar sits, and how to move it. Each button can be turned off on its own from the
+  Control Panel.
+</p>
+
+<p>
+  During a session your app is covered by one small bar of controls. It is hidden
+  behind a gear icon until the viewer opens it, and every button on it is
+  optional &mdash; you decide which ones your viewers get. Turn the bar off
+  entirely and the viewer sees nothing but your application.
+</p>
+
+<p>
+  <strong>Control Panel &rsaquo; your app &rsaquo; Edit Config &rsaquo; UI.</strong>
+  Each button is a switch. Save, and the change applies to sessions started from
+  then on &mdash; a session already running keeps the controls it started with.
+</p>
+
+<details class="sect" id="bar" open>
+  <summary><h2>The bar, and the gear that opens it</h2><span class="hint">What the viewer actually sees, and in what order</span></summary>
+  <div class="body">
+
+<p>
+  The viewer sees one gear icon. Pressing it slides the bar open; pressing it
+  again closes it. There is no separate close button and nothing to dismiss
+  &mdash; the gear is both.
+</p>
+
+<p>
+  When the bar is open, the buttons appear in this order, and each is covered in
+  its own section below:
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>#</th><th>Button</th><th>What the viewer does with it</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><a href="#share">Share</a></td><td>Invite someone else into this session</td></tr>
+      <tr><td>2</td><td><a href="#screenshot">Screenshot</a></td><td>Save a still of the stream</td></tr>
+      <tr><td>3</td><td><a href="#screen-record">Screen record</a></td><td>Record the stream to a video file</td></tr>
+      <tr><td>4</td><td><a href="#info">Info</a></td><td>Connection and stream statistics</td></tr>
+      <tr><td>5</td><td><a href="#quality">Quality</a></td><td>Choose a picture quality preset</td></tr>
+      <tr><td>6</td><td><a href="#vr">VR</a></td><td>Enter the stream in a headset</td></tr>
+      <tr><td>7</td><td><a href="#resolution">Resolution</a></td><td>Change the streaming resolution</td></tr>
+      <tr><td>8</td><td><a href="#audio">Audio</a></td><td>Volume</td></tr>
+      <tr><td>9</td><td><a href="#fullscreen">Fullscreen</a></td><td>Fill the screen with the stream</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<aside class="callout warning">
+  <p>
+    <strong>Every one of these lives inside the bar.</strong> Turn
+    <strong>Settings Control Bar</strong> off and none of them appear, however
+    they are set individually &mdash; there is no gear to press. That is the
+    single most common reason a button switch looks like it does nothing.
+  </p>
+</aside>
+
+<p>
+  A button you have never touched is <strong>on</strong>. The player treats a
+  missing setting as &ldquo;show it&rdquo;, so apps configured before a button
+  existed keep working and keep showing it. You only ever have to act to take
+  something away.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="position">
+  <summary><h2>Where the bar sits, and moving it</h2><span class="hint">Four corners, plus letting the viewer drag it</span></summary>
+  <div class="body">
+
+<p>
+  The gear sits in a corner of the stream, 20&nbsp;pixels in from each edge. By
+  default that is the <strong>bottom right</strong>. If something important in
+  your application lives in that corner &mdash; a logo, a menu, a readout &mdash;
+  move the gear rather than redesigning around it.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Setting</th><th>Where the gear appears</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Bottom Right</strong></td><td>The default.</td></tr>
+      <tr><td><strong>Bottom Left</strong></td><td>Opposite corner, same edge.</td></tr>
+      <tr><td><strong>Top Right</strong></td><td>Useful when your app puts its own controls along the bottom.</td></tr>
+      <tr><td><strong>Top Left</strong></td><td>Useful when the bottom edge is busy and the right side carries a panel.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  <strong>The bar opens away from the edge it is anchored to.</strong> In a bottom
+  corner it opens upward, in a top corner downward, and it works out which way
+  round to go from where the gear actually is at that moment &mdash; not from the
+  corner you chose. So it stays correct after the viewer drags it somewhere else
+  or resizes the window.
+</p>
+
+<h3>Letting the viewer move it themselves</h3>
+
+<p>
+  <strong>Draggable Settings Button</strong> lets the viewer pick the gear up and
+  put it wherever they like. It is worth turning on when your application's own
+  interface moves around &mdash; a corner that is clear on one screen may be
+  covered on another, and the viewer can see which.
+</p>
+
+<p>
+  It is a <strong>hold, then move</strong> gesture rather than a plain drag: a
+  short press first, so an ordinary tap still opens the bar instead of nudging
+  the gear a few pixels every time. On a phone the button grows slightly when it
+  is ready to be moved, which is the signal the viewer is meant to feel rather
+  than read.
+</p>
+
+<aside class="callout">
+  <p>
+    Dragging changes where the gear is <em>for that viewer, for that session</em>.
+    It does not change your configuration, and the next viewer starts from the
+    corner you chose.
+  </p>
+</aside>
+
+  </div>
+</details>
+
+<details class="sect" id="share">
+  <summary><h2>Share</h2><span class="hint">Invite someone else into the session you are already in</span></summary>
+  <div class="body">
+
+<p>
+  Hands the viewer a link to <strong>the session they are in right now</strong>,
+  so somebody else can open it and see the same running application. It is not a
+  link to your app in general &mdash; it joins this one.
+</p>
+
+<p>
+  The person who opened the session stays the host. Guests arriving on a shared
+  link appear in the participants list, and the host can hand control over or
+  remove them.
+</p>
+
+<p>
+  Turn this off for a single-viewer product, or anywhere a session should not be
+  forwarded &mdash; the link works for whoever receives it.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="screenshot">
+  <summary><h2>Screenshot</h2><span class="hint">A still of the stream, saved to the viewer's downloads</span></summary>
+  <div class="body">
+
+<p>
+  Saves the current frame as a PNG. The picture is taken at the resolution the
+  stream is actually running at, not the size of the browser window, so it is not
+  stretched by whatever shape the viewer's window happens to be.
+</p>
+
+<p>
+  The viewer is told what happened either way: the file name when it is saved,
+  and a reason when it is not &mdash; most often because the stream has not
+  produced a frame yet, or because the device blocks downloads started by a web
+  page. Apple devices and in-app browsers (a link opened inside a social or chat
+  app) are the usual case for the second one, and the message says to open the
+  page in Safari or Chrome directly instead.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="screen-record">
+  <summary><h2>Screen record</h2><span class="hint">Record the stream to a video file</span></summary>
+  <div class="body">
+
+<p>
+  Records what the viewer is watching and saves it as a video file when they stop.
+  Useful for capturing a walkthrough or reporting something that only happens
+  occasionally &mdash; a recording answers &ldquo;what exactly did you see&rdquo;
+  in a way a description cannot.
+</p>
+
+<p>
+  The recording is made in the viewer's browser and stays on their machine unless
+  they send it somewhere. Nothing is uploaded by pressing this.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="info">
+  <summary><h2>Info</h2><span class="hint">Connection and stream statistics, for diagnosing a bad session</span></summary>
+  <div class="body">
+
+<p>
+  Opens a panel of live readings about the session: the codec in use, the
+  resolution and frame rate actually being delivered, the bitrate, and the
+  connection's own numbers.
+</p>
+
+<p>
+  This is the panel to ask a viewer for when they report that the stream
+  &ldquo;looks bad&rdquo;. A description cannot separate a slow connection from a
+  low frame rate from a resolution that was never high to begin with; these
+  numbers can.
+</p>
+
+<p>
+  Leave it on for an internal or technical audience. Turn it off where the
+  numbers would only be noise to the people using your application.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="quality">
+  <summary><h2>Quality</h2><span class="hint">Let the viewer trade sharpness against smoothness</span></summary>
+  <div class="body">
+
+<p>
+  Offers the viewer a set of presets &mdash; <strong>low</strong>,
+  <strong>medium</strong>, <strong>high</strong> and <strong>ultra</strong>
+  &mdash; which move the picture quality the encoder aims for.
+</p>
+
+<p>
+  The trade is bandwidth. A higher preset sends more data for a sharper picture;
+  on a connection that cannot carry it, the result is dropped frames rather than
+  a better image. Low is the setting for a poor connection, where a softer but
+  steady picture is easier to use than a sharp one that stutters.
+</p>
+
+<aside class="callout">
+  <p>
+    This is a request, not a guarantee. The encoder works within what the
+    connection will carry, so asking for ultra on a weak link does not produce an
+    ultra picture &mdash; it produces the best the link allows.
+  </p>
+</aside>
+
+  </div>
+</details>
+
+<details class="sect" id="vr">
+  <summary><h2>VR</h2><span class="hint">Enter the stream in a headset &mdash; and why the button may not appear</span></summary>
+  <div class="body">
+
+<p>
+  Puts the stream into a headset, for applications built to be viewed that way.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>This button has two conditions, and your switch is only one of them.</strong>
+    It also needs a browser that supports WebXR and a headset available to it. On
+    an ordinary desktop or phone browser the button stays hidden even with the
+    setting turned on &mdash; that is the browser answering, not the setting
+    failing.
+  </p>
+</aside>
+
+<p>
+  So the honest test of this setting is a headset. If you are checking it on a
+  laptop, the button being absent tells you nothing either way.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="resolution">
+  <summary><h2>Resolution</h2><span class="hint">Change the size of the picture being streamed</span></summary>
+  <div class="body">
+
+<p>
+  Lets the viewer change the resolution the application renders and streams at.
+  A smaller picture needs less bandwidth and less of the machine, which can turn
+  an unusable session into a workable one; a larger one is sharper where the
+  connection can carry it.
+</p>
+
+<p>
+  This is a different control from <a href="#quality">Quality</a>, and they are
+  worth keeping apart. Resolution changes how many pixels there are; Quality
+  changes how much detail survives the compression of those pixels. A viewer on a
+  poor connection is usually better served by lowering quality first.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="audio">
+  <summary><h2>Audio</h2><span class="hint">Volume for the sound coming from your application</span></summary>
+  <div class="body">
+
+<p>
+  A volume control for the audio your application is sending. It changes what
+  this viewer hears and nothing else &mdash; it is not a mute for the
+  application, and in a shared session it does not affect anybody else.
+</p>
+
+<p>
+  Worth leaving on for anything with sound, simply because a viewer whose only
+  option is their operating system's volume will turn down everything else on
+  their machine too.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="fullscreen">
+  <summary><h2>Fullscreen</h2><span class="hint">Fill the screen &mdash; and the one device where it behaves differently</span></summary>
+  <div class="body">
+
+<p>
+  Expands the stream to fill the screen and hides the browser's own interface.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>iPhone is the exception, and it matters.</strong> iPhone cannot put a
+    web page fullscreen &mdash; only a video, in Apple's own player. In that
+    player the viewer <strong>cannot interact with your application at all</strong>:
+    they can watch it, and that is all, until they come back out. Because of that
+    the button is hidden by default on devices where only video fullscreen is
+    possible.
+  </p>
+  <p>
+    Show it there anyway with <strong>Show it where only video fullscreen is
+    possible</strong>, underneath the Fullscreen switch. That is the right choice
+    for something being watched rather than used &mdash; a presentation, a
+    walkthrough, a render &mdash; and the wrong one for anything interactive.
+  </p>
+</aside>
+
+  </div>
+</details>
+
+<details class="sect" id="not-showing">
+  <summary><h2>A button is switched on and still not showing</h2><span class="hint">The four reasons, in the order worth checking</span></summary>
+  <div class="body">
+
+<ol>
+  <li>
+    <strong>The settings bar itself is off.</strong> Every button lives inside
+    it. With the bar off there is no gear to press and nothing appears, whatever
+    the individual switches say. Check this first &mdash; it explains most cases.
+  </li>
+  <li>
+    <strong>The session started before the change.</strong> Saving affects
+    sessions started afterwards. Close the session and open a new one.
+  </li>
+  <li>
+    <strong>The device cannot do it.</strong> <a href="#vr">VR</a> needs WebXR
+    and a headset; <a href="#fullscreen">Fullscreen</a> is hidden on devices
+    where only the video can go fullscreen. Both are the device answering, not
+    the setting failing.
+  </li>
+  <li>
+    <strong>You are looking at the wrong configuration.</strong> A link carries
+    the configuration name in it. Editing one configuration and testing a link
+    built from another shows no change, and nothing on either screen says so.
+  </li>
+</ol>
+
+  </div>
+</details>

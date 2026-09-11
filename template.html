@@ -448,5 +448,59 @@
     <p>Eagle 3D Streaming</p>
   </footer>
 </div>
+<script>
+/* [E3DS-ANCHOR-OPEN] Make a link to a folded section actually show it.
+ *
+ * Sections on these pages are <details class="sect"> with the id on the
+ * <details> itself, so another page can link straight to one -
+ * .../settings-bar#quality. Navigating there scrolls to the element and leaves
+ * it SHUT: the browser only auto-opens a <details> when the thing being
+ * targeted is INSIDE it, and here the target IS it. The reader arrives at a
+ * closed heading with no sign that it was the answer to their question.
+ *
+ * That matters more than it sounds, because these anchors are what the info
+ * icons in the Control Panel point at. A support link that lands on a collapsed
+ * heading has failed at the last inch.
+ *
+ * Ancestors are opened too, so a section nested inside another still appears.
+ * Then it is scrolled into view AGAIN: opening a <details> changes the height
+ * of everything below it, so wherever the browser scrolled to a moment ago is
+ * no longer where the section is.
+ *
+ * Progressive enhancement only. With scripting off the page still works exactly
+ * as before - every section is still there and still openable by hand, which is
+ * the whole reason these are native <details> and not a script in the first
+ * place. */
+(function () {
+  function reveal() {
+    var id = decodeURIComponent((location.hash || "").slice(1));
+    if (!id) return;
+    var el;
+    try { el = document.getElementById(id); } catch (e) { return; }
+    if (!el) return;
+
+    if (el.tagName === "DETAILS") el.open = true;
+    var p = el.parentElement;
+    while (p) {
+      if (p.tagName === "DETAILS") p.open = true;
+      p = p.parentElement;
+    }
+
+    /* After the layout has settled, not before. */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        el.scrollIntoView({ block: "start" });
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", reveal);
+  } else {
+    reveal();
+  }
+  window.addEventListener("hashchange", reveal);
+})();
+</script>
 </body>
 </html>
