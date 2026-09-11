@@ -180,7 +180,7 @@
       <tr><td>Touch input on or off</td><td><code>setTouchInputEnabled(enabled)</code></td><td><code>{ cmd: "setTouchInputEnabled", value: enabled }</code></td></tr>
       <tr><td>Capture a frame</td><td><code>captureScreenShot()</code></td><td><code>{ cmd: "captureScreenShot" }</code></td></tr>
       <tr><td>End the session</td><td><code>terminate()</code></td><td><code>{ cmd: "ForceEndSession" }</code></td></tr>
-      <tr><td>Which device is watching</td><td>&mdash;</td><td><code>{ cmd: "getDeviceInfo" }</code></td></tr>
+      <tr><td>Which device is watching</td><td>&mdash;</td><td><code>{ cmd: "sendDeviceInfo" }</code> &mdash; replies <code>takeUserDeviceInfo</code>, see <a href="/wiki/device-detection">Detect the viewer's device</a></td></tr>
       <tr><td>Which app is streaming</td><td>&mdash;</td><td><code>{ cmd: "getAppInfo" }</code></td></tr>
     </tbody>
   </table>

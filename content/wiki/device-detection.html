@@ -30,6 +30,16 @@
   </li>
 </ol>
 
+<aside class="callout note">
+  <p>
+    <strong>An embedding page can ask for this too.</strong> The command used to
+    be reachable only from inside the Unreal app; sending
+    <code>{ cmd: "sendDeviceInfo" }</code> to the iframe now gets the same reply,
+    in the same shape, back to your page. Same command, same answer, whoever
+    asks.
+  </p>
+</aside>
+
 <h2>The answer</h2>
 
 <p>The platform replies with a JSON message describing the viewer's device:</p>
