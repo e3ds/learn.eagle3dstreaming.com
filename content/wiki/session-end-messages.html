@@ -1,16 +1,61 @@
 <p class="standfirst">
-  A stream can end for many reasons, and every one of them reaches your page the
-  same way: one callback, one string. Below is every value that string can
-  currently take, each entry closed until you want it.
-  <strong>This page is the single list</strong> &mdash; the iframe and web SDK
-  guides both point here rather than keeping copies that would drift.
+  A stream can end for many reasons, and every one of them reaches your page as
+  one short string written for a person to read. Below is every value that string
+  can currently take, each entry closed until you want it.
+  <strong>This page is the single list for both integrations</strong> &mdash; the
+  web SDK and the iframe receive the same set, so the guides point here instead
+  of keeping two copies that would drift apart.
 </p>
 
-<h2>The callback</h2>
+<h2>How it reaches you</h2>
+
+<p>
+  Two integrations, two mechanisms, <em>identical</em> strings. Whichever you
+  are using, the list below is the one to build against.
+</p>
+
+<h3>Web SDK &mdash; a callback</h3>
 
 <pre><code class="language-javascript">e3ds_controller.callbacks.onSessionEnding = function (message) {
     showMyEndScreen(message);
 };</code></pre>
+
+<h3>Iframe &mdash; a posted message</h3>
+
+<pre><code class="language-javascript">window.addEventListener("message", function (event) {
+    var data = event.data || {};
+    if (data.type !== "session.ending") return;
+    showMyEndScreen(data.message);
+});</code></pre>
+
+<aside class="callout note">
+  <p>
+    <strong>The iframe event also carries
+    <code>legacyType: "redirectingWithMessage"</code>.</strong> That is the name
+    the event had before, kept so pages already listening for it keep working.
+    New code should match on <code>type === "session.ending"</code>; the
+    <code>message</code> field is the same string either way.
+  </p>
+  <p>
+    Note the asymmetry, because it catches people out: the <em>SDK callback</em>
+    was renamed and the old name removed, while the <em>iframe event</em> was
+    renamed and the old name kept. The iframe is embedded in pages that are not
+    ours to update, so nothing there could be taken away.
+  </p>
+</aside>
+
+<aside class="callout warning">
+  <p>
+    <strong>One list, two readers &mdash; so change it here.</strong> If an
+    ending is added, or wording is improved, this page is where it gets written
+    down. Neither the
+    <a href="/wiki/sdk-reference">SDK reference</a> nor the
+    <a href="/wiki/embed-stream-into-webpage">iframe guide</a> keeps its own copy
+    of these strings, deliberately: a list maintained in three places is a list
+    that is wrong in at least two of them, and nobody finds out until a viewer is
+    shown the wrong reason a session ended.
+  </p>
+</aside>
 
 <aside class="callout warning">
   <p>
