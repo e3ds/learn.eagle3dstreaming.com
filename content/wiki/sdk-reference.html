@@ -110,7 +110,7 @@ if (result &amp;&amp; result.ok === false) {
   Assign these to <code>e3ds_controller.callbacks</code>. <strong>All are
   optional</strong> &mdash; the ones you do not define are simply never called.
   Assign them before the stream starts, which is why
-  <code>session-token.js</code> loads last in the sample.
+  <code>sdk-token.js</code> loads last in the sample.
 </p>
 
 <h3>Starting up</h3>
@@ -201,7 +201,7 @@ if (result &amp;&amp; result.ok === false) {
 </p>
 
 <p>
-  The sample ships a working version in <code>stream-callbacks.js</code> that
+  The sample ships a working version in <code>sdk-callbacks.js</code> that
   puts the message in a full-page overlay, so the demo shows something real
   instead of logging where nobody is looking. It is <strong>meant to be
   replaced</strong> &mdash; the block is marked <code>THIS IS THE PART YOU
@@ -243,12 +243,12 @@ document.getElementById("myEndMessage").textContent = message;</code></pre>
   <table>
     <thead><tr><th>Symptom</th><th>Likely cause</th></tr></thead>
     <tbody>
-      <tr><td>An alert naming a setting</td><td><code>config.js</code> still holds a placeholder. The message names the field.</td></tr>
+      <tr><td>An alert naming a setting</td><td><code>sdk-config.js</code> still holds a placeholder. The message names the field.</td></tr>
       <tr><td>Nothing happens; the console shows a failed request</td><td>The page was opened as <code>file:///</code>. Serve it over <code>http://</code>.</td></tr>
       <tr><td>The token request replied <code>401</code></td><td>The API key is wrong, or is not the Streaming key.</td></tr>
       <tr><td>The stream never starts, and there are no errors</td><td><code>appName</code>, <code>userName</code> or <code>configurationName</code> do not match the Control Panel exactly. They are case-sensitive.</td></tr>
       <tr><td><code>e3ds_controller is not defined</code></td><td>Script order changed. The SDK must load first.</td></tr>
-      <tr><td>Callbacks never fire</td><td><code>session-token.js</code> was moved earlier. It must load <strong>last</strong>.</td></tr>
+      <tr><td>Callbacks never fire</td><td><code>sdk-token.js</code> was moved earlier. It must load <strong>last</strong>.</td></tr>
       <tr><td>A button does nothing</td><td>It was given the <em>result</em> of a function instead of the function. Use <code>() =&gt; doThing()</code>, not <code>doThing()</code>.</td></tr>
       <tr><td><code>sendDataToUE()</code> has no effect</td><td>Your app is listening for a different shape than you are sending.</td></tr>
       <tr><td>A second player appears on restart</td><td><code>main()</code> was called without <code>terminate()</code> first.</td></tr>

@@ -559,12 +559,12 @@
         <td>Never</td>
       </tr>
       <tr>
-        <td><code>scripts/config.js</code></td>
+        <td><code>scripts/sdk-config.js</code></td>
         <td>Your API key and which application to launch.</td>
         <td><strong>Yes</strong> &mdash; this is the only file you must edit</td>
       </tr>
       <tr>
-        <td><code>scripts/stream-callbacks.js</code></td>
+        <td><code>scripts/sdk-callbacks.js</code></td>
         <td>What your page does as the session progresses.</td>
         <td>Yes, once you are past the sample</td>
       </tr>
@@ -574,7 +574,7 @@
         <td>Replace it with your own interface</td>
       </tr>
       <tr>
-        <td><code>scripts/session-token.js</code></td>
+        <td><code>scripts/sdk-token.js</code></td>
         <td>Requests the token and starts the stream.</td>
         <td>Yes, when you move token requests to your server</td>
       </tr>
@@ -585,10 +585,10 @@
 <h3>Why the order in the page is not arbitrary</h3>
 
 <pre><code class="language-html">&lt;script defer src="./scripts/dist/e3dsCore.min_ns.js"&gt;&lt;/script&gt;
-&lt;script defer src="./scripts/config.js"&gt;&lt;/script&gt;
-&lt;script defer src="./scripts/stream-callbacks.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/sdk-config.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/sdk-callbacks.js"&gt;&lt;/script&gt;
 &lt;script defer src="./scripts/demo-controls.js"&gt;&lt;/script&gt;
-&lt;script defer src="./scripts/session-token.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script defer src="./scripts/sdk-token.js"&gt;&lt;/script&gt;</code></pre>
 
 <p>
   The SDK is first because everything after it uses <code>e3ds_controller</code>.
@@ -602,7 +602,7 @@
 <h2>Configuration</h2>
 
 <p>
-  Everything in <code>config.js</code>. Every field under
+  Everything in <code>sdk-config.js</code>. Every field under
   <code>application</code> must match your dashboard exactly, capitalisation
   included &mdash; a mismatched name is rejected by the token endpoint, not by
   the browser, so the failure arrives as a refusal rather than as a typo.
@@ -657,7 +657,7 @@
 <aside class="callout warning">
   <p>
     <strong>Anything in a web page can be read by anyone who visits it.</strong>
-    A key in <code>config.js</code> is visible in the browser's developer tools
+    A key in <code>sdk-config.js</code> is visible in the browser's developer tools
     to every visitor. That is acceptable for a local experiment or an internal
     demo. It is not acceptable for anything public, because the key does not
     expire and can be used to start sessions billed to your account.

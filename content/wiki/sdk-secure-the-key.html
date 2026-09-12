@@ -17,7 +17,7 @@
 
 <p>
   Anything in a web page can be read by anyone who visits it. Your API key sits
-  in <code>scripts/config.js</code>, so it is one click of View Source away
+  in <code>scripts/sdk-config.js</code>, so it is one click of View Source away
   &mdash; and it does not expire.
 </p>
 
@@ -71,7 +71,7 @@
 
 <p>
   One function. <code>requestSessionToken()</code> in
-  <code>scripts/session-token.js</code> currently calls our token endpoint
+  <code>scripts/sdk-token.js</code> currently calls our token endpoint
   directly, with your key in the header. Point it at your own endpoint instead:
 </p>
 
@@ -126,7 +126,7 @@
   <strong>Open your page and search the source for your key</strong>
   <p>
     View Source, then the Network tab. Your key must appear in neither. If it is
-    still in <code>config.js</code> because the file was copied across, the page
+    still in <code>sdk-config.js</code> because the file was copied across, the page
     will work perfectly and still be leaking it &mdash; working is not the test
     here, absence is.
   </p>
