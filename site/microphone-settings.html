@@ -718,6 +718,31 @@
       </div>
 
     </div>
+
+    <div class="note" style="margin-top:22px">
+      <h4>Three things you cannot set here &mdash; and what to do if you need them</h4>
+      <p>
+        A browser can, in principle, be asked for three more microphone factors:
+        <strong>latency</strong>, <strong>sample size</strong> (bit depth) and
+        <strong>volume</strong>. They are not on this page and there is no field for them,
+        because the streaming plugin we build on fixes all three at its own values and
+        does not offer them as settings.
+      </p>
+      <p>
+        This is a deliberate limit, not an oversight. Two of the three would make very
+        little difference in practice even if they were exposed &mdash; browsers treat
+        latency as a hint and largely disregard volume on capture &mdash; and a setting
+        that looks adjustable but changes nothing is worse than one that is simply
+        absent.
+      </p>
+      <p>
+        <strong>If your application genuinely needs one of them</strong>, we want to hear
+        about it, because a real use case is what decides whether we add it. Write to
+        <a href="mailto:support@eagle3dstreaming.com">support@eagle3dstreaming.com</a>
+        or ask in our Discord channel, and tell us which one and what you are trying to
+        achieve with it.
+      </p>
+    </div>
   </section>
 
   <section>
