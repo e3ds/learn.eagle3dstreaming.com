@@ -1,0 +1,159 @@
+<p class="standfirst">
+  Your page sends the message. This is what has to exist inside the Unreal
+  application for it to arrive &mdash; and how the application sends one back.
+  It is the same in Unreal whether the page uses the Web SDK or an iframe.
+</p>
+
+<div class="note">
+  <h4>Why this is a separate page</h4>
+  <p>
+    The page half is easy to test and easy to see: you call
+    <code>sendDataToUE</code>, and the call returns. The Unreal half is where
+    messages actually go missing, because <strong>a message with nowhere to
+    arrive fails silently</strong> &mdash; no error on the page, nothing in the
+    console, no complaint from the engine. If data is not reaching your app,
+    this page is where the answer usually is.
+  </p>
+</div>
+
+<h2>The one component everything depends on</h2>
+
+<p>
+  An Unreal actor cannot send or receive Pixel Streaming messages by default.
+  It needs a <strong>Pixel Streaming Input</strong> component, and adding it is
+  what turns the feature on for that actor.
+</p>
+
+<ol>
+  <li>Open the <strong>Actor Blueprint</strong> that should handle the message.</li>
+  <li>Press <strong>Add Component</strong> in the Components panel.</li>
+  <li>Add <strong>Pixel Streaming Input</strong>.</li>
+</ol>
+
+<div class="note caution">
+  <h4>Without it, nothing works and nothing says so</h4>
+  <p>
+    This is the single most common reason data does not arrive. The page sends
+    it, the platform delivers it to the engine, and the engine has no actor
+    prepared to receive it &mdash; so it stops there. Every symptom points at
+    the page, and the page is fine.
+  </p>
+  <p>
+    Check this before you check anything else.
+  </p>
+</div>
+
+<h2>Two kinds of message, and only one needs your code</h2>
+
+<p>
+  This is the distinction that decides whether you need to build anything in
+  Unreal at all.
+</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>What the page sends</th><th>Who handles it</th><th>Do you write Unreal code?</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>sendConsoleCommandToUE</code></td>
+      <td>the Unreal engine itself</td>
+      <td><strong>No.</strong> Console commands are built in.</td>
+    </tr>
+    <tr>
+      <td><code>sendCommandToUE</code></td>
+      <td>the streaming platform</td>
+      <td><strong>No.</strong> Resolution and the like are handled for you.</td>
+    </tr>
+    <tr>
+      <td><code>sendDataToUE</code> &mdash; your own messages</td>
+      <td><strong>your Blueprint or C++</strong></td>
+      <td><strong>Yes.</strong> Nothing listens until you write the listener.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  So a stream where <code>sendConsoleCommandToUE("stat fps")</code> works
+  perfectly and <code>sendDataToUE({ Character: "Aurora" })</code> appears to do
+  nothing is not broken. Those two take different paths, and only the second one
+  needs something of yours at the far end.
+</p>
+
+<h2>Unreal &rarr; page: sending a message back</h2>
+
+<p>
+  In the Blueprint where the event happens:
+</p>
+
+<ol>
+  <li>Make sure the actor has the <strong>Pixel Streaming Input</strong>
+    component, as above &mdash; it is needed in both directions.</li>
+  <li>Right-click in the graph and add <strong>Send Pixel Streaming
+    Response</strong>.</li>
+  <li>Give it the string you want the page to receive.</li>
+</ol>
+
+<p>
+  That is the whole Unreal side. The page receives it through one callback:
+</p>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onResponseFromUnreal = function (descriptor) {
+  console.log("Message from Unreal:", descriptor);
+};</code></pre>
+
+<div class="note caution">
+  <h4>Assign the callback before the stream starts</h4>
+  <p>
+    Callbacks are optional and the ones you do not define are simply never
+    called &mdash; but one assigned <em>late</em> has already missed whatever
+    arrived first. If your application sends something as it starts up, a
+    callback wired after <code>startStream()</code> will not see it, and the
+    message is gone rather than queued.
+  </p>
+</div>
+
+<h2>If you are using an iframe instead</h2>
+
+<p>
+  The Unreal side above is identical. The page side differs: you post a message
+  to the frame, and it must be a JSON object carrying one exact key.
+</p>
+
+<pre><code class="language-javascript">const message = {
+  cmd: "sendDataToUE",          // required, exactly this
+  value: { message: "Hello World!" }
+};</code></pre>
+
+<div class="note caution">
+  <h4>A wrong <code>cmd</code> is discarded in silence</h4>
+  <p>
+    Without <code>cmd: "sendDataToUE"</code> the message goes nowhere and
+    nothing complains. The frame receives it and simply does not forward it
+    &mdash; no error, no warning, no delivery.
+  </p>
+  <p>
+    Combined with the missing component above, these are the two silent
+    failures in this whole path. Between them they account for most reports of
+    "data is not arriving".
+  </p>
+</div>
+
+<h2>Watch it being done</h2>
+
+<p>
+  Sending a message from a web page to Unreal, end to end:
+  <a href="https://youtu.be/EEwEfjzcOLs" rel="noreferrer" target="_blank">Send a
+  message from your webpage to Unreal with the SDK</a>.
+</p>
+
+<div class="note">
+  <h4>Where to go next</h4>
+  <p>
+    <a href="/wiki/javascript-sdk-guide">The Web SDK reference</a> covers the
+    page side of all of this &mdash; the three send calls, what each is for, and
+    every callback the stream will make back to you.
+  </p>
+</div>

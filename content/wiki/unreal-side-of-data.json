@@ -1,0 +1,12 @@
+{
+ "title": "The Unreal side of sending and receiving data",
+ "slug": "unreal-side-of-data",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "javascript-sdk-guide"
+ ],
+ "source": "salvaged from sending-and-receiving-data, 2026-09-12",
+ "rewritten": true,
+ "replaces": [],
+ "order": 4
+}
