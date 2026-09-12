@@ -523,7 +523,11 @@
   </div>
   <div class="choice">
     <h3>Blueprint</h3>
-    <p>From inside the Unreal app, when the trigger belongs to your scene rather than your page.</p>
+    <p><strong>Not directly &mdash; Unreal cannot put a browser into fullscreen.</strong>
+      What a Blueprint can do is send a message to your page
+      (<a href="/wiki/unreal-side-of-data">Send Pixel Streaming Response</a>), and your
+      page then makes one of the two calls above. Worth knowing when the trigger
+      belongs to your scene rather than your interface.</p>
   </div>
 </div>
 

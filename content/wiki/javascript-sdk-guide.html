@@ -503,6 +503,35 @@ e3ds_controller.setTouchInputEnabled(false);</code></pre>
   otherwise be swallowed by the stream.
 </p>
 
+<h3>Sending key presses &mdash; iframe only, today</h3>
+
+<p>
+  For an on-screen control that should behave like a key press &mdash; a
+  touch-screen movement pad, an action button, a menu shortcut &mdash; the
+  platform can emulate keyboard input. <strong>It is not on
+  <code>e3ds_controller</code> yet.</strong> The commands exist and work, but
+  only over the iframe bridge:
+  <a href="/wiki/controlling-the-stream">sending keys to the app</a>.
+</p>
+
+<p>
+  Said here rather than left out, because the alternative is worse: looking for
+  a method that does not exist and concluding the feature does not either. If
+  you need it from the SDK, tell us &mdash; the plumbing is already in the
+  player and exposing it is small.
+</p>
+
+<div class="note">
+  <h4>Press and hold are different things</h4>
+  <p>
+    Worth knowing before you build a control around either. A <em>press</em> is
+    a down and an up together, which is what a menu or an action key wants. A
+    <em>hold</em> leaves the key down until you release it, which is what
+    movement wants &mdash; and a single button that does both cannot hold
+    anything.
+  </p>
+</div>
+
 <h3>Volume</h3>
 
 <pre><code class="language-javascript">e3ds_controller.setVolume(0.5);          // 0 = silent, 1 = full
@@ -688,6 +717,44 @@ e3ds_controller.callbacks.onReceivingAppStartingProgress = function (percent) {
 
     e3ds_controller.main(tokenData); // ends the old session and starts the new
 }</code></pre>
+
+<h2>These exist and do nothing</h2>
+
+<p>
+  The SDK offers fourteen callbacks. <strong>Four of them are never called.</strong>
+  They are listed here so you do not wire one up and then spend an afternoon
+  debugging why it never fires &mdash; which is the only thing that can happen,
+  because a callback that is never invoked reports nothing at all.
+</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Never fires</th><th>Use instead</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>onError</code></td><td><code>onSessionEnding</code> &mdash; it carries the reason</td></tr>
+    <tr><td><code>onEnding</code></td><td><code>onSessionEnding</code></td></tr>
+    <tr><td><code>onHtmlBind</code></td><td><code>onDataChannelOpen</code></td></tr>
+    <tr><td><code>onFrame</code></td><td>&mdash;</td></tr>
+    <tr><td><code>preventErrorRedirect</code></td><td>&mdash; the redirect cannot be prevented today</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note caution">
+  <h4><code>onRedirectingWithMessage</code> is not on this list, and that is worse</h4>
+  <p>
+    It is not dead &mdash; it was <strong>renamed</strong>. The handler is now
+    <code>onSessionEnding</code>, and a page still defining the old name has no
+    end-of-session handler at all: the stream stops and the viewer is shown
+    nothing.
+  </p>
+  <p>
+    If your integration predates the rename, change that one line. Nothing else
+    about it moved.
+  </p>
+</div>
 
 <h2>When it does not work</h2>
 
