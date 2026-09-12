@@ -1009,7 +1009,7 @@ e3ds_controller.setVolume(e3ds_controller.scaleVolumeTo01(75));</code></pre>
         <td>Offer to start a new one. Nothing is wrong.</td>
       </tr>
       <tr>
-        <td><code>onRedirectingWithMessage(message)</code></td>
+        <td><code>onSessionEnding(message)</code></td>
         <td>The session is ending with an explanation.</td>
         <td>Show <code>message</code> in your own interface &mdash; see below.</td>
       </tr>
@@ -1041,11 +1041,21 @@ e3ds_controller.callbacks.onReceivingAppStartingProgress = function (percent) {
 <p>
   By default the player replaces the page with a message when a session ends.
   In an application that is usually wrong &mdash; it destroys the interface
-  around the stream. Handle <code>onRedirectingWithMessage</code> and it becomes
+  around the stream. Handle <code>onSessionEnding</code> and it becomes
   yours to present.
 </p>
 
-<pre><code class="language-javascript">e3ds_controller.callbacks.onRedirectingWithMessage = function (message) {
+<aside class="callout warning">
+  <p>
+    <strong>Renamed from <code>onRedirectingWithMessage</code>.</strong> The old
+    name is no longer called &mdash; rename it and nothing else changes. A page
+    still defining the old one has no end-of-session handler at all, which only
+    becomes visible when a session ends.
+    <a href="/wiki/session-end-messages">Every message it can receive</a>.
+  </p>
+</aside>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onSessionEnding = function (message) {
     showOverlay({
         title: "The session has ended",
         body:  message,

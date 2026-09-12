@@ -585,15 +585,25 @@ if (result &amp;&amp; result.ok === false) {
   <table>
     <thead><tr><th>Callback</th><th>When it fires</th><th>Receives</th></tr></thead>
     <tbody>
-      <tr><td><code>onRedirectingWithMessage</code></td><td><strong>Any</strong> reason the stream ends. Use this one.</td><td><code>message</code></td></tr>
+      <tr><td><code>onSessionEnding</code></td><td><strong>Any</strong> reason the stream ends. Use this one.</td><td><code>message</code></td></tr>
       <tr><td><code>onStreamerDisconnected</code></td><td>Only when the app itself crashed or stopped.</td><td>&mdash;</td></tr>
       <tr><td><code>onSessionExpired</code></td><td>The session's time limit was reached.</td><td>&mdash;</td></tr>
     </tbody>
   </table>
 </div>
 
+<aside class="callout warning">
+  <p>
+    <strong>Renamed from <code>onRedirectingWithMessage</code>.</strong> The old
+    name is no longer called &mdash; rename it and nothing else changes. A page
+    still defining the old one has no end-of-session handler at all, which only
+    becomes visible when a session ends.
+    <a href="/wiki/session-end-messages">Every message it can receive</a>.
+  </p>
+</aside>
+
 <div class="outcome">
-  <strong><code>onRedirectingWithMessage</code> is the dependable one</strong>
+  <strong><code>onSessionEnding</code> is the dependable one</strong>
   <p>
     It fires for essentially every way a session ends &mdash; crash, idle
     timeout, expired session or link, wrong password &mdash; and gives you a
@@ -644,7 +654,7 @@ document.getElementById("myEndMessage").textContent = message;</code></pre>
   <table>
     <thead><tr><th>Name</th><th>Use instead</th></tr></thead>
     <tbody>
-      <tr><td><code>onError</code></td><td><code>onRedirectingWithMessage</code></td></tr>
+      <tr><td><code>onError</code></td><td><code>onSessionEnding</code></td></tr>
       <tr><td><code>onHtmlBind</code></td><td><code>onDataChannelOpen</code></td></tr>
       <tr><td><code>preventErrorRedirect</code></td><td>&mdash; the redirect cannot be prevented today</td></tr>
     </tbody>

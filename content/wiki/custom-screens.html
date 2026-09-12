@@ -69,7 +69,7 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
     <strong><code>onSessionExpired</code> only covers the time limit.</strong>
     It does not fire for a crash, an idle timeout, a wrong password or an
     expired link. If you want one screen for every way a session can end, build
-    it on <code>onRedirectingWithMessage</code> instead &mdash; that one fires
+    it on <code>onSessionEnding</code> instead &mdash; that one fires
     for all of them and carries a line of text explaining which.
   </p>
 </aside>
@@ -92,7 +92,7 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
         <td>No text.</td>
       </tr>
       <tr>
-        <td><code>redirectingWithMessage</code><br>(<code>onRedirectingWithMessage</code>)</td>
+        <td><code>redirectingWithMessage</code><br>(<code>onSessionEnding</code>)</td>
         <td><strong>Every</strong> session end, for any reason.</td>
         <td>A readable message.</td>
       </tr>

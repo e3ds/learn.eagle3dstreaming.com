@@ -228,7 +228,7 @@
     <tbody>
       <tr><td><code>onDataChannelOpen</code></td><td>The stream is live and ready for your commands.</td></tr>
       <tr><td><code>onResponseFromUnreal</code></td><td>Your app sent something back to the page.</td></tr>
-      <tr><td><code>onRedirectingWithMessage</code></td><td><strong>Any</strong> reason the session is ending, with a line of text for the viewer.</td></tr>
+      <tr><td><code>onSessionEnding</code></td><td><strong>Any</strong> reason the session is ending, with a line of text for the viewer.</td></tr>
       <tr><td><code>onSessionExpired</code></td><td>The session's time limit was reached.</td></tr>
       <tr><td><code>onStreamerDisconnected</code></td><td>The app itself stopped or crashed.</td></tr>
       <tr><td><code>onReceivingApp…Progress</code></td><td>Acquiring, preparing and starting, for your own loading screen.</td></tr>
@@ -238,7 +238,7 @@
 
 <aside class="callout note">
   <p>
-    <strong><code>onRedirectingWithMessage</code> is the dependable one.</strong>
+    <strong><code>onSessionEnding</code> is the dependable one.</strong>
     It fires for every way a session ends &mdash; crash, idle timeout, expired
     link, wrong password. <code>onSessionExpired</code> covers only the time
     limit, and <code>onStreamerDisconnected</code> only a genuine crash. If you

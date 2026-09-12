@@ -8,9 +8,32 @@
 
 <h2>The callback</h2>
 
-<pre><code class="language-javascript">e3ds_controller.callbacks.onRedirectingWithMessage = function (message) {
+<pre><code class="language-javascript">e3ds_controller.callbacks.onSessionEnding = function (message) {
     showMyEndScreen(message);
 };</code></pre>
+
+<aside class="callout warning">
+  <p>
+    <strong>This was called <code>onRedirectingWithMessage</code>.</strong> If you
+    have that name anywhere, rename it to <code>onSessionEnding</code>. Same
+    moment, same single string argument &mdash; nothing else about it changed.
+  </p>
+  <p>
+    The old name is no longer called, so a page still defining it has no
+    end-of-session handler at all: the stream stops and your viewer is left
+    looking at whatever was on screen, with no explanation. That is the one
+    failure worth checking for by hand, because it only shows up when a session
+    ends.
+  </p>
+  <p>
+    The old name described what <em>we</em> do rather than what your page does.
+    The player document does redirect itself, but your page never goes anywhere,
+    so the name promised something you would never see &mdash; and people
+    reasonably read that as broken. <code>onSessionEnding</code> also matches the
+    iframe bridge's <code>session.ending</code>, so both integrations now use the
+    same word for the same moment.
+  </p>
+</aside>
 
 <div class="scroll">
   <table>
@@ -468,7 +491,7 @@
 
 <h2>A shape that handles all of them</h2>
 
-<pre><code class="language-javascript">e3ds_controller.callbacks.onRedirectingWithMessage = function (message) {
+<pre><code class="language-javascript">e3ds_controller.callbacks.onSessionEnding = function (message) {
     // 1. Keep it. Several of these describe an account, capacity or crash
     //    problem that you need to know about, not your viewer.
     sendToMyLogging({ event: "session_ended", message: message });

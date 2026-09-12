@@ -1,0 +1,712 @@
+<p class="standfirst">
+  The complete guide to the Eagle 3D Streaming JavaScript SDK: how a session is
+  authorised and started, every call you can make on a running stream, every
+  callback it will make back to you, and the mistakes that are expensive to make
+  late.
+</p>
+
+<div class="prereq">
+  <strong>Before you start you need three things</strong>
+  <p>
+    A <strong>Streaming API key</strong> from your Control Panel, an
+    <strong>application</strong> uploaded and playable there, and the
+    <strong>connector domain</strong> your account was issued (something like
+    <code>connector.eagle3dstreaming.com</code>). All three appear in the
+    dashboard. If the app does not play from the Control Panel it will not play
+    from the SDK either &mdash; fix that first, because it removes half the
+    variables.
+  </p>
+</div>
+
+<h2>What the SDK is, and when to use it instead of an iframe</h2>
+
+<p>
+  Both approaches put a running Unreal application on your web page. The
+  difference is who owns the page.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th></th><th>iframe</th><th>SDK</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>What you add</strong></td>
+        <td>One <code>&lt;iframe&gt;</code> tag</td>
+        <td>A script, a configuration file, and code you write</td>
+      </tr>
+      <tr>
+        <td><strong>The stream lives</strong></td>
+        <td>In a separate document, isolated from your page</td>
+        <td>In your page, as an element you position and style</td>
+      </tr>
+      <tr>
+        <td><strong>You talk to it by</strong></td>
+        <td><code>postMessage</code> across the frame boundary</td>
+        <td>Direct function calls on <code>e3ds_controller</code></td>
+      </tr>
+      <tr>
+        <td><strong>Best for</strong></td>
+        <td>Dropping a stream into an existing site quickly</td>
+        <td>Applications where the stream is part of the interface</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  Choose the SDK when the stream and your interface have to behave as one
+  thing &mdash; when your own controls drive the application, when you need the
+  stream's lifecycle events to change what your page shows, or when the stream
+  must sit inside a layout that resizes with it. Choose the iframe when you want
+  a stream on a page and nothing more.
+</p>
+
+<h2>How a session actually works</h2>
+
+<p>
+  Understanding this sequence explains almost every error message you will
+  encounter, so it is worth reading once even if you only intend to copy the
+  sample.
+</p>
+
+<ol class="steps">
+  <li>
+    <p>
+      <strong>Your API key buys a token.</strong> A request goes to the token
+      endpoint carrying your key and a description of which application to
+      launch. It comes back with a short-lived <strong>session token</strong> and
+      the address of a signalling server.
+    </p>
+  </li>
+  <li>
+    <p>
+      <strong>The token starts a session.</strong> You hand it to
+      <code>e3ds_controller.main()</code>. The player connects to the signalling
+      server, which finds a machine, launches your application on it, and
+      negotiates a WebRTC connection back to the browser.
+    </p>
+  </li>
+  <li>
+    <p>
+      <strong>Video arrives, then the data channel opens.</strong> These are two
+      separate events and they do not arrive together. Video can be playing
+      before you are able to send anything to the application.
+    </p>
+  </li>
+  <li>
+    <p>
+      <strong>The session ends</strong> &mdash; because you called
+      <code>terminate()</code>, because the session's time limit expired, or
+      because the connection was lost. Each of these tells you through a
+      different callback.
+    </p>
+  </li>
+</ol>
+
+<aside class="callout note">
+  <p>
+    <strong>The token is not the API key, and the difference matters.</strong>
+    A token expires within about a minute and is good for a single session. An
+    API key does not expire and can start sessions billed to your account. The
+    token is safe to send to a browser; the key is not. This is the entire basis
+    of the security section below.
+  </p>
+</aside>
+
+<h2>The files, and the order they load in</h2>
+
+<p>
+  The sample is a plain static site &mdash; no build step, no package manager.
+  Every file is one you can open and read.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>File</th><th>What it is for</th><th>Do you edit it?</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>scripts/dist/e3dsCore.min_ns.js</code></td>
+        <td>The SDK itself. Defines <code>e3ds_controller</code>.</td>
+        <td>Never</td>
+      </tr>
+      <tr>
+        <td><code>scripts/config.js</code></td>
+        <td>Your API key and which application to launch.</td>
+        <td><strong>Yes</strong> &mdash; this is the only file you must edit</td>
+      </tr>
+      <tr>
+        <td><code>scripts/stream-callbacks.js</code></td>
+        <td>What your page does as the session progresses.</td>
+        <td>Yes, once you are past the sample</td>
+      </tr>
+      <tr>
+        <td><code>scripts/demo-controls.js</code></td>
+        <td>The sample's control panel. An example, not part of the SDK.</td>
+        <td>Replace it with your own interface</td>
+      </tr>
+      <tr>
+        <td><code>scripts/session-token.js</code></td>
+        <td>Requests the token and starts the stream.</td>
+        <td>Yes, when you move token requests to your server</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>Why the order in the page is not arbitrary</h3>
+
+<pre><code class="language-html">&lt;script defer src="./scripts/dist/e3dsCore.min_ns.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/config.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/stream-callbacks.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/demo-controls.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/session-token.js"&gt;&lt;/script&gt;</code></pre>
+
+<p>
+  The SDK is first because everything after it uses <code>e3ds_controller</code>.
+  Configuration is next because the rest reads it. The file that
+  <em>starts</em> the stream is last, so that everything it depends on &mdash;
+  your callbacks in particular &mdash; is already in place when the session
+  begins. Move it earlier and you will lose the earliest events, which are the
+  ones that report progress while the application is still starting.
+</p>
+
+<h2>Configuration</h2>
+
+<p>
+  Everything in <code>config.js</code>. Every field under
+  <code>application</code> must match your dashboard exactly, capitalisation
+  included &mdash; a mismatched name is rejected by the token endpoint, not by
+  the browser, so the failure arrives as a refusal rather than as a typo.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Field</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>STREAMING_API_KEY</code></td>
+        <td>Your key. See the security section &mdash; in production this does not belong here.</td>
+      </tr>
+      <tr>
+        <td><code>clientUserName</code></td>
+        <td>Identifies the person watching. Used for session records and limits. In a real integration this is your own logged-in user's id.</td>
+      </tr>
+      <tr>
+        <td><code>tokenExpiryMs</code></td>
+        <td>How long the token stays valid, in milliseconds. It only has to survive long enough for the page to start its session, so short is correct. <code>60000</code> is a sensible default.</td>
+      </tr>
+      <tr>
+        <td><code>application.domain</code></td>
+        <td>The connector your account was issued.</td>
+      </tr>
+      <tr>
+        <td><code>application.userName</code></td>
+        <td>The account that owns the application.</td>
+      </tr>
+      <tr>
+        <td><code>application.appName</code></td>
+        <td>The application's name, exactly as the dashboard shows it.</td>
+      </tr>
+      <tr>
+        <td><code>application.configurationName</code></td>
+        <td>Which stored configuration to launch with.</td>
+      </tr>
+      <tr>
+        <td><code>application.version</code></td>
+        <td>A specific version, or <code>"latest"</code> to always use the newest.</td>
+      </tr>
+      <tr>
+        <td><code>configurationToOverride</code></td>
+        <td>Per-session overrides of the stored configuration. Applies to this session only and never changes what is saved. Leave it empty to use the dashboard's settings as they are.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Your API key, and the one thing you must not get wrong</h2>
+
+<aside class="callout warning">
+  <p>
+    <strong>Anything in a web page can be read by anyone who visits it.</strong>
+    A key in <code>config.js</code> is visible in the browser's developer tools
+    to every visitor. That is acceptable for a local experiment or an internal
+    demo. It is not acceptable for anything public, because the key does not
+    expire and can be used to start sessions billed to your account.
+  </p>
+</aside>
+
+<p>
+  The fix is to move the token request to your own server. Your server holds the
+  key; the browser only ever receives a token that expires in a minute.
+</p>
+
+<h3>What your server does</h3>
+
+<pre><code class="language-javascript">// On YOUR server. The key lives here and never reaches the browser.
+app.post("/api/stream-token", async (req, res) =&gt; {
+    const response = await fetch(
+        "https://token.eagle3dstreaming.com/api/v2/token/create",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Auth " + process.env.E3DS_API_KEY
+            },
+            body: JSON.stringify({
+                object: {
+                    core: {
+                        domain:            "connector.eagle3dstreaming.com",
+                        userName:          "your-account",
+                        appName:           "YourApp",
+                        configurationName: "default",
+                        version:           "latest"
+                    },
+                    configurationToOverride: {}
+                },
+                expiry: 60000,
+                // Identify the viewer from YOUR session, not from the request
+                // body - otherwise a caller can stream as somebody else.
+                client: req.user.id
+            })
+        }
+    );
+
+    res.json(await response.json());
+});</code></pre>
+
+<h3>What your page does</h3>
+
+<pre><code class="language-javascript">async function startStream() {
+    const response = await fetch("/api/stream-token", { method: "POST" });
+    const tokenData = await response.json();
+
+    e3ds_controller.main(tokenData);
+}</code></pre>
+
+<div class="outcome">
+  <strong>How to check you have actually done it</strong>
+  <p>
+    Open your live page, view source, and search for your key. If it appears,
+    you have not finished. Search the network tab as well &mdash; a key sent in a
+    request from the browser is just as exposed as one written in the page.
+  </p>
+</div>
+
+<h2>Starting a session</h2>
+
+<p>
+  <code>main()</code> requires two fields on the object you give it:
+  <strong><code>token</code></strong> and <strong><code>socket_url</code></strong>.
+  Anything else is carried along and used where it applies &mdash;
+  <code>client</code>, for instance, identifies the viewer, and a field your
+  token endpoint starts returning later becomes available without any change on
+  this side.
+</p>
+
+<pre><code class="language-javascript">const result = e3ds_controller.main({
+    token:      tokenData.token,
+    socket_url: tokenData.socket_url,
+    client:     "the-viewer-id"
+});</code></pre>
+
+<h3>It reports failure rather than throwing</h3>
+
+<p>
+  A missing field is a setup mistake, not an exceptional condition, and throwing
+  would take down whatever called it. So it returns instead:
+</p>
+
+<pre><code class="language-javascript">const result = e3ds_controller.main(tokenData);
+
+if (result &amp;&amp; result.ok === false) {
+    // result.error   -> "missing_fields"
+    // result.missing -> ["token"]
+    // result.message -> a sentence naming exactly what is absent
+    showYourOwnError(result.message);
+}</code></pre>
+
+<aside class="callout tip">
+  <p>
+    <strong>Retry the token request, not the session.</strong> Token requests
+    fail for ordinary network reasons. A short retry loop around the fetch
+    &mdash; two or three attempts a couple of seconds apart &mdash; removes a
+    class of failure the viewer would otherwise see as "it did not start."
+  </p>
+</aside>
+
+<h2>Talking to your application</h2>
+
+<p>
+  Three calls, and they are not interchangeable. The distinction is who defined
+  the message.
+</p>
+
+<h3><code>sendDataToUE(data)</code> &mdash; messages you defined</h3>
+
+<p>
+  Anything your own Blueprints or C++ listen for. The object is delivered as-is,
+  and its shape is entirely up to you.
+</p>
+
+<pre><code class="language-javascript">e3ds_controller.sendDataToUE({ Character: "Aurora" });
+e3ds_controller.sendDataToUE({ action: "openDoor", id: 42 });</code></pre>
+
+<p>
+  <code>sendToUnreal(data)</code> is the same function under a second name. Pick
+  one and be consistent across your codebase.
+</p>
+
+<h3><code>sendCommandToUE(command)</code> &mdash; platform commands</h3>
+
+<p>
+  Commands the streaming platform itself understands, rather than ones you
+  implemented. These work without any support in your application.
+</p>
+
+<pre><code class="language-javascript">e3ds_controller.sendCommandToUE({ "Resolution.Width": 1920,
+                                  "Resolution.Height": 1080 });</code></pre>
+
+<h3><code>sendConsoleCommandToUE(command)</code> &mdash; Unreal console commands</h3>
+
+<p>
+  Standard Unreal console commands, as you would type them into the editor.
+</p>
+
+<pre><code class="language-javascript">e3ds_controller.sendConsoleCommandToUE("stat fps");
+e3ds_controller.sendConsoleCommandToUE("r.ScreenPercentage 80");</code></pre>
+
+<aside class="callout warning">
+  <p>
+    <strong>Console commands are disabled unless the configuration allows
+    them.</strong> This is a deliberate protection: console access can change
+    rendering, spawn objects and read state, so it is not on by default. If your
+    console commands appear to do nothing and no error is reported, check that
+    setting before looking anywhere else &mdash; the command is being dropped,
+    not failing.
+  </p>
+</aside>
+
+<h3>Receiving replies</h3>
+
+<p>
+  Anything your application sends back arrives at one callback.
+</p>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onResponseFromUnreal = function (descriptor) {
+    // descriptor is whatever your application sent.
+    if (descriptor.type === "inventoryChanged") {
+        renderInventory(descriptor.items);
+    }
+};</code></pre>
+
+<aside class="callout note">
+  <p>
+    <strong>Nothing can be sent until the data channel is open.</strong> Video
+    playing is not the same signal. Send before it opens and the message is
+    lost silently &mdash; there is no error and no queue. Gate your first
+    message on <code>onDataChannelOpen</code>.
+  </p>
+</aside>
+
+<h2>Controlling the stream</h2>
+
+<h3>Quality</h3>
+
+<p>
+  Quality is expressed as a <strong>quantisation parameter</strong>. It runs
+  roughly from 0 to 51 and it is inverted: <strong>lower means better
+  quality and more bandwidth</strong>.
+</p>
+
+<pre><code class="language-javascript">// Hold one fixed quality. The picture stays consistent, and a poor
+// connection shows up as stutter rather than as softening.
+e3ds_controller.setQualityPoint(20);
+
+// Allow it to move within a range. The picture softens under pressure
+// instead of stuttering.
+e3ds_controller.setAdaptiveQualityPoint(20, 40);</code></pre>
+
+<div class="outcome">
+  <strong>Which to choose</strong>
+  <p>
+    Fixed for anything where appearance is being judged &mdash; a product
+    configurator, a design review &mdash; because a frame that quietly softens
+    misrepresents the thing on screen. Adaptive for anything interactive, where
+    a stutter costs more than a soft frame.
+  </p>
+</div>
+
+<h3>Resolution</h3>
+
+<pre><code class="language-javascript">// Pin the stream to a fixed size.
+const r = e3ds_controller.setResolution(1920, 1080);
+// { ok: false, error: "invalid_resolution", ... } if the numbers are unusable
+
+// Go back to following the size of the element on the page.
+e3ds_controller.useViewportResolution();</code></pre>
+
+<p>
+  Following the viewport is the right default: the stream renders at the size it
+  is actually displayed, so nothing is spent on pixels that get scaled away. Pin
+  it when you need a known size regardless of the window &mdash; a fixed-size
+  embed, or a capture you intend to store.
+</p>
+
+<h3>Fullscreen</h3>
+
+<pre><code class="language-javascript">e3ds_controller.toggleFullscreen();</code></pre>
+
+<aside class="callout note">
+  <p>
+    <strong>It must be called from a real user gesture.</strong> Browsers refuse
+    fullscreen requests that do not originate in a click or tap. Calling it from
+    a timer, or on page load, does nothing and reports nothing.
+  </p>
+</aside>
+
+<h3>Mouse and touch</h3>
+
+<pre><code class="language-javascript">e3ds_controller.switchMouseControlSchemeTo("HoveringMouse"); // cursor is visible
+e3ds_controller.switchMouseControlSchemeTo("LockedMouse");   // pointer captured
+
+e3ds_controller.setTouchInputEnabled(false);</code></pre>
+
+<p>
+  Locked capture suits first-person navigation, where the pointer should not
+  leave the frame. Hovering suits anything with an interface the viewer clicks.
+  Turning touch off is worth doing when your own page handles gestures that would
+  otherwise be swallowed by the stream.
+</p>
+
+<h3>Volume</h3>
+
+<pre><code class="language-javascript">e3ds_controller.setVolume(0.5);          // 0 = silent, 1 = full
+
+// If your interface works in percentages, convert first: anything above 1
+// is treated as a percentage, so 100 becomes 1.0 rather than being clamped.
+e3ds_controller.setVolume(e3ds_controller.scaleVolumeTo01(75));</code></pre>
+
+<p>
+  Values outside 0&ndash;1 are clamped; a value that is not a number is refused
+  and reported as <code>false</code> rather than being applied as zero.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>Raising the volume from silent may be refused until the viewer
+    interacts with the page.</strong> Browsers block audio that starts without a
+    gesture. Setting a volume during startup can therefore appear to do nothing
+    through no fault of your code. Offer the viewer something to click, and set
+    the volume from that.
+  </p>
+</aside>
+
+<h3>Screenshots</h3>
+
+<pre><code class="language-javascript">e3ds_controller.captureScreenshot();
+// captureScreenShot() is the same call under an older spelling.</code></pre>
+
+<p>
+  This captures the current frame and hands it to the browser as a download.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>Some devices cannot save a file a page generates.</strong> Every
+    browser on iOS is Safari underneath, and in-app browsers such as those inside
+    Facebook, Instagram, Line and WeChat disable downloads. On those devices the
+    capture succeeds and the file simply never arrives, with no error to catch.
+    Suggesting another browser is not a workaround on iOS, because there is no
+    other engine there. If saving images matters to your product, deliver the
+    file from a server as a normal link.
+  </p>
+</aside>
+
+<h2>Lifecycle callbacks</h2>
+
+<p>
+  Assign these to <code>e3ds_controller.callbacks</code> before the session
+  starts. Each one is optional; the SDK simply does not call what you have not
+  assigned.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>Callback</th><th>When it fires</th><th>What to do with it</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>onConfigAcquire()</code></td>
+        <td>The configuration has been fetched and startup is beginning.</td>
+        <td>Show that something is happening.</td>
+      </tr>
+      <tr>
+        <td><code>onReceivingAppAcquiringProgress(percent)</code></td>
+        <td>A machine is being acquired.</td>
+        <td>First stage of your progress display.</td>
+      </tr>
+      <tr>
+        <td><code>onReceivingAppPreparationProgress(percent)</code></td>
+        <td>The application is being prepared on that machine.</td>
+        <td>Second stage. This is the longest one on a cold start.</td>
+      </tr>
+      <tr>
+        <td><code>onReceivingAppStartingProgress(percent)</code></td>
+        <td>The application is launching.</td>
+        <td>Final stage before video.</td>
+      </tr>
+      <tr>
+        <td><code>onDataChannelOpen()</code></td>
+        <td>Two-way communication is available.</td>
+        <td><strong>Send your first message from here</strong>, and enable controls that talk to the app.</td>
+      </tr>
+      <tr>
+        <td><code>onResponseFromUnreal(descriptor)</code></td>
+        <td>Your application sent something.</td>
+        <td>Your side of your own protocol.</td>
+      </tr>
+      <tr>
+        <td><code>onDataChannelClose()</code></td>
+        <td>Communication ended.</td>
+        <td>Disable controls that send. Video may still be on screen.</td>
+      </tr>
+      <tr>
+        <td><code>onStreamerDisconnected()</code></td>
+        <td>The application stopped sending.</td>
+        <td>Say so plainly. This is not always permanent.</td>
+      </tr>
+      <tr>
+        <td><code>onSessionExpired()</code></td>
+        <td>The session reached its time limit.</td>
+        <td>Offer to start a new one. Nothing is wrong.</td>
+      </tr>
+      <tr>
+        <td><code>onSessionEnding(message)</code></td>
+        <td>The session is ending with an explanation.</td>
+        <td>Show <code>message</code> in your own interface &mdash; see below.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>Three separate stages, not one progress bar</h3>
+
+<p>
+  Acquiring, preparing and starting are reported separately because they take
+  very different amounts of time and fail for different reasons. Collapsing them
+  into a single bar throws away the information that tells a waiting viewer
+  whether anything is actually happening.
+</p>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onReceivingAppAcquiringProgress = function (percent) {
+    setStatus("Finding a machine", percent);
+};
+e3ds_controller.callbacks.onReceivingAppPreparationProgress = function (percent) {
+    setStatus("Preparing the application", percent);
+};
+e3ds_controller.callbacks.onReceivingAppStartingProgress = function (percent) {
+    setStatus("Starting up", percent);
+};</code></pre>
+
+<h3>Ending the session in your own interface</h3>
+
+<p>
+  By default the player replaces the page with a message when a session ends.
+  In an application that is usually wrong &mdash; it destroys the interface
+  around the stream. Handle <code>onSessionEnding</code> and it becomes
+  yours to present.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>Renamed from <code>onRedirectingWithMessage</code>.</strong> The old
+    name is no longer called &mdash; rename it and nothing else changes. A page
+    still defining the old one has no end-of-session handler at all, which only
+    becomes visible when a session ends.
+    <a href="/wiki/session-end-messages">Every message it can receive</a>.
+  </p>
+</aside>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onSessionEnding = function (message) {
+    showOverlay({
+        title: "The session has ended",
+        body:  message,
+        action: { label: "Start again", onClick: startStream }
+    });
+};</code></pre>
+
+<h2>Ending and restarting</h2>
+
+<pre><code class="language-javascript">e3ds_controller.terminate();</code></pre>
+
+<p>
+  This ends the session and releases the machine. Call it when the viewer
+  navigates away from the stream, and not only when they close the tab &mdash;
+  a session nobody is watching still occupies a machine and is still billed.
+</p>
+
+<h3>Restarting correctly</h3>
+
+<p>
+  Fetch the replacement token <strong>before</strong> ending the session that is
+  running. If the request fails, the viewer keeps what they already had instead
+  of being left with nothing.
+</p>
+
+<pre><code class="language-javascript">async function restartStream() {
+    const response  = await fetch("/api/stream-token", { method: "POST" });
+    const tokenData = await response.json();
+
+    if (!tokenData || !tokenData.token) {
+        showYourOwnError("Could not start a new session. The current one is still running.");
+        return;                     // the existing stream is untouched
+    }
+
+    e3ds_controller.main(tokenData); // ends the old session and starts the new
+}</code></pre>
+
+<h2>When it does not work</h2>
+
+<div class="scroll">
+  <table>
+    <thead><tr><th>What you see</th><th>What it usually is</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Nothing happens, no errors</td>
+        <td>The token request failed. Check the network tab: a rejection carries a body explaining which field the server did not accept.</td>
+      </tr>
+      <tr>
+        <td>The server refuses the token request</td>
+        <td>A field in <code>application</code> does not match the dashboard. Capitalisation counts.</td>
+      </tr>
+      <tr>
+        <td>Video plays but messages do nothing</td>
+        <td>You are sending before <code>onDataChannelOpen</code>, or the application is not listening for that message name.</td>
+      </tr>
+      <tr>
+        <td>Console commands are ignored</td>
+        <td>Console commands are not enabled in the configuration. They are dropped, not failed.</td>
+      </tr>
+      <tr>
+        <td>No sound until something is clicked</td>
+        <td>Expected. The browser blocks audio that begins without a user gesture.</td>
+      </tr>
+      <tr>
+        <td>Fullscreen does nothing</td>
+        <td>It was not called from a click or tap.</td>
+      </tr>
+      <tr>
+        <td>Screenshots never arrive on a phone</td>
+        <td>iOS and in-app browsers block downloads a page generates. Nothing is wrong with the call.</td>
+      </tr>
+      <tr>
+        <td>It works locally, fails when deployed</td>
+        <td>The page must be served over HTTPS. WebRTC will not negotiate otherwise.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="next">
+  <a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser &rarr;</a>
+  <p>The server-side token pattern in full, and how to verify you have done it.</p>
+</div>
