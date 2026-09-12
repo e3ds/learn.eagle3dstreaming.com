@@ -5,6 +5,31 @@
   late.
 </p>
 
+<div class="note">
+  <h4>Try it before you build anything</h4>
+  <p>
+    <a href="https://demo-sdk.eaglepixelstreaming.com/" rel="noreferrer" target="_blank">demo-sdk.eaglepixelstreaming.com</a>
+    is the sample below, deployed and running. Open it and you get a live stream,
+    the demo control panel, and every callback on this page firing against a real
+    session &mdash; without cloning anything or entering a key.
+  </p>
+  <p>
+    The source is on GitHub at
+    <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">github.com/e3ds/pixelstreaming-sdk</a>,
+    and it is the same code the demo runs.
+  </p>
+  <p>
+    <strong>Look at the demo's address, because it is making a point.</strong>
+    The page is served from <code>eaglepixelstreaming.com</code> while the
+    platform it talks to is <code>connector.eagle3dstreaming.com</code>. Those
+    are different origins. Nothing about the SDK requires your page to be served
+    from an Eagle 3D Streaming domain &mdash; the demo is hosted elsewhere on
+    purpose, to prove that rather than claim it. Your page can live on your own
+    domain, behind your own login. If the SDK only worked same-origin, that demo
+    could not run at all.
+  </p>
+</div>
+
 <div class="prereq">
   <strong>Before you start you need three things</strong>
   <p>
