@@ -548,10 +548,10 @@ if (result &amp;&amp; result.ok === false) {
   <table>
     <thead><tr><th>Callback</th><th>When it fires</th><th>Receives</th></tr></thead>
     <tbody>
-      <tr><td><code>onConfigAcquire</code></td><td>Configuration received; the stream is not playing yet.</td><td>&mdash;</td></tr>
-      <tr><td><code>onReceivingAppAcquiringProgress</code></td><td>Your app is downloading onto the machine.</td><td><code>percent</code> (0&ndash;100)</td></tr>
-      <tr><td><code>onReceivingAppPreparationProgress</code></td><td>The downloaded app is being prepared.</td><td><code>percent</code> (0&ndash;100)</td></tr>
-      <tr><td><code>onReceivingAppStartingProgress</code></td><td>The app is launching.</td><td><code>percent</code> (0&ndash;100)</td></tr>
+      <tr id="onConfigAcquire"><td><code>onConfigAcquire</code></td><td>Configuration received; the stream is not playing yet.</td><td>&mdash;</td></tr>
+      <tr id="onReceivingAppAcquiringProgress"><td><code>onReceivingAppAcquiringProgress</code></td><td>Your app is downloading onto the machine.</td><td><code>percent</code> (0&ndash;100)</td></tr>
+      <tr id="onReceivingAppPreparationProgress"><td><code>onReceivingAppPreparationProgress</code></td><td>The downloaded app is being prepared.</td><td><code>percent</code> (0&ndash;100)</td></tr>
+      <tr id="onReceivingAppStartingProgress"><td><code>onReceivingAppStartingProgress</code></td><td>The app is launching.</td><td><code>percent</code> (0&ndash;100)</td></tr>
     </tbody>
   </table>
 </div>
@@ -572,9 +572,9 @@ if (result &amp;&amp; result.ok === false) {
   <table>
     <thead><tr><th>Callback</th><th>When it fires</th><th>Receives</th></tr></thead>
     <tbody>
-      <tr><td><code>onDataChannelOpen</code></td><td><strong>The stream is live.</strong> Build your interface here.</td><td>&mdash;</td></tr>
-      <tr><td><code>onDataChannelClose</code></td><td>The connection closed.</td><td>&mdash;</td></tr>
-      <tr><td><code>onResponseFromUnreal</code></td><td>Your app sent something back.</td><td><code>descriptor</code></td></tr>
+      <tr id="onDataChannelOpen"><td><code>onDataChannelOpen</code></td><td><strong>The stream is live.</strong> Build your interface here.</td><td>&mdash;</td></tr>
+      <tr id="onDataChannelClose"><td><code>onDataChannelClose</code></td><td>The connection closed.</td><td>&mdash;</td></tr>
+      <tr id="onResponseFromUnreal"><td><code>onResponseFromUnreal</code></td><td>Your app sent something back.</td><td><code>descriptor</code></td></tr>
     </tbody>
   </table>
 </div>
@@ -585,9 +585,9 @@ if (result &amp;&amp; result.ok === false) {
   <table>
     <thead><tr><th>Callback</th><th>When it fires</th><th>Receives</th></tr></thead>
     <tbody>
-      <tr><td><code>onSessionEnding</code></td><td><strong>Any</strong> reason the stream ends. Use this one.</td><td><code>message</code></td></tr>
-      <tr><td><code>onStreamerDisconnected</code></td><td>Only when the app itself crashed or stopped.</td><td>&mdash;</td></tr>
-      <tr><td><code>onSessionExpired</code></td><td>The session's time limit was reached.</td><td>&mdash;</td></tr>
+      <tr id="onSessionEnding"><td><code>onSessionEnding</code></td><td><strong>Any</strong> reason the stream ends. Use this one.</td><td><code>message</code></td></tr>
+      <tr id="onStreamerDisconnected"><td><code>onStreamerDisconnected</code></td><td>Only when the app itself crashed or stopped.</td><td>&mdash;</td></tr>
+      <tr id="onSessionExpired"><td><code>onSessionExpired</code></td><td>The session's time limit was reached.</td><td>&mdash;</td></tr>
     </tbody>
   </table>
 </div>
