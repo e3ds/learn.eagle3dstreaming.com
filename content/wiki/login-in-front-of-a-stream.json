@@ -1,0 +1,12 @@
+{
+ "title": "Putting a login in front of a stream",
+ "slug": "login-in-front-of-a-stream",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-using-e3ds-sdk"
+ ],
+ "source": "rewritten from login-integration, 2026-09-12",
+ "rewritten": true,
+ "replaces": [],
+ "order": 6
+}

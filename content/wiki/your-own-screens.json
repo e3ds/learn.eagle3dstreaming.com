@@ -1,0 +1,12 @@
+{
+ "title": "Your own loading and ending screens",
+ "slug": "your-own-screens",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "javascript-sdk-guide"
+ ],
+ "source": "rewritten from custom-screens, 2026-09-12",
+ "rewritten": true,
+ "replaces": [],
+ "order": 5
+}

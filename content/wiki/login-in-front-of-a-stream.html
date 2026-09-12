@@ -1,0 +1,89 @@
+<p class="standfirst">
+  Put a login in front of your stream, so only the people you choose can reach
+  it. The pattern is the same for the Web SDK and the iframe: authenticate
+  first, then load the stream page.
+</p>
+
+<div class="note caution">
+  <h4>Two checks, and the second is the one people leave out</h4>
+  <p>
+    A login page is the obvious half. The half that actually does the work is
+    the page <em>holding the stream</em> verifying authentication
+    <strong>before</strong> it loads anything.
+  </p>
+  <p>
+    Without it, anyone who knows that page's address skips the login entirely
+    &mdash; and a login you can walk around is decoration.
+  </p>
+</div>
+
+<h2>The flow</h2>
+
+<ol>
+  <li><strong>The visitor lands on a login page.</strong> Your page, your
+    design, entirely separate from the stream.</li>
+  <li><strong>Credentials are checked on your server.</strong> Not in the
+    browser. Anything decided in the browser can be changed in the browser.</li>
+  <li><strong>On success they go to the page holding the stream.</strong></li>
+  <li><strong>That page verifies authentication before loading the stream</strong>
+    &mdash; the check above.</li>
+  <li>If the check fails, back to the login page.</li>
+</ol>
+
+<h2>Where the stream fits</h2>
+
+<p>
+  Either integration works, and the difference is only what the protected page
+  contains once the visitor reaches it: the SDK's
+  <code>e3ds_controller.main()</code> call, or the iframe with your streaming
+  URL.
+</p>
+
+<div class="note caution">
+  <h4>Protect the token, not just the page</h4>
+  <p>
+    With the Web SDK the <strong>session token</strong> is what actually grants
+    access to the stream. So request it from your server <em>after</em> the
+    login has passed &mdash; rather than embedding a key in a page and relying
+    on the page being hard to find.
+  </p>
+  <p>
+    This is the difference between a login that gates a <em>page</em> and one
+    that gates a <em>session</em>. Only the second survives somebody reading
+    your page source.
+  </p>
+</div>
+
+<h2>Why this is the SDK's argument, not a feature you configure</h2>
+
+<p>
+  With a streaming URL or an iframe, the link itself is what grants access. You
+  can put a password in front of it, but you cannot revoke it for one person,
+  and the URL inside your page is a working link to anyone who reads the source.
+</p>
+
+<p>
+  With the SDK, <strong>your backend decides who gets a token, when, and for
+  which app</strong>. That is a different kind of control, and it is the one
+  thing the other two methods cannot be configured into doing.
+  <a href="/wiki/api-keys-and-tokens">API keys and session tokens</a> covers
+  what each credential is and how long it lives.
+</p>
+
+<div class="note">
+  <h4>What a demo will not show you</h4>
+  <p>
+    Any sample of this flow is a demonstration of <em>where the check goes</em>,
+    not of how to check securely. A production login belongs on your server
+    &mdash; real sessions, tokens or secure cookies. Treat the sample as the
+    shape, and your own authentication as the substance.
+  </p>
+</div>
+
+<div class="note">
+  <h4>Where to go next</h4>
+  <p>
+    <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a> &mdash;
+    where the token comes from, and why it should not come from the browser.
+  </p>
+</div>

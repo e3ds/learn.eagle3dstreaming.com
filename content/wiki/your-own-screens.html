@@ -1,0 +1,135 @@
+<p class="standfirst">
+  A wait and a failure are the two moments your stream looks least like your
+  product. Both are replaceable: the platform tells your page what is
+  happening, and you decide what appears. With the Web SDK that is a callback;
+  with an iframe it is a <code>postMessage</code> event.
+</p>
+
+<div class="note caution">
+  <h4>Read this before you design any of them</h4>
+  <p>
+    <strong>None of these callbacks can cancel or delay what is happening.</strong>
+    They tell you; they do not let you intervene. So design every screen around
+    the session already being over &mdash; offer a way to start a new one,
+    rather than anything that implies the old one might come back.
+  </p>
+  <p>
+    A "reconnecting&hellip;" spinner on a session that has ended is worse than a
+    blunt message, because it asks the viewer to wait for something that will
+    never arrive.
+  </p>
+</div>
+
+<h2>A loading screen</h2>
+
+<p>
+  Two events bracket the wait, and the pattern is simply show-then-hide.
+</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Event</th><th>What to do</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>onConfigAcquire</code></td>
+        <td>Show your loading screen &mdash; the session is preparing.</td></tr>
+    <tr><td><code>onDataChannelOpen</code></td>
+        <td>Hide it &mdash; the stream is live.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onConfigAcquire = function () {
+  document.getElementById("myLoadingScreen").style.display = "flex";
+};
+
+e3ds_controller.callbacks.onDataChannelOpen = function () {
+  document.getElementById("myLoadingScreen").style.display = "none";
+};</code></pre>
+
+<p>
+  For a progress bar rather than a static image, the three
+  <code>onReceivingApp&hellip;Progress</code> callbacks report acquiring,
+  preparing and starting as they happen &mdash; see
+  <a href="/wiki/javascript-sdk-guide">the reference</a>. They are three
+  separate stages, not one bar filling up, and a progress bar that pretends
+  otherwise will stall at odd percentages.
+</p>
+
+<div class="note caution">
+  <h4>A hosted image needs the direct URL</h4>
+  <p>
+    The one ending in <code>.png</code> or <code>.jpg</code> &mdash; not the
+    share page the host shows you. <strong>A share page will not load as an
+    image and the failure is silent:</strong> an empty loading screen rather
+    than an error.
+  </p>
+</div>
+
+<h2>A session-expired screen</h2>
+
+<p>
+  By default the platform shows its own "session expired" page. To show yours
+  instead:
+</p>
+
+<pre><code class="language-javascript">e3ds_controller.callbacks.onSessionExpired = function () {
+  document.getElementById("mySessionEnded").style.display = "flex";
+};</code></pre>
+
+<p>
+  With an iframe, keep a full-screen overlay hidden in your page and reveal it
+  when the frame reports the session has ended. Because the overlay is yours,
+  you can put a <strong>start a new session</strong> button on it &mdash; which
+  the default screen does not offer, and which is the single most useful thing
+  to add.
+</p>
+
+<div class="note caution">
+  <h4><code>onSessionExpired</code> covers the time limit and nothing else</h4>
+  <p>
+    It does not fire for a crash, an idle timeout, a wrong password or an
+    expired link. If you want <em>one</em> screen for every way a session can
+    end, build it on <code>onSessionEnding</code> instead &mdash; that one fires
+    for all of them and carries a line of text explaining which.
+  </p>
+  <p>
+    <a href="/wiki/session-end-messages">Every message a session can end
+    with</a> lists what that text can say.
+  </p>
+</div>
+
+<h2>A message for a crash, and only a crash</h2>
+
+<p>
+  Showing "something went wrong" when a session simply reached its time limit is
+  worse than showing nothing. Reacting to a genuine crash needs
+  <strong>two events together</strong>, because neither is sufficient alone
+  &mdash; the reasoning, and the flag pattern that solves it, are on
+  <a href="/wiki/session-end-messages">the session-end page</a>.
+</p>
+
+<p>
+  The short version: <code>onStreamerDisconnected</code> fires only for a crash
+  and carries no text; <code>onSessionEnding</code> fires for every ending and
+  carries the message. Set a flag on the first, read it on the second.
+</p>
+
+<h2>Watch one being built</h2>
+
+<p>
+  A "press any key to start" screen, end to end:
+  <a href="https://youtu.be/VGY42E55QoU" rel="noreferrer" target="_blank">Build
+  a press-any-key-to-start screen</a>.
+</p>
+
+<div class="note">
+  <h4>Where to go next</h4>
+  <p>
+    <a href="/wiki/javascript-sdk-guide">The Web SDK reference</a> has the full
+    callback list and what each one actually fires for &mdash; including the
+    four that are offered and never fire, which is worth reading before you
+    build a screen on one of them.
+  </p>
+</div>
