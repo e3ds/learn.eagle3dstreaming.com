@@ -453,7 +453,7 @@
 
 <pre><code class="language-javascript">window.addEventListener("message", function (event) {
     var data = event.data || {};
-    if (data.type !== "session.ending") return;
+    if (data.type !== "sessionEnding") return;
     showMyEndScreen(data.message);
 });</code></pre>
 
@@ -462,7 +462,7 @@
     <strong>The iframe event also carries
     <code>legacyType: "redirectingWithMessage"</code>.</strong> That is the name
     the event had before, kept so pages already listening for it keep working.
-    New code should match on <code>type === "session.ending"</code>; the
+    New code should match on <code>type === "sessionEnding"</code>; the
     <code>message</code> field is the same string either way.
   </p>
   <p>
@@ -504,7 +504,7 @@
     The player document does redirect itself, but your page never goes anywhere,
     so the name promised something you would never see &mdash; and people
     reasonably read that as broken. <code>onSessionEnding</code> also matches the
-    iframe bridge's <code>session.ending</code>, so both integrations now use the
+    iframe bridge's <code>sessionEnding</code>, so both integrations now use the
     same word for the same moment.
   </p>
 </aside>
