@@ -7,6 +7,8 @@
  ],
  "source": "written from the SDK source, 2026-09-10",
  "rewritten": true,
- "replaces": [],
+ "replaces": [
+  "sdk-reference"
+ ],
  "order": 3
 }
