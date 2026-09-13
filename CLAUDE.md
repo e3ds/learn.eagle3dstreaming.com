@@ -279,15 +279,15 @@ branch 3 levels.
 ├── Embedding  ·  embed-stream-into-webpage
 │   ├── Embed with an iframe  ·  embed-stream-using-iframe
 │   ├── Web SDK demo manual  ·  web-sdk-demo-manual
-│   ├── Embed with the SDK  ·  embed-stream-using-e3ds-sdk
+│   ├── Set up the Web SDK  ·  embed-stream-using-e3ds-sdk
 │   │   ├── SDK reference  ·  sdk-reference
 │   │   ├── Keeping your API key off the browser  ·  sdk-secure-the-key
 │   │   ├── Why a session ended  ·  session-end-messages
 │   │   └── Putting a login in front of a stream  ·  login-in-front-of-a-stream
-│   ├── JavaScript SDK: the complete guide  ·  javascript-sdk-guide
+│   ├── Sending and receiving data  ·  sending-and-receiving-data
+│   ├── Web SDK reference  ·  javascript-sdk-guide
 │   │   ├── The Unreal side of sending and receiving data  ·  unreal-side-of-data
 │   │   └── Your own loading and ending screens  ·  your-own-screens
-│   ├── Sending and receiving data  ·  sending-and-receiving-data
 │   ├── Controlling the stream  ·  controlling-the-stream
 │   ├── Choose the microphone  ·  choose-the-microphone
 │   ├── Custom loading and error screens  ·  custom-screens
