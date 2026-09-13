@@ -624,6 +624,72 @@ server {
   HTTPS, with a certificate handled for you. That URL is what you share.
 </p>
 
+<h3>We host ours exactly this way &mdash; here it is</h3>
+
+<p>
+  The public Web SDK repository is served by GitHub Pages, from its own root,
+  with nothing else involved. Both halves are open, so you can compare the files
+  with the address they produce:
+</p>
+
+<div class="scroll">
+<table>
+  <tbody>
+    <tr><td>The repository</td>
+        <td><a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">github.com/e3ds/pixelstreaming-sdk</a></td></tr>
+    <tr><td>The page it serves</td>
+        <td><a href="https://e3ds.github.io/pixelstreaming-sdk/" rel="noreferrer" target="_blank">e3ds.github.io/pixelstreaming-sdk/</a></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  That address is public, permanent and shareable, and it cost nothing to
+  produce. <strong>It will not stream, though</strong> &mdash; the key in it is
+  the placeholder <code>"Your Streaming API Key"</code>, because we are not
+  publishing ours. It proves the hosting; filling in the key is what makes it
+  a stream, and the next section is how you do that without installing
+  anything.
+</p>
+
+<h3>The whole thing in a browser: fork ours, edit, share</h3>
+
+<p>
+  You do not need git, an editor, or a checkout on your machine. Everything
+  below happens on github.com.
+</p>
+
+<ol>
+  <li>Open
+    <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">github.com/e3ds/pixelstreaming-sdk</a>
+    and press <strong>Fork</strong>. You now have your own copy.</li>
+  <li>In <em>your</em> fork, open <code>scripts/sdk-config.js</code> and press
+    the <strong>pencil</strong> icon &mdash; GitHub edits the file in the
+    browser.</li>
+  <li>Fill in the four values that are placeholders:
+    <code>STREAMING_API_KEY</code>, <code>userName</code>,
+    <code>appName</code> and <code>configurationName</code>.</li>
+  <li>Press <strong>Commit changes</strong>. That is the save.</li>
+  <li><strong>Settings &rarr; Pages</strong>, source <code>main</code> and
+    <code>/ (root)</code>, save.</li>
+</ol>
+
+<p>
+  A minute later your own copy is live at
+  <code>https://&lt;your-account&gt;.github.io/pixelstreaming-sdk/</code>,
+  streaming <em>your</em> application. Copy that URL and anyone you send it to
+  can open your stream &mdash; no account, no install, nothing to explain.
+</p>
+
+<aside class="callout tip">
+  <p><strong>Changing it later is the same three clicks</strong></p>
+  <p>
+    Pencil, edit, commit. GitHub rebuilds the page within about a minute and
+    the URL never changes, so a link you have already shared keeps working and
+    simply shows the new settings.
+  </p>
+</aside>
+
 <aside class="callout warning">
   <p><strong>A public repository is genuinely public</strong></p>
 <p>
@@ -633,8 +699,19 @@ server {
     git history even if you delete it later.
   </p>
   <p>
-    Use a <strong>private</strong> repository, or do the change below first.
-    This option and an API key in the page are a bad combination.
+    <strong>A fork cannot be made private</strong> &mdash; GitHub does not
+    offer it, so a fork of our public repository is public too, key and all.
+    To keep the files private you need your own private repository (download
+    the ZIP, push it there), and Pages from a private repository is a paid
+    plan.
+  </p>
+  <p>
+    So treat the fork route as what it is: the fastest way to put a working
+    stream in front of someone. For anything lasting, keep the key off the
+    page &mdash; <a href="/wiki/sdk-secure-the-key">your server holds it and
+    hands the page only a token</a>. Rotating a key you have published is one
+    click in the Control Panel, and worth doing the moment the demo has served
+    its purpose.
   </p>
 </aside>
 
