@@ -10,11 +10,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Launch profiles — Eagle 3D Streaming</title>
+<title>Embed with the Web SDK — Eagle 3D Streaming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="Patching needs two custom launch profiles in Unreal's Project Launcher: one that produces the base build, and one that produces patches against it. Where these live Platforms &amp;rarr; Project Launcher &amp;rarr; Add a Custom Launch Profile .">
+<meta name="description" content="The Web SDK puts a cloud-rendered Unreal application directly in your page &amp;mdash; not inside an iframe &amp;mdash; and hands you JavaScript control of it. Start and stop sessions, send data to the application, react to what it sends back, change quality while it runs.">
 
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
@@ -33,7 +33,7 @@
      follow; this only means a single page can be opened up early, deliberately,
      by someone who has read that checklist. -->
 <meta name="robots" content="noindex,nofollow">
-<link rel="canonical" href="https://docs.eagle3dstreaming.com/wiki/creating-custom-launch-profiles-in-project-launche">
+<link rel="canonical" href="written 2026-09-12 to give the Web SDK pages a parent">
 
 <!-- [E3DS-LEARN-SEO] What a link to this page looks like when somebody shares
      it - in Slack, on LinkedIn, in a message. Without these, every share of
@@ -42,13 +42,13 @@
      placeholder: a broken image in a preview looks worse than no image. -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Eagle 3D Streaming">
-<meta property="og:title" content="Launch profiles">
-<meta property="og:description" content="Patching needs two custom launch profiles in Unreal's Project Launcher: one that produces the base build, and one that produces patches against it. Where these live Platforms &amp;rarr; Project Launcher &amp;rarr; Add a Custom Launch Profile .">
-<meta property="og:url" content="https://docs.eagle3dstreaming.com/wiki/creating-custom-launch-profiles-in-project-launche">
+<meta property="og:title" content="Embed with the Web SDK">
+<meta property="og:description" content="The Web SDK puts a cloud-rendered Unreal application directly in your page &amp;mdash; not inside an iframe &amp;mdash; and hands you JavaScript control of it. Start and stop sessions, send data to the application, react to what it sends back, change quality while it runs.">
+<meta property="og:url" content="written 2026-09-12 to give the Web SDK pages a parent">
 
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Launch profiles">
-<meta name="twitter:description" content="Patching needs two custom launch profiles in Unreal's Project Launcher: one that produces the base build, and one that produces patches against it. Where these live Platforms &amp;rarr; Project Launcher &amp;rarr; Add a Custom Launch Profile .">
+<meta name="twitter:title" content="Embed with the Web SDK">
+<meta name="twitter:description" content="The Web SDK puts a cloud-rendered Unreal application directly in your page &amp;mdash; not inside an iframe &amp;mdash; and hands you JavaScript control of it. Start and stop sessions, send data to the application, react to what it sends back, change quality while it runs.">
 
 <style>
   :root{
@@ -420,102 +420,110 @@
 <body>
 
 
-<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-interface">The streaming interface</a></summary><ul><li><a href="/wiki/settings-bar">The settings bar, button by button</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a></summary><ul><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></summary><ul><li><a href="/wiki/unreal-side-of-data">The Unreal side of sending and receiving data</a></li><li><a href="/wiki/your-own-screens">Your own loading and ending screens</a></li></ul></details></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles" class="on" aria-current="page">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-interface">The streaming interface</a></summary><ul><li><a href="/wiki/settings-bar">The settings bar, button by button</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/embed-with-the-web-sdk" class="on" aria-current="page">Embed with the Web SDK</a></summary><ul><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></summary><ul><li><a href="/wiki/sdk-reference">SDK reference</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></summary><ul><li><a href="/wiki/unreal-side-of-data">The Unreal side of sending and receiving data</a></li><li><a href="/wiki/your-own-screens">Your own loading and ending screens</a></li></ul></details></li></ul></details></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
 
 <div class="wrap">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep crumbMoreSep">/</span><button type="button" class="crumbMore" aria-label="Show the levels in between" onclick="this.closest('.crumbs').classList.add('crumbsOpen')">&hellip;</button><span class="sep mid">/</span><a class="mid" href="/wiki/development-guides">Developer guides</a><span class="sep">/</span><a href="/wiki/patches">Patching an app</a><span class="sep">/</span><span class="here">Launch profiles</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><span class="here">Embed with the Web SDK</span></nav>
   
-  <h1>Launch profiles</h1>
+  <h1>Embed with the Web SDK</h1>
   <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
-  Patching needs two custom launch profiles in Unreal's Project Launcher: one
-  that produces the base build, and one that produces patches against it.
+  The Web SDK puts a cloud-rendered Unreal application <strong>directly in your
+  page</strong> &mdash; not inside an iframe &mdash; and hands you JavaScript
+  control of it. Start and stop sessions, send data to the application, react to
+  what it sends back, change quality while it runs.
 </p>
 
-<div class="prereq">
-  <strong>Where these live</strong>
+<div class="note">
+  <h4>Three pages, in the order most people want them</h4>
   <p>
-    <strong>Platforms &rarr; Project Launcher &rarr; Add a Custom Launch
-    Profile</strong>. You will make two, and keep both &mdash; the base profile
-    is not a one-off.
+    <strong>1. <a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></strong>
+    &mdash; a running demo you can open right now. No account, no key, nothing
+    to download. Every control explained, and which SDK call is behind it.
+  </p>
+  <p>
+    <strong>2. <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></strong>
+    &mdash; get the source code, run it, and point it at your own application.
+    Plain HTML and JavaScript: no build step, no framework, nothing to install.
+  </p>
+  <p>
+    <strong>3. <a href="/wiki/javascript-sdk-guide">Web SDK reference</a></strong>
+    &mdash; every call and every callback. Not read end to end; searched when
+    you need one answer.
   </p>
 </div>
 
-<h2>Profile 1: the base build</h2>
+<h2>When to choose it over the other two</h2>
+
+<p>
+  <a href="/wiki/embed-stream-into-webpage">Embedding</a> compares all three
+  methods topic by topic. The short version of why you would pick this one:
+</p>
 
 <div class="scroll">
-  <table>
-    <thead><tr><th>Setting</th><th>Value</th></tr></thead>
-    <tbody>
-      <tr><td>Cook Mode</td><td>By The Book</td></tr>
-      <tr><td>Platform</td><td>Windows</td></tr>
-      <tr><td>Culture</td><td>en</td></tr>
-      <tr><td>Maps</td><td>Your working map</td></tr>
-      <tr><td>Release / DLC / Patching</td><td><strong>Create a release version of the game for distribution</strong>, release version <code>1.0</code></td></tr>
-      <tr><td>Advanced</td><td>Iterative Cooking, Compress Content, Store all content in a single file (unrealPak)</td></tr>
-      <tr><td>Package</td><td>Package &amp; store locally, <strong>Retain the staged directory</strong></td></tr>
-      <tr><td>Deploy</td><td>Do not deploy</td></tr>
-    </tbody>
-  </table>
+<table>
+  <thead>
+    <tr><th></th><th>What it gives you</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Streaming URL</strong></td>
+      <td>A link. Nothing to build, and nothing you control.</td>
+    </tr>
+    <tr>
+      <td><strong>iframe</strong></td>
+      <td>The stream on your page, controlled by posting messages to the frame.
+        Your page cannot reach inside it.</td>
+    </tr>
+    <tr>
+      <td><strong>Web SDK</strong></td>
+      <td>The stream <em>is</em> part of your page. Direct JavaScript calls, and
+        &mdash; the part that usually decides it &mdash; <strong>your server
+        decides who is allowed to start one.</strong></td>
+    </tr>
+  </tbody>
+</table>
 </div>
 
-<figure><img src="/images/AD_4nXck20_eFa0-A3e1NAN_GNli6po-6kL63b7cHKNwdZvTMdo3-5e21b0.png" alt="The base packaged profile in Project Launcher" loading="lazy"></figure>
+<p>
+  That last row is the real argument. With a link or an iframe, the link itself
+  grants access and you cannot revoke it for one person. With the SDK a session
+  starts from a short-lived token, so your backend chooses who gets one, when,
+  and for which application &mdash; see
+  <a href="/wiki/sdk-secure-the-key">keeping your API key off the browser</a>.
+</p>
 
-<aside class="callout warning">
+<h2>What it is built on</h2>
+
+<p>
+  The Web SDK is built on Epic's <strong>PixelStreamingInfrastructure</strong>
+  frontend &mdash; the same library that ships with Unreal Engine &mdash; and
+  adds the part that library has no concept of: finding a machine, launching
+  your application on it, queueing, session tokens and expiry, and the callbacks
+  around all of that.
+</p>
+
+<div class="note">
+  <h4>If you already know PixelStreamingInfrastructure</h4>
   <p>
-    <strong>"Create a release version" is what makes patching possible
-    later.</strong> It records the state of this build so a future patch can be
-    computed as the difference from it. A base packaged without it cannot be
-    patched, and you will not find that out until you try to build the patch.
-  </p>
-</aside>
-
-<h2>Profile 2: the patch</h2>
-
-<div class="scroll">
-  <table>
-    <thead><tr><th>Setting</th><th>Value</th></tr></thead>
-    <tbody>
-      <tr><td>Cook Mode</td><td>By The Book</td></tr>
-      <tr><td>Platform / Culture / Maps</td><td>Same as the base</td></tr>
-      <tr><td>New release version</td><td><code>1.1</code></td></tr>
-      <tr><td>Release version this is based on</td><td><code>1.0</code></td></tr>
-      <tr><td>Generate Patch</td><td>Enabled</td></tr>
-      <tr><td>Advanced</td><td>Compress Content, Store all content in a single file (unrealPak)</td></tr>
-      <tr><td>Package</td><td>Package &amp; store locally, Retain the staged directory</td></tr>
-      <tr><td>Deploy</td><td>Do not deploy</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<figure><img src="/images/AD_4nXcvJIgmxCdDcULVFYYkzCW8rfotS2gVhsFglf0ziWB3hZZ9-b7e2ab.png" alt="The patch profile with Generate Patch enabled" loading="lazy"></figure>
-
-<div class="outcome">
-  <strong>The two version fields are the whole mechanism</strong>
-  <p>
-    <em>Based on</em> says which build to compare against; <em>new release
-    version</em> names what you are producing. Point the patch at the wrong base
-    and you get a patch file that appears fine and does not work against the
-    build you actually shipped.
+    The streaming underneath is the same, so what you know about the video, the
+    data channel and the stats still applies. <strong>What is new is everything
+    before the stream exists</strong> &mdash; which is most of what these pages
+    are about.
   </p>
 </div>
 
-<h2>Rules that bite later</h2>
+<h2>The source code</h2>
 
-<ul>
-  <li><strong>Keep the base <code>.pak</code>.</strong> The app will not run without it.</li>
-  <li><strong>Upload the base first, then patches in order.</strong> Higher-numbered patches override lower ones, so sequence is meaning, not tidiness.</li>
-  <li><strong>Name them consistently</strong> &mdash; <code>testPatch3-Windows_0_P.pak</code>, <code>testPatch3-Windows_1_P.pak</code>, and so on.</li>
-  <li><strong>Keep old patch files.</strong> Removing a patch reverts the app to the previous version, which is a useful escape hatch only if you still have the files.</li>
-</ul>
-
-<div class="next">
-  <a href="/wiki/create-a-patch">Make your own patch &rarr;</a>
-  <p>Changing a project and producing a patch from it.</p>
-</div>
+<p>
+  <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">github.com/e3ds/pixelstreaming-sdk</a>
+  &mdash; the same code the demo runs on, and what
+  <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a> walks you
+  through.
+</p>
 
   <!-- E3DS-CONTENT:END -->
-  
+  <h2 class="children-head">In this section</h2><ul class="children"><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></li><li><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></li></ul>
   <!-- Every source page carried its own copy of this. Once, here, instead:
        sixteen copies is sixteen places to update a support link. -->
   <footer>

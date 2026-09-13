@@ -1,0 +1,12 @@
+{
+ "title": "Embed with the Web SDK",
+ "slug": "embed-with-the-web-sdk",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage"
+ ],
+ "source": "written 2026-09-12 to give the Web SDK pages a parent",
+ "rewritten": true,
+ "replaces": [],
+ "order": 3
+}

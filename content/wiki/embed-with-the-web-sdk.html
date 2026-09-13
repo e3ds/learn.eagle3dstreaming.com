@@ -1,0 +1,94 @@
+<p class="standfirst">
+  The Web SDK puts a cloud-rendered Unreal application <strong>directly in your
+  page</strong> &mdash; not inside an iframe &mdash; and hands you JavaScript
+  control of it. Start and stop sessions, send data to the application, react to
+  what it sends back, change quality while it runs.
+</p>
+
+<div class="note">
+  <h4>Three pages, in the order most people want them</h4>
+  <p>
+    <strong>1. <a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></strong>
+    &mdash; a running demo you can open right now. No account, no key, nothing
+    to download. Every control explained, and which SDK call is behind it.
+  </p>
+  <p>
+    <strong>2. <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></strong>
+    &mdash; get the source code, run it, and point it at your own application.
+    Plain HTML and JavaScript: no build step, no framework, nothing to install.
+  </p>
+  <p>
+    <strong>3. <a href="/wiki/javascript-sdk-guide">Web SDK reference</a></strong>
+    &mdash; every call and every callback. Not read end to end; searched when
+    you need one answer.
+  </p>
+</div>
+
+<h2>When to choose it over the other two</h2>
+
+<p>
+  <a href="/wiki/embed-stream-into-webpage">Embedding</a> compares all three
+  methods topic by topic. The short version of why you would pick this one:
+</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th></th><th>What it gives you</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Streaming URL</strong></td>
+      <td>A link. Nothing to build, and nothing you control.</td>
+    </tr>
+    <tr>
+      <td><strong>iframe</strong></td>
+      <td>The stream on your page, controlled by posting messages to the frame.
+        Your page cannot reach inside it.</td>
+    </tr>
+    <tr>
+      <td><strong>Web SDK</strong></td>
+      <td>The stream <em>is</em> part of your page. Direct JavaScript calls, and
+        &mdash; the part that usually decides it &mdash; <strong>your server
+        decides who is allowed to start one.</strong></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  That last row is the real argument. With a link or an iframe, the link itself
+  grants access and you cannot revoke it for one person. With the SDK a session
+  starts from a short-lived token, so your backend chooses who gets one, when,
+  and for which application &mdash; see
+  <a href="/wiki/sdk-secure-the-key">keeping your API key off the browser</a>.
+</p>
+
+<h2>What it is built on</h2>
+
+<p>
+  The Web SDK is built on Epic's <strong>PixelStreamingInfrastructure</strong>
+  frontend &mdash; the same library that ships with Unreal Engine &mdash; and
+  adds the part that library has no concept of: finding a machine, launching
+  your application on it, queueing, session tokens and expiry, and the callbacks
+  around all of that.
+</p>
+
+<div class="note">
+  <h4>If you already know PixelStreamingInfrastructure</h4>
+  <p>
+    The streaming underneath is the same, so what you know about the video, the
+    data channel and the stats still applies. <strong>What is new is everything
+    before the stream exists</strong> &mdash; which is most of what these pages
+    are about.
+  </p>
+</div>
+
+<h2>The source code</h2>
+
+<p>
+  <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">github.com/e3ds/pixelstreaming-sdk</a>
+  &mdash; the same code the demo runs on, and what
+  <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a> walks you
+  through.
+</p>
