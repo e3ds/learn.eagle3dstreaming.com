@@ -114,7 +114,7 @@ scripts/
     <tr><td><code>tokenExpiryMs</code></td>
         <td><code>60000</code>. The token only has to last long enough to start the session.</td></tr>
     <tr><td><code>clientUserName</code></td>
-        <td><strong>Who is watching</strong> &mdash; not the same as <code>application.userName</code>, which is who owns the app. See below.</td></tr>
+        <td>Who is watching. <strong>Usually the same value as <code>application.userName</code></strong> &mdash; see below.</td></tr>
     <tr><td><code>configurationToOverride</code></td>
         <td>Empty. Per-session overrides of the stored configuration; it does not change the saved one.</td></tr>
   </tbody>
@@ -155,23 +155,27 @@ scripts/
 </div>
 
 <div class="note">
-  <h4><code>clientUserName</code> and <code>application.userName</code> are two different people</h4>
+  <h4><code>clientUserName</code> and <code>application.userName</code> are usually the same value</h4>
   <p>
-    <code>application.userName</code> is <strong>the account that owns the
-    app</strong> &mdash; it travels with the application block and tells us
-    whose app to launch.
+    They are sent to two different places in the token request &mdash;
+    <code>application.userName</code> travels inside the application block and
+    says <strong>whose app to launch</strong>; <code>clientUserName</code> is
+    sent alongside it as the token's <code>client</code> and identifies
+    <strong>who is watching</strong>, for session records and limits.
   </p>
   <p>
-    <code>clientUserName</code> is <strong>the viewer</strong>. It is sent as
-    the token's <code>client</code>, and the token is looked up by it
-    afterwards. In a real integration this is your own logged-in user's id, so
-    session records and limits are attributed to a person you recognise.
+    In the demo both are set to the same value, and for most integrations that
+    is right: you are streaming your own app to your own users. They only
+    diverge if you want each viewer attributed separately, in which case
+    <code>clientUserName</code> becomes your own logged-in user's id while
+    <code>application.userName</code> stays the account that owns the app.
   </p>
   <p>
-    They are both required and they are not interchangeable. If the value the
-    token was created with does not match the one used later, verification
-    answers <strong>404 for a token that is perfectly good</strong> &mdash; a
-    failure that looks like an expired token and is not.
+    <strong>Whichever you use, keep it stable for the life of a session.</strong>
+    The token is looked up afterwards by the value it was created with, so a
+    value that changes in between makes verification answer <em>404 for a token
+    that is perfectly good</em> &mdash; a failure that reads as expiry and is
+    not.
   </p>
 </div>
 
