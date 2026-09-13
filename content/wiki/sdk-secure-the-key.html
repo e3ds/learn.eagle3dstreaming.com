@@ -120,6 +120,75 @@
   </p>
 </aside>
 
+<h2>Who is allowed to start a stream at all</h2>
+
+<p>
+  This is the part that is easy to miss, because it does not look like a
+  security question until somebody asks it: <strong>who, exactly, can start a
+  session billed to your account?</strong> The answer depends entirely on how
+  you embedded the stream, and the three methods are not close.
+</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>How you embedded it</th><th>Who can start a stream</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Streaming URL</strong></td>
+      <td>Anyone with the link. You can add a password or restrict the link in
+        the configuration, but <strong>the link itself is what grants
+        access</strong> &mdash; and you cannot revoke it for one person.</td>
+    </tr>
+    <tr>
+      <td><strong>iframe</strong></td>
+      <td>The same. Your page can require a login before it shows the frame, but
+        the streaming URL inside is still a working link to anyone who reads
+        your page source.</td>
+    </tr>
+    <tr>
+      <td><strong>Web SDK</strong></td>
+      <td><strong>Your backend decides.</strong> The session starts from a
+        short-lived token, so your server chooses who gets one, when, and for
+        which app.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note">
+  <h4>Putting your own login in front of it</h4>
+  <p>
+    Deciding <em>who</em> gets a token is a question for your own
+    authentication. <a href="/wiki/login-in-front-of-a-stream">Login integration</a>
+    covers the flow &mdash; and the one step that matters:
+    <strong>credentials are checked on your server.</strong> Anything decided in
+    the browser can be changed in the browser.
+  </p>
+  <p>
+    The check that is easiest to leave out is the second one: the page holding
+    the stream must verify authentication <em>before</em> it loads the stream.
+    Without it, anyone who knows that page's address skips the login entirely,
+    and a login you can walk around is decoration.
+  </p>
+</div>
+
+<div class="note">
+  <h4>This is the real reason to choose the SDK</h4>
+  <p>
+    Not the control surface, and not the callbacks &mdash; those are
+    conveniences. The reason is this one: <strong>keep the Streaming API key on
+    your server and the browser never holds anything reusable.</strong> A token
+    expires harmlessly; a key does not expire at all.
+  </p>
+  <p>
+    It is also the one thing the other two methods cannot be configured into
+    doing. A password in front of a link is a different thing from a server
+    deciding, per request, whether this person may have a session right now.
+  </p>
+</div>
+
 <h2>Checking you have actually done it</h2>
 
 <div class="outcome">
