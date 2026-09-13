@@ -113,8 +113,6 @@ scripts/
         <td><code>connector.eagle3dstreaming.com</code> for everyone on our platform. <strong>Enterprise only</strong> &mdash; see below.</td></tr>
     <tr><td><code>tokenExpiryMs</code></td>
         <td><code>60000</code>. The token only has to last long enough to start the session.</td></tr>
-    <tr><td><code>clientUserName</code></td>
-        <td>Who is watching. <strong>Usually the same value as <code>application.userName</code></strong> &mdash; see below.</td></tr>
     <tr><td><code>configurationToOverride</code></td>
         <td>Empty. Per-session overrides of the stored configuration; it does not change the saved one.</td></tr>
   </tbody>
@@ -155,27 +153,32 @@ scripts/
 </aside>
 
 <aside class="callout note">
-  <p><strong><code>clientUserName</code> and <code>application.userName</code> are usually the same value</strong></p>
-<p>
-    They are sent to two different places in the token request &mdash;
-    <code>application.userName</code> travels inside the application block and
-    says <strong>whose app to launch</strong>; <code>clientUserName</code> is
-    sent alongside it as the token's <code>client</code> and identifies
-    <strong>who is watching</strong>, for session records and limits.
+  <p><strong>There is one username, and it is
+    <code>application.userName</code></strong></p>
+  <p>
+    It says whose app to launch, and it is the name the session is recorded
+    against. The token request carries it twice &mdash; once inside the
+    application block, once beside it under the API's own name,
+    <code>client</code> &mdash; but <code>sdk-token.js</code> fills in both from
+    the one field, so there is nothing to keep in step.
   </p>
   <p>
-    In the demo both are set to the same value, and for most integrations that
-    is right: you are streaming your own app to your own users. They only
-    diverge if you want each viewer attributed separately, in which case
-    <code>clientUserName</code> becomes your own logged-in user's id while
-    <code>application.userName</code> stays the account that owns the app.
+    <strong>Keep it stable for the life of a session.</strong> The token is
+    looked up afterwards by the value it was created with, so a value that
+    changes in between makes verification answer <em>404 for a token that is
+    perfectly good</em> &mdash; a failure that reads as expiry and is not.
   </p>
+</aside>
+
+<aside class="callout tip">
+  <p><strong>Came from an older sample? Delete <code>clientUserName</code></strong></p>
   <p>
-    <strong>Whichever you use, keep it stable for the life of a session.</strong>
-    The token is looked up afterwards by the value it was created with, so a
-    value that changes in between makes verification answer <em>404 for a token
-    that is perfectly good</em> &mdash; a failure that reads as expiry and is
-    not.
+    <code>sdk-config.js</code> used to carry a second field,
+    <code>clientUserName</code>, described as "who is watching". It always held
+    the same value as <code>application.userName</code> &mdash; the demo set
+    both to the same string &mdash; so it was removed in <strong>SDK
+    4.23</strong>, and the sample reads the one that is left. An older config
+    with both in it still works; the extra field is simply ignored.
   </p>
 </aside>
 

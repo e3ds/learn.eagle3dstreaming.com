@@ -213,10 +213,6 @@
         <td>Your key. See the security section &mdash; in production this does not belong here.</td>
       </tr>
       <tr>
-        <td><code>clientUserName</code></td>
-        <td>Identifies the person watching. Used for session records and limits. In a real integration this is your own logged-in user's id.</td>
-      </tr>
-      <tr>
         <td><code>tokenExpiryMs</code></td>
         <td>How long the token stays valid, in milliseconds. It only has to survive long enough for the page to start its session, so short is correct. <code>60000</code> is a sensible default.</td>
       </tr>
@@ -226,7 +222,7 @@
       </tr>
       <tr>
         <td><code>application.userName</code></td>
-        <td>The account that owns the application.</td>
+        <td>The account that owns the application, and the name the session is recorded against. One username, used for both &mdash; the separate <code>clientUserName</code> field was removed in SDK 4.23.</td>
       </tr>
       <tr>
         <td><code>application.appName</code></td>

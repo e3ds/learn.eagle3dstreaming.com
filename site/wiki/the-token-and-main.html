@@ -450,7 +450,7 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 <pre><code class="language-javascript">e3ds_controller.main({
     token:      tokenResponse.token,
     socket_url: tokenResponse.socket_url,
-    client:     "your-username"
+    userName:   "your-username"
 });</code></pre>
 
 <p>
@@ -465,7 +465,7 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     The sample never names it. <code>requestSessionToken()</code> returns the
     <em>whole</em> response and spreads it straight in:
   </p>
-  <pre><code class="language-javascript">e3ds_controller.main({ ...tokenResponse, client: yourUserName });</code></pre>
+  <pre><code class="language-javascript">e3ds_controller.main({ ...tokenResponse, userName: yourUserName });</code></pre>
   <p>
     Convenient, and it hides where the fields came from. They came from the API,
     in the response, and <code>main()</code> refuses without either of them
@@ -523,7 +523,7 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 <pre><code class="language-javascript">e3ds_controller.main({
     token:      "the token you generated",
     socket_url: "the socket_url beside it",
-    client:     "your-username"
+    userName:   "your-username"
 });</code></pre>
 
 <p>
@@ -655,39 +655,62 @@ e3ds_controller.callbacks.onSessionEnding = function (message) {
 e3ds_controller.main({
     token:      tokenResponse.token,
     socket_url: tokenResponse.socket_url,
-    client:     "your-username"
+    userName:   "your-username"
 });</code></pre>
 
-<aside class="callout warning">
-  <p><strong>One username, under three names &mdash; and they are the same thing</strong></p>
+<aside class="callout note">
+  <p><strong>One username &mdash; and the one place it is still spelled
+    <code>client</code></strong></p>
   <p>
-    You will meet this value spelled three ways, and the inconsistency is ours,
-    not yours:
+    There is a single value here: <strong>your username</strong>. You set it
+    once, as <code>application.userName</code> in <code>sdk-config.js</code>,
+    and it travels to two places:
   </p>
-  <ul>
-    <li><code>clientUserName</code> in <code>sdk-config.js</code></li>
-    <li><code>client</code> in the token request body and in
-      <code>main()</code></li>
-    <li><code>userName</code> inside <code>object.core</code></li>
-  </ul>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Where</th><th>Called</th><th>Who writes it</th></tr></thead>
+    <tbody>
+      <tr><td>inside <code>object.core</code> of the token request</td>
+          <td><code>userName</code></td><td>the sample, for you</td></tr>
+      <tr><td>beside it, at the top of the same request</td>
+          <td><code>client</code></td><td>the sample, for you</td></tr>
+      <tr><td><code>main()</code></td>
+          <td><code>userName</code></td><td><strong>you</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
   <p>
-    In practice you set all of them to the same value: your username. The one
-    rule that matters is that <strong>the value used to create a token must be
-    the value used with it afterwards</strong> &mdash; the token is looked up by
-    it, so a mismatch answers 404 for a token that is perfectly good, which
-    reads as expiry and is not.
+    <code>client</code> is the token API's own name for the field and is not
+    changing, but it is filled in for you &mdash; the only one you type is
+    <code>main()</code>'s, and that one takes <code>userName</code>.
   </p>
   <p>
-    We are collapsing these onto one name. <strong>Until that ships, send
-    <code>client</code> to <code>main()</code></strong> &mdash; it is what the
-    published SDK reads, and the newer spelling will simply be ignored by a
-    build that predates it.
+    <strong><code>client</code> still works there too</strong>, and will keep
+    working: every integration written before this accepted spelling arrived
+    sends it. If both are present they should hold the same value.
   </p>
   <p>
-    The failure if you get ahead of it is unhelpfully disguised: the value
-    reaches nothing, the token is then looked up by an empty one, and
-    verification answers <strong>404 for a token that is perfectly good</strong>
-    &mdash; which reads as expiry.
+    The rule that actually matters is unchanged: <strong>the value used to
+    create a token must be the value used with it afterwards</strong>. The token
+    is looked up by it, so a mismatch answers 404 for a token that is perfectly
+    good &mdash; a failure that reads as expiry and is not.
+  </p>
+</aside>
+
+<aside class="callout tip">
+  <p><strong>If you are on an older SDK</strong></p>
+  <p>
+    <code>userName</code> arrived in <strong>SDK 4.23</strong>. A build older
+    than that reads <code>client</code> only &mdash; and ignores what it does
+    not know, so the symptom is a 404 on a good token rather than an error
+    naming the field. Either send <code>client</code>, or take the current
+    build: <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer"
+    target="_blank">github.com/e3ds/pixelstreaming-sdk</a>.
+  </p>
+  <p>
+    There is no version you can read from the page, so if you are unsure which
+    build you have, re-downloading is quicker than working it out. We can see it
+    from our side &mdash; quote a session and support can tell you.
   </p>
 </aside>
 
