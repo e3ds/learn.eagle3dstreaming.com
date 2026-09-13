@@ -272,7 +272,17 @@
   .sect[open]>summary::after{content:"\2212"}
   .sect>summary:hover::after{color:var(--ink)}
   .sect>summary h2{margin:0;font-size:20px;flex:0 0 auto}
-  .sect>summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
+  .sect>/* [E3DS-COPYLINK] A link to one folded section, obtainable without knowing it
+   exists. The id alone is useless to a reader - they cannot see it, so they
+   cannot send it to anybody. Injected by script, so no page has to carry it. */
+.copylink{margin-left:auto;flex:0 0 auto;border:1px solid var(--line);background:transparent;
+  color:var(--ink-3);font:inherit;font-size:12.5px;line-height:1;padding:5px 9px;border-radius:6px;
+  cursor:pointer;opacity:0;transition:opacity .12s}
+summary:hover .copylink,summary:focus-within .copylink,.copylink:focus{opacity:1}
+.copylink:hover{color:var(--ink-1);border-color:var(--ink-3)}
+.copylink[data-done="1"]{opacity:1;color:var(--tip);border-color:var(--tip)}
+@media (hover:none){.copylink{opacity:1}}
+summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
   .sect>.body{padding:0 0 22px}
   .sect>.body>:first-child{margin-top:0}
   /* The first heading inside an open section must not fight its own summary. */
@@ -758,6 +768,59 @@
     reveal();
   }
   window.addEventListener("hashchange", reveal);
+})();
+
+/* [E3DS-COPYLINK] Give every id'd <details> a button that copies its link.
+ *
+ * WHY A SCRIPT AND NOT MARKUP. The ids are already on the pages; what was
+ * missing is any way for a reader to GET one. Adding a button to every summary
+ * by hand would be a hundred edits and would have to be remembered forever.
+ * This finds them.
+ *
+ * THE CLICK MUST NOT TOGGLE THE SECTION. A button inside <summary> is still
+ * inside the summary, so without stopping the event, copying a link also folds
+ * the thing you were reading. preventDefault stops the toggle; stopPropagation
+ * stops it reaching any other handler.
+ *
+ * Falls back to a prompt-free no-op when the clipboard API is unavailable -
+ * over plain http:// it is - rather than throwing where a reader can see it.
+ */
+(function () {
+  var summaries = document.querySelectorAll("details[id] > summary");
+  for (var i = 0; i < summaries.length; i++) {
+    (function (summary) {
+      var details = summary.parentElement;
+      if (!details || !details.id) return;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "copylink";
+      btn.textContent = "Copy link";
+      btn.setAttribute("aria-label", "Copy a link to this section");
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var url = location.origin + location.pathname + "#" + details.id;
+        var done = function () {
+          btn.textContent = "Copied";
+          btn.setAttribute("data-done", "1");
+          setTimeout(function () {
+            btn.textContent = "Copy link";
+            btn.removeAttribute("data-done");
+          }, 1600);
+        };
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(done, function () {});
+            return;
+          }
+        } catch (err) { }
+        /* No clipboard: put it in the address bar instead, which is at least
+           copyable by hand and does not lose the reader's place. */
+        try { history.replaceState(null, "", "#" + details.id); done(); } catch (err) { }
+      });
+      summary.appendChild(btn);
+    })(summaries[i]);
+  }
 })();
 </script>
 </body>
