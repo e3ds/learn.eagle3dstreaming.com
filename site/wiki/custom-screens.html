@@ -516,12 +516,12 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
     <thead><tr><th>Event</th><th>Fires for</th><th>Carries</th></tr></thead>
     <tbody>
       <tr>
-        <td><code>handleStreamerDisconnected</code><br>(<code>onStreamerDisconnected</code> in the SDK)</td>
+        <td><code>onStreamerDisconnected</code><br><span class="hint">iframe: <code>handleStreamerDisconnected</code></span></td>
         <td><strong>Only</strong> the app process stopping &mdash; crash, unexpected close, machine down.</td>
         <td>No text.</td>
       </tr>
       <tr>
-        <td><code>redirectingWithMessage</code><br>(<code>onSessionEnding</code>)</td>
+        <td><code>onSessionEnding</code><br><span class="hint">was <code>redirectingWithMessage</code> &mdash; legacy name, no longer called</span></td>
         <td><strong>Every</strong> session end, for any reason.</td>
         <td>A readable message.</td>
       </tr>

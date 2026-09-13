@@ -1,7 +1,7 @@
 <p class="standfirst">
   Your integration works when you double-click it. This is the next question:
   getting it onto a web address other people can open. Sometimes called hosting,
-  sometimes serving — the same job either way.
+  sometimes serving &mdash; the same job either way.
 </p>
 
 <div class="note">
@@ -27,14 +27,56 @@
     is a server-side decision, and you would not be told if it changed.</li>
   <li><strong>It is not how your integration will run.</strong> A problem that
     only appears over <code>http://</code> is better found now than after you
-    have moved the files into your real application.</li>
+    have moved the files into your own application.</li>
 </ul>
 
-<h2>The quickest way to serve it locally</h2>
+<h2>Choosing how to serve it</h2>
 
 <p>
-  Any static file server will do. The SDK is plain HTML and JavaScript, so there
-  is nothing to compile and no runtime to install.
+  The SDK is plain HTML, CSS and JavaScript. There is nothing to compile and no
+  runtime it requires, so <strong>anything that can serve a static folder will
+  work</strong>. What differs is what each option costs you.
+</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Option</th><th>Needs</th><th>Good for</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><a href="#nginx">nginx on your own server</a></td>
+        <td>a machine, a domain, a certificate</td>
+        <td>production, when you already have infrastructure</td></tr>
+    <tr><td><a href="#github-pages">GitHub Pages</a></td>
+        <td>a free GitHub account</td>
+        <td>no server, no cost, a public URL in minutes</td></tr>
+    <tr><td><a href="#nodejs">Node.js</a></td>
+        <td>a machine that runs Node</td>
+        <td>when you also want the token handled server-side</td></tr>
+    <tr><td><a href="#iis">IIS on Windows</a></td>
+        <td>Windows, already installed</td>
+        <td>a Windows machine you already run</td></tr>
+    <tr><td><a href="#quick-local">Python or any one-liner</a></td>
+        <td>nothing</td>
+        <td>testing on your own machine only</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  Two of these cost money or hardware &mdash; a server and a domain are not
+  free. Two are free. One is for testing and should never face the public.
+</p>
+
+<hr>
+
+<details class="sect" id="quick-local">
+<summary><h2>Testing on your own machine</h2><span class="hint">Free, nothing to install</span></summary>
+<div class="body">
+
+<p>
+  Any static file server. Run one of these in the folder and open
+  <code>http://localhost:8000</code>:
 </p>
 
 <pre><code class="language-bash">python -m http.server 8000     # Python 3
@@ -42,30 +84,201 @@ npx serve .                    # Node.js
 php -S localhost:8000          # PHP</code></pre>
 
 <p>
-  Then open <code>http://localhost:8000</code>. Nothing about the configuration
-  changes.
+  Nothing about your configuration changes. This is the cheapest way to confirm
+  the page behaves the same over <code>http://</code> as it did from disk.
 </p>
 
-<h2>Putting it on a real address</h2>
+<div class="note caution">
+  <h4>These are for you, not for visitors</h4>
+  <p>
+    They serve on <code>localhost</code>, have no certificate, and none of them
+    is built to face the internet. Use them to test, then pick one of the
+    options below for anybody else.
+  </p>
+</div>
+
+</div>
+</details>
+
+<details class="sect" id="nginx">
+<summary><h2>nginx, on a server you already have</h2><span class="hint">Costs a machine, a domain and a certificate</span></summary>
+<div class="body">
 
 <p>
-  Once it works over <code>http://</code> locally, publishing it is an ordinary
-  static-site job. The SDK does not constrain the choice:
+  If you already run a server, this is the smallest job on the page: copy the
+  folder somewhere nginx can read, and add a server block pointing at it.
 </p>
 
-<div class="scroll">
-<table>
-  <thead><tr><th>Option</th><th>Worth knowing</th></tr></thead>
-  <tbody>
-    <tr><td><strong>Your own web server</strong> — nginx, Apache, IIS</td>
-        <td>Copy the folder into the document root. No application server, no Node process.</td></tr>
-    <tr><td><strong>Static hosting or a CDN</strong></td>
-        <td>Works, because there is nothing dynamic to run. Good if the page is mostly the stream.</td></tr>
-    <tr><td><strong>Inside an application you already have</strong></td>
-        <td>The usual end state — the SDK files become part of a page your framework already serves.</td></tr>
-  </tbody>
-</table>
+<p>
+  Put the SDK folder somewhere sensible, for example
+  <code>/var/www/stream</code>, so that <code>index.html</code> sits at
+  <code>/var/www/stream/index.html</code>. Then:
+</p>
+
+<pre><code class="language-nginx">server {
+    listen 443 ssl;
+    server_name stream.yourdomain.com;
+
+    # Your certificate and its private key.
+    ssl_certificate      /etc/ssl/certs/yourdomain.pem;
+    ssl_certificate_key  /etc/ssl/private/yourdomain.key;
+
+    # The folder holding index.html, css/ and scripts/.
+    root  /var/www/stream;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+
+# Send plain HTTP to HTTPS, so nobody reaches the page without a certificate.
+server {
+    listen 80;
+    server_name stream.yourdomain.com;
+    return 301 https://$host$request_uri;
+}</code></pre>
+
+<p>
+  Reload nginx and open <code>https://stream.yourdomain.com</code>. There is no
+  application server, no Node process and nothing to keep running &mdash; nginx
+  is handing over files.
+</p>
+
+<div class="note">
+  <h4>HTTPS is not optional in practice</h4>
+  <p>
+    Browsers restrict what a page served over plain <code>http://</code> may do
+    &mdash; the microphone in particular will not be granted. If your stream
+    uses one, serve over <code>https://</code> or it will fail in a way that
+    looks like our problem and is not.
+  </p>
 </div>
+
+</div>
+</details>
+
+<details class="sect" id="github-pages">
+<summary><h2>GitHub Pages, with no server at all</h2><span class="hint">Free, and you get a public URL</span></summary>
+<div class="body">
+
+<p>
+  If you do not have a server and do not want one, GitHub will host a static
+  folder for nothing and give you an address you can hand to anybody.
+</p>
+
+<ol>
+  <li>Create a repository on GitHub &mdash; public is fine, and free.</li>
+  <li>Put the SDK folder's contents at the repository root, so
+    <code>index.html</code> is the top-level file.</li>
+  <li>Push it.</li>
+  <li>In the repository, open <strong>Settings &rarr; Pages</strong>.</li>
+  <li>Set the source to your branch and <code>/ (root)</code>, and save.</li>
+</ol>
+
+<p>
+  A minute later the page is live at
+  <code>https://&lt;your-account&gt;.github.io/&lt;repository&gt;/</code>, over
+  HTTPS, with a certificate handled for you. That URL is what you share.
+</p>
+
+<div class="note caution">
+  <h4>A public repository is genuinely public</h4>
+  <p>
+    Anybody can read every file in it, including
+    <code>scripts/sdk-config.js</code> &mdash; so the API key in it is not merely
+    visible in the browser, it is visible in the repository, and it stays in the
+    git history even if you delete it later.
+  </p>
+  <p>
+    Use a <strong>private</strong> repository, or do the change below first.
+    This option and an API key in the page are a bad combination.
+  </p>
+</div>
+
+</div>
+</details>
+
+<details class="sect" id="nodejs">
+<summary><h2>Node.js &mdash; and the reason to prefer it</h2><span class="hint">Costs a machine, but solves the key problem at the same time</span></summary>
+<div class="body">
+
+<p>
+  Node can serve the folder like anything else. A few lines with Express, or
+  <code>npx serve</code> behind a process manager, and you are done.
+</p>
+
+<p>
+  But if you are running Node anyway, <strong>do not use it only as a file
+  server.</strong> You already have the one thing every other option on this
+  page lacks: somewhere to put your API key that the browser cannot read.
+</p>
+
+<div class="note">
+  <h4>The arrangement worth building</h4>
+  <p>
+    Your Node server holds the Streaming API key. When a page asks for a
+    session, the server requests the token and returns <strong>only the
+    token</strong> to the browser.
+  </p>
+  <p>
+    The page never sees the key. A token expires in the time you set and is
+    single use, so a leaked one is harmless &mdash; which a leaked key never is.
+  </p>
+  <p>
+    <a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a>
+    walks through the change. It is one function, and nothing else in your
+    integration moves.
+  </p>
+</div>
+
+<p>
+  This is why Node is worth the machine it costs when the alternatives are free:
+  the other options serve files, and this one can also serve tokens.
+</p>
+
+</div>
+</details>
+
+<details class="sect" id="iis">
+<summary><h2>IIS, if you are on Windows</h2><span class="hint">Already installed, nothing to buy</span></summary>
+<div class="body">
+
+<p>
+  Windows Server &mdash; and Windows itself, once the feature is enabled &mdash;
+  ships with IIS, so a machine you already run can serve the folder with nothing
+  extra installed.
+</p>
+
+<ol>
+  <li>Enable <strong>Internet Information Services</strong> in Windows Features
+    if it is not on already.</li>
+  <li>Open <strong>IIS Manager</strong>.</li>
+  <li>Add a website: give it a name, point its physical path at the SDK folder,
+    and choose a port or host name.</li>
+  <li>For HTTPS, bind a certificate to the site in the same dialog.</li>
+</ol>
+
+<p>
+  Nothing needs configuring beyond that. There is no application pool setting
+  that matters, because nothing runs server-side &mdash; IIS is serving static
+  files.
+</p>
+
+</div>
+</details>
+
+<hr>
+
+<h2>Your own domain is not a problem</h2>
+
+<p>
+  Whichever you choose, the SDK does not require the page to be served from an
+  Eagle 3D Streaming domain. The demo is the proof: it runs on
+  <code>eaglepixelstreaming.com</code> and streams from
+  <code>connector.eagle3dstreaming.com</code> &mdash; two different origins. Your
+  page can live on your own domain, behind your own login.
+</p>
 
 <div class="note caution">
   <h4>A public address changes one thing, and it matters</h4>
@@ -77,16 +290,5 @@ php -S localhost:8000          # PHP</code></pre>
   <p>
     <strong>Do this before you publish, not after:</strong>
     <a href="/wiki/sdk-secure-the-key">keeping the API key off the browser</a>.
-    It is one change to one function and nothing else in your integration moves.
   </p>
 </div>
-
-<h2>Your own domain is not a problem</h2>
-
-<p>
-  The SDK does not require the page to be served from an Eagle 3D Streaming
-  domain. The demo is the proof: it runs on
-  <code>eaglepixelstreaming.com</code> and streams from
-  <code>connector.eagle3dstreaming.com</code> — two different origins. Your page
-  can live on your own domain, behind your own login.
-</p>
