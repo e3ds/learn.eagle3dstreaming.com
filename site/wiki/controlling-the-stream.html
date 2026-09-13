@@ -631,6 +631,37 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 </div>
 
 <aside class="callout warning">
+  <p><strong>Five of these are newer than some running platforms</strong></p>
+  <p>
+    <code>setVolume</code>, <code>captureScreenShot</code>,
+    <code>toggleFullscreen</code>, <code>useViewportResolution</code>,
+    <code>ForceEndSession</code> and <code>sendDeviceInfo</code> reached the
+    iframe bridge recently. They have been available to the Web SDK for much
+    longer, and bringing the two level is what added them here.
+  </p>
+  <p>
+    <strong>An older player does not refuse them &mdash; it ignores them.</strong>
+    An unrecognised command reaches the end of the player's dispatcher and stops
+    there, with no error, no warning and no reply. So a page that sends
+    <code>setVolume</code> to a platform build that predates it gets silence,
+    which is indistinguishable from a bug in your own code.
+  </p>
+  <p>
+    <strong>How to tell:</strong> send <code>{ cmd: "sendDeviceInfo" }</code>
+    once the stream is playing. It answers <code>takeUserDeviceInfo</code>
+    whether or not it has anything to report, and it arrived with the same
+    change as the other five &mdash; so one reply, or one silence, settles all
+    six. That is exactly what
+    <a href="/wiki/iframe-demo-manual">the iframe demo</a> does, which is why
+    some of its controls are sometimes dimmed.
+  </p>
+  <p>
+    <code>getAppInfo</code> is not part of that set and is not yet on every
+    platform either.
+  </p>
+</aside>
+
+<aside class="callout warning">
   <p>
     <strong>From an iframe, your page saves the screenshot &mdash; the frame
     cannot.</strong> A browser refuses a download started inside a cross-origin
