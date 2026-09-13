@@ -1,0 +1,12 @@
+{
+ "title": "Streaming API key and tokens",
+ "slug": "streaming-api-key-and-tokens",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-using-e3ds-sdk"
+ ],
+ "source": "written 2026-09-12 per CLAUDE-DOC-PLAN",
+ "rewritten": true,
+ "replaces": [],
+ "order": 1
+}

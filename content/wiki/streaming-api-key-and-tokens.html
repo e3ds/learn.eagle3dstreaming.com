@@ -1,0 +1,117 @@
+<p class="standfirst">
+  Configuring the Web SDK needs a <strong>Streaming API key</strong> — it is the
+  first line of <code>sdk-config.js</code>. This is what it is, where to get
+  one, and what it produces.
+</p>
+
+<div class="note caution">
+  <h4>It is not the API key</h4>
+  <p>
+    Two different credentials live in the Developer section of the Control
+    Panel, and they are not interchangeable.
+  </p>
+</div>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th></th><th>API key</th><th>Streaming API key</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Can delete or replace your app</td><td><strong>Yes</strong></td><td>No</td></tr>
+    <tr><td>Use in a web integration</td><td>No — support is being withdrawn</td><td><strong>Yes</strong></td></tr>
+    <tr><td>Used by</td><td>the Control Panel APIs — analytics, apps and versions, health check, billing</td><td>streaming, and nothing else</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  The account <strong>API key</strong> is powerful enough to delete your
+  application, which is exactly why it must never reach a browser. The
+  <strong>Streaming API key</strong> exists because that one is too dangerous
+  for the job. See
+  <a href="/wiki/api-keys-and-tokens">API keys and tokens</a> for the account
+  key, generating one, and version control.
+</p>
+
+<div class="note">
+  <h4>Only this integration needs it</h4>
+  <p>
+    A <strong>streaming URL</strong> and an <strong>iframe</strong> use neither
+    the Streaming API key nor a token. If you are embedding either of those
+    ways, you can skip this page entirely — the link itself is what starts the
+    session.
+  </p>
+</div>
+
+<h2>Where to get one</h2>
+
+<ol>
+  <li>Open the Control Panel.</li>
+  <li>Go to the <strong>Developer</strong> section.</li>
+  <li>Copy the <strong>Streaming API key</strong> — not the API key above it.</li>
+</ol>
+
+<p>
+  Then put it in <code>scripts/sdk-config.js</code>:
+</p>
+
+<pre><code class="language-javascript">const STREAMING_API_KEY = "Your Streaming API Key";</code></pre>
+
+<h2>What it actually does: it makes tokens</h2>
+
+<p>
+  The key never starts a session by itself. It <em>authorises a request for a
+  token</em>, and the token is what starts one.
+</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th></th><th>Streaming API key</th><th>Session token</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Lifetime</td><td><strong>Does not expire</strong></td><td>Expires in the time you set — a minute is plenty</td></tr>
+    <tr><td>Reusable</td><td>Yes, indefinitely</td><td><strong>No — single use</strong></td></tr>
+    <tr><td>Safe in a browser</td><td>No</td><td>Yes, and that is the point</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  That difference is the whole design. <strong>A leaked token expires
+  harmlessly; a leaked key does not.</strong> It is also why restarting a stream
+  needs a fresh token — the previous one is already spent.
+</p>
+
+<div class="note caution">
+  <h4>The demo puts the key in the browser, and that is fine for now</h4>
+  <p>
+    While you are building, pasting the key into <code>sdk-config.js</code> is
+    the quickest way to get a stream running, and nobody else can reach your
+    page yet.
+  </p>
+  <p>
+    <strong>It stops being fine the moment the page is public</strong>, because
+    the key is one click of View Source away and does not expire. Before you
+    publish, move it:
+    <a href="/wiki/sdk-secure-the-key">keeping the API key off the browser</a>.
+  </p>
+</div>
+
+<h2>Why this is the reason to choose the SDK</h2>
+
+<p>
+  With a streaming URL or an iframe, the link itself grants access. You can put
+  a password in front of it, but you cannot revoke it for one person, and the
+  URL inside your page is a working link to anyone who reads the source.
+</p>
+
+<p>
+  With the Web SDK, <strong>your backend decides who gets a token, when, and for
+  which application</strong>. That is a different kind of control, and it is the
+  one thing the other two methods cannot be configured into doing. Deciding
+  <em>who</em> is then your own authentication —
+  <a href="/wiki/login-in-front-of-a-stream">putting a login in front of a
+  stream</a>.
+</p>
