@@ -275,9 +275,10 @@
   .sect>/* [E3DS-COPYLINK] A link to one folded section, obtainable without knowing it
    exists. The id alone is useless to a reader - they cannot see it, so they
    cannot send it to anybody. Injected by script, so no page has to carry it. */
-.copylink{margin-left:auto;flex:0 0 auto;border:1px solid var(--line);background:transparent;
-  color:var(--ink-3);font:inherit;font-size:12.5px;line-height:1;padding:5px 9px;border-radius:6px;
-  cursor:pointer;opacity:0;transition:opacity .12s}
+.copylink{margin-left:auto;flex:0 0 auto;display:inline-flex;align-items:center;
+  justify-content:center;width:28px;height:28px;padding:0;border:1px solid transparent;
+  background:transparent;color:var(--ink-3);border-radius:6px;
+  cursor:pointer;opacity:0;transition:opacity .12s,color .12s,border-color .12s}
 summary:hover .copylink,summary:focus-within .copylink,.copylink:focus{opacity:1}
 .copylink:hover{color:var(--ink-1);border-color:var(--ink-3)}
 .copylink[data-done="1"]{opacity:1;color:var(--tip);border-color:var(--tip)}
@@ -639,21 +640,47 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     (function (summary) {
       var details = summary.parentElement;
       if (!details || !details.id) return;
+      /* [E3DS-COPYLINK] An icon, not the words "Copy link".
+       *
+       * Words in a control read as instructions - somebody meets "Copy link"
+       * beside a heading and wonders whether they are being asked to. They also
+       * collide with the page's own subject: a section legitimately CALLED
+       * "Copy link" would carry a button saying the same thing beside it.
+       *
+       * The chain-link glyph is the one people already know from mail clients
+       * and editors, so it needs no label to be understood, and it stays out of
+       * the way of whatever the page is actually about.
+       */
+      var LINK_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" '
+        + 'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+        + 'stroke-linejoin="round" aria-hidden="true">'
+        + '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>'
+        + '<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>'
+        + '</svg>';
+      var TICK_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" '
+        + 'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" '
+        + 'stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "copylink";
-      btn.textContent = "Copy link";
+      btn.innerHTML = LINK_ICON;
+      /* The only text it carries is for screen readers and the tooltip, where
+       * words help rather than compete. */
       btn.setAttribute("aria-label", "Copy a link to this section");
+      btn.setAttribute("title", "Copy a link to this section");
       btn.addEventListener("click", function (e) {
         e.preventDefault();
         e.stopPropagation();
         var url = location.origin + location.pathname + "#" + details.id;
         var done = function () {
-          btn.textContent = "Copied";
+          btn.innerHTML = TICK_ICON;
           btn.setAttribute("data-done", "1");
+          btn.setAttribute("title", "Link copied");
           setTimeout(function () {
-            btn.textContent = "Copy link";
+            btn.innerHTML = LINK_ICON;
             btn.removeAttribute("data-done");
+            btn.setAttribute("title", "Copy a link to this section");
           }, 1600);
         };
         try {
