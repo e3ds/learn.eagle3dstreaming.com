@@ -1,0 +1,246 @@
+<p class="standfirst">
+  A manual for the running demo. No account, no key, nothing to download
+  &mdash; open the page and every control described here is in front of you.
+  When you want the code, there is one link at the bottom.
+</p>
+
+<div class="note">
+  <h4>Open it</h4>
+  <p>
+    <a href="https://demo-sdk.eaglepixelstreaming.com/" rel="noreferrer" target="_blank">demo-sdk.eaglepixelstreaming.com</a>
+  </p>
+  <p>
+    A real application, on a real machine, streamed to you. Give it a few
+    seconds: a machine has to be found and your application started on it before
+    there is a picture. That wait is the thing the SDK exists to manage, and the
+    demo shows it happening rather than hiding it.
+  </p>
+</div>
+
+<h2>Why the controls arrive at different times</h2>
+
+<p>
+  Notice that the panel fills in rather than appearing complete. That is
+  deliberate, and it is the first real thing this demo teaches: <strong>a
+  control that cannot work yet is not shown yet.</strong> There are three
+  levels.
+</p>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Appears</th><th>Needs</th><th>Which controls</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Always</strong></td>
+      <td>nothing</td>
+      <td>Restart, Connection settings</td>
+    </tr>
+    <tr>
+      <td><strong>Once there is a session</strong></td>
+      <td>a video element to act on</td>
+      <td>Volume, Fullscreen, Screenshot, Terminate stream</td>
+    </tr>
+    <tr>
+      <td><strong>Once the data channel is open</strong></td>
+      <td>a two-way link to the application</td>
+      <td>everything that sends the app a message &mdash; quality, resolution,
+        diagnostics, and the app's own buttons</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  The distinction matters when a stream ends. Volume and Fullscreen keep working
+  after the data channel closes, because they act on the video element in your
+  page. Anything that has to <em>tell the application</em> something stops,
+  because there is no longer anything to tell.
+</p>
+
+<h2>The panel, control by control</h2>
+
+<h3>Picture</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Quality: Low / Medium / High / Ultra</strong></td>
+      <td>Changes how hard the encoder tries. Watch the picture sharpen and the
+        bitrate climb as you go up. Give each one a few seconds &mdash; the
+        encoder is being asked to change, not told.</td></tr>
+    <tr><td><strong>1920 &times; 1080</strong> and <strong>800 &times; 600</strong></td>
+      <td>Pins the stream to a fixed size, whatever your window is doing.</td></tr>
+    <tr><td><strong>Match window Resolution</strong></td>
+      <td>Releases the pin and follows your browser window again. This is the
+        default behaviour, so it is also how you undo the two above.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note">
+  <h4>Try this: resize the window after pinning</h4>
+  <p>
+    Pin 800 &times; 600, then drag your browser window larger. The picture stays
+    at the size you pinned and is scaled up to fit. Press <strong>Match window
+    Resolution</strong> and it snaps back to matching the window exactly.
+  </p>
+  <p>
+    That is the whole difference between the two modes, and it is much easier to
+    see than to read about.
+  </p>
+</div>
+
+<h3>Window</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Fullscreen</strong></td>
+      <td>The stream fills the screen. One call handles the platform
+        differences, including iOS, where only the video element is allowed to
+        go fullscreen at all.</td></tr>
+    <tr><td><strong>Screenshot</strong></td>
+      <td>Captures the current frame from the video element and downloads it.
+        Browser-side &mdash; the application is not involved and does not know
+        it happened.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Sound</h3>
+
+<p>
+  <strong>Volume</strong> is a slider rather than a button because it is a
+  range, and it acts on the video element in your page &mdash; not on the
+  application. Sliding it to zero silences your end; the application carries on
+  producing audio exactly as before.
+</p>
+
+<h3>Diagnostics</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Show FPS</strong></td>
+      <td>Sends the Unreal console command <code>stat fps</code>. The counter
+        that appears is drawn <em>by the application</em>, inside the picture
+        &mdash; which is why it is in the stream and in a screenshot.</td></tr>
+    <tr><td><strong>Show streaming graphs</strong></td>
+      <td>The transport's own numbers: bitrate, packet loss, latency. Useful
+        when the picture looks wrong and you want to know whether the problem is
+        the network or the application.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Session</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Restart</strong></td>
+      <td>Ends this session and starts a fresh one. Available even before a
+        stream exists, because it is also how you recover from a session that
+        never started.</td></tr>
+    <tr><td><strong>Terminate stream</strong></td>
+      <td>Ends the session deliberately. The machine is released. Nothing
+        reconnects on its own &mdash; use Restart for that.</td></tr>
+    <tr><td><strong>Connection settings</strong></td>
+      <td>Point the demo at a different application. See below.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>App &mdash; and these are the odd ones out</h3>
+
+<div class="note caution">
+  <h4>Character and Skin only work because this particular application
+    understands them</h4>
+  <p>
+    Every other control on the panel works against <em>any</em> streamed
+    application, because the platform handles it. These two do not. They send a
+    message that means nothing unless the application was built to receive it
+    &mdash; and the demo application was.
+  </p>
+  <p>
+    <strong>That is the point of them being here.</strong> They are the one
+    place you can watch your own data reach an application and change something,
+    rather than reading about it. Everything else demonstrates what the platform
+    gives you; these demonstrate what you build on top.
+  </p>
+  <p>
+    Pointed at your own application, they will do nothing until you add a
+    listener for them &mdash; see
+    <a href="/wiki/unreal-side-of-data">the Unreal side of sending and receiving
+    data</a>.
+  </p>
+</div>
+
+<h3>Connection settings</h3>
+
+<p>
+  Opens a dialog holding a Streaming API key, a username and an application
+  name. Filling them in points the demo at <em>your</em> application instead of
+  ours, and what you type is saved in your browser only.
+</p>
+
+<p>
+  It is worth opening even if you do not change anything, because it shows the
+  three values every integration needs &mdash; and because the note inside it is
+  the most important sentence on the whole page: a key typed into a web page can
+  be read by anyone with developer tools open. Fine for a demo. Not fine in
+  production, where
+  <a href="/wiki/api-keys-and-tokens">your server holds the key and hands the
+  page only a session token</a>.
+</p>
+
+<h2>What each control is really demonstrating</h2>
+
+<p>
+  Every button is one SDK call. This is the bridge between playing with the demo
+  and writing the code &mdash; and the reason the panel is worth reading as
+  documentation rather than just clicking.
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>The call behind it</th></tr></thead>
+  <tbody>
+    <tr><td>Quality: Low &hellip; Ultra</td><td><code>setVideoDetailLevel(level)</code></td></tr>
+    <tr><td>1920&times;1080, 800&times;600</td><td><code>setResolution(w, h)</code></td></tr>
+    <tr><td>Match window Resolution</td><td><code>useViewportResolution()</code></td></tr>
+    <tr><td>Fullscreen</td><td><code>toggleFullscreen()</code></td></tr>
+    <tr><td>Screenshot</td><td><code>captureScreenshot()</code></td></tr>
+    <tr><td>Volume</td><td><code>setVolume(0&ndash;1)</code></td></tr>
+    <tr><td>Show FPS</td><td><code>sendConsoleCommandToUE("stat fps")</code></td></tr>
+    <tr><td>Character, Skin</td><td><code>sendDataToUE({ &hellip; })</code> &mdash; your own message</td></tr>
+    <tr><td>Terminate stream</td><td><code>terminate()</code></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  Note the three different kinds in that list. <code>setVolume</code> never
+  leaves your page. <code>sendConsoleCommandToUE</code> reaches the engine.
+  <code>sendDataToUE</code> reaches <em>your code</em> and does whatever you
+  wrote. <a href="/wiki/javascript-sdk-guide">The reference</a> covers each in
+  full.
+</p>
+
+<h2>Like what you see?</h2>
+
+<div class="note">
+  <h4>Make it stream your own application</h4>
+  <p>
+    <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a> &mdash;
+    get the source code this demo runs on, run it, and point it at your own
+    application. It is plain HTML and JavaScript: no build step, no framework,
+    nothing to install.
+  </p>
+</div>
