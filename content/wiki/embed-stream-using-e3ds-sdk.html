@@ -1,228 +1,217 @@
 <p class="standfirst">
-  The SDK puts the stream directly in your page and hands you the session in
-  JavaScript &mdash; you start it, drive it and end it. It handles the token,
-  the authentication, the connection and the player.
+  You have most likely already opened
+  <a href="/wiki/web-sdk-demo-manual">the demo</a>, seen what it does, and
+  decided the Web SDK is how you want to embed your application. If so, this is
+  the page for you: get the code, point it at your app, and run it.
 </p>
 
-<aside class="callout warning">
-  <p>
-    <strong>The old SDK no longer works.</strong> Our streaming infrastructure
-    was upgraded and the previous SDK is not compatible with it. Integrations
-    still using it have <em>stopped</em> streaming, not degraded.
-  </p>
-  <p>
-    <strong>Nothing changes in your Unreal application.</strong> The work is
-    entirely on the web side, which makes the move smaller than it sounds.
-  </p>
-</aside>
-
-<div class="prereq">
-  <strong>Before you begin</strong>
-  <p>
-    An app uploaded and streaming from the Control Panel; your <strong>Streaming
-    API key</strong> &mdash; read the warning below, because there is more than
-    one kind of key; and your username plus the app and configuration names
-    exactly as the Control Panel shows them, capitalisation included.
-  </p>
-</div>
-
 <div class="note">
-  <h4>Not sure yet? Play with it first</h4>
+  <h4>If you have not tried it yet, do that first</h4>
   <p>
-    <a href="/wiki/web-sdk-demo-manual">The Web SDK demo manual</a> walks through
-    the running demo control by control &mdash; what each one does and which SDK
-    call is behind it &mdash; with nothing to download and no key to enter. Come
-    back here when you want the code.
+    <a href="/wiki/web-sdk-demo-manual">The Web SDK demo manual</a> walks
+    through the running demo control by control, with nothing to download and no
+    key to enter. It is a much cheaper way to find out whether this is the right
+    method for you than reading the rest of this page.
+  </p>
+  <p>
+    While you were there you may have noticed the demo runs on
+    <code>eaglepixelstreaming.com</code> while the platform it streams from is
+    <code>connector.eagle3dstreaming.com</code>. Different origins.
+    <strong>That is deliberate</strong> &mdash; it is the answer to "will this
+    work on my own domain?", demonstrated rather than promised.
   </p>
 </div>
 
-<div class="note">
-  <h4>Or just open it, running, right now</h4>
-  <p>
-    <a href="https://demo-sdk.eaglepixelstreaming.com/" rel="noreferrer" target="_blank">demo-sdk.eaglepixelstreaming.com</a>
-    is this sample deployed. It streams a real application with no key, no clone
-    and no setup, so you can see what you are about to download before you
-    download it.
-  </p>
-  <p>
-    <strong>Its address is deliberate.</strong> The page is on
-    <code>eaglepixelstreaming.com</code>; the platform it streams from is
-    <code>connector.eagle3dstreaming.com</code>. Different origins &mdash;
-    which is the answer to "will this work on my own domain?" Yes, and that demo
-    is the proof rather than the promise.
-  </p>
-</div>
-
-<h2>Start from the sample, not from scratch</h2>
+<h2>Get the source code</h2>
 
 <p>
-  Download the
-  <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">demo
-  project</a>, get it streaming <em>your</em> app, and only then move the pieces
-  into your real application. It is a working integration, so anything that
-  fails is your configuration rather than your code &mdash; a far smaller thing
-  to debug than both at once.
+  <a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">github.com/e3ds/pixelstreaming-sdk</a>
+  &mdash; the source code of the demo you just used. Not a cut-down sample: it
+  is the same code, running.
 </p>
 
 <p>
-  There is a
-  <a href="https://e3ds.github.io/pixelstreaming-sdk/e3ds_streaming_FE.html"
-     rel="noreferrer" target="_blank">live version</a> you can open before
-  downloading anything.
+  Get it streaming <em>your</em> app before you move anything into your real
+  project. It is a working integration, so anything that fails is your
+  configuration rather than your code &mdash; a far smaller thing to debug than
+  both at once.
 </p>
 
 <h2>What is in it</h2>
 
-<pre><code>sdk/
-├── index.html                     the page itself
-├── css/style.css                  styles the demo's buttons only
-└── scripts/
-    ├── sdk-config.js                  the only file you must edit
-    ├── sdk-token.js           gets a token, starts the session
-    ├── sdk-callbacks.js        every callback, documented
-    ├── demo-controls.js           the demo's buttons
-    └── dist/e3dsCore.min_ns.js    the SDK itself (generated, never edit)</code></pre>
+<pre><code>index.html                       the page itself
+css/style.css                    styles the demo's buttons only
+scripts/
+├── sdk-config.js                the only file you must edit
+├── sdk-token.js                 gets a token, starts the session
+├── sdk-callbacks.js             every callback, documented
+├── demo-ui-controls.js          the demo's buttons
+├── demo-ui-connection-setup.js  the demo's settings dialog
+└── dist/e3dsCore.min_ns.js      the SDK itself (generated, never edit)</code></pre>
 
 <p>
-  Carry <code>sdk-config.js</code>, <code>sdk-token.js</code>,
-  <code>sdk-callbacks.js</code> and <code>dist/</code> into your own project.
-  <code>index.html</code> and <code>demo-controls.js</code> are references rather
-  than things to copy.
+  <code>sdk-*</code> is what you integrate. <code>demo-ui-*</code> is the demo
+  wrapped around it, and <code>css/style.css</code> styles only those buttons.
+  If you are building your own interface you need none of the three.
 </p>
+
+<div class="note">
+  <h4>Read <code>demo-ui-controls.js</code> before you build your own interface</h4>
+  <p>
+    You will delete it, but read it first. It is a worked example of driving
+    every part of the SDK &mdash; building controls, wiring them to calls, and
+    knowing <em>when</em> each one is safe to show.
+  </p>
+  <p>
+    That last part is not obvious and is easy to get wrong: some controls need
+    only a session, others need the data channel open, and a button offered too
+    early looks broken to the person clicking it.
+  </p>
+</div>
 
 <h2>Configure it</h2>
 
-<div class="note">
-  <h4>You need a Streaming API key for this step</h4>
-  <p>
-    It is the first value in the file. <a href="/wiki/streaming-api-key-and-tokens">Streaming
-    API key and tokens</a> — what it is, why it is not the account API key, and
-    where to get one. Two minutes, then come back here.
-  </p>
-</div>
-
-
-
 <p>
-  Everything you need to change is in <code>scripts/sdk-config.js</code>. It is the
-  only file you have to edit to get the demo running against your own app.
+  Everything you change is in <code>scripts/sdk-config.js</code>. It is the only
+  file you have to edit.
 </p>
+
+<h3>What you must set</h3>
 
 <div class="scroll">
-  <table>
-    <thead><tr><th>Setting</th><th>Set it to</th></tr></thead>
-    <tbody>
-      <tr><td><code>STREAMING_API_KEY</code></td><td>Your <strong>Streaming</strong> API key.</td></tr>
-      <tr><td><code>clientUserName</code></td><td>Identifies the person watching. In a real integration, your own logged-in user's id.</td></tr>
-      <tr><td><code>tokenExpiryMs</code></td><td>How long the token stays valid, in milliseconds. <code>60000</code> is a good default &mdash; it only has to last long enough to start the session.</td></tr>
-      <tr><td><code>application.domain</code></td><td>The connector your account was given, for example <code>connector.eagle3dstreaming.com</code>.</td></tr>
-      <tr><td><code>application.userName</code></td><td>The account that owns the app.</td></tr>
-      <tr><td><code>application.appName</code></td><td>The app's name, exactly as the Control Panel shows it.</td></tr>
-      <tr><td><code>application.configurationName</code></td><td>Which stored configuration to launch.</td></tr>
-      <tr><td><code>application.version</code></td><td>A specific version, or <code>"latest"</code>.</td></tr>
-      <tr><td><code>configurationToOverride</code></td><td>Per-session overrides of that stored configuration. Applies to this session only and does not change the saved one; leave it empty to use the Control Panel's settings as they are.</td></tr>
-    </tbody>
-  </table>
+<table>
+  <thead><tr><th>Setting</th><th>Set it to</th></tr></thead>
+  <tbody>
+    <tr><td><code>STREAMING_API_KEY</code></td>
+        <td>Your <strong>Streaming</strong> API key &mdash; see below.</td></tr>
+    <tr><td><code>application.userName</code></td>
+        <td>The account that owns the app.</td></tr>
+    <tr><td><code>application.appName</code></td>
+        <td>The app's name, exactly as the Control Panel shows it, capitalisation included.</td></tr>
+    <tr><td><code>application.configurationName</code></td>
+        <td>Which stored configuration to launch.</td></tr>
+  </tbody>
+</table>
 </div>
 
-<aside class="callout warning">
-  <p>
-    <strong>There are two kinds of API key, and only one works here.</strong>
-    Use the <strong>Streaming API key</strong>. The other looks identical, is
-    for a different purpose, and fails at token generation with nothing that
-    says "wrong sort of key".
-  </p>
-</aside>
+<h3>What you can leave alone</h3>
 
-<aside class="callout note">
-  <p>
-    <strong>Enterprise plans use a different domain.</strong> Replace
-    <code>connector.eagle3dstreaming.com</code> with the custom domain provided
-    to you. If you are not sure which applies,
-    <a href="mailto:support@eagle3dstreaming.com">ask support</a> rather than
-    guessing &mdash; a wrong domain fails at connection time and looks like a
-    network fault.
-  </p>
-</aside>
+<div class="scroll">
+<table>
+  <thead><tr><th>Setting</th><th>Default, and when to change it</th></tr></thead>
+  <tbody>
+    <tr><td><code>application.version</code></td>
+        <td><code>"latest"</code> uses the newest build. Set a specific version only when you need to pin one.</td></tr>
+    <tr><td><code>application.domain</code></td>
+        <td><code>connector.eagle3dstreaming.com</code> for everyone on our platform. <strong>Enterprise only</strong> &mdash; see below.</td></tr>
+    <tr><td><code>tokenExpiryMs</code></td>
+        <td><code>60000</code>. The token only has to last long enough to start the session.</td></tr>
+    <tr><td><code>clientUserName</code></td>
+        <td>Identifies the person watching, for session records and limits. In a real integration, your own logged-in user's id.</td></tr>
+    <tr><td><code>configurationToOverride</code></td>
+        <td>Empty. Per-session overrides of the stored configuration; it does not change the saved one.</td></tr>
+  </tbody>
+</table>
+</div>
 
-<h2>Serving it</h2>
+<div class="note caution">
+  <h4>The account API key will not work here</h4>
+  <p>
+    There are two credentials in the Developer section and they are not
+    alternatives. <strong>Only the Streaming API key works with the SDK.</strong>
+    The account API key is for the Control Panel APIs; used here it fails at
+    token generation, with nothing in the error that says "wrong sort of key".
+  </p>
+  <p>
+    <a href="/wiki/streaming-api-key-and-tokens">Streaming API key and
+    tokens</a> &mdash; which is which, where to get one, and what it produces.
+  </p>
+</div>
+
+<div class="note">
+  <h4><code>application.domain</code> is for enterprise plans</h4>
+  <p>
+    On our platform it is <code>connector.eagle3dstreaming.com</code> and you do
+    not need to think about it.
+  </p>
+  <p>
+    <strong>Enterprise customers running their own deployment</strong> have their
+    own domain, and it goes here. You are normally given it when the system is
+    handed over &mdash; if you have a custom deployment and do not know your
+    domain, ask support rather than guessing. A wrong domain fails at connection
+    time and looks like a network fault.
+  </p>
+</div>
+
+<h2>Run it</h2>
 
 <p>
-  Opening <code>index.html</code> straight from disk does work &mdash; the token
-  endpoint sends <code>Access-Control-Allow-Origin: *</code>, which accepts the
-  <code>null</code> origin a <code>file://</code> page has. It is the quickest
-  way to try the demo.
+  <strong>Double-click <code>index.html</code>.</strong> That is the step &mdash;
+  no server, no build, no install. The stream starts by itself. Press
+  <strong>F12</strong> to watch the session progress in the console.
 </p>
 
-<pre><code class="language-bash">python -m http.server 8000     # or:  npx serve .     # or:  php -S localhost:8000</code></pre>
+<p>
+  Opening it straight from disk works because the token endpoint sends
+  <code>Access-Control-Allow-Origin: *</code>, which accepts the
+  <code>null</code> origin a <code>file://</code> page has.
+</p>
 
-<div class="outcome">
-  <strong>Serve it anyway, once you are past the first look</strong>
-  <p>
-    Not because <code>file://</code> is blocked, but because it works only for
-    as long as that endpoint accepts any origin &mdash; a server-side policy you
-    do not control and would not be told about. Serving over
-    <code>http://</code> is how your real integration will run, so a problem
-    that only appears there is better found now than after you have moved the
-    files into your own application.
-  </p>
-</div>
+<p>
+  Once it runs and you want other people to reach it, that is a separate job:
+  <a href="/wiki/serving-the-sdk-page">serving the page</a>.
+</p>
 
 <h2>Script order is not arbitrary</h2>
 
 <pre><code class="language-html">&lt;script defer src="./scripts/dist/e3dsCore.min_ns.js"&gt;&lt;/script&gt;
 &lt;script defer src="./scripts/sdk-config.js"&gt;&lt;/script&gt;
 &lt;script defer src="./scripts/sdk-callbacks.js"&gt;&lt;/script&gt;
-&lt;script defer src="./scripts/demo-controls.js"&gt;&lt;/script&gt;
+&lt;script defer src="./scripts/demo-ui-controls.js"&gt;&lt;/script&gt;
 &lt;script defer src="./scripts/sdk-token.js"&gt;&lt;/script&gt;</code></pre>
 
-<div class="outcome">
-  <strong>Two rules, and breaking one of them fails silently</strong>
+<div class="note caution">
+  <h4>Two rules, and breaking one of them fails silently</h4>
   <p>
-    The <strong>SDK loads first</strong>, because everything after it refers to
-    <code>e3ds_controller</code> &mdash; move it and you get
-    <code>e3ds_controller is not defined</code>, which at least says so.
-    <strong><code>sdk-token.js</code> loads last</strong>, because it starts
-    the stream: a callback registered after the stream has started has already
-    missed whatever fired first. That one produces no error at all &mdash; just
-    callbacks that never run.
+    <strong>The SDK loads first</strong>, because everything after it refers to
+    <code>e3ds_controller</code>. Move it and you get
+    <code>e3ds_controller is not defined</code> &mdash; which at least says so.
+  </p>
+  <p>
+    <strong><code>sdk-token.js</code> loads last</strong>, because it starts the
+    stream. A callback registered after the stream has started has already
+    missed whatever fired first. That one produces <em>no error at all</em>
+    &mdash; just callbacks that never run.
   </p>
 </div>
-
-<p>
-  Your page also needs a <code>&lt;div id="playerUI"&gt;&lt;/div&gt;</code> for
-  the player to render into.
-</p>
-
-<h2>One thing to know before you go live</h2>
-
-<p>
-  The demo keeps your API key in <code>sdk-config.js</code>, which means every
-  visitor to the page can read it. That is fine for what you are doing now
-  &mdash; trying it out, an internal demo, development against your own app.
-</p>
-
-<aside class="callout warning">
-  <p>
-    <strong>It is not fine on a public site.</strong> The key does not expire,
-    and anyone who reads it can start sessions billed to your account. Before
-    you put this on a page the public can reach, move the key to a server:
-    <a href="/wiki/sdk-secure-the-key">keeping your API key off the browser</a>.
-    It is one change to one function, and nothing else in your integration moves.
-  </p>
-</aside>
 
 <h2>Moving it into your own application</h2>
 
 <p>
-  Once the sample streams your app: load the SDK, call
-  <code>e3ds_controller.main()</code> with the token data, and build your
-  interface when <code>onDataChannelOpen</code> fires. From there,
-  <a href="/wiki/sending-and-receiving-data">send and receive data</a> and
-  <a href="/wiki/controlling-the-stream">control the stream</a>.
+  Carry <code>sdk-config.js</code>, <code>sdk-token.js</code>,
+  <code>sdk-callbacks.js</code> and <code>dist/</code> across. Leave
+  <code>demo-ui-*</code> and <code>css/style.css</code> behind &mdash; they are
+  the demo's interface, and you are writing your own.
 </p>
 
-<div class="next">
-  <a href="/wiki/javascript-sdk-guide">SDK reference &rarr;</a>
-  <p>Every call and callback, what <code>main()</code> returns when the payload is incomplete, and how to restart without stacking two players.</p>
+<p>
+  Then, before anyone else can reach the page:
+  <a href="/wiki/sdk-secure-the-key">keep the API key off the browser</a>.
+</p>
+
+<hr>
+
+<div class="note caution">
+  <h4>Upgrading from the SDK we shipped before 2026</h4>
+  <p>
+    If you are here because an existing integration stopped working: the
+    streaming infrastructure was upgraded and <strong>the previous SDK is not
+    compatible with it.</strong> Integrations still on it have <em>stopped</em>
+    streaming rather than degraded.
+  </p>
+  <p>
+    <strong>Nothing changes in your Unreal application.</strong> The work is
+    entirely on the web side, which makes the move smaller than it sounds
+    &mdash; the steps above are the whole of it.
+  </p>
 </div>

@@ -1,0 +1,92 @@
+<p class="standfirst">
+  Your integration works when you double-click it. This is the next question:
+  getting it onto a web address other people can open. Sometimes called hosting,
+  sometimes serving — the same job either way.
+</p>
+
+<div class="note">
+  <h4>You do not need this to get a stream running</h4>
+  <p>
+    <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a> ends with
+    the page working from your own disk. Come here when you want somebody else
+    to be able to open it.
+  </p>
+</div>
+
+<h2>Why <code>file://</code> stops being good enough</h2>
+
+<p>
+  Opening the page from disk works today, and it is the quickest way to see a
+  stream. It is not something to build on, for two reasons:
+</p>
+
+<ul>
+  <li><strong>It relies on a policy you do not control.</strong> It works because
+    the token endpoint sends <code>Access-Control-Allow-Origin: *</code>, which
+    accepts the <code>null</code> origin a <code>file://</code> page has. That
+    is a server-side decision, and you would not be told if it changed.</li>
+  <li><strong>It is not how your integration will run.</strong> A problem that
+    only appears over <code>http://</code> is better found now than after you
+    have moved the files into your real application.</li>
+</ul>
+
+<h2>The quickest way to serve it locally</h2>
+
+<p>
+  Any static file server will do. The SDK is plain HTML and JavaScript, so there
+  is nothing to compile and no runtime to install.
+</p>
+
+<pre><code class="language-bash">python -m http.server 8000     # Python 3
+npx serve .                    # Node.js
+php -S localhost:8000          # PHP</code></pre>
+
+<p>
+  Then open <code>http://localhost:8000</code>. Nothing about the configuration
+  changes.
+</p>
+
+<h2>Putting it on a real address</h2>
+
+<p>
+  Once it works over <code>http://</code> locally, publishing it is an ordinary
+  static-site job. The SDK does not constrain the choice:
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Option</th><th>Worth knowing</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Your own web server</strong> — nginx, Apache, IIS</td>
+        <td>Copy the folder into the document root. No application server, no Node process.</td></tr>
+    <tr><td><strong>Static hosting or a CDN</strong></td>
+        <td>Works, because there is nothing dynamic to run. Good if the page is mostly the stream.</td></tr>
+    <tr><td><strong>Inside an application you already have</strong></td>
+        <td>The usual end state — the SDK files become part of a page your framework already serves.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note caution">
+  <h4>A public address changes one thing, and it matters</h4>
+  <p>
+    As soon as the page is reachable by other people, the API key in
+    <code>sdk-config.js</code> is reachable too &mdash; it is one click of View
+    Source away, and it does not expire.
+  </p>
+  <p>
+    <strong>Do this before you publish, not after:</strong>
+    <a href="/wiki/sdk-secure-the-key">keeping the API key off the browser</a>.
+    It is one change to one function and nothing else in your integration moves.
+  </p>
+</div>
+
+<h2>Your own domain is not a problem</h2>
+
+<p>
+  The SDK does not require the page to be served from an Eagle 3D Streaming
+  domain. The demo is the proof: it runs on
+  <code>eaglepixelstreaming.com</code> and streams from
+  <code>connector.eagle3dstreaming.com</code> — two different origins. Your page
+  can live on your own domain, behind your own login.
+</p>
