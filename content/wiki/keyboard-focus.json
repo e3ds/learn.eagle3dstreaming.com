@@ -1,0 +1,13 @@
+{
+ "title": "Typing does not reach the app: keyboard focus",
+ "slug": "keyboard-focus",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-using-iframe",
+  "embed-stream-into-webpage"
+ ],
+ "source": "written 2026-09-13 from the player source and a live reproduction on the microphone demo",
+ "rewritten": true,
+ "replaces": [],
+ "order": 3
+}

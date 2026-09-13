@@ -10,11 +10,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Unreal notes — Eagle 3D Streaming</title>
+<title>Typing does not reach the app: keyboard focus — Eagle 3D Streaming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="Unreal-side questions that come up repeatedly when preparing an app for streaming: which build configuration, how to get logs out of it, how to reach files you packaged, and how your app should talk to the page.">
+<meta name="description" content="Your visitor clicks your page, then types &amp;mdash; and the application does not hear a word of it. The picture still moves when they move the mouse, so it looks as though the app has frozen or is ignoring the keyboard. It is neither.">
 
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
@@ -33,7 +33,7 @@
      follow; this only means a single page can be opened up early, deliberately,
      by someone who has read that checklist. -->
 <meta name="robots" content="noindex,nofollow">
-<link rel="canonical" href="https://docs.eagle3dstreaming.com/wiki/unreal-engine-faqs">
+<link rel="canonical" href="written 2026-09-13 from the player source and a live reproduction on the microphone demo">
 
 <!-- [E3DS-LEARN-SEO] What a link to this page looks like when somebody shares
      it - in Slack, on LinkedIn, in a message. Without these, every share of
@@ -42,13 +42,13 @@
      placeholder: a broken image in a preview looks worse than no image. -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Eagle 3D Streaming">
-<meta property="og:title" content="Unreal notes">
-<meta property="og:description" content="Unreal-side questions that come up repeatedly when preparing an app for streaming: which build configuration, how to get logs out of it, how to reach files you packaged, and how your app should talk to the page.">
-<meta property="og:url" content="https://docs.eagle3dstreaming.com/wiki/unreal-engine-faqs">
+<meta property="og:title" content="Typing does not reach the app: keyboard focus">
+<meta property="og:description" content="Your visitor clicks your page, then types &amp;mdash; and the application does not hear a word of it. The picture still moves when they move the mouse, so it looks as though the app has frozen or is ignoring the keyboard. It is neither.">
+<meta property="og:url" content="written 2026-09-13 from the player source and a live reproduction on the microphone demo">
 
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Unreal notes">
-<meta name="twitter:description" content="Unreal-side questions that come up repeatedly when preparing an app for streaming: which build configuration, how to get logs out of it, how to reach files you packaged, and how your app should talk to the page.">
+<meta name="twitter:title" content="Typing does not reach the app: keyboard focus">
+<meta name="twitter:description" content="Your visitor clicks your page, then types &amp;mdash; and the application does not hear a word of it. The picture still moves when they move the mouse, so it looks as though the app has frozen or is ignoring the keyboard. It is neither.">
 
 <style>
   :root{
@@ -431,136 +431,270 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 <body>
 
 
-<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-interface">The streaming interface</a></summary><ul><li><a href="/wiki/settings-bar">The settings bar, button by button</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></summary><ul><li><a href="/wiki/iframe-demo-manual">iframe demo manual</a></li></ul></details></li><li><a href="/wiki/iframe-or-web-sdk">iframe or Web SDK</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a></summary><ul><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></summary><ul><li><a href="/wiki/streaming-api-key-and-tokens">Streaming API key and tokens</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li><li><a href="/wiki/serving-the-sdk-page">Serving the page</a></li></ul></details></li><li><a href="/wiki/the-token-and-main">The token, and e3ds_controller.main()</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></summary><ul><li><a href="/wiki/unreal-side-of-data">The Unreal side of sending and receiving data</a></li><li><a href="/wiki/your-own-screens">Your own loading and ending screens</a></li></ul></details></li></ul></details></li><li><a href="/wiki/keyboard-focus">Typing does not reach the app: keyboard focus</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes" class="on" aria-current="page">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-interface">The streaming interface</a></summary><ul><li><a href="/wiki/settings-bar">The settings bar, button by button</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></summary><ul><li><a href="/wiki/iframe-demo-manual">iframe demo manual</a></li></ul></details></li><li><a href="/wiki/iframe-or-web-sdk">iframe or Web SDK</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a></summary><ul><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></summary><ul><li><a href="/wiki/streaming-api-key-and-tokens">Streaming API key and tokens</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li><li><a href="/wiki/serving-the-sdk-page">Serving the page</a></li></ul></details></li><li><a href="/wiki/the-token-and-main">The token, and e3ds_controller.main()</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></summary><ul><li><a href="/wiki/unreal-side-of-data">The Unreal side of sending and receiving data</a></li><li><a href="/wiki/your-own-screens">Your own loading and ending screens</a></li></ul></details></li></ul></details></li><li><a href="/wiki/keyboard-focus" class="on" aria-current="page">Typing does not reach the app: keyboard focus</a></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
 
 <div class="wrap">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><a href="/wiki/blogs-and-articles">Foundational knowledge</a><span class="sep">/</span><span class="here">Unreal notes</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep crumbMoreSep">/</span><button type="button" class="crumbMore" aria-label="Show the levels in between" onclick="this.closest('.crumbs').classList.add('crumbsOpen')">&hellip;</button><span class="sep mid">/</span><a class="mid" href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a><span class="sep">/</span><span class="here">Typing does not reach the app: keyboard focus</span></nav>
   
-  <h1>Unreal notes</h1>
+  <h1>Typing does not reach the app: keyboard focus</h1>
   <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
-  Unreal-side questions that come up repeatedly when preparing an app for
-  streaming: which build configuration, how to get logs out of it, how to reach
-  files you packaged, and how your app should talk to the page.
-</p>
-
-<h2>Choosing a build configuration</h2>
-
-<p>
-  Unreal offers several, and the choice is a trade between how fast it runs and
-  how much it can tell you when something goes wrong.
-</p>
-
-<div class="scroll">
-  <table>
-    <thead><tr><th>Configuration</th><th>Use it</th></tr></thead>
-    <tbody>
-      <tr>
-        <td><strong>Development</strong></td>
-        <td>While building and diagnosing. Slower, and it keeps the logging and tooling you need to find a fault.</td>
-      </tr>
-      <tr>
-        <td><strong>Shipping</strong></td>
-        <td>For release. Fastest, smallest &mdash; and it strips out the logging, which is the trade.</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<aside class="callout warning">
-  <p>
-    <strong>Logs cannot be added to a Shipping build after it is packaged.</strong>
-    They are compiled out, not switched off. Getting them back means building
-    from Unreal's <em>source</em> engine from GitHub with modified engine code,
-    switching your project to that engine and regenerating the solution &mdash;
-    which is a day's work, not a setting.
-  </p>
-  <p>
-    So: while an app is still being diagnosed, package Development. Move to
-    Shipping when you no longer expect to need the logs, not before.
-  </p>
-</aside>
-
-<h2>Talking to the page: VaRest or Pixel Streaming Input</h2>
-
-<p>
-  Both plugins can handle the JSON that arrives from a web page, which is why
-  the choice comes up at all.
-</p>
-
-<div class="choices">
-  <div class="choice pick">
-    <span class="tag">Prefer this</span>
-    <h3>Pixel Streaming Input</h3>
-    <p>
-      Epic's own, built for exactly this, and already required for streaming.
-      Nothing extra to install and nothing extra to keep working across engine
-      upgrades.
-    </p>
-  </div>
-  <div class="choice">
-    <h3>VaRest</h3>
-    <p>
-      A general-purpose JSON plugin. Worth it only if you are already using it
-      for other work in the project &mdash; then it is one JSON approach instead
-      of two.
-    </p>
-  </div>
-</div>
-
-<p>
-  Sending in the other direction is the same either way: the <strong>Send Pixel
-  Streaming Response</strong> node, with a Pixel Streaming Input component on
-  the actor. See
-  <a href="/wiki/sending-and-receiving-data">sending and receiving data</a> for
-  the page's half.
-</p>
-
-<h2>Files you packaged, and how to reach them</h2>
-
-<p>
-  Non-asset files &mdash; videos, text, configuration &mdash; need to be
-  included in the package deliberately, and then found at runtime.
+  Your visitor clicks your page, then types &mdash; and the application does not
+  hear a word of it. The picture still moves when they move the mouse, so it
+  looks as though the app has frozen or is ignoring the keyboard. It is neither.
+  This page explains what is actually happening, and every way to fix it.
 </p>
 
 <aside class="callout note">
+  <p><strong>The one-line version</strong></p>
   <p>
-    <strong>Use relative paths, not absolute ones.</strong> An absolute path is
-    correct on your machine and wrong on ours: the app runs from a different
-    directory on a streaming machine, so a path that begins with your drive
-    letter cannot resolve. This is a common cause of an app that works locally
-    and fails as soon as it streams.
+    Keyboard input goes to whichever <em>frame</em> the browser considers
+    focused. A stream inside an <code>&lt;iframe&gt;</code> is a separate frame
+    from your page, so until it has focus, every keystroke lands on your page
+    instead. The mouse is unaffected, which is what makes this so confusing.
   </p>
 </aside>
 
-<h2>The mouse cursor</h2>
+<h2>Why the keyboard and the mouse behave differently</h2>
 
 <p>
-  A streamed app shows the browser's cursor as well as its own, which is
-  disorienting enough that people report it as lag. The fix is to hide the app's
-  cursor &mdash; a custom cursor image with zero alpha &mdash; so only the
-  browser's remains. <a href="/wiki/optimise-your-app">Optimising your app</a>
-  covers the settings.
-</p>
-
-<h2>Anti-aliasing</h2>
-
-<p>
-  Anti-aliasing smooths the jagged edges that appear when curves are drawn on a
-  rectangular grid of pixels. It costs GPU time on every frame, and in a stream
-  it competes with the encoder for the same GPU.
+  Mouse events are tied to <em>position</em>. The pointer is over the video, so
+  the video receives them. Nothing else can claim them.
 </p>
 
 <p>
-  At a streamed resolution the difference is smaller than it is on a desktop
-  monitor, because video compression softens edges anyway. If you are short of
-  frame rate, this is a cheaper thing to reduce than most.
+  Keyboard events have no position. The browser has to decide where they go, and
+  it sends them to the focused element &mdash; and, one level up, to the focused
+  <strong>browsing context</strong>. Every <code>&lt;iframe&gt;</code> on a page
+  is its own browsing context. Only one of them is focused at a time.
 </p>
 
-<div class="next">
-  <a href="/wiki/optimise-your-app">Optimise your app &rarr;</a>
-  <p>The full set of rendering and load-time changes that matter for streaming.</p>
+<p>
+  The player listens for keys on its <em>own</em> document. When the frame is not
+  focused, that document never receives them, so the player has nothing to
+  forward. The application sits there perfectly healthy, receiving mouse input,
+  hearing no typing at all.
+</p>
+
+<h2>Why you only hit this when embedding</h2>
+
+<p>
+  Open a stream URL directly in a tab and there is no problem, ever. The player
+  <em>is</em> the page, and a page has focus from the moment you navigate to it.
+  Nothing has to be done.
+</p>
+
+<p>
+  Put that same URL in an <code>&lt;iframe&gt;</code> and the top-level page is
+  now <strong>yours</strong>. Yours has the focus. The stream has to earn it.
+  Nothing about the player changed &mdash; it simply no longer starts with
+  something it used to be handed for free.
+</p>
+
+<aside class="callout warning">
+  <p><strong>This is why the symptom misleads</strong></p>
+  <p>
+    Typing is dead while the picture responds normally to the mouse. Nobody's
+    first thought is "focus" &mdash; the first thought is that the application
+    has hung, or that the key bindings are wrong. On an app with push-to-talk,
+    where one key opens the microphone, it looks exactly like the microphone is
+    broken.
+  </p>
+</aside>
+
+<h2>When focus is lost</h2>
+
+<p>
+  It is not lost once. It is lost every time your visitor touches your page:
+</p>
+
+<ul>
+  <li>they click any button, link, or menu you have around the stream</li>
+  <li>they type in a search box, a name field, a chat input</li>
+  <li>they pick something from a dropdown &mdash; a quality selector, a
+      microphone chooser</li>
+  <li>they close a dialog of yours</li>
+  <li>the page loads and they have not clicked the stream yet</li>
+</ul>
+
+<p>
+  Each of those moves focus to your page and leaves it there. From that moment
+  the application is deaf until focus comes back.
+</p>
+
+<h2>The ways to fix it</h2>
+
+<p>
+  There are four, and they are not alternatives &mdash; the first is automatic,
+  and the rest are yours to add depending on what your page does.
+</p>
+
+<h3>1. The visitor clicks the stream</h3>
+
+<p>
+  Clicking the video gives it focus and typing works again. This is automatic and
+  needs nothing from you.
+</p>
+
+<aside class="callout note">
+  <p><strong>If you are on an older player build</strong></p>
+  <p>
+    Clicking the stream did <em>not</em> always take focus. Two things in the
+    player prevented it: nothing inside the video area was focusable, and the
+    player cancelled the browser's default click behaviour in order to suppress
+    text selection and dragging over the video &mdash; and moving focus is part
+    of that same default behaviour. Both are fixed. If clicking the picture does
+    nothing for you, you are on a build from before that fix, and the methods
+    below are your route until you update.
+  </p>
+</aside>
+
+<h3>2. Give focus back after every click on your page</h3>
+
+<p>
+  The most reliable fix, and the one our own demo uses. Whenever your page is
+  clicked, hand focus back to the frame:
+</p>
+
+<pre class="scroll"><code>const frame = document.getElementById("stream");
+
+document.body.addEventListener("click", (event) =&gt; {
+  // Do NOT steal focus from anything the visitor is trying to type into.
+  if (event.target.closest("input, select, textarea, label")) return;
+  frame.focus();
+});</code></pre>
+
+<aside class="callout warning">
+  <p><strong>That exclusion is not optional</strong></p>
+  <p>
+    Without it, your own text fields become impossible to use: the click that
+    puts the caret in the box is the same click that takes focus straight back
+    out of it, so nothing can ever be typed. Exclude every element a visitor
+    types into or selects from.
+  </p>
+</aside>
+
+<h3>3. Return focus after a control has done its job</h3>
+
+<p>
+  A button is a completed action. Once it has run, your visitor almost certainly
+  wants to be back in the application &mdash; so give focus back on the way out,
+  after the click handler, not instead of it:
+</p>
+
+<pre class="scroll"><code>myButton.addEventListener("click", () =&gt; {
+  doTheThing();
+  setTimeout(() =&gt; frame.focus(), 0);   // after this handler, not during it
+});</code></pre>
+
+<p>
+  This matters most for the controls that sit next to a stream: a microphone
+  picker, a quality selector, a fullscreen toggle. Leaving focus parked on the
+  button is how a visitor ends up typing into a dead page.
+</p>
+
+<h3>4. Focus the frame when the stream is ready</h3>
+
+<p>
+  So that the first keystroke works without anyone having to click the picture
+  first:
+</p>
+
+<pre class="scroll"><code>frame.addEventListener("load", () =&gt; setTimeout(() =&gt; frame.focus(), 0));</code></pre>
+
+<p>
+  Use this one with judgement. If your page has a form the visitor is expected to
+  fill in before they start streaming, taking focus on load will interrupt them.
+</p>
+
+<h2>What we cannot do for you, and why</h2>
+
+<p>
+  A frame can take focus when it is clicked. It cannot take focus <em>back</em>
+  after your page has taken it &mdash; browsers do not allow content inside a
+  frame to pull focus out of the page containing it, and that restriction is a
+  security feature, not an oversight. An embedded advert that could steal your
+  keystrokes whenever it liked would be a far worse problem than this one.
+</p>
+
+<p>
+  So the pattern in section 2 is not a workaround for something we have failed to
+  do. <strong>It is the only place the decision can be made</strong>, because
+  only your page knows whether your visitor is halfway through typing their
+  email address.
+</p>
+
+<h2>Deciding what your page needs</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Your page</th><th>What to add</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>The stream, and nothing else around it</td>
+      <td>Nothing. A click on the video is enough.</td>
+    </tr>
+    <tr>
+      <td>A few buttons beside the stream</td>
+      <td>Section 3 &mdash; return focus after each button.</td>
+    </tr>
+    <tr>
+      <td>Controls, panels, menus around the stream</td>
+      <td>Section 2 &mdash; the click handler, with the exclusion.</td>
+    </tr>
+    <tr>
+      <td>Forms your visitor types into</td>
+      <td>Section 2, and test every field. The exclusion list is what makes
+          them usable.</td>
+    </tr>
+    <tr>
+      <td>The stream is the first thing they use</td>
+      <td>Add section 4 as well.</td>
+    </tr>
+  </tbody>
+</table>
 </div>
+
+<h2>Checking whether focus is the problem</h2>
+
+<p>
+  Before changing anything, confirm the diagnosis. Open your page, click one of
+  your own controls, then run this in the browser console &mdash; on
+  <strong>your</strong> page, not inside the frame:
+</p>
+
+<pre class="scroll"><code>document.getElementById("stream").focus();</code></pre>
+
+<p>
+  Now type, without clicking anything. If the application responds, focus was the
+  whole problem and the sections above will fix it permanently. If it still does
+  not, the cause is something else and it is worth telling us.
+</p>
+
+<aside class="callout tip">
+  <p><strong>A quicker check</strong></p>
+  <p>
+    Type <code>document.activeElement</code> into the console on your page. If it
+    reports your own button or input rather than the
+    <code>&lt;iframe&gt;</code>, the keyboard is going to your page &mdash; which
+    is precisely the fault.
+  </p>
+</aside>
+
+<h2>The Web SDK</h2>
+
+<p>
+  With the Web SDK there is no frame: the video element lives in your page, in
+  your document, so there is no boundary for focus to be stuck on the wrong side
+  of. The keyboard follows normal page rules.
+</p>
+
+<p>
+  One thing still applies. If your visitor is typing in one of your own text
+  fields, those keystrokes belong to that field &mdash; not to the application.
+  Whether to hand focus back, and when, is the same design decision as section 3,
+  just without the frame.
+</p>
 
   <!-- E3DS-CONTENT:END -->
   

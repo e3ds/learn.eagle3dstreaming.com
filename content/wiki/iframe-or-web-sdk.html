@@ -62,11 +62,43 @@
 </p>
 
 <p>
+  <strong>An iframe needs nothing from you, not even a redeploy.</strong> A
+  visitor reloading the page is already getting the current player. There is no
+  version of ours pinned inside your site, so there is nothing that can fall
+  behind.
+</p>
+
+<p>
   <strong>The Web SDK is a file you host.</strong> The version on your site is
   the version you last copied there, and it stays that version until you replace
-  it. A fix we shipped last month is not on your page until you update the
-  bundle, deploy it, and confirm it works with the rest of your site.
+  it. A fix we ship does not reach your visitors when we deploy it &mdash; it
+  reaches them at the end of a chain:
 </p>
+
+<ol>
+  <li>we fix it and publish a new SDK build</li>
+  <li>you learn that there is one</li>
+  <li>you download it and put it into your site</li>
+  <li>you test it against the rest of your page</li>
+  <li>you deploy</li>
+</ol>
+
+<p>
+  Every step is somebody making time for it, and in practice that is usually not
+  the same week. A fix that took us an afternoon can sit unused on a live site
+  for months &mdash; not because anything went wrong, but because nothing in that
+  chain happens by itself.
+</p>
+
+<aside class="callout note">
+  <p><strong>We are working on this</strong></p>
+  <p>
+    Eagle 3D Streaming is actively improving how SDK updates reach the sites
+    using them, so that more of what we fix arrives without the full manual
+    round trip. It is genuine work in progress and we would rather say that
+    plainly than give you a date. Until it lands, plan for the chain above.
+  </p>
+</aside>
 
 <p>
   Neither is automatically better. Automatic updates are the whole point for a
@@ -81,6 +113,18 @@
   version on your page and the current one only ever grows, and the longer it
   gets the more of a job the update becomes.
 </p>
+
+<aside class="callout tip">
+  <p><strong>One embedding difference worth reading before you choose</strong></p>
+  <p>
+    With an iframe, keyboard input goes to whichever frame the browser considers
+    focused &mdash; so typing can silently go to your page instead of the
+    application. It is easily handled once you know, and it does not arise with
+    the SDK, where the video lives in your own document.
+    See <a href="/wiki/keyboard-focus">Typing does not reach the app: keyboard
+    focus</a>.
+  </p>
+</aside>
 
 <h2>The one that usually decides it: access</h2>
 
