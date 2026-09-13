@@ -5,9 +5,9 @@
   late.
 </p>
 
-<div class="note">
-  <h4>Try it before you build anything</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>Try it before you build anything</strong></p>
+<p>
     <a href="https://demo-sdk.eaglepixelstreaming.com/" rel="noreferrer" target="_blank">demo-sdk.eaglepixelstreaming.com</a>
     is the sample below, deployed and running. Open it and you get a live stream,
     the demo control panel, and every callback on this page firing against a real
@@ -28,7 +28,7 @@
     domain, behind your own login. If the SDK only worked same-origin, that demo
     could not run at all.
   </p>
-</div>
+</aside>
 
 <div class="prereq">
   <strong>Before you start you need three things</strong>
@@ -521,16 +521,16 @@ e3ds_controller.setTouchInputEnabled(false);</code></pre>
   player and exposing it is small.
 </p>
 
-<div class="note">
-  <h4>Press and hold are different things</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>Press and hold are different things</strong></p>
+<p>
     Worth knowing before you build a control around either. A <em>press</em> is
     a down and an up together, which is what a menu or an action key wants. A
     <em>hold</em> leaves the key down until you release it, which is what
     movement wants &mdash; and a single button that does both cannot hold
     anything.
   </p>
-</div>
+</aside>
 
 <h3>Volume</h3>
 
@@ -744,9 +744,9 @@ e3ds_controller.callbacks.onReceivingAppStartingProgress = function (percent) {
 </table>
 </div>
 
-<div class="note caution">
-  <h4><code>onRedirectingWithMessage</code> is not on this list, and that is worse</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong><code>onRedirectingWithMessage</code> is not on this list, and that is worse</strong></p>
+<p>
     It is not dead &mdash; it was <strong>renamed</strong>. The handler is now
     <code>onSessionEnding</code>, and a page still defining the old name has no
     end-of-session handler at all: the stream stops and the viewer is shown
@@ -756,7 +756,7 @@ e3ds_controller.callbacks.onReceivingAppStartingProgress = function (percent) {
     If your integration predates the rename, change that one line. Nothing else
     about it moved.
   </p>
-</div>
+</aside>
 
 <h2>When it does not work</h2>
 

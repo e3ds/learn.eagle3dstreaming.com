@@ -434,9 +434,9 @@
   the page for you: get the code, point it at your app, and run it.
 </p>
 
-<div class="note">
-  <h4>If you have not tried it yet, do that first</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>If you have not tried it yet, do that first</strong></p>
+<p>
     <a href="/wiki/web-sdk-demo-manual">The Web SDK demo manual</a> walks
     through the running demo control by control, with nothing to download and no
     key to enter. It is a much cheaper way to find out whether this is the right
@@ -449,7 +449,7 @@
     <strong>That is deliberate</strong> &mdash; it is the answer to "will this
     work on my own domain?", demonstrated rather than promised.
   </p>
-</div>
+</aside>
 
 <h2>Get the source code</h2>
 
@@ -491,9 +491,9 @@ scripts/
   own interface you need none of the three.
 </p>
 
-<div class="note">
-  <h4>Read <code>demo-ui-controls.js</code> before you build your own interface</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>Read <code>demo-ui-controls.js</code> before you build your own interface</strong></p>
+<p>
     You will delete it, but read it first. It is a worked example of driving
     every part of the SDK &mdash; building controls, wiring them to calls, and
     knowing <em>when</em> each one is safe to show.
@@ -503,7 +503,7 @@ scripts/
     only a session, others need the data channel open, and a button offered too
     early looks broken to the person clicking it.
   </p>
-</div>
+</aside>
 
 <h2>Configure it</h2>
 
@@ -550,9 +550,9 @@ scripts/
 </table>
 </div>
 
-<div class="note caution">
-  <h4>The account API key will not work here</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>The account API key will not work here</strong></p>
+<p>
     There are two credentials in the Developer section and they are not
     alternatives. <strong>Only the Streaming API key works with the SDK.</strong>
     The account API key is for the Control Panel APIs; used here it fails at
@@ -565,11 +565,11 @@ scripts/
   </p>
   <!-- TODO: add a screenshot of the Developer section showing both keys, so the
        difference is visible rather than described. -->
-</div>
+</aside>
 
-<div class="note">
-  <h4><code>application.domain</code> is for enterprise plans</h4>
-  <p>
+<aside class="callout note">
+  <p><strong><code>application.domain</code> is for enterprise plans</strong></p>
+<p>
     On our platform it is <code>connector.eagle3dstreaming.com</code> and you do
     not need to think about it.
   </p>
@@ -581,11 +581,11 @@ scripts/
     ask support rather than guessing. A wrong domain fails at connection time
     and looks like a network fault.
   </p>
-</div>
+</aside>
 
-<div class="note">
-  <h4><code>clientUserName</code> and <code>application.userName</code> are usually the same value</h4>
-  <p>
+<aside class="callout note">
+  <p><strong><code>clientUserName</code> and <code>application.userName</code> are usually the same value</strong></p>
+<p>
     They are sent to two different places in the token request &mdash;
     <code>application.userName</code> travels inside the application block and
     says <strong>whose app to launch</strong>; <code>clientUserName</code> is
@@ -606,7 +606,7 @@ scripts/
     that is perfectly good</em> &mdash; a failure that reads as expiry and is
     not.
   </p>
-</div>
+</aside>
 
 <h2>Run it</h2>
 
@@ -635,9 +635,9 @@ scripts/
 &lt;script defer src="./scripts/demo-ui-controls.js"&gt;&lt;/script&gt;
 &lt;script defer src="./scripts/sdk-token.js"&gt;&lt;/script&gt;</code></pre>
 
-<div class="note caution">
-  <h4>Two rules, and breaking one of them fails silently</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>Two rules, and breaking one of them fails silently</strong></p>
+<p>
     <strong>The SDK loads first.</strong> The SDK is
     <code>dist/e3dsCore.min_ns.js</code> &mdash; that one file is the whole of
     it, and it is what defines <code>e3ds_controller</code>. Everything after it
@@ -652,7 +652,7 @@ scripts/
     fired first. That one produces <em>no error at all</em> &mdash; just
     callbacks that never run.
   </p>
-</div>
+</aside>
 
 <h2>Moving it into your own application</h2>
 
@@ -670,9 +670,9 @@ scripts/
 
 <hr>
 
-<div class="note caution">
-  <h4>Upgrading from the SDK we shipped before 2026</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>Upgrading from the SDK we shipped before 2026</strong></p>
+<p>
     If you are here because an existing integration stopped working: the
     streaming infrastructure was upgraded and <strong>the previous SDK is not
     compatible with it.</strong> Integrations still on it have <em>stopped</em>
@@ -683,7 +683,7 @@ scripts/
     entirely on the web side, which makes the move smaller than it sounds
     &mdash; the steps above are the whole of it.
   </p>
-</div>
+</aside>
 
   <!-- E3DS-CONTENT:END -->
   <h2 class="children-head">In this section</h2><ul class="children"><li><a href="/wiki/streaming-api-key-and-tokens">Streaming API key and tokens</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li><li><a href="/wiki/serving-the-sdk-page">Serving the page</a></li></ul>

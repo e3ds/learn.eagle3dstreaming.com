@@ -116,7 +116,21 @@
   Scan the titles; open the one you need.
 </p>
 
-<details class="msg">
+<aside class="callout note">
+  <p><strong>Every message has its own address</strong></p>
+  <p>
+    Each entry below can be linked to directly, and the link opens it already
+    expanded &mdash; useful in a support reply, a ticket or your own runbook. The
+    crash message, for example, is
+    <a href="/wiki/session-end-messages#app-crashed">/wiki/session-end-messages#app-crashed</a>.
+  </p>
+  <p>
+    The id is on the entry itself, so it survives the list being reordered or a
+    title being reworded.
+  </p>
+</aside>
+
+<details class="msg" id="kicked-out">
   <summary><span class="n">1</span><span class="t">You kicked the viewer out</span><span class="s">You have been kicked out</span></summary>
   <div class="body">
     <p>
@@ -152,7 +166,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="time-limit">
   <summary><span class="n">2</span><span class="t">The session reached its time limit</span><span class="s">Session lasted for &lt;duration&gt;. Session expired.</span></summary>
   <div class="body">
     <p>
@@ -174,7 +188,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="idle-timeout">
   <summary><span class="n">3</span><span class="t">The viewer went idle</span><span class="s">You have been disconnected due to inactivity.</span></summary>
   <div class="body">
     <p>
@@ -217,7 +231,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="app-crashed">
   <summary><span class="n">4</span><span class="t">Your application crashed</span><span class="s">App Crashed</span></summary>
   <div class="body">
     <p>
@@ -241,7 +255,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="host-closed-meeting">
   <summary><span class="n">5</span><span class="t">A meeting host closed the meeting</span><span class="s">Host's Streaming Closed</span></summary>
   <div class="body">
     <p>
@@ -252,7 +266,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="link-expired">
   <summary><span class="n">6</span><span class="t">The link expired</span><span class="s">Url Expired</span></summary>
   <div class="body">
     <p>
@@ -263,7 +277,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="machine-offline">
   <summary><span class="n">7</span><span class="t">The machine is not online</span><span class="s">The machine "&lt;name&gt;" is not currently online…</span></summary>
   <div class="body">
     <p>
@@ -275,7 +289,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="no-machine-free">
   <summary><span class="n">8</span><span class="t">No machine is free</span><span class="s">The requested exe launcher is currently busy…</span></summary>
   <div class="body">
     <p>
@@ -291,7 +305,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="account-cannot-stream">
   <summary><span class="n">9</span><span class="t">The account cannot stream</span><span class="s">User &lt;name&gt; not found · no subscription · expired · maxUserLimit</span></summary>
   <div class="body">
     <p>Four messages, one cause: the account rather than the viewer.</p>
@@ -318,7 +332,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="wrong-password">
   <summary><span class="n">10</span><span class="t">The password was wrong</span><span class="s">You did not enter the correct password…</span></summary>
   <div class="body">
     <p>
@@ -328,7 +342,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="token-not-verified">
   <summary><span class="n">11</span><span class="t">The token did not verify</span><span class="s">Token verification: &lt;reason&gt;</span></summary>
   <div class="body">
     <p>
@@ -344,7 +358,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="unreal-version-unsupported">
   <summary><span class="n">12</span><span class="t">The Unreal version is not supported</span><span class="s">Your application is running on UE4.27…</span></summary>
   <div class="body">
     <p>
@@ -365,7 +379,7 @@
   </p>
 </div>
 
-<details class="msg">
+<details class="msg" id="never-pressed-play">
   <summary><span class="n">13</span><span class="t">The viewer never pressed play</span><span class="s">Disconnected due to not pressing play Button</span></summary>
   <div class="body">
     <p>
@@ -390,7 +404,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="ended-by-your-page">
   <summary><span class="n">14</span><span class="t">Your own page ended the session</span><span class="s">Session Ended</span></summary>
   <div class="body">
     <p>
@@ -407,7 +421,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="signalling-unreachable">
   <summary><span class="n">15</span><span class="t">The browser could not reach us</span><span class="s">Websocket connection to signalling server failed.</span></summary>
   <div class="body">
     <p>
@@ -423,7 +437,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="password-dismissed">
   <summary><span class="n">16</span><span class="t">The viewer dismissed the password box</span><span class="s">password cancled</span></summary>
   <div class="body">
     <p>
@@ -442,7 +456,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="no-executable">
   <summary><span class="n">17</span><span class="t">The build has no executable</span><span class="s">Invalid App. No exe found in any subdirectories</span></summary>
   <div class="body">
     <p>
@@ -458,7 +472,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="old-sdk">
   <summary><span class="n">18</span><span class="t">An old SDK version</span><span class="s">this old sdk not suppoted anymore</span></summary>
   <div class="body">
     <p>
@@ -473,7 +487,7 @@
   </div>
 </details>
 
-<details class="msg">
+<details class="msg" id="malformed-message">
   <summary><span class="n">19</span><span class="t">A message arrived malformed</span><span class="s">info is missing</span></summary>
   <div class="body">
     <p>
@@ -543,14 +557,14 @@
   the messages you are already handling.
 </p>
 
-<div class="note caution">
-  <h4>Do not branch on the message text</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>Do not branch on the message text</strong></p>
+<p>
     It is written for a person, and the wording can change. Show it; do not
     parse it. A page that switches behaviour on the words breaks the first time
     one is reworded.
   </p>
-</div>
+</aside>
 
 <h2>A shape that handles all of them</h2>
 

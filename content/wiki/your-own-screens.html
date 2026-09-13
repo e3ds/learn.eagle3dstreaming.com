@@ -5,9 +5,9 @@
   with an iframe it is a <code>postMessage</code> event.
 </p>
 
-<div class="note caution">
-  <h4>Read this before you design any of them</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>Read this before you design any of them</strong></p>
+<p>
     <strong>None of these callbacks can cancel or delay what is happening.</strong>
     They tell you; they do not let you intervene. So design every screen around
     the session already being over &mdash; offer a way to start a new one,
@@ -18,7 +18,7 @@
     blunt message, because it asks the viewer to wait for something that will
     never arrive.
   </p>
-</div>
+</aside>
 
 <h2>A loading screen</h2>
 
@@ -57,15 +57,15 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
   otherwise will stall at odd percentages.
 </p>
 
-<div class="note caution">
-  <h4>A hosted image needs the direct URL</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>A hosted image needs the direct URL</strong></p>
+<p>
     The one ending in <code>.png</code> or <code>.jpg</code> &mdash; not the
     share page the host shows you. <strong>A share page will not load as an
     image and the failure is silent:</strong> an empty loading screen rather
     than an error.
   </p>
-</div>
+</aside>
 
 <h2>A session-expired screen</h2>
 
@@ -86,9 +86,9 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
   to add.
 </p>
 
-<div class="note caution">
-  <h4><code>onSessionExpired</code> covers the time limit and nothing else</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong><code>onSessionExpired</code> covers the time limit and nothing else</strong></p>
+<p>
     It does not fire for a crash, an idle timeout, a wrong password or an
     expired link. If you want <em>one</em> screen for every way a session can
     end, build it on <code>onSessionEnding</code> instead &mdash; that one fires
@@ -98,7 +98,7 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
     <a href="/wiki/session-end-messages">Every message a session can end
     with</a> lists what that text can say.
   </p>
-</div>
+</aside>
 
 <h2>A message when something goes wrong</h2>
 
@@ -116,14 +116,14 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
   lists what it can say.
 </p>
 
-<div class="note caution">
-  <h4>"Something went wrong" on a session that simply timed out is worse than nothing</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>"Something went wrong" on a session that simply timed out is worse than nothing</strong></p>
+<p>
     This is the reason to use the message rather than a fixed string: a viewer
     whose hour ran out is not looking at a fault, and telling them they are
     costs you a support ticket and their confidence.
   </p>
-</div>
+</aside>
 
 <h2>Watch one being built</h2>
 
@@ -133,12 +133,12 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
   a press-any-key-to-start screen</a>.
 </p>
 
-<div class="note">
-  <h4>Where to go next</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>Where to go next</strong></p>
+<p>
     <a href="/wiki/javascript-sdk-guide">The Web SDK reference</a> has the full
     callback list and what each one actually fires for &mdash; including the
     four that are offered and never fire, which is worth reading before you
     build a screen on one of them.
   </p>
-</div>
+</aside>

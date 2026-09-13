@@ -433,14 +433,14 @@
   sometimes serving &mdash; the same job either way.
 </p>
 
-<div class="note">
-  <h4>You do not need this to get a stream running</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>You do not need this to get a stream running</strong></p>
+<p>
     <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a> ends with
     the page working from your own disk. Come here when you want somebody else
     to be able to open it.
   </p>
-</div>
+</aside>
 
 <h2>Why <code>file://</code> stops being good enough</h2>
 
@@ -473,21 +473,21 @@
     <tr><th>Option</th><th>Needs</th><th>Good for</th></tr>
   </thead>
   <tbody>
-    <tr><td><a href="#nginx">nginx on your own server</a></td>
+    <tr><td><a href="#nginx">Your own machine &mdash; nginx</a></td>
         <td>a machine, a domain, a certificate</td>
         <td>production, when you already have infrastructure</td></tr>
-    <tr><td><a href="#github-pages">GitHub Pages</a></td>
+    <tr><td><a href="#github-pages">GitHub Pages &mdash; no machine needed</a></td>
         <td>a free GitHub account</td>
         <td>no server, no cost, a public URL in minutes</td></tr>
-    <tr><td><a href="#nodejs">Node.js</a></td>
+    <tr><td><a href="#nodejs">Your own machine &mdash; Node.js</a></td>
         <td>a machine that runs Node</td>
         <td>when you also want the token handled server-side</td></tr>
-    <tr><td><a href="#iis">IIS on Windows</a></td>
+    <tr><td><a href="#iis">Your own machine &mdash; Windows IIS</a></td>
         <td>Windows, already installed</td>
         <td>a Windows machine you already run</td></tr>
-    <tr><td><a href="#quick-local">Python or any one-liner</a></td>
+    <tr><td><a href="#quick-local">Your own machine &mdash; Python, Node or PHP</a></td>
         <td>nothing</td>
-        <td>testing on your own machine only</td></tr>
+        <td>a quick look, on your own machine only</td></tr>
   </tbody>
 </table>
 </div>
@@ -500,7 +500,7 @@
 <hr>
 
 <details class="sect" id="quick-local">
-<summary><h2>Testing on your own machine</h2><span class="hint">Free, nothing to install</span></summary>
+<summary><h2>Serving from your own machine &mdash; Python, Node or PHP</h2><span class="hint">Free, nothing to install, one command</span></summary>
 <div class="body">
 
 <p>
@@ -513,24 +513,26 @@ npx serve .                    # Node.js
 php -S localhost:8000          # PHP</code></pre>
 
 <p>
-  Nothing about your configuration changes. This is the cheapest way to confirm
-  the page behaves the same over <code>http://</code> as it did from disk.
+  Nothing about your configuration changes. <strong>This is still serving, not
+  testing</strong> &mdash; testing is double-clicking the file, which needs no
+  server at all. This is the cheapest way to confirm the page behaves the same
+  over <code>http://</code> as it did from disk.
 </p>
 
-<div class="note caution">
-  <h4>These are for you, not for visitors</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>These are for you, not for visitors</strong></p>
+<p>
     They serve on <code>localhost</code>, have no certificate, and none of them
     is built to face the internet. Use them to test, then pick one of the
     options below for anybody else.
   </p>
-</div>
+</aside>
 
 </div>
 </details>
 
 <details class="sect" id="nginx">
-<summary><h2>nginx, on a server you already have</h2><span class="hint">Costs a machine, a domain and a certificate</span></summary>
+<summary><h2>Serving from your own machine &mdash; nginx</h2><span class="hint">Costs a machine, a domain and a certificate</span></summary>
 <div class="body">
 
 <p>
@@ -574,21 +576,21 @@ server {
   is handing over files.
 </p>
 
-<div class="note">
-  <h4>HTTPS is not optional in practice</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>HTTPS is not optional in practice</strong></p>
+<p>
     Browsers restrict what a page served over plain <code>http://</code> may do
     &mdash; the microphone in particular will not be granted. If your stream
     uses one, serve over <code>https://</code> or it will fail in a way that
     looks like our problem and is not.
   </p>
-</div>
+</aside>
 
 </div>
 </details>
 
 <details class="sect" id="github-pages">
-<summary><h2>GitHub Pages, with no server at all</h2><span class="hint">Free, and you get a public URL</span></summary>
+<summary><h2>Hosting on GitHub Pages &mdash; no machine of your own</h2><span class="hint">Free, and you get a public URL</span></summary>
 <div class="body">
 
 <p>
@@ -611,9 +613,9 @@ server {
   HTTPS, with a certificate handled for you. That URL is what you share.
 </p>
 
-<div class="note caution">
-  <h4>A public repository is genuinely public</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>A public repository is genuinely public</strong></p>
+<p>
     Anybody can read every file in it, including
     <code>scripts/sdk-config.js</code> &mdash; so the API key in it is not merely
     visible in the browser, it is visible in the repository, and it stays in the
@@ -623,13 +625,13 @@ server {
     Use a <strong>private</strong> repository, or do the change below first.
     This option and an API key in the page are a bad combination.
   </p>
-</div>
+</aside>
 
 </div>
 </details>
 
 <details class="sect" id="nodejs">
-<summary><h2>Node.js &mdash; and the reason to prefer it</h2><span class="hint">Costs a machine, but solves the key problem at the same time</span></summary>
+<summary><h2>Serving from your own machine &mdash; Node.js</h2><span class="hint">Costs a machine, and it is the only option that also solves the key problem</span></summary>
 <div class="body">
 
 <p>
@@ -643,9 +645,9 @@ server {
   page lacks: somewhere to put your API key that the browser cannot read.
 </p>
 
-<div class="note">
-  <h4>The arrangement worth building</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>The arrangement worth building</strong></p>
+<p>
     Your Node server holds the Streaming API key. When a page asks for a
     session, the server requests the token and returns <strong>only the
     token</strong> to the browser.
@@ -659,7 +661,7 @@ server {
     walks through the change. It is one function, and nothing else in your
     integration moves.
   </p>
-</div>
+</aside>
 
 <p>
   This is why Node is worth the machine it costs when the alternatives are free:
@@ -670,7 +672,7 @@ server {
 </details>
 
 <details class="sect" id="iis">
-<summary><h2>IIS, if you are on Windows</h2><span class="hint">Already installed, nothing to buy</span></summary>
+<summary><h2>Serving from your own machine &mdash; Windows IIS</h2><span class="hint">Already on the machine, nothing to buy</span></summary>
 <div class="body">
 
 <p>
@@ -709,9 +711,9 @@ server {
   page can live on your own domain, behind your own login.
 </p>
 
-<div class="note caution">
-  <h4>A public address changes one thing, and it matters</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>A public address changes one thing, and it matters</strong></p>
+<p>
     As soon as the page is reachable by other people, the API key in
     <code>sdk-config.js</code> is reachable too &mdash; it is one click of View
     Source away, and it does not expire.
@@ -720,7 +722,7 @@ server {
     <strong>Do this before you publish, not after:</strong>
     <a href="/wiki/sdk-secure-the-key">keeping the API key off the browser</a>.
   </p>
-</div>
+</aside>
 
   <!-- E3DS-CONTENT:END -->
   

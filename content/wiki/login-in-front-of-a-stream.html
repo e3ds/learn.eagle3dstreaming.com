@@ -4,9 +4,9 @@
   first, then load the stream page.
 </p>
 
-<div class="note caution">
-  <h4>Two checks, and the second is the one people leave out</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>Two checks, and the second is the one people leave out</strong></p>
+<p>
     A login page is the obvious half. The half that actually does the work is
     the page <em>holding the stream</em> verifying authentication
     <strong>before</strong> it loads anything.
@@ -15,7 +15,7 @@
     Without it, anyone who knows that page's address skips the login entirely
     &mdash; and a login you can walk around is decoration.
   </p>
-</div>
+</aside>
 
 <h2>The flow</h2>
 
@@ -39,9 +39,9 @@
   URL.
 </p>
 
-<div class="note caution">
-  <h4>Protect the token, not just the page</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>Protect the token, not just the page</strong></p>
+<p>
     With the Web SDK the <strong>session token</strong> is what actually grants
     access to the stream. So request it from your server <em>after</em> the
     login has passed &mdash; rather than embedding a key in a page and relying
@@ -52,7 +52,7 @@
     that gates a <em>session</em>. Only the second survives somebody reading
     your page source.
   </p>
-</div>
+</aside>
 
 <h2>Why this is the SDK's argument, not a feature you configure</h2>
 
@@ -70,20 +70,20 @@
   what each credential is and how long it lives.
 </p>
 
-<div class="note">
-  <h4>What a demo will not show you</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>What a demo will not show you</strong></p>
+<p>
     Any sample of this flow is a demonstration of <em>where the check goes</em>,
     not of how to check securely. A production login belongs on your server
     &mdash; real sessions, tokens or secure cookies. Treat the sample as the
     shape, and your own authentication as the substance.
   </p>
-</div>
+</aside>
 
-<div class="note">
-  <h4>Where to go next</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>Where to go next</strong></p>
+<p>
     <a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a> &mdash;
     where the token comes from, and why it should not come from the browser.
   </p>
-</div>
+</aside>

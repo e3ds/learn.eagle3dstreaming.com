@@ -433,9 +433,9 @@
   It is the same in Unreal whether the page uses the Web SDK or an iframe.
 </p>
 
-<div class="note">
-  <h4>Why this is a separate page</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>Why this is a separate page</strong></p>
+<p>
     The page half is easy to test and easy to see: you call
     <code>sendDataToUE</code>, and the call returns. The Unreal half is where
     messages actually go missing, because <strong>a message with nowhere to
@@ -443,7 +443,7 @@
     console, no complaint from the engine. If data is not reaching your app,
     this page is where the answer usually is.
   </p>
-</div>
+</aside>
 
 <h2>The one component everything depends on</h2>
 
@@ -459,9 +459,9 @@
   <li>Add <strong>Pixel Streaming Input</strong>.</li>
 </ol>
 
-<div class="note caution">
-  <h4>Without it, nothing works and nothing says so</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>Without it, nothing works and nothing says so</strong></p>
+<p>
     This is the single most common reason data does not arrive. The page sends
     it, the platform delivers it to the engine, and the engine has no actor
     prepared to receive it &mdash; so it stops there. Every symptom points at
@@ -470,7 +470,7 @@
   <p>
     Check this before you check anything else.
   </p>
-</div>
+</aside>
 
 <h2>Two kinds of message, and only one needs your code</h2>
 
@@ -533,16 +533,16 @@
   console.log("Message from Unreal:", descriptor);
 };</code></pre>
 
-<div class="note caution">
-  <h4>Assign the callback before the stream starts</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>Assign the callback before the stream starts</strong></p>
+<p>
     Callbacks are optional and the ones you do not define are simply never
     called &mdash; but one assigned <em>late</em> has already missed whatever
     arrived first. If your application sends something as it starts up, a
     callback wired after <code>startStream()</code> will not see it, and the
     message is gone rather than queued.
   </p>
-</div>
+</aside>
 
 <h2>If you are using an iframe instead</h2>
 
@@ -556,9 +556,9 @@
   value: { message: "Hello World!" }
 };</code></pre>
 
-<div class="note caution">
-  <h4>A wrong <code>cmd</code> is discarded in silence</h4>
-  <p>
+<aside class="callout warning">
+  <p><strong>A wrong <code>cmd</code> is discarded in silence</strong></p>
+<p>
     Without <code>cmd: "sendDataToUE"</code> the message goes nowhere and
     nothing complains. The frame receives it and simply does not forward it
     &mdash; no error, no warning, no delivery.
@@ -568,7 +568,7 @@
     failures in this whole path. Between them they account for most reports of
     "data is not arriving".
   </p>
-</div>
+</aside>
 
 <h2>Watch it being done</h2>
 
@@ -578,14 +578,14 @@
   message from your webpage to Unreal with the SDK</a>.
 </p>
 
-<div class="note">
-  <h4>Where to go next</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>Where to go next</strong></p>
+<p>
     <a href="/wiki/javascript-sdk-guide">The Web SDK reference</a> covers the
     page side of all of this &mdash; the three send calls, what each is for, and
     every callback the stream will make back to you.
   </p>
-</div>
+</aside>
 
   <!-- E3DS-CONTENT:END -->
   

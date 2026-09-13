@@ -157,9 +157,9 @@
 </table>
 </div>
 
-<div class="note">
-  <h4>Putting your own login in front of it</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>Putting your own login in front of it</strong></p>
+<p>
     Deciding <em>who</em> gets a token is a question for your own
     authentication. <a href="/wiki/login-in-front-of-a-stream">Login integration</a>
     covers the flow &mdash; and the one step that matters:
@@ -172,11 +172,11 @@
     Without it, anyone who knows that page's address skips the login entirely,
     and a login you can walk around is decoration.
   </p>
-</div>
+</aside>
 
-<div class="note">
-  <h4>This is the real reason to choose the SDK</h4>
-  <p>
+<aside class="callout note">
+  <p><strong>This is the real reason to choose the SDK</strong></p>
+<p>
     Not the control surface, and not the callbacks &mdash; those are
     conveniences. The reason is this one: <strong>keep the Streaming API key on
     your server and the browser never holds anything reusable.</strong> A token
@@ -187,7 +187,7 @@
     doing. A password in front of a link is a different thing from a server
     deciding, per request, whether this person may have a session right now.
   </p>
-</div>
+</aside>
 
 <h2>Checking you have actually done it</h2>
 
