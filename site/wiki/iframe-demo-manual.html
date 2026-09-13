@@ -10,11 +10,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>System requirements — Eagle 3D Streaming</title>
+<title>iframe demo manual — Eagle 3D Streaming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="Your application runs on our servers, not on your users' machines. This is the hardware it gets, the budget it has to fit inside, and what happens if it does not. What your app runs on Our streaming servers are in the United States and Europe.">
+<meta name="description" content="A manual for the running iframe demo. No account, no key, nothing to download &amp;mdash; open the page and every control described here is in front of you. When you want the code, there is one link at the bottom.">
 
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
@@ -33,7 +33,7 @@
      follow; this only means a single page can be opened up early, deliberately,
      by someone who has read that checklist. -->
 <meta name="robots" content="noindex,nofollow">
-<link rel="canonical" href="https://docs.eagle3dstreaming.com/wiki/hardware-and-software-specifications">
+<link rel="canonical" href="written from the demo source and a live session, 2026-09-13">
 
 <!-- [E3DS-LEARN-SEO] What a link to this page looks like when somebody shares
      it - in Slack, on LinkedIn, in a message. Without these, every share of
@@ -42,13 +42,13 @@
      placeholder: a broken image in a preview looks worse than no image. -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Eagle 3D Streaming">
-<meta property="og:title" content="System requirements">
-<meta property="og:description" content="Your application runs on our servers, not on your users' machines. This is the hardware it gets, the budget it has to fit inside, and what happens if it does not. What your app runs on Our streaming servers are in the United States and Europe.">
-<meta property="og:url" content="https://docs.eagle3dstreaming.com/wiki/hardware-and-software-specifications">
+<meta property="og:title" content="iframe demo manual">
+<meta property="og:description" content="A manual for the running iframe demo. No account, no key, nothing to download &amp;mdash; open the page and every control described here is in front of you. When you want the code, there is one link at the bottom.">
+<meta property="og:url" content="written from the demo source and a live session, 2026-09-13">
 
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="System requirements">
-<meta name="twitter:description" content="Your application runs on our servers, not on your users' machines. This is the hardware it gets, the budget it has to fit inside, and what happens if it does not. What your app runs on Our streaming servers are in the United States and Europe.">
+<meta name="twitter:title" content="iframe demo manual">
+<meta name="twitter:description" content="A manual for the running iframe demo. No account, no key, nothing to download &amp;mdash; open the page and every control described here is in front of you. When you want the code, there is one link at the bottom.">
 
 <style>
   :root{
@@ -431,109 +431,309 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 <body>
 
 
-<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-interface">The streaming interface</a></summary><ul><li><a href="/wiki/settings-bar">The settings bar, button by button</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></summary><ul><li><a href="/wiki/iframe-demo-manual">iframe demo manual</a></li></ul></details></li><li><a href="/wiki/iframe-or-web-sdk">iframe or Web SDK</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a></summary><ul><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></summary><ul><li><a href="/wiki/streaming-api-key-and-tokens">Streaming API key and tokens</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li><li><a href="/wiki/serving-the-sdk-page">Serving the page</a></li></ul></details></li><li><a href="/wiki/the-token-and-main">The token, and e3ds_controller.main()</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></summary><ul><li><a href="/wiki/unreal-side-of-data">The Unreal side of sending and receiving data</a></li><li><a href="/wiki/your-own-screens">Your own loading and ending screens</a></li></ul></details></li></ul></details></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/system-requirements" class="on" aria-current="page">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-interface">The streaming interface</a></summary><ul><li><a href="/wiki/settings-bar">The settings bar, button by button</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><details class="e3dsNavSec" open><summary><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></summary><ul><li><a href="/wiki/iframe-demo-manual" class="on" aria-current="page">iframe demo manual</a></li></ul></details></li><li><a href="/wiki/iframe-or-web-sdk">iframe or Web SDK</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a></summary><ul><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></summary><ul><li><a href="/wiki/streaming-api-key-and-tokens">Streaming API key and tokens</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li><li><a href="/wiki/serving-the-sdk-page">Serving the page</a></li></ul></details></li><li><a href="/wiki/the-token-and-main">The token, and e3ds_controller.main()</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></summary><ul><li><a href="/wiki/unreal-side-of-data">The Unreal side of sending and receiving data</a></li><li><a href="/wiki/your-own-screens">Your own loading and ending screens</a></li></ul></details></li></ul></details></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
 
 <div class="wrap">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep">/</span><span class="here">System requirements</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep crumbMoreSep">/</span><button type="button" class="crumbMore" aria-label="Show the levels in between" onclick="this.closest('.crumbs').classList.add('crumbsOpen')">&hellip;</button><span class="sep mid">/</span><a class="mid" href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a><span class="sep">/</span><span class="here">iframe demo manual</span></nav>
   
-  <h1>System requirements</h1>
+  <h1>iframe demo manual</h1>
   <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
-  Your application runs on our servers, not on your users' machines. This is the
-  hardware it gets, the budget it has to fit inside, and what happens if it does
-  not.
+  A manual for the running iframe demo. No account, no key, nothing to download
+  &mdash; open the page and every control described here is in front of you.
+  When you want the code, there is one link at the bottom.
 </p>
 
-<h2>What your app runs on</h2>
-
-<p>
-  Our streaming servers are in the United States and Europe. We can also deploy
-  on AWS, GCP and Azure &mdash; see <a href="/wiki/cloud-vms">cloud VMs</a> if
-  you need a specific region or want to use your own account.
-</p>
-
-<div class="scroll">
-  <table>
-    <thead>
-      <tr><th>Resource</th><th>The machine has</th><th>Your app should use up to</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Memory</td><td>32 GB</td><td>20 GB</td></tr>
-      <tr><td>GPU memory</td><td>8&ndash;16 GB</td><td>4&ndash;6 GB</td></tr>
-      <tr><td>CPU</td><td>Intel i7 / AMD R7</td><td>50&ndash;70% utilisation</td></tr>
-      <tr><td>GPU</td><td>RTX 4080 / 5070</td><td>50&ndash;70% utilisation</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<p>
-  <strong>The right-hand column is the one that matters.</strong> The machine's
-  full capacity is not yours to spend: the operating system, the encoder that
-  turns your frames into video, and the streaming stack all need room. An app
-  that fits the middle column but not the right one will look fine in testing
-  and fail under load.
-</p>
-
-<div class="outcome">
-  <strong>The number to check first</strong>
+<aside class="callout note">
+  <p><strong>Open it</strong></p>
   <p>
-    <strong>GPU memory.</strong> Running out of it is the most common reason an
-    upload fails its test or a stream dies mid-session, and the error it
-    produces &mdash; <code>Out of Video Memory</code> &mdash; usually arrives
-    without warning after several minutes of apparently normal running.
+    <a href="https://e3ds.github.io/E3DS-Iframe-Demo/" rel="noreferrer" target="_blank">e3ds.github.io/E3DS-Iframe-Demo/</a>
   </p>
-</div>
-
-<h2>Where to start</h2>
-
-<p>
-  These three settings do more for streaming performance than anything else, and
-  cost the least to change:
-</p>
-
-<div class="prereq">
-  <h2>Recommended baseline</h2>
-  <ul>
-    <li><strong>1280 &times; 720</strong> resolution. Streaming is video, and a
-      smaller frame is a smaller, faster, more reliable video.</li>
-    <li><strong>30 frames per second.</strong></li>
-    <li><strong>PAK files disabled</strong> in Project Settings. They slow the
-      start of every session.</li>
-  </ul>
-</div>
-
-<p>
-  <a href="/wiki/optimise-your-app">Optimising your app</a> goes considerably
-  further, including the settings that matter specifically on phones.
-</p>
-
-<h2>If your app needs more</h2>
-
-<p>
-  Some applications genuinely cannot fit &mdash; a large architectural scene, a
-  simulation with heavy physics, anything built for a workstation.
-  <a href="https://support.eagle3dstreaming.com/" rel="noreferrer" target="_blank">Contact
-  support</a> rather than trying to squeeze it in. Custom hardware is available,
-  and a machine sized for the app costs far less than a stream that fails in
-  front of your customers.
-</p>
-
-<aside class="callout warning">
   <p>
-    <strong>An app that exceeds the hardware does not fail politely.</strong> It
-    may crash during the upload test, or run for several minutes and then stop
-    mid-session. Neither failure names the resource that ran out, which is why
-    the budget above is worth checking before you upload rather than after.
+    A real application, on a real machine, streamed into an iframe on a page
+    hosted somewhere else entirely. Give it a few seconds: a machine has to be
+    found and your application started on it before there is a picture.
+  </p>
+  <p>
+    That address is the repository itself, served by GitHub Pages. Nothing about
+    embedding requires your page to sit on an Eagle 3D Streaming domain, and
+    hosting the demo on github.io proves it rather than claiming it.
   </p>
 </aside>
 
-<div class="next">
-  <a href="/wiki/optimise-your-app">Optimise your app &rarr;</a>
-  <p>Cursor, resolution, load time, and the settings that matter on phones.</p>
+<h2>It is the same panel as the Web SDK demo</h2>
+
+<p>
+  Deliberately. The two demos show the same controls over two different
+  transports, so you can open them side by side and see that the difference is
+  the wiring, not the features. Everything below has a counterpart in
+  <a href="/wiki/web-sdk-demo-manual">the Web SDK demo manual</a>, usually with
+  the same label.
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>In this demo</th><th>In the SDK demo</th></tr></thead>
+  <tbody>
+    <tr><td>a message posted at the frame</td><td>a JavaScript call on <code>e3ds_controller</code></td></tr>
+    <tr><td><code>{ cmd: "setVolume", value: 0.5 }</code></td><td><code>e3ds_controller.setVolume(0.5)</code></td></tr>
+    <tr><td>an event arrives as a <code>message</code></td><td>a callback you assigned is called</td></tr>
+  </tbody>
+</table>
 </div>
 
+<h2>Why the controls arrive at different times</h2>
+
+<p>
+  The panel fills in rather than appearing complete. That is deliberate, and it
+  is the first real thing this demo teaches: <strong>a control that cannot work
+  yet is not shown yet.</strong>
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Appears</th><th>Needs</th><th>Which controls</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Always</strong></td><td>nothing</td>
+        <td>Restart stream, the Stream URL field, the permission rows</td></tr>
+    <tr><td><strong>Once the channel is open</strong></td><td>a two-way link to the application</td>
+        <td>Show FPS, streaming graphs, the console command box, Device info, messages to your app</td></tr>
+    <tr><td><strong>Once frames arrive</strong></td><td>a picture to act on</td>
+        <td>quality, resolution, volume, mouse, keyboard, fullscreen, screenshot, Terminate</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>The log, which is the most useful thing here</h2>
+
+<p>
+  Everything this page sends into the stream, and everything that comes back,
+  appears in the <strong>Log</strong> panel &mdash; newest first, with an arrow
+  saying which direction it went.
+</p>
+
+<p>
+  It answers the question every integration eventually asks: <em>did that
+  actually arrive?</em> A message posted at a frame that nothing handles fails in
+  complete silence, so watching the log while you press a control is the
+  difference between debugging and guessing.
+</p>
+
+<aside class="callout tip">
+  <p><strong>Try this first</strong></p>
+  <p>
+    Press <strong>Show FPS</strong> and watch the log: one line out. Then wait
+    for the app to send something back and watch a line arrive the other way.
+    That pair is the whole of two-way communication, and everything else in this
+    demo is a variation on it.
+  </p>
+</aside>
+
+<h2>The panel, control by control</h2>
+
+<h3>Picture</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Quality: Low / Medium / High / Ultra</strong></td>
+      <td>The four named levels, the same ones the viewer's own quality menu
+        offers. A level is the portable unit &mdash; the platform resolves it to
+        whichever encoder scale the running plugin uses.</td></tr>
+    <tr><td><strong>Quality: HD</strong> and <strong>Quality point (QP)</strong></td>
+      <td>A raw quantisation parameter: lower is a better picture and more
+        bandwidth. Useful when you know which plugin you are on and want a
+        specific number.</td></tr>
+    <tr><td><strong>Adaptive quality</strong></td>
+      <td>A minimum and a maximum instead of a point; the encoder moves between
+        them as the network allows.</td></tr>
+    <tr><td><strong>1920 &times; 1080</strong>, <strong>800 &times; 600</strong>,
+        <strong>Custom resolution</strong></td>
+      <td>Pins the stream to a fixed size, whatever the frame is doing.
+        <code>1280x720</code>, <code>1280 720</code> and <code>1280, 720</code>
+        all work.</td></tr>
+    <tr><td><strong>Match window resolution</strong></td>
+      <td>Releases the pin and follows the frame again &mdash; the default, so it
+        is also how you undo the three above.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Sound and window</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Volume</strong></td>
+      <td>Acts on the player inside the frame. Raising it from silent may be
+        refused until the viewer has clicked something &mdash; browsers block
+        audio that starts without a gesture, and that refusal is invisible from
+        the parent page.</td></tr>
+    <tr><td><strong>Fullscreen</strong></td>
+      <td>This one is done by the <em>page</em>, not the stream: the demo calls
+        <code>requestFullscreen()</code> on the iframe element. Nothing is sent
+        anywhere, which is why it keeps working when the session has ended.</td></tr>
+    <tr><td><strong>Screenshot</strong></td>
+      <td>Captures the current frame inside the player and downloads it. The
+        parent page cannot do this itself &mdash; a cross-origin frame's pixels
+        are not readable from outside &mdash; so it is a command, not a browser
+        call.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Input</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Mouse: Hovering / Locked</strong></td>
+      <td>How the mouse drives the camera. Locked captures the pointer, as a
+        first-person game does.</td></tr>
+    <tr><td><strong>Key</strong> + <strong>Press / Hold / Release</strong></td>
+      <td>Types into the application from your own buttons. Press is one tap;
+        Hold and Release are the pair you need for anything held, such as
+        movement. This is how you build a WASD pad for a phone.</td></tr>
+    <tr><td><strong>Touch input: on / off</strong></td>
+      <td>Turn it off when your own buttons sit over the stream on a phone, so a
+        tap on your control does not also reach the app underneath it.</td></tr>
+    <tr><td><strong>Press play</strong></td>
+      <td>Presses the player's own play button, for a page with its own start
+        screen that does not want the viewer to click twice.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Diagnostics</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Show FPS</strong></td>
+      <td>Sends the Unreal console command <code>stat fps</code>. The counter is
+        drawn <em>by the application</em>, inside the picture &mdash; which is
+        why it appears in a screenshot.</td></tr>
+    <tr><td><strong>Show streaming graphs</strong></td>
+      <td>The transport's own numbers: bitrate, packet loss, latency. Useful when
+        the picture looks wrong and you want to know whether the network or the
+        application is at fault.</td></tr>
+    <tr><td><strong>Unreal console command</strong></td>
+      <td>Any command the app accepts at its own console &mdash; <code>stat
+        unit</code>, <code>r.ScreenPercentage 50</code>. See the warning
+        below before putting a box like this in a public page.</td></tr>
+    <tr><td><strong>Device info</strong></td>
+      <td>Asks the platform what device the viewer is on, and the answer arrives
+        as <code>takeUserDeviceInfo</code> &mdash; the same message an Unreal app
+        gets when it asks.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<aside class="callout warning">
+  <p><strong>A free-text console box is not a feature to copy blindly</strong></p>
+  <p>
+    The command runs with the application's own privileges on the machine
+    streaming to that viewer. It belongs in a demo and in your own testing. In a
+    public page, send the specific commands you support rather than whatever a
+    visitor types.
+  </p>
+</aside>
+
+<h3>Your app</h3>
+
+<p>
+  <strong>Character</strong> and <strong>Skin</strong> appear only when the demo
+  is streaming an application known to understand them, and that gating is worth
+  understanding: those buttons send a message that means nothing to any other
+  app, and a message that means nothing produces no error &mdash; just a button
+  that appears broken.
+</p>
+
+<p>
+  <strong>Message to your app</strong> sends whatever you type: JSON if it
+  parses, a plain string if it does not. That is the one to use the moment you
+  point this demo at your own application &mdash; and what arrives at the other
+  end needs something waiting for it, which is
+  <a href="/wiki/unreal-side-of-data">the Unreal side of sending and receiving
+  data</a>.
+</p>
+
+<h3>Session and connection</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Restart stream</strong></td>
+      <td>Reloads the frame, which starts a fresh session. Available even before
+        there is a stream, because it is also how you recover from one that never
+        started.</td></tr>
+    <tr><td><strong>Terminate stream</strong></td>
+      <td>Ends the session deliberately and releases the machine. Nothing
+        reconnects on its own.</td></tr>
+    <tr><td><strong>Stream URL</strong> + <strong>Apply</strong></td>
+      <td>Points the demo at a different application without editing a file. What
+        you type is remembered in your browser only.</td></tr>
+    <tr><td><strong>Camera</strong>, <strong>Fullscreen</strong> rows</td>
+      <td>What the page is willing to share with the frame, written into the
+        <code>allow</code> attribute when it reloads. The state beside each one is
+        what the <em>browser</em> currently thinks &mdash; the two are different
+        things, and a denied permission cannot be undone by any attribute.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<aside class="callout note">
+  <p><strong>Controls that appear dimmed</strong></p>
+  <p>
+    The demo asks the player, once, whether it understands the newer commands. If
+    it does not, <strong>Volume</strong>, <strong>Screenshot</strong>,
+    <strong>Match window resolution</strong>, <strong>Terminate stream</strong>
+    and <strong>Device info</strong> are dimmed and say so, because those
+    commands would otherwise be sent and ignored without a word.
+  </p>
+  <p>
+    Nothing is wrong with your page when you see that. It means the platform
+    build streaming to you predates those commands.
+  </p>
+</aside>
+
+<h2>The microphone is a separate demo</h2>
+
+<p>
+  <a href="https://e3ds.github.io/E3DS-Iframe-Demo/microphone/" rel="noreferrer" target="_blank">e3ds.github.io/E3DS-Iframe-Demo/microphone/</a>
+  is this same demo with the microphone built in: asking for the permission,
+  choosing an input device, and the reasons both are harder than they look.
+</p>
+
+<p>
+  It is separate on purpose. A page that asks for a microphone costs every
+  visitor a browser prompt, and most integrations do not need one. See
+  <a href="/wiki/choose-the-microphone">choosing the microphone</a>.
+</p>
+
+<h2>Like what you see?</h2>
+
+<aside class="callout note">
+  <p><strong>Make it stream your own application</strong></p>
+  <p>
+    <a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a> &mdash;
+    the whole embedding story. Or take the demo itself:
+    <a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">github.com/e3ds/E3DS-Iframe-Demo</a>,
+    where one line in <code>js/iframe-config.js</code> points it at your app.
+  </p>
+  <p>
+    Weighing this against the SDK? <a href="/wiki/iframe-or-web-sdk">iframe or
+    Web SDK</a> puts them side by side.
+  </p>
+</aside>
+
   <!-- E3DS-CONTENT:END -->
-  <h2 class="children-head">In this section</h2><ul class="children"><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><a href="/wiki/streaming-agent">Stream from your own hardware</a></li></ul>
+  
   <!-- Every source page carried its own copy of this. Once, here, instead:
        sixteen copies is sixteen places to update a support link. -->
   <footer>

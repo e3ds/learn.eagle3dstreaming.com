@@ -1,0 +1,12 @@
+{
+ "title": "iframe or Web SDK",
+ "slug": "iframe-or-web-sdk",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-into-webpage"
+ ],
+ "source": "written 2026-09-13, after the two demos were brought level",
+ "rewritten": true,
+ "replaces": [],
+ "order": 2
+}

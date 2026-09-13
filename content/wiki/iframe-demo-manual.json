@@ -1,0 +1,12 @@
+{
+ "title": "iframe demo manual",
+ "slug": "iframe-demo-manual",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-using-iframe"
+ ],
+ "source": "written from the demo source and a live session, 2026-09-13",
+ "rewritten": true,
+ "replaces": [],
+ "order": 1
+}

@@ -1,0 +1,293 @@
+<p class="standfirst">
+  A manual for the running iframe demo. No account, no key, nothing to download
+  &mdash; open the page and every control described here is in front of you.
+  When you want the code, there is one link at the bottom.
+</p>
+
+<aside class="callout note">
+  <p><strong>Open it</strong></p>
+  <p>
+    <a href="https://e3ds.github.io/E3DS-Iframe-Demo/" rel="noreferrer" target="_blank">e3ds.github.io/E3DS-Iframe-Demo/</a>
+  </p>
+  <p>
+    A real application, on a real machine, streamed into an iframe on a page
+    hosted somewhere else entirely. Give it a few seconds: a machine has to be
+    found and your application started on it before there is a picture.
+  </p>
+  <p>
+    That address is the repository itself, served by GitHub Pages. Nothing about
+    embedding requires your page to sit on an Eagle 3D Streaming domain, and
+    hosting the demo on github.io proves it rather than claiming it.
+  </p>
+</aside>
+
+<h2>It is the same panel as the Web SDK demo</h2>
+
+<p>
+  Deliberately. The two demos show the same controls over two different
+  transports, so you can open them side by side and see that the difference is
+  the wiring, not the features. Everything below has a counterpart in
+  <a href="/wiki/web-sdk-demo-manual">the Web SDK demo manual</a>, usually with
+  the same label.
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>In this demo</th><th>In the SDK demo</th></tr></thead>
+  <tbody>
+    <tr><td>a message posted at the frame</td><td>a JavaScript call on <code>e3ds_controller</code></td></tr>
+    <tr><td><code>{ cmd: "setVolume", value: 0.5 }</code></td><td><code>e3ds_controller.setVolume(0.5)</code></td></tr>
+    <tr><td>an event arrives as a <code>message</code></td><td>a callback you assigned is called</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Why the controls arrive at different times</h2>
+
+<p>
+  The panel fills in rather than appearing complete. That is deliberate, and it
+  is the first real thing this demo teaches: <strong>a control that cannot work
+  yet is not shown yet.</strong>
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Appears</th><th>Needs</th><th>Which controls</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Always</strong></td><td>nothing</td>
+        <td>Restart stream, the Stream URL field, the permission rows</td></tr>
+    <tr><td><strong>Once the channel is open</strong></td><td>a two-way link to the application</td>
+        <td>Show FPS, streaming graphs, the console command box, Device info, messages to your app</td></tr>
+    <tr><td><strong>Once frames arrive</strong></td><td>a picture to act on</td>
+        <td>quality, resolution, volume, mouse, keyboard, fullscreen, screenshot, Terminate</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>The log, which is the most useful thing here</h2>
+
+<p>
+  Everything this page sends into the stream, and everything that comes back,
+  appears in the <strong>Log</strong> panel &mdash; newest first, with an arrow
+  saying which direction it went.
+</p>
+
+<p>
+  It answers the question every integration eventually asks: <em>did that
+  actually arrive?</em> A message posted at a frame that nothing handles fails in
+  complete silence, so watching the log while you press a control is the
+  difference between debugging and guessing.
+</p>
+
+<aside class="callout tip">
+  <p><strong>Try this first</strong></p>
+  <p>
+    Press <strong>Show FPS</strong> and watch the log: one line out. Then wait
+    for the app to send something back and watch a line arrive the other way.
+    That pair is the whole of two-way communication, and everything else in this
+    demo is a variation on it.
+  </p>
+</aside>
+
+<h2>The panel, control by control</h2>
+
+<h3>Picture</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Quality: Low / Medium / High / Ultra</strong></td>
+      <td>The four named levels, the same ones the viewer's own quality menu
+        offers. A level is the portable unit &mdash; the platform resolves it to
+        whichever encoder scale the running plugin uses.</td></tr>
+    <tr><td><strong>Quality: HD</strong> and <strong>Quality point (QP)</strong></td>
+      <td>A raw quantisation parameter: lower is a better picture and more
+        bandwidth. Useful when you know which plugin you are on and want a
+        specific number.</td></tr>
+    <tr><td><strong>Adaptive quality</strong></td>
+      <td>A minimum and a maximum instead of a point; the encoder moves between
+        them as the network allows.</td></tr>
+    <tr><td><strong>1920 &times; 1080</strong>, <strong>800 &times; 600</strong>,
+        <strong>Custom resolution</strong></td>
+      <td>Pins the stream to a fixed size, whatever the frame is doing.
+        <code>1280x720</code>, <code>1280 720</code> and <code>1280, 720</code>
+        all work.</td></tr>
+    <tr><td><strong>Match window resolution</strong></td>
+      <td>Releases the pin and follows the frame again &mdash; the default, so it
+        is also how you undo the three above.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Sound and window</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Volume</strong></td>
+      <td>Acts on the player inside the frame. Raising it from silent may be
+        refused until the viewer has clicked something &mdash; browsers block
+        audio that starts without a gesture, and that refusal is invisible from
+        the parent page.</td></tr>
+    <tr><td><strong>Fullscreen</strong></td>
+      <td>This one is done by the <em>page</em>, not the stream: the demo calls
+        <code>requestFullscreen()</code> on the iframe element. Nothing is sent
+        anywhere, which is why it keeps working when the session has ended.</td></tr>
+    <tr><td><strong>Screenshot</strong></td>
+      <td>Captures the current frame inside the player and downloads it. The
+        parent page cannot do this itself &mdash; a cross-origin frame's pixels
+        are not readable from outside &mdash; so it is a command, not a browser
+        call.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Input</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Mouse: Hovering / Locked</strong></td>
+      <td>How the mouse drives the camera. Locked captures the pointer, as a
+        first-person game does.</td></tr>
+    <tr><td><strong>Key</strong> + <strong>Press / Hold / Release</strong></td>
+      <td>Types into the application from your own buttons. Press is one tap;
+        Hold and Release are the pair you need for anything held, such as
+        movement. This is how you build a WASD pad for a phone.</td></tr>
+    <tr><td><strong>Touch input: on / off</strong></td>
+      <td>Turn it off when your own buttons sit over the stream on a phone, so a
+        tap on your control does not also reach the app underneath it.</td></tr>
+    <tr><td><strong>Press play</strong></td>
+      <td>Presses the player's own play button, for a page with its own start
+        screen that does not want the viewer to click twice.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Diagnostics</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Show FPS</strong></td>
+      <td>Sends the Unreal console command <code>stat fps</code>. The counter is
+        drawn <em>by the application</em>, inside the picture &mdash; which is
+        why it appears in a screenshot.</td></tr>
+    <tr><td><strong>Show streaming graphs</strong></td>
+      <td>The transport's own numbers: bitrate, packet loss, latency. Useful when
+        the picture looks wrong and you want to know whether the network or the
+        application is at fault.</td></tr>
+    <tr><td><strong>Unreal console command</strong></td>
+      <td>Any command the app accepts at its own console &mdash; <code>stat
+        unit</code>, <code>r.ScreenPercentage 50</code>. See the warning
+        below before putting a box like this in a public page.</td></tr>
+    <tr><td><strong>Device info</strong></td>
+      <td>Asks the platform what device the viewer is on, and the answer arrives
+        as <code>takeUserDeviceInfo</code> &mdash; the same message an Unreal app
+        gets when it asks.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<aside class="callout warning">
+  <p><strong>A free-text console box is not a feature to copy blindly</strong></p>
+  <p>
+    The command runs with the application's own privileges on the machine
+    streaming to that viewer. It belongs in a demo and in your own testing. In a
+    public page, send the specific commands you support rather than whatever a
+    visitor types.
+  </p>
+</aside>
+
+<h3>Your app</h3>
+
+<p>
+  <strong>Character</strong> and <strong>Skin</strong> appear only when the demo
+  is streaming an application known to understand them, and that gating is worth
+  understanding: those buttons send a message that means nothing to any other
+  app, and a message that means nothing produces no error &mdash; just a button
+  that appears broken.
+</p>
+
+<p>
+  <strong>Message to your app</strong> sends whatever you type: JSON if it
+  parses, a plain string if it does not. That is the one to use the moment you
+  point this demo at your own application &mdash; and what arrives at the other
+  end needs something waiting for it, which is
+  <a href="/wiki/unreal-side-of-data">the Unreal side of sending and receiving
+  data</a>.
+</p>
+
+<h3>Session and connection</h3>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Restart stream</strong></td>
+      <td>Reloads the frame, which starts a fresh session. Available even before
+        there is a stream, because it is also how you recover from one that never
+        started.</td></tr>
+    <tr><td><strong>Terminate stream</strong></td>
+      <td>Ends the session deliberately and releases the machine. Nothing
+        reconnects on its own.</td></tr>
+    <tr><td><strong>Stream URL</strong> + <strong>Apply</strong></td>
+      <td>Points the demo at a different application without editing a file. What
+        you type is remembered in your browser only.</td></tr>
+    <tr><td><strong>Camera</strong>, <strong>Fullscreen</strong> rows</td>
+      <td>What the page is willing to share with the frame, written into the
+        <code>allow</code> attribute when it reloads. The state beside each one is
+        what the <em>browser</em> currently thinks &mdash; the two are different
+        things, and a denied permission cannot be undone by any attribute.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<aside class="callout note">
+  <p><strong>Controls that appear dimmed</strong></p>
+  <p>
+    The demo asks the player, once, whether it understands the newer commands. If
+    it does not, <strong>Volume</strong>, <strong>Screenshot</strong>,
+    <strong>Match window resolution</strong>, <strong>Terminate stream</strong>
+    and <strong>Device info</strong> are dimmed and say so, because those
+    commands would otherwise be sent and ignored without a word.
+  </p>
+  <p>
+    Nothing is wrong with your page when you see that. It means the platform
+    build streaming to you predates those commands.
+  </p>
+</aside>
+
+<h2>The microphone is a separate demo</h2>
+
+<p>
+  <a href="https://e3ds.github.io/E3DS-Iframe-Demo/microphone/" rel="noreferrer" target="_blank">e3ds.github.io/E3DS-Iframe-Demo/microphone/</a>
+  is this same demo with the microphone built in: asking for the permission,
+  choosing an input device, and the reasons both are harder than they look.
+</p>
+
+<p>
+  It is separate on purpose. A page that asks for a microphone costs every
+  visitor a browser prompt, and most integrations do not need one. See
+  <a href="/wiki/choose-the-microphone">choosing the microphone</a>.
+</p>
+
+<h2>Like what you see?</h2>
+
+<aside class="callout note">
+  <p><strong>Make it stream your own application</strong></p>
+  <p>
+    <a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a> &mdash;
+    the whole embedding story. Or take the demo itself:
+    <a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">github.com/e3ds/E3DS-Iframe-Demo</a>,
+    where one line in <code>js/iframe-config.js</code> points it at your app.
+  </p>
+  <p>
+    Weighing this against the SDK? <a href="/wiki/iframe-or-web-sdk">iframe or
+    Web SDK</a> puts them side by side.
+  </p>
+</aside>

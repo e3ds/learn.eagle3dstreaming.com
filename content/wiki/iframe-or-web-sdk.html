@@ -1,0 +1,158 @@
+<p class="standfirst">
+  Two ways to put a stream in your page. They reach the same platform, run the
+  same applications, and &mdash; since both demos were brought level &mdash;
+  offer the same controls. What differs is who holds the video element, and who
+  decides whether a session may start at all.
+</p>
+
+<h2>The short answer</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th></th><th>iframe</th><th>Web SDK</th></tr></thead>
+  <tbody>
+    <tr><td>To embed</td>
+        <td>one <code>&lt;iframe&gt;</code> tag</td>
+        <td>a script, a token, and a <code>main()</code> call</td></tr>
+    <tr><td>A Streaming API key</td>
+        <td><strong>not needed</strong></td>
+        <td>needed, to create session tokens</td></tr>
+    <tr><td>The video element</td>
+        <td>inside the frame, ours</td>
+        <td><strong>in your page, yours</strong></td></tr>
+    <tr><td>Who may start a session</td>
+        <td>anyone with the link</td>
+        <td><strong>whoever your server gives a token</strong></td></tr>
+    <tr><td>Talking to the application</td>
+        <td><code>postMessage</code> at the frame</td>
+        <td>direct calls on <code>e3ds_controller</code></td></tr>
+    <tr><td>Hearing back</td>
+        <td>a <code>message</code> event</td>
+        <td>a callback you assigned</td></tr>
+    <tr><td>Your own loading / ended screens</td>
+        <td>yes</td>
+        <td>yes</td></tr>
+    <tr><td>Styling around the video</td>
+        <td>around the frame</td>
+        <td><strong>anywhere, including over it</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  <strong>An iframe is quicker to embed. The SDK gives you control over who
+  streams and what the page around the video can do.</strong>
+</p>
+
+<h2>The one that usually decides it: access</h2>
+
+<p>
+  With an iframe, the URL is the access. You can put a password in front of it,
+  but you cannot revoke it for one person, and the address sitting in your page
+  source is a working link for anyone who reads it.
+</p>
+
+<p>
+  With the Web SDK, your backend decides who gets a token, when, and for which
+  application. A token is single use and expires in the time you set, so a leaked
+  one is harmless. That is a different kind of control, and it is the one thing
+  an iframe cannot be configured into doing.
+</p>
+
+<aside class="callout tip">
+  <p><strong>A reasonable order to do this in</strong></p>
+  <p>
+    Start with an iframe. It takes one line and proves the whole path &mdash;
+    your app, your account, your network, your page. Move to the SDK when you
+    need to decide who may stream, or when you want the video element itself.
+  </p>
+  <p>
+    Nothing is wasted by starting there. Everything you learn about sending and
+    receiving messages carries over, because it is the same set of commands
+    either way.
+  </p>
+</aside>
+
+<h2>The features are the same. The spelling is not.</h2>
+
+<p>
+  Every control in one demo now exists in the other. What changes when you move
+  a page across is <em>how you say it</em>, and the pattern is mechanical:
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>iframe</th><th>Web SDK</th></tr></thead>
+  <tbody>
+    <tr><td><code>{ cmd: "setVideoDetailLevel", value: "high" }</code></td>
+        <td><code>setVideoDetailLevel("high")</code></td></tr>
+    <tr><td><code>{ cmd: "setResolution" }</code> &mdash; as <code>freezeResolutionAt</code></td>
+        <td><code>setResolution(w, h)</code></td></tr>
+    <tr><td><code>{ cmd: "useViewportResolution" }</code></td>
+        <td><code>useViewportResolution()</code></td></tr>
+    <tr><td><code>{ cmd: "setVolume", value: 0.5 }</code></td>
+        <td><code>setVolume(0.5)</code></td></tr>
+    <tr><td><code>{ cmd: "captureScreenShot" }</code></td>
+        <td><code>captureScreenShot()</code></td></tr>
+    <tr><td><code>{ cmd: "sendConsoleCommandToUE", value: "stat fps" }</code></td>
+        <td><code>sendConsoleCommandToUE("stat fps")</code></td></tr>
+    <tr><td><code>{ cmd: "sendDataToUE", value: {…} }</code></td>
+        <td><code>sendDataToUE({…})</code></td></tr>
+    <tr><td><code>{ cmd: "emulateKeyboardKeyPress", value: "W" }</code></td>
+        <td><code>emulateKeyboardKeyPress("W")</code></td></tr>
+    <tr><td><code>{ cmd: "ForceEndSession" }</code></td>
+        <td><code>terminate()</code></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  Events follow the same rule. The iframe receives
+  <code>{ type: "stream.channelOpen" }</code>; the SDK calls
+  <code>callbacks.onDataChannelOpen</code>. The part after the dot is the same
+  word on purpose, so porting is a rename rather than a translation.
+</p>
+
+<aside class="callout warning">
+  <p><strong>Two names for one level, for now</strong></p>
+  <p>
+    The named quality levels are <code>setVideoDetailLevel</code> on the
+    production player and <code>setQualityPreset</code> on newer development
+    builds &mdash; the same function, renamed on one side and not yet the other.
+    The demo sends both, because an unrecognised command is ignored in silence
+    and one extra message is cheaper than a control that quietly does nothing.
+  </p>
+</aside>
+
+<h2>Both demos, side by side</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th></th><th>Live</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td><strong>iframe</strong></td>
+        <td><a href="https://e3ds.github.io/E3DS-Iframe-Demo/" rel="noreferrer" target="_blank">e3ds.github.io/E3DS-Iframe-Demo</a></td>
+        <td><a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">github.com/e3ds/E3DS-Iframe-Demo</a></td></tr>
+    <tr><td><strong>Web SDK</strong></td>
+        <td><a href="https://demo-sdk.eaglepixelstreaming.com/" rel="noreferrer" target="_blank">demo-sdk.eaglepixelstreaming.com</a></td>
+        <td><a href="https://github.com/e3ds/pixelstreaming-sdk" rel="noreferrer" target="_blank">github.com/e3ds/pixelstreaming-sdk</a></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  Open both. The panels are the same on purpose &mdash; same controls, same
+  groups, same log &mdash; so what you are comparing is the thing that actually
+  differs.
+</p>
+
+<aside class="callout note">
+  <p><strong>Where to go next</strong></p>
+  <p>
+    <a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a> &middot;
+    <a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a> &middot;
+    <a href="/wiki/iframe-demo-manual">the iframe demo, control by control</a>
+    &middot;
+    <a href="/wiki/web-sdk-demo-manual">the Web SDK demo, control by control</a>
+  </p>
+</aside>
