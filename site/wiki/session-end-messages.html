@@ -963,52 +963,21 @@
   </p>
 </aside>
 
-<h2>Reacting to a crash, and only a crash</h2>
+<h2>Reacting to a crash</h2>
 
 <p>
-  Showing &ldquo;something went wrong&rdquo; when a session simply timed out is
-  worse than showing nothing. To react to a genuine crash and nothing else you
-  need <strong>two events together</strong>, because neither is sufficient
-  alone.
-</p>
-
-<div class="scroll">
-<table>
-  <thead>
-    <tr><th>Event</th><th>Fires for</th><th>Carries</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>onStreamerDisconnected</code><br>
-        <span class="hint">iframe: <code>handleStreamerDisconnected</code></span></td>
-      <td><strong>Only</strong> the app process stopping &mdash; crash,
-        unexpected close, machine down.</td>
-      <td>No text.</td>
-    </tr>
-    <tr>
-      <td><code>onSessionEnding</code><br>
-        <span class="hint">iframe: <code>redirectingWithMessage</code></span></td>
-      <td><strong>Every</strong> session end, for any reason.</td>
-      <td>A readable message.</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p>
-  So the crash-specific event tells you it <em>was</em> a crash and gives you
-  nothing to say; the reliable event gives you something to say but fires for
-  everything. Combine them: <strong>set a flag when the crash event arrives,
-  and when the session-ending event follows, show your crash message only if
-  that flag is set.</strong>
+  <strong>Use <code>onSessionEnding</code> for this too.</strong> It fires for
+  every way a session ends &mdash; a crash included &mdash; and carries a line of
+  text saying which. So a crash is not a separate thing to wire up: it is one of
+  the messages you are already handling.
 </p>
 
 <div class="note caution">
-  <h4>Do not read the message text to work out what happened</h4>
+  <h4>Do not branch on the message text</h4>
   <p>
-    It is written for a person, and the wording can change. Use the
-    <em>events</em> to decide what occurred, and the text only to show someone.
-    A page that branches on the words breaks the first time one is reworded.
+    It is written for a person, and the wording can change. Show it; do not
+    parse it. A page that switches behaviour on the words breaks the first time
+    one is reworded.
   </p>
 </div>
 

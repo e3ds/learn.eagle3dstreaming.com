@@ -529,21 +529,30 @@ e3ds_controller.callbacks.onDataChannelOpen = function () {
   </p>
 </div>
 
-<h2>A message for a crash, and only a crash</h2>
+<h2>A message when something goes wrong</h2>
 
 <p>
-  Showing "something went wrong" when a session simply reached its time limit is
-  worse than showing nothing. Reacting to a genuine crash needs
-  <strong>two events together</strong>, because neither is sufficient alone
-  &mdash; the reasoning, and the flag pattern that solves it, are on
-  <a href="/wiki/session-end-messages">the session-end page</a>.
+  Build it on <code>onSessionEnding</code>. It fires for every way a session ends
+  &mdash; a crash, an idle timeout, an expired link, a wrong password &mdash; and
+  carries a line of text saying which, so one handler and one screen cover all of
+  them.
 </p>
 
 <p>
-  The short version: <code>onStreamerDisconnected</code> fires only for a crash
-  and carries no text; <code>onSessionEnding</code> fires for every ending and
-  carries the message. Set a flag on the first, read it on the second.
+  Show that text rather than inventing your own. It is written for the person
+  reading it, and it is the only part that knows what actually happened.
+  <a href="/wiki/session-end-messages">Every message a session can end with</a>
+  lists what it can say.
 </p>
+
+<div class="note caution">
+  <h4>"Something went wrong" on a session that simply timed out is worse than nothing</h4>
+  <p>
+    This is the reason to use the message rather than a fixed string: a viewer
+    whose hour ran out is not looking at a fault, and telling them they are
+    costs you a support ticket and their confidence.
+  </p>
+</div>
 
 <h2>Watch one being built</h2>
 

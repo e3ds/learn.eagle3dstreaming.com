@@ -626,7 +626,9 @@ e3ds_controller.setVolume(e3ds_controller.scaleVolumeTo01(75));</code></pre>
       <tr>
         <td><code>onStreamerDisconnected()</code></td>
         <td>The application stopped sending.</td>
-        <td>Say so plainly. This is not always permanent.</td>
+        <td><strong>Do not build on this one.</strong> It is unreliable, and
+          <code>onSessionEnding</code> already covers a crash &mdash; with text
+          explaining it.</td>
       </tr>
       <tr>
         <td><code>onSessionExpired()</code></td>
