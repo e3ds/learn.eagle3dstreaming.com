@@ -450,7 +450,7 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 <pre><code class="language-javascript">e3ds_controller.main({
     token:      tokenResponse.token,
     socket_url: tokenResponse.socket_url,
-    userName:   "your-username"
+    client:     "your-username"
 });</code></pre>
 
 <p>
@@ -523,7 +523,7 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 <pre><code class="language-javascript">e3ds_controller.main({
     token:      "the token you generated",
     socket_url: "the socket_url beside it",
-    userName:   "your-username"
+    client:     "your-username"
 });</code></pre>
 
 <p>
@@ -655,7 +655,7 @@ e3ds_controller.callbacks.onSessionEnding = function (message) {
 e3ds_controller.main({
     token:      tokenResponse.token,
     socket_url: tokenResponse.socket_url,
-    userName:   "your-username"
+    client:     "your-username"
 });</code></pre>
 
 <aside class="callout warning">
@@ -678,8 +678,16 @@ e3ds_controller.main({
     reads as expiry and is not.
   </p>
   <p>
-    We are collapsing these onto one name. Until then, set them the same and you
-    cannot go wrong.
+    We are collapsing these onto one name. <strong>Until that ships, send
+    <code>client</code> to <code>main()</code></strong> &mdash; it is what the
+    published SDK reads, and the newer spelling will simply be ignored by a
+    build that predates it.
+  </p>
+  <p>
+    The failure if you get ahead of it is unhelpfully disguised: the value
+    reaches nothing, the token is then looked up by an empty one, and
+    verification answers <strong>404 for a token that is perfectly good</strong>
+    &mdash; which reads as expiry.
   </p>
 </aside>
 
