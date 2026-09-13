@@ -460,7 +460,7 @@
 </p>
 
 <p>
-  Get it streaming <em>your</em> app before you move anything into your real
+  Get it streaming <em>your</em> app before you move anything into your own web
   project. It is a working integration, so anything that fails is your
   configuration rather than your code &mdash; a far smaller thing to debug than
   both at once.
@@ -479,9 +479,16 @@ scripts/
 └── dist/e3dsCore.min_ns.js      the SDK itself (generated, never edit)</code></pre>
 
 <p>
-  <code>sdk-*</code> is what you integrate. <code>demo-ui-*</code> is the demo
-  wrapped around it, and <code>css/style.css</code> styles only those buttons.
-  If you are building your own interface you need none of the three.
+  <strong><code>sdk-*</code> is the integration</strong> &mdash; those files,
+  plus <code>dist/</code>, are what goes into your own web project. You can
+  write your own from scratch against the same API, but copying these across is
+  the quicker path and they are already correct.
+</p>
+
+<p>
+  <code>demo-ui-*</code> is the demo wrapped around it, and
+  <code>css/style.css</code> styles only those buttons. If you are building your
+  own interface you need none of the three.
 </p>
 
 <div class="note">
@@ -536,7 +543,7 @@ scripts/
     <tr><td><code>tokenExpiryMs</code></td>
         <td><code>60000</code>. The token only has to last long enough to start the session.</td></tr>
     <tr><td><code>clientUserName</code></td>
-        <td>Identifies the person watching, for session records and limits. In a real integration, your own logged-in user's id.</td></tr>
+        <td><strong>Who is watching</strong> &mdash; not the same as <code>application.userName</code>, which is who owns the app. See below.</td></tr>
     <tr><td><code>configurationToOverride</code></td>
         <td>Empty. Per-session overrides of the stored configuration; it does not change the saved one.</td></tr>
   </tbody>
@@ -552,9 +559,12 @@ scripts/
     token generation, with nothing in the error that says "wrong sort of key".
   </p>
   <p>
-    <a href="/wiki/streaming-api-key-and-tokens">Streaming API key and
-    tokens</a> &mdash; which is which, where to get one, and what it produces.
+    Read <a href="/wiki/streaming-api-key-and-tokens">Streaming API key and
+    tokens</a> to understand the difference &mdash; which is which, where each
+    lives in the Control Panel, and what the Streaming key produces.
   </p>
+  <!-- TODO: add a screenshot of the Developer section showing both keys, so the
+       difference is visible rather than described. -->
 </div>
 
 <div class="note">
@@ -564,11 +574,33 @@ scripts/
     not need to think about it.
   </p>
   <p>
-    <strong>Enterprise customers running their own deployment</strong> have their
-    own domain, and it goes here. You are normally given it when the system is
-    handed over &mdash; if you have a custom deployment and do not know your
-    domain, ask support rather than guessing. A wrong domain fails at connection
-    time and looks like a network fault.
+    If you have a <strong>custom system streaming dedicated to you</strong>,
+    under the <a href="/wiki/plans-and-billing">enterprise plan</a>, it has its
+    own domain and that is what goes here. You are normally given it when the
+    system is handed over &mdash; if you have one and do not know your domain,
+    ask support rather than guessing. A wrong domain fails at connection time
+    and looks like a network fault.
+  </p>
+</div>
+
+<div class="note">
+  <h4><code>clientUserName</code> and <code>application.userName</code> are two different people</h4>
+  <p>
+    <code>application.userName</code> is <strong>the account that owns the
+    app</strong> &mdash; it travels with the application block and tells us
+    whose app to launch.
+  </p>
+  <p>
+    <code>clientUserName</code> is <strong>the viewer</strong>. It is sent as
+    the token's <code>client</code>, and the token is looked up by it
+    afterwards. In a real integration this is your own logged-in user's id, so
+    session records and limits are attributed to a person you recognise.
+  </p>
+  <p>
+    They are both required and they are not interchangeable. If the value the
+    token was created with does not match the one used later, verification
+    answers <strong>404 for a token that is perfectly good</strong> &mdash; a
+    failure that looks like an expired token and is not.
   </p>
 </div>
 
@@ -587,8 +619,8 @@ scripts/
 </p>
 
 <p>
-  Once it runs and you want other people to reach it, that is a separate job:
-  <a href="/wiki/serving-the-sdk-page">serving the page</a>.
+  <strong>Your application is now streaming on your own machine, from a file on
+  your disk.</strong> No server was involved, and nothing was uploaded.
 </p>
 
 <h2>Script order is not arbitrary</h2>
@@ -602,15 +634,19 @@ scripts/
 <div class="note caution">
   <h4>Two rules, and breaking one of them fails silently</h4>
   <p>
-    <strong>The SDK loads first</strong>, because everything after it refers to
-    <code>e3ds_controller</code>. Move it and you get
+    <strong>The SDK loads first.</strong> The SDK is
+    <code>dist/e3dsCore.min_ns.js</code> &mdash; that one file is the whole of
+    it, and it is what defines <code>e3ds_controller</code>. Everything after it
+    refers to that object, so move it and you get
     <code>e3ds_controller is not defined</code> &mdash; which at least says so.
   </p>
   <p>
-    <strong><code>sdk-token.js</code> loads last</strong>, because it starts the
-    stream. A callback registered after the stream has started has already
-    missed whatever fired first. That one produces <em>no error at all</em>
-    &mdash; just callbacks that never run.
+    <strong><code>sdk-token.js</code> loads last</strong>, because it is the
+    file that starts the stream: it holds the API call that exchanges your key
+    for a session token and hands that token to the player's main function. A
+    callback registered after the stream has started has already missed whatever
+    fired first. That one produces <em>no error at all</em> &mdash; just
+    callbacks that never run.
   </p>
 </div>
 
@@ -624,8 +660,8 @@ scripts/
 </p>
 
 <p>
-  Then, before anyone else can reach the page:
-  <a href="/wiki/sdk-secure-the-key">keep the API key off the browser</a>.
+  When you are ready for other people to open it, that is the next job:
+  <a href="/wiki/serving-the-sdk-page">serving the page</a>.
 </p>
 
 <hr>
