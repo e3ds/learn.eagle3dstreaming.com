@@ -193,6 +193,197 @@ to the first, each page served byte-for-byte identical to the file on disk, and
 the current page highlighted correctly per file. Checked locally on :6500 and
 over `https://learn.eagle3dstreaming.com`.
 
+### The tree as it stands — a SNAPSHOT, not a source of truth
+
+**Regenerate it rather than trusting this block.** The tree is built from the
+`.json` sidecars, so the sidecars are the truth and anything pasted here starts
+going stale the moment a page is added. This exists so a reader can see the
+shape without running anything, and so the problems called out underneath have
+something to point at.
+
+```
+cd content && python - <<'EOF'
+import json,glob,collections
+p={}
+for f in glob.glob("wiki/*.json"):
+    d=json.load(open(f,encoding="utf-8"))
+    if d.get("slug"): p[d["slug"]]=d
+k=collections.defaultdict(list); roots=[]
+for s,d in p.items():
+    ps=d.get("parents") or []
+    (k[ps[0]].append(s) if ps and ps[0] in p else roots.append(s))
+o=lambda s:(p[s].get("order") if p[s].get("order") is not None else 99, p[s].get("title",s))
+def draw(s,pre="",last=True):
+    print(f"{pre}{'└── ' if last else '├── '}{p[s].get('title',s)}  ·  {s}")
+    c=sorted(k.get(s,[]),key=o)
+    for i,x in enumerate(c): draw(x,pre+("    " if last else "│   "),i==len(c)-1)
+r=sorted(roots,key=o)
+for i,x in enumerate(r): draw(x,"",i==len(r)-1)
+EOF
+```
+
+Snapshot taken **2026-09-12** — 105 pages, 12 top-level sections, deepest
+branch 3 levels.
+
+```
+├── App configuration  ·  app-configuration
+│   ├── Developer options  ·  developer-options
+│   ├── Loading screen  ·  loading-screen
+│   ├── Session and access  ·  session-and-access
+│   └── The streaming interface  ·  streaming-interface
+│       └── The settings bar, button by button  ·  settings-bar
+├── Control Panel Features  ·  control-panel-features
+│   ├── API keys and tokens  ·  api-keys-and-tokens
+│   ├── Apps, links and versions  ·  apps-and-versions
+│   ├── Meeting links  ·  meeting-links
+│   ├── Monitoring and analytics  ·  monitoring-sessions
+│   ├── Pixel Streaming plugin versions  ·  plugin-compatibility
+│   ├── Plans and billing  ·  plans-and-billing
+│   ├── What happens when you upload and stream  ·  what-happens-when
+│   └── Your account and team  ·  your-account
+├── Developer guides  ·  development-guides
+│   ├── Testing locally  ·  test-locally
+│   │   ├── From your own browser  ·  test-from-your-browser
+│   │   ├── From another device  ·  test-on-another-device
+│   │   ├── A Linux build  ·  test-linux-locally
+│   │   ├── A VR app  ·  test-vr-locally
+│   │   └── A dedicated server  ·  test-dedicated-server-locally
+│   ├── Features plugin nodes  ·  features-plugin
+│   │   ├── Capture a screenshot  ·  screenshots
+│   │   ├── Open and redirect URLs  ·  open-and-redirect-urls
+│   │   ├── End a session from the app  ·  ending-sessions
+│   │   ├── File transfer  ·  file-transfer
+│   │   ├── Detect the viewer's device  ·  device-detection
+│   │   └── Mouse and fullscreen  ·  mouse-and-fullscreen
+│   ├── Plugins  ·  plugins
+│   │   ├── Install the Features plugin  ·  features-plugin-setup
+│   │   ├── Automation Tools plugin  ·  automation-tools-plugin
+│   │   ├── Remote Unreal Editor plugin  ·  remote-editor-plugin
+│   │   └── Multiplayer Server Scaling plugin  ·  server-scaling-plugin
+│   ├── Input and performance  ·  performance-optimization
+│   │   ├── Game controllers  ·  game-controller-support
+│   │   ├── On-screen keyboard  ·  on-screen-keyboard
+│   │   ├── NVIDIA DLSS  ·  dlss
+│   │   └── Audio and microphone  ·  audio-and-microphone
+│   ├── Patching an app  ·  patches
+│   │   ├── Try it on a demo app  ·  apply-a-patch
+│   │   ├── Launch profiles  ·  patch-launch-profiles
+│   │   └── Make your own patch  ·  create-a-patch
+│   ├── API reference  ·  api-reference
+│   │   ├── Health check API  ·  health-check-api
+│   │   ├── Analytics API  ·  analytics-api
+│   │   └── Automation Kit  ·  automation-kit
+│   └── Demos  ·  demos-and-tutorials
+│       ├── iframe demo  ·  iframe-demo
+│       └── Convai microphone  ·  convai-microphone
+├── Embedding  ·  embed-stream-into-webpage
+│   ├── Embed with an iframe  ·  embed-stream-using-iframe
+│   ├── Web SDK demo manual  ·  web-sdk-demo-manual
+│   ├── Embed with the SDK  ·  embed-stream-using-e3ds-sdk
+│   │   ├── SDK reference  ·  sdk-reference
+│   │   ├── Keeping your API key off the browser  ·  sdk-secure-the-key
+│   │   ├── Why a session ended  ·  session-end-messages
+│   │   └── Putting a login in front of a stream  ·  login-in-front-of-a-stream
+│   ├── JavaScript SDK: the complete guide  ·  javascript-sdk-guide
+│   │   ├── The Unreal side of sending and receiving data  ·  unreal-side-of-data
+│   │   └── Your own loading and ending screens  ·  your-own-screens
+│   ├── Sending and receiving data  ·  sending-and-receiving-data
+│   ├── Controlling the stream  ·  controlling-the-stream
+│   ├── Choose the microphone  ·  choose-the-microphone
+│   ├── Custom loading and error screens  ·  custom-screens
+│   ├── How the microphone is chosen  ·  device-ids-across-the-iframe
+│   ├── Putting a login in front  ·  login-integration
+│   └── Branding and hosting  ·  branding-and-hosting
+├── FAQ  ·  faq-frequently-asked-questions
+├── Foundational knowledge  ·  blogs-and-articles
+│   ├── Capacity and regions  ·  capacity-and-regions
+│   ├── Load time  ·  load-time
+│   ├── Ready Player Me  ·  ready-player-me
+│   ├── Shared and dedicated sessions  ·  shared-and-dedicated-sessions
+│   └── Unreal notes  ·  unreal-notes
+├── Getting Started  ·  getting-started
+│   ├── Create your account  ·  create-your-account
+│   ├── Prepare your app in Unreal  ·  prepare-your-app
+│   ├── Stream a sample app  ·  stream-a-sample-app
+│   ├── Upload from Unreal  ·  upload-from-unreal
+│   └── Upload from the Control Panel  ·  upload-from-the-control-panel
+├── Linux streaming  ·  linux-pixel-streaming
+│   ├── Build a Linux package  ·  linux-build
+│   └── Upload and stream a Linux build  ·  linux-upload-and-stream
+├── Multiplayer Pixel Streaming  ·  multiplayer-pixel-streaming
+│   ├── Build the project  ·  multiplayer-build-a-project
+│   ├── Package both builds  ·  multiplayer-package
+│   ├── Upload both builds  ·  multiplayer-upload
+│   ├── Start the server and play  ·  multiplayer-play
+│   ├── Automatic server join  ·  multiplayer-automatic-join
+│   ├── Upload from the editor  ·  multiplayer-upload-from-editor
+│   └── Metaverse  ·  metaverse-pixel-streaming
+├── System requirements  ·  system-requirements
+│   ├── Cloud VMs  ·  cloud-vms
+│   ├── Networks and firewalls  ·  network-and-firewall
+│   ├── Optimise your app  ·  optimise-your-app
+│   └── Stream from your own hardware  ·  streaming-agent
+│       ├── Preallocated apps  ·  preallocated-apps
+│       └── Update without uploading  ·  update-without-uploading
+├── Virtual reality streaming  ·  virtual-reality-pixel-streaming
+│   └── Set up a VR project  ·  vr-project-setup
+└── What's new  ·  what-s-new
+    ├── Control Panel Release Notes  ·  new-control-panel-release-note
+    ├── New Features  ·  new-features-released-in-the-new-control-panel
+    └── Payment System: Stripe integration  ·  new-payment-system-release-note
+```
+
+### What this tree shows that a page-by-page read does not
+
+**1. Embedding is flat, and four pages now have near-duplicate siblings.**
+Four migrated pages were rewritten as children of the SDK branch and the
+originals were deliberately not deleted. So the branch carries both:
+
+    Putting a login in front             login-integration            (old)
+    Putting a login in front of a stream login-in-front-of-a-stream   (new)
+
+    Sending and receiving data           sending-and-receiving-data   (old)
+    The Unreal side of ...               unreal-side-of-data          (new)
+
+    Custom loading and error screens     custom-screens               (old)
+    Your own loading and ending screens  your-own-screens             (new)
+
+    SDK reference                        sdk-reference                (old)
+    (absorbed into javascript-sdk-guide)
+
+Near-identical titles one branch apart. A reader browsing cannot tell which is
+current, and search returns both.
+
+**The fix is one line per sidecar**, and the mechanism already exists: add the
+old slug to the new page's `replaces` array and `build.js` emits a redirect
+stub. It does this for 276 merged-away pages already, so nothing is lost and
+the old URLs keep working.
+
+    unreal-side-of-data.json         replaces: ["sending-and-receiving-data"]
+    your-own-screens.json            replaces: ["custom-screens"]
+    login-in-front-of-a-stream.json  replaces: ["login-integration"]
+    javascript-sdk-guide.json        replaces: ["sdk-reference"]
+
+Left undone on purpose: retiring a page is a decision, not a chore.
+
+**2. `javascript-sdk-guide` is a SIBLING of `embed-stream-using-e3ds-sdk`, not
+a child of it.** So the intended reading order — demo manual, then setup, then
+reference — is not what the tree says. Setup and reference sit side by side,
+and their children are split across both.
+
+**3. `embed-stream-into-webpage` is the real parent of the whole area** and is
+worth keeping as such. It is the three-method comparison — Streaming URL,
+iframe, SDK, across fourteen topics — and nothing else does that job. Folding
+it into the SDK branch would strand every iframe reader.
+
+**4. The Streaming API key is not a Control Panel concern.** Checked: it appears
+in six pages, five of them SDK; the sixth match was the phrase "your Eagle 3D
+Streaming API key" — the PLAIN key — caught by substring. An iframe integration
+and a plain streaming URL use neither the Streaming API key nor a token. The
+account API key stays under Control Panel Features, where `analytics-api`,
+`api-reference`, `apps-and-versions`, `plans-and-billing` and `health-check-api`
+all need it; the Streaming API key and tokens belong to `sdk-secure-the-key`.
+
 ---
 
 ## 6. Hosting
