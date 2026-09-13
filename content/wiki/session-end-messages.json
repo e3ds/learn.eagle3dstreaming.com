@@ -3,10 +3,10 @@
  "slug": "session-end-messages",
  "section": "Embed Stream into Webpage",
  "parents": [
-  "javascript-sdk-guide"
+  "embed-stream-into-webpage"
  ],
  "source": "https://docs.eagle3dstreaming.com/wiki/streaming-app-monitor",
  "rewritten": true,
  "replaces": [],
- "order": 1
+ "order": 4
 }
