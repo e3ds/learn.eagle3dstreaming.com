@@ -1,0 +1,184 @@
+<p class="standfirst">
+  A stream starts with one call, <code>e3ds_controller.main()</code>, and that
+  call needs a <strong>session token</strong>. Everything else in the Web SDK
+  sits either side of those two facts. This page is both of them: where a token
+  comes from, and what to do with it.
+</p>
+
+<h2>The one call that starts a stream</h2>
+
+<pre><code class="language-javascript">e3ds_controller.main({
+    token:      tokenData.token,
+    socket_url: tokenData.socket_url,
+    client:     "the-viewer-id"
+});</code></pre>
+
+<p>
+  That is the SDK's entry point. <code>token</code> and <code>socket_url</code>
+  are required; anything else you pass is carried along and used where it
+  applies.
+</p>
+
+<aside class="callout warning">
+  <p><strong><code>main()</code> is ours. <code>startStream()</code> is yours.</strong></p>
+  <p>
+    The sample has a function called <code>startStream()</code> in
+    <code>sdk-token.js</code>. It fetches a token and then calls
+    <code>main()</code>. It is convenience code you own &mdash; rename it,
+    replace it, or delete it, and the SDK neither knows nor cares.
+  </p>
+  <p>
+    So wherever timing matters &mdash; <strong>"assign your callbacks before the
+    stream starts"</strong> &mdash; the line meant is <code>main()</code>.
+  </p>
+</aside>
+
+<h2>Three ways to get a token</h2>
+
+<p>
+  <code>main()</code> does not care where the token came from. Pick by how far
+  along you are.
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Where from</th><th>Good for</th><th>Key lives</th></tr></thead>
+  <tbody>
+    <tr><td><strong>The Control Panel, by hand</strong></td>
+        <td>a first look, a test, a bug report &mdash; no code at all</td>
+        <td>nowhere near your page</td></tr>
+    <tr><td><strong>The API, called from the browser</strong></td>
+        <td>building and developing, which is what the sample does</td>
+        <td><strong>in your page, readable by anyone</strong></td></tr>
+    <tr><td><strong>The API, called from your server</strong></td>
+        <td>production</td>
+        <td>on your server, where it belongs</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>By hand, from the Control Panel</h3>
+
+<p>
+  The Developer section has a <strong>Token Generation</strong> tab. Generate
+  one, paste it into <code>main()</code>, and you have a stream &mdash; no API
+  call, no key in your page, no code beyond the one line.
+</p>
+
+<p>
+  This is the quickest way to prove your integration works before any of the
+  plumbing exists. A token is single use and expires, so one you generated for a
+  test is spent afterwards and harmless.
+</p>
+
+<h3>From the API</h3>
+
+<pre><code class="language-http">POST https://token.eagle3dstreaming.com/api/v2/token/create
+Content-Type: application/json
+Authorization: Auth &lt;your Streaming API key&gt;</code></pre>
+
+<p>
+  The body says which application to launch, for whom, and for how long:
+</p>
+
+<pre><code class="language-javascript">{
+  "object": {
+    "core": {
+      "domain":            "connector.eagle3dstreaming.com",
+      "userName":          "your-username",
+      "appName":           "YourAppName",
+      "configurationName": "your-configuration",
+      "version":           "latest"
+    },
+    "configurationToOverride": {}
+  },
+  "expiry": 60000,
+  "client": "the-viewer-id"
+}</code></pre>
+
+<p>
+  <code>object.core</code> is the application block from
+  <code>sdk-config.js</code>, passed through as-is. <code>expiry</code> is how
+  long the token stays valid in milliseconds &mdash; it only has to survive long
+  enough to start the session. <code>client</code> identifies the viewer, and
+  <strong>the token is looked up by it afterwards</strong>, so it must be the
+  same value you later hand to <code>main()</code>.
+</p>
+
+<p>
+  What comes back is what <code>main()</code> wants:
+</p>
+
+<pre><code class="language-javascript">{
+  "token":      "…",
+  "socket_url": "…"
+}</code></pre>
+
+<aside class="callout warning">
+  <p><strong>Read the body when it refuses</strong></p>
+  <p>
+    A 401 says the request was refused; <em>the body says why</em> &mdash; wrong
+    key, expired, unknown application, quota. That sentence is the difference
+    between fixing it and guessing, and it is easy to discard unread.
+  </p>
+  <p>
+    The commonest cause is the wrong credential entirely: the account API key
+    instead of the Streaming API key. See
+    <a href="/wiki/streaming-api-key-and-tokens">Streaming API key and
+    tokens</a>.
+  </p>
+</aside>
+
+<h3>From your own server</h3>
+
+<p>
+  Same request, made from somewhere the browser cannot read. Your page asks your
+  server, your server asks us, and only the token comes back to the browser.
+</p>
+
+<p>
+  This is the only arrangement where your key is not published, and it is one
+  function's worth of change:
+  <a href="/wiki/sdk-secure-the-key">keeping your API key off the browser</a>.
+</p>
+
+<h2>Putting it together</h2>
+
+<pre><code class="language-javascript">// 1. Get a token — from your server, the API, or pasted in by hand.
+const tokenData = await fetch("/api/stream-token", { method: "POST" })
+                          .then(r =&gt; r.json());
+
+// 2. Register your callbacks BEFORE starting. Anything assigned after
+//    main() has already missed whatever fired first.
+e3ds_controller.callbacks.onSessionEnding = function (message) {
+    showMyEndScreen(message);
+};
+
+// 3. Start.
+e3ds_controller.main({
+    token:      tokenData.token,
+    socket_url: tokenData.socket_url,
+    client:     "the-viewer-id"
+});</code></pre>
+
+<aside class="callout warning">
+  <p><strong>A token is single use</strong></p>
+  <p>
+    Restarting a stream needs a <em>fresh</em> one &mdash; reusing the previous
+    token fails. Fetch the replacement <em>before</em> tearing down the session
+    that is running, so a failed request leaves the viewer watching what they
+    already had rather than nothing at all.
+  </p>
+</aside>
+
+<aside class="callout note">
+  <p><strong>It reports failure rather than throwing</strong></p>
+  <p>
+    A missing field is a setup mistake, not an exceptional condition, so
+    <code>main()</code> returns instead of throwing &mdash; a throw would take
+    down whatever called it. Check the result:
+    <code>result.ok === false</code>, with <code>result.missing</code> naming
+    exactly what was absent. The full shape is in
+    <a href="/wiki/javascript-sdk-guide">the Web SDK reference</a>.
+  </p>
+</aside>

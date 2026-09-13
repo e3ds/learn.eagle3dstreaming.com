@@ -10,11 +10,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Automation Kit — Eagle 3D Streaming</title>
+<title>The token, and e3ds_controller.main() — Eagle 3D Streaming</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400&display=swap">
-<meta name="description" content="A Node.js package that uploads a packaged build, registers it, and waits for the stream test &amp;mdash; so a deployment can be a step in a script rather than a person at a browser.">
+<meta name="description" content="A stream starts with one call, e3ds_controller.main() , and that call needs a session token . Everything else in the Web SDK sits either side of those two facts. This page is both of them: where a token comes from, and what to do with it.">
 
 <!-- Internal review only until the rewrite is finished. docs.eagle3dstreaming.com
      is still the public site, so it keeps the canonical and this one is hidden.
@@ -33,7 +33,7 @@
      follow; this only means a single page can be opened up early, deliberately,
      by someone who has read that checklist. -->
 <meta name="robots" content="noindex,nofollow">
-<link rel="canonical" href="https://docs.eagle3dstreaming.com/wiki/upload-unreal-app-using-e3ds-automation-kit">
+<link rel="canonical" href="written 2026-09-12 - the entry point and the token were documented nowhere as one subject">
 
 <!-- [E3DS-LEARN-SEO] What a link to this page looks like when somebody shares
      it - in Slack, on LinkedIn, in a message. Without these, every share of
@@ -42,13 +42,13 @@
      placeholder: a broken image in a preview looks worse than no image. -->
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Eagle 3D Streaming">
-<meta property="og:title" content="Automation Kit">
-<meta property="og:description" content="A Node.js package that uploads a packaged build, registers it, and waits for the stream test &amp;mdash; so a deployment can be a step in a script rather than a person at a browser.">
-<meta property="og:url" content="https://docs.eagle3dstreaming.com/wiki/upload-unreal-app-using-e3ds-automation-kit">
+<meta property="og:title" content="The token, and e3ds_controller.main()">
+<meta property="og:description" content="A stream starts with one call, e3ds_controller.main() , and that call needs a session token . Everything else in the Web SDK sits either side of those two facts. This page is both of them: where a token comes from, and what to do with it.">
+<meta property="og:url" content="written 2026-09-12 - the entry point and the token were documented nowhere as one subject">
 
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Automation Kit">
-<meta name="twitter:description" content="A Node.js package that uploads a packaged build, registers it, and waits for the stream test &amp;mdash; so a deployment can be a step in a script rather than a person at a browser.">
+<meta name="twitter:title" content="The token, and e3ds_controller.main()">
+<meta name="twitter:description" content="A stream starts with one call, e3ds_controller.main() , and that call needs a session token . Everything else in the Web SDK sits either side of those two facts. This page is both of them: where a token comes from, and what to do with it.">
 
 <style>
   :root{
@@ -430,128 +430,197 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 <body>
 
 
-<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-interface">The streaming interface</a></summary><ul><li><a href="/wiki/settings-bar">The settings bar, button by button</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a></summary><ul><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></summary><ul><li><a href="/wiki/streaming-api-key-and-tokens">Streaming API key and tokens</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li><li><a href="/wiki/serving-the-sdk-page">Serving the page</a></li></ul></details></li><li><a href="/wiki/the-token-and-main">The token, and e3ds_controller.main()</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></summary><ul><li><a href="/wiki/unreal-side-of-data">The Unreal side of sending and receiving data</a></li><li><a href="/wiki/your-own-screens">Your own loading and ending screens</a></li></ul></details></li></ul></details></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit" class="on" aria-current="page">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
+<aside id="e3dsNav"><nav class="e3dsNavInner" aria-label="Documentation"><a class="e3dsNavHome" href="/">Eagle 3D Streaming docs</a><ul class="e3dsNavRoot"><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/getting-started">Getting started</a></summary><ul><li><a href="/wiki/create-your-account">Create your account</a></li><li><a href="/wiki/prepare-your-app">Prepare your app in Unreal</a></li><li><a href="/wiki/stream-a-sample-app">Stream a sample app</a></li><li><a href="/wiki/upload-from-the-control-panel">Upload from the Control Panel</a></li><li><a href="/wiki/upload-from-unreal">Upload from Unreal</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><span>Streaming settings</span></summary><ul><li><a href="/microphone-settings.html">Microphone settings</a></li><li><a href="/fullscreen-button.html">Fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/app-configuration">App configuration</a></summary><ul><li><a href="/wiki/developer-options">Developer options</a></li><li><a href="/wiki/loading-screen">Loading screen</a></li><li><a href="/wiki/session-and-access">Session and access</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-interface">The streaming interface</a></summary><ul><li><a href="/wiki/settings-bar">The settings bar, button by button</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/control-panel-features">Control panel</a></summary><ul><li><a href="/wiki/api-keys-and-tokens">API keys and tokens</a></li><li><a href="/wiki/apps-and-versions">Apps, links and versions</a></li><li><a href="/wiki/meeting-links">Meeting links</a></li><li><a href="/wiki/monitoring-sessions">Monitoring and analytics</a></li><li><a href="/wiki/plugin-compatibility">Pixel Streaming plugin versions</a></li><li><a href="/wiki/plans-and-billing">Plans and billing</a></li><li><a href="/wiki/what-happens-when">What happens when you upload and stream</a></li><li><a href="/wiki/your-account">Your account and team</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup" open><summary><a href="/wiki/embed-stream-into-webpage">Embedding</a></summary><ul><li><a href="/wiki/embed-stream-using-iframe">Embed with an iframe</a></li><li><details class="e3dsNavSec" open><summary><a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a></summary><ul><li><a href="/wiki/web-sdk-demo-manual">Web SDK demo manual</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/embed-stream-using-e3ds-sdk">Set up the Web SDK</a></summary><ul><li><a href="/wiki/streaming-api-key-and-tokens">Streaming API key and tokens</a></li><li><a href="/wiki/sdk-secure-the-key">Keeping your API key off the browser</a></li><li><a href="/wiki/login-in-front-of-a-stream">Putting a login in front of a stream</a></li><li><a href="/wiki/serving-the-sdk-page">Serving the page</a></li></ul></details></li><li><a href="/wiki/the-token-and-main" class="on" aria-current="page">The token, and e3ds_controller.main()</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/javascript-sdk-guide">Web SDK reference</a></summary><ul><li><a href="/wiki/unreal-side-of-data">The Unreal side of sending and receiving data</a></li><li><a href="/wiki/your-own-screens">Your own loading and ending screens</a></li></ul></details></li></ul></details></li><li><a href="/wiki/session-end-messages">Why a session ended</a></li><li><a href="/wiki/controlling-the-stream">Controlling the stream</a></li><li><a href="/wiki/sending-and-receiving-data">Sending and receiving data</a></li><li><a href="/wiki/choose-the-microphone">Choose the microphone</a></li><li><a href="/wiki/custom-screens">Custom loading and error screens</a></li><li><a href="/wiki/device-ids-across-the-iframe">How the microphone is chosen</a></li><li><a href="/wiki/login-integration">Putting a login in front</a></li><li><a href="/wiki/branding-and-hosting">Branding and hosting</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/development-guides">Developer guides</a></summary><ul><li><details class="e3dsNavSec"><summary><a href="/wiki/test-locally">Testing locally</a></summary><ul><li><a href="/wiki/test-from-your-browser">From your own browser</a></li><li><a href="/wiki/test-on-another-device">From another device</a></li><li><a href="/wiki/test-linux-locally">A Linux build</a></li><li><a href="/wiki/test-vr-locally">A VR app</a></li><li><a href="/wiki/test-dedicated-server-locally">A dedicated server</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/features-plugin">Features plugin nodes</a></summary><ul><li><a href="/wiki/screenshots">Capture a screenshot</a></li><li><a href="/wiki/open-and-redirect-urls">Open and redirect URLs</a></li><li><a href="/wiki/ending-sessions">End a session from the app</a></li><li><a href="/wiki/file-transfer">File transfer</a></li><li><a href="/wiki/device-detection">Detect the viewer's device</a></li><li><a href="/wiki/mouse-and-fullscreen">Mouse and fullscreen</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/plugins">Plugins</a></summary><ul><li><a href="/wiki/features-plugin-setup">Install the Features plugin</a></li><li><a href="/wiki/automation-tools-plugin">Automation Tools plugin</a></li><li><a href="/wiki/remote-editor-plugin">Remote Unreal Editor plugin</a></li><li><a href="/wiki/server-scaling-plugin">Multiplayer Server Scaling plugin</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/performance-optimization">Input and performance</a></summary><ul><li><a href="/wiki/game-controller-support">Game controllers</a></li><li><a href="/wiki/on-screen-keyboard">On-screen keyboard</a></li><li><a href="/wiki/dlss">NVIDIA DLSS</a></li><li><a href="/wiki/audio-and-microphone">Audio and microphone</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/patches">Patching an app</a></summary><ul><li><a href="/wiki/apply-a-patch">Try it on a demo app</a></li><li><a href="/wiki/patch-launch-profiles">Launch profiles</a></li><li><a href="/wiki/create-a-patch">Make your own patch</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/api-reference">API reference</a></summary><ul><li><a href="/wiki/health-check-api">Health check API</a></li><li><a href="/wiki/analytics-api">Analytics API</a></li><li><a href="/wiki/automation-kit">Automation Kit</a></li></ul></details></li><li><details class="e3dsNavSec"><summary><a href="/wiki/demos-and-tutorials">Demos</a></summary><ul><li><a href="/wiki/iframe-demo">iframe demo</a></li><li><a href="/wiki/convai-microphone">Convai microphone</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/multiplayer-pixel-streaming">Multiplayer</a></summary><ul><li><a href="/wiki/multiplayer-build-a-project">Build the project</a></li><li><a href="/wiki/multiplayer-package">Package both builds</a></li><li><a href="/wiki/multiplayer-upload">Upload both builds</a></li><li><a href="/wiki/multiplayer-play">Start the server and play</a></li><li><a href="/wiki/multiplayer-automatic-join">Automatic server join</a></li><li><a href="/wiki/multiplayer-upload-from-editor">Upload from the editor</a></li><li><a href="/wiki/metaverse-pixel-streaming">Metaverse</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/virtual-reality-pixel-streaming">Virtual reality</a></summary><ul><li><a href="/wiki/vr-project-setup">Set up a VR project</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/linux-pixel-streaming">Linux streaming</a></summary><ul><li><a href="/wiki/linux-build">Build a Linux package</a></li><li><a href="/wiki/linux-upload-and-stream">Upload and stream a Linux build</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/system-requirements">System requirements</a></summary><ul><li><a href="/wiki/cloud-vms">Cloud VMs</a></li><li><a href="/wiki/network-and-firewall">Networks and firewalls</a></li><li><a href="/wiki/optimise-your-app">Optimise your app</a></li><li><details class="e3dsNavSec"><summary><a href="/wiki/streaming-agent">Stream from your own hardware</a></summary><ul><li><a href="/wiki/preallocated-apps">Preallocated apps</a></li><li><a href="/wiki/update-without-uploading">Update without uploading</a></li></ul></details></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/blogs-and-articles">Foundational knowledge</a></summary><ul><li><a href="/wiki/capacity-and-regions">Capacity and regions</a></li><li><a href="/wiki/load-time">Load time</a></li><li><a href="/wiki/ready-player-me">Ready Player Me</a></li><li><a href="/wiki/shared-and-dedicated-sessions">Shared and dedicated sessions</a></li><li><a href="/wiki/unreal-notes">Unreal notes</a></li></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/faq-frequently-asked-questions">FAQ</a></summary><ul></ul></details></li><li><details class="e3dsNavSec e3dsNavGroup"><summary><a href="/wiki/what-s-new">What's new</a></summary><ul><li><a href="/wiki/new-control-panel-release-note">Control Panel Release Notes</a></li><li><a href="/wiki/new-features-released-in-the-new-control-panel">New Features</a></li><li><a href="/wiki/new-payment-system-release-note">Payment System: Stripe integration</a></li></ul></details></li></ul></nav></aside><button id="e3dsNavToggle" aria-expanded="false" onclick="document.body.classList.toggle('e3dsNavOpen');this.setAttribute('aria-expanded',document.body.classList.contains('e3dsNavOpen'))">All documentation</button>
 
 <div class="wrap">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep crumbMoreSep">/</span><button type="button" class="crumbMore" aria-label="Show the levels in between" onclick="this.closest('.crumbs').classList.add('crumbsOpen')">&hellip;</button><span class="sep mid">/</span><a class="mid" href="/wiki/development-guides">Developer guides</a><span class="sep">/</span><a href="/wiki/api-reference">API reference</a><span class="sep">/</span><span class="here">Automation Kit</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Docs</a><span class="sep crumbMoreSep">/</span><button type="button" class="crumbMore" aria-label="Show the levels in between" onclick="this.closest('.crumbs').classList.add('crumbsOpen')">&hellip;</button><span class="sep mid">/</span><a class="mid" href="/wiki/embed-stream-into-webpage">Embedding</a><span class="sep">/</span><a href="/wiki/embed-with-the-web-sdk">Embed with the Web SDK</a><span class="sep">/</span><span class="here">The token, and e3ds_controller.main()</span></nav>
   
-  <h1>Automation Kit</h1>
+  <h1>The token, and e3ds_controller.main()</h1>
   <!-- E3DS-CONTENT:BEGIN the editable body. Save reads between these -->
   <p class="standfirst">
-  A Node.js package that uploads a packaged build, registers it, and waits for the
-  stream test &mdash; so a deployment can be a step in a script rather than a
-  person at a browser.
+  A stream starts with one call, <code>e3ds_controller.main()</code>, and that
+  call needs a <strong>session token</strong>. Everything else in the Web SDK
+  sits either side of those two facts. This page is both of them: where a token
+  comes from, and what to do with it.
 </p>
 
-<div class="outcome">
-  <strong>Two ways to automate an upload</strong>
-  <p>
-    The <a href="/wiki/automation-tools-plugin">Automation Tools plugin</a> works
-    from inside Unreal, which suits a developer packaging by hand. The Automation
-    Kit works from a script, which is what you want in a CI/CD pipeline where
-    nobody is watching.
-  </p>
-</div>
+<h2>The one call that starts a stream</h2>
 
-<h2>Install</h2>
-
-<pre><code class="language-bash">npm install e3ds-automation-kit</code></pre>
+<pre><code class="language-javascript">e3ds_controller.main({
+    token:      tokenData.token,
+    socket_url: tokenData.socket_url,
+    client:     "the-viewer-id"
+});</code></pre>
 
 <p>
-  The package is on
-  <a href="https://www.npmjs.com/package/e3ds-automation-kit">npm</a>.
+  That is the SDK's entry point. <code>token</code> and <code>socket_url</code>
+  are required; anything else you pass is carried along and used where it
+  applies.
 </p>
 
-<h2>The script</h2>
-
-<pre><code class="language-javascript">const { uploadStreamingApp } = require("e3ds-automation-kit");
-
-(async () =&gt; {
-  try {
-    await uploadStreamingApp(
-      "../../Downloads/tinyApp.zip",  // path to the .zip
-      process.env.E3DS_API_KEY,       // your API key
-      "MyStreamingApp"                // app name
-    );
-    console.log("Upload completed successfully!");
-  } catch (err) {
-    console.error("Upload failed:", err.message);
-  }
-})();</code></pre>
-
-<pre><code class="language-bash">node index.js</code></pre>
-
-<p>Which then validates the path, requests a signed upload URL, uploads with progress, and polls until the stream test finishes.</p>
-
 <aside class="callout warning">
+  <p><strong><code>main()</code> is ours. <code>startStream()</code> is yours.</strong></p>
   <p>
-    <strong>Do not hard-code the API key.</strong> It authorises uploads to your
-    account, and a script with a key in it ends up in version control. Read it
-    from an environment variable, as above &mdash; particularly in CI, where the
-    key belongs in the pipeline's secret store.
+    The sample has a function called <code>startStream()</code> in
+    <code>sdk-token.js</code>. It fetches a token and then calls
+    <code>main()</code>. It is convenience code you own &mdash; rename it,
+    replace it, or delete it, and the SDK neither knows nor cares.
+  </p>
+  <p>
+    So wherever timing matters &mdash; <strong>"assign your callbacks before the
+    stream starts"</strong> &mdash; the line meant is <code>main()</code>.
   </p>
 </aside>
 
-<h2>The path argument</h2>
+<h2>Three ways to get a token</h2>
 
 <p>
-  Most failures here are the path, so it is worth getting right first time. It
-  must point at the <strong>.zip file itself</strong>, not the folder holding it
-  and not the project directory.
+  <code>main()</code> does not care where the token came from. Pick by how far
+  along you are.
 </p>
 
 <div class="scroll">
-  <table>
-    <thead><tr><th>Form</th><th>Example</th><th>Works</th></tr></thead>
-    <tbody>
-      <tr><td>Relative to where you run <code>node</code></td><td><code>"../../Downloads/tinyApp.zip"</code></td><td>Yes</td></tr>
-      <tr><td>Windows, forward slashes</td><td><code>"C:/Users/USER/Downloads/tinyApp.zip"</code></td><td>Yes &mdash; the easiest on Windows</td></tr>
-      <tr><td>Windows, escaped backslashes</td><td><code>"C:\Users\USER\Downloads\tinyApp.zip"</code></td><td>Yes</td></tr>
-      <tr><td>macOS or Linux</td><td><code>"/Users/USER/Downloads/tinyApp.zip"</code></td><td>Yes</td></tr>
-      <tr><td>Windows, single backslashes</td><td><code>"C:\Users\USER\Downloads\tinyApp.zip"</code></td><td><strong>No</strong> &mdash; JavaScript reads <code>\</code> as an escape character</td></tr>
-      <tr><td>A folder</td><td><code>"C:/Users/USER/Downloads/"</code></td><td><strong>No</strong> &mdash; must end in <code>.zip</code></td></tr>
-    </tbody>
-  </table>
+<table>
+  <thead><tr><th>Where from</th><th>Good for</th><th>Key lives</th></tr></thead>
+  <tbody>
+    <tr><td><strong>The Control Panel, by hand</strong></td>
+        <td>a first look, a test, a bug report &mdash; no code at all</td>
+        <td>nowhere near your page</td></tr>
+    <tr><td><strong>The API, called from the browser</strong></td>
+        <td>building and developing, which is what the sample does</td>
+        <td><strong>in your page, readable by anyone</strong></td></tr>
+    <tr><td><strong>The API, called from your server</strong></td>
+        <td>production</td>
+        <td>on your server, where it belongs</td></tr>
+  </tbody>
+</table>
 </div>
 
-<h2>The app name argument</h2>
+<h3>By hand, from the Control Panel</h3>
 
 <p>
-  Letters, numbers and underscores only. No spaces, no hyphens, no dots, no other
-  punctuation.
+  The Developer section has a <strong>Token Generation</strong> tab. Generate
+  one, paste it into <code>main()</code>, and you have a stream &mdash; no API
+  call, no key in your page, no code beyond the one line.
 </p>
 
-<pre><code class="language-javascript">"MyStreamingApp"    // fine
-"My_App_01"         // fine
-"app123"            // fine
+<p>
+  This is the quickest way to prove your integration works before any of the
+  plumbing exists. A token is single use and expires, so one you generated for a
+  test is spent afterwards and harmless.
+</p>
 
-"My Streaming App"  // space
-"My-App"            // hyphen
-"My@App"            // symbol
-"My.App"            // dot</code></pre>
+<h3>From the API</h3>
 
-<p>This is the name that appears in your Control Panel once the upload lands.</p>
+<pre><code class="language-http">POST https://token.eagle3dstreaming.com/api/v2/token/create
+Content-Type: application/json
+Authorization: Auth &lt;your Streaming API key&gt;</code></pre>
 
-<h2>When it fails</h2>
+<p>
+  The body says which application to launch, for whom, and for how long:
+</p>
 
-<div class="scroll">
-  <table>
-    <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
-    <tbody>
-      <tr><td><code>Cannot find module 'e3ds-automation-kit'</code></td><td>Not installed in this project</td><td><code>npm install e3ds-automation-kit</code></td></tr>
-      <tr><td><code>Cannot find module '...index.js'</code></td><td>Wrong filename or wrong directory</td><td>Run the file that exists, from where it exists.</td></tr>
-      <tr><td>No output at all</td><td>Node did not run</td><td>Check <code>node -v</code> works.</td></tr>
-      <tr><td>Upload rejected on the name</td><td>Spaces or symbols in the app name</td><td>Letters, numbers, underscores.</td></tr>
-      <tr><td>It retries repeatedly</td><td>Unstable connection</td><td>It retries up to three times on its own. If all three fail, the network is the problem.</td></tr>
-      <tr><td>Stream test times out</td><td>Large build, slow link</td><td>Not necessarily a failure &mdash; check the Control Panel, where the upload may still be progressing.</td></tr>
-    </tbody>
-  </table>
-</div>
+<pre><code class="language-javascript">{
+  "object": {
+    "core": {
+      "domain":            "connector.eagle3dstreaming.com",
+      "userName":          "your-username",
+      "appName":           "YourAppName",
+      "configurationName": "your-configuration",
+      "version":           "latest"
+    },
+    "configurationToOverride": {}
+  },
+  "expiry": 60000,
+  "client": "the-viewer-id"
+}</code></pre>
 
-<div class="next">
-  <a href="/wiki/apps-and-versions">Applications and versions &rarr;</a>
-  <p>What happens to the build once it arrives.</p>
-</div>
+<p>
+  <code>object.core</code> is the application block from
+  <code>sdk-config.js</code>, passed through as-is. <code>expiry</code> is how
+  long the token stays valid in milliseconds &mdash; it only has to survive long
+  enough to start the session. <code>client</code> identifies the viewer, and
+  <strong>the token is looked up by it afterwards</strong>, so it must be the
+  same value you later hand to <code>main()</code>.
+</p>
+
+<p>
+  What comes back is what <code>main()</code> wants:
+</p>
+
+<pre><code class="language-javascript">{
+  "token":      "…",
+  "socket_url": "…"
+}</code></pre>
+
+<aside class="callout warning">
+  <p><strong>Read the body when it refuses</strong></p>
+  <p>
+    A 401 says the request was refused; <em>the body says why</em> &mdash; wrong
+    key, expired, unknown application, quota. That sentence is the difference
+    between fixing it and guessing, and it is easy to discard unread.
+  </p>
+  <p>
+    The commonest cause is the wrong credential entirely: the account API key
+    instead of the Streaming API key. See
+    <a href="/wiki/streaming-api-key-and-tokens">Streaming API key and
+    tokens</a>.
+  </p>
+</aside>
+
+<h3>From your own server</h3>
+
+<p>
+  Same request, made from somewhere the browser cannot read. Your page asks your
+  server, your server asks us, and only the token comes back to the browser.
+</p>
+
+<p>
+  This is the only arrangement where your key is not published, and it is one
+  function's worth of change:
+  <a href="/wiki/sdk-secure-the-key">keeping your API key off the browser</a>.
+</p>
+
+<h2>Putting it together</h2>
+
+<pre><code class="language-javascript">// 1. Get a token — from your server, the API, or pasted in by hand.
+const tokenData = await fetch("/api/stream-token", { method: "POST" })
+                          .then(r =&gt; r.json());
+
+// 2. Register your callbacks BEFORE starting. Anything assigned after
+//    main() has already missed whatever fired first.
+e3ds_controller.callbacks.onSessionEnding = function (message) {
+    showMyEndScreen(message);
+};
+
+// 3. Start.
+e3ds_controller.main({
+    token:      tokenData.token,
+    socket_url: tokenData.socket_url,
+    client:     "the-viewer-id"
+});</code></pre>
+
+<aside class="callout warning">
+  <p><strong>A token is single use</strong></p>
+  <p>
+    Restarting a stream needs a <em>fresh</em> one &mdash; reusing the previous
+    token fails. Fetch the replacement <em>before</em> tearing down the session
+    that is running, so a failed request leaves the viewer watching what they
+    already had rather than nothing at all.
+  </p>
+</aside>
+
+<aside class="callout note">
+  <p><strong>It reports failure rather than throwing</strong></p>
+  <p>
+    A missing field is a setup mistake, not an exceptional condition, so
+    <code>main()</code> returns instead of throwing &mdash; a throw would take
+    down whatever called it. Check the result:
+    <code>result.ok === false</code>, with <code>result.missing</code> naming
+    exactly what was absent. The full shape is in
+    <a href="/wiki/javascript-sdk-guide">the Web SDK reference</a>.
+  </p>
+</aside>
 
   <!-- E3DS-CONTENT:END -->
   

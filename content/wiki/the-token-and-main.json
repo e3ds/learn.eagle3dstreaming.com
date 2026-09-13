@@ -1,0 +1,12 @@
+{
+ "title": "The token, and e3ds_controller.main()",
+ "slug": "the-token-and-main",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-with-the-web-sdk"
+ ],
+ "source": "written 2026-09-12 - the entry point and the token were documented nowhere as one subject",
+ "rewritten": true,
+ "replaces": [],
+ "order": 3
+}
