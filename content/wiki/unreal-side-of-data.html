@@ -110,8 +110,16 @@
     Callbacks are optional and the ones you do not define are simply never
     called &mdash; but one assigned <em>late</em> has already missed whatever
     arrived first. If your application sends something as it starts up, a
-    callback wired after <code>startStream()</code> will not see it, and the
-    message is gone rather than queued.
+    callback wired after <code>e3ds_controller.main()</code> will not see it,
+    and the message is gone rather than queued.
+  </p>
+  <p>
+    <strong><code>main()</code> is the line that matters</strong>, not the
+    sample's <code>startStream()</code> &mdash; that is a wrapper in
+    <code>sdk-token.js</code> which fetches a token and then calls
+    <code>main()</code>. Move the token request to your own server, as you
+    should before going live, and <code>startStream()</code> may not exist in
+    your code at all. <code>main()</code> always will.
   </p>
 </aside>
 

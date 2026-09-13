@@ -758,6 +758,24 @@ app.post("/api/stream-token", async (req, res) =&gt; {
 
 <h2>Starting a session</h2>
 
+<aside class="callout warning">
+  <p><strong><code>e3ds_controller.main()</code> is the SDK's call. <code>startStream()</code> is not.</strong></p>
+  <p>
+    <code>startStream()</code> appears throughout the sample and in the examples
+    below, but it is <em>your</em> function &mdash; in the downloaded code it
+    lives in <code>sdk-token.js</code>, fetches a token, and then calls
+    <code>main()</code>. Rename it, replace it, or drop it when you move the
+    token request to your own server, and nothing in the SDK notices.
+  </p>
+  <p>
+    This matters wherever timing matters. <strong>"Assign your callbacks before
+    the stream starts" means before <code>main()</code></strong>, because that
+    is the line that starts it. A rule written against
+    <code>startStream()</code> stops meaning anything the moment somebody
+    renames their own wrapper.
+  </p>
+</aside>
+
 <p>
   <code>main()</code> requires two fields on the object you give it:
   <strong><code>token</code></strong> and <strong><code>socket_url</code></strong>.
