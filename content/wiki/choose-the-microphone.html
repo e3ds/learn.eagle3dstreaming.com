@@ -12,6 +12,22 @@
 </p>
 
 <aside class="callout note">
+  <p><strong>There is a demo of exactly this, and it is a separate one</strong></p>
+  <p>
+    <a href="https://e3ds.github.io/E3DS-Iframe-Demo/microphone/" rel="noreferrer" target="_blank">e3ds.github.io/E3DS-Iframe-Demo/microphone/</a>
+    is the standard iframe demo with the microphone built in: the permission
+    asked from the parent page, the device picker, and the switch happening
+    without the stream dropping.
+  </p>
+  <p>
+    <strong>Separate on purpose.</strong> A page that asks for a microphone costs
+    every visitor a browser prompt before anything starts, and most integrations
+    do not need one &mdash; so the standard demo has no microphone in it at all.
+    Yours should make the same choice deliberately.
+  </p>
+</aside>
+
+<aside class="callout note">
   <p>
     <strong>This is an iframe feature.</strong> An SDK page and the player share
     one document and one website, so the ids never have to cross anything and

@@ -5,11 +5,38 @@
 
 <p>
   The examples here are plain HTML, and the approach is identical in React,
-  Angular, Vue or anything else &mdash; an iframe is an iframe. There is a
-  <a href="https://iframe.eagle3dstreaming.com/" rel="noreferrer" target="_blank">live
-  demo</a> and its
-  <a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">source</a>.
+  Angular, Vue or anything else &mdash; an iframe is an iframe.
 </p>
+
+<aside class="callout note">
+  <p><strong>There is a working demo, and you can open it now</strong></p>
+  <p>
+    <a href="https://e3ds.github.io/E3DS-Iframe-Demo/" rel="noreferrer" target="_blank">e3ds.github.io/E3DS-Iframe-Demo</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://github.com/e3ds/E3DS-Iframe-Demo" rel="noreferrer" target="_blank">the source</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/wiki/iframe-demo-manual">what every control does</a>
+  </p>
+  <p>
+    No account and no key: an iframe needs neither. One line in
+    <code>js/iframe-config.js</code> points it at your own application, and the
+    page is plain HTML and JavaScript with no build step.
+  </p>
+  <p>
+    The demo also carries a <strong>log of everything sent and received</strong>,
+    which is the fastest way to answer the question this page's warnings are all
+    about: did that message actually arrive?
+  </p>
+</aside>
+
+<aside class="callout tip">
+  <p><strong>Deciding between this and the Web SDK?</strong></p>
+  <p>
+    They offer the same controls, so the choice is about who holds the video
+    element and who decides whether a session may start:
+    <a href="/wiki/iframe-or-web-sdk">iframe or Web SDK</a>.
+  </p>
+</aside>
 
 <h2>Embed it</h2>
 
@@ -79,6 +106,24 @@
     </tbody>
   </table>
 </div>
+
+<aside class="callout note">
+  <p><strong>These events have a second set of names</strong></p>
+  <p>
+    A current platform build sends each of these again under a modern name
+    &mdash; <code>stage1_inqueued</code> also arrives as
+    <code>session.queued</code>, <code>stage5_playBtnPressed</code> as
+    <code>stream.playing</code> &mdash; and the SDK spells the same moments as
+    callbacks. Handle one set or the other, never both, or every handler runs
+    twice.
+  </p>
+  <p>
+    <strong>The old names are not going anywhere.</strong> They are what every
+    deployment sends, so a page written against them works everywhere; the
+    modern names are the ones that match the SDK's, for pages that move between
+    the two.
+  </p>
+</aside>
 
 <aside class="callout warning">
   <p>
