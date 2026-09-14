@@ -655,6 +655,118 @@ document.body.addEventListener("click", (event) =&gt; {
 </table>
 </div>
 
+<h2>The notice we can show, and how to replace it</h2>
+
+<p>
+  The player can show a small notice over the stream when it does not have
+  keyboard focus. It is <strong>off by default</strong> and is meant as a
+  diagnostic &mdash; something you switch on while working out whether focus is
+  the reason an application seems to be ignoring the keyboard.
+</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Setting</th><th>Where</th><th>Default</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>showFocusNotice</code></td>
+      <td>Control Panel &rarr; your application &rarr; UI &rarr;
+          <strong>Keyboard Focus Notice</strong></td>
+      <td><strong>off</strong></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>
+  With it on, an amber notice appears while the stream lacks focus, and
+  <strong>tapping or clicking the notice itself gives the stream focus</strong>
+  &mdash; it is not only a warning, it is the quickest fix. It turns green to
+  confirm, then disappears a few seconds later. If focus is never lost, nothing
+  is ever shown.
+</p>
+
+<h2>Build your own instead: the focus events</h2>
+
+<p>
+  Our notice is one opinion about how to present this. If you want your own
+  &mdash; in your language, your styling, in your own layout &mdash; leave
+  <code>showFocusNotice</code> off and listen for these instead. They fire
+  either way.
+</p>
+
+<pre class="scroll"><code>// iframe
+window.addEventListener("message", (event) =&gt; {
+  const msg = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+
+  if (msg.type === "streamFocusLost") {
+    // typing is going to YOUR page, not the application
+    showMyOwnBanner();
+  }
+  if (msg.type === "streamFocusGained") {
+    hideMyOwnBanner();
+  }
+});</code></pre>
+
+<pre class="scroll"><code>// Web SDK
+e3ds_controller.callbacks.onStreamFocusLost   = () =&gt; showMyOwnBanner();
+e3ds_controller.callbacks.onStreamFocusGained = () =&gt; hideMyOwnBanner();</code></pre>
+
+<p>
+  You do not have to show anything at all. A common use is to handle it
+  silently: on <code>streamFocusLost</code>, call <code>frame.focus()</code>
+  yourself and let the visitor carry on without ever knowing.
+</p>
+
+<aside class="callout warning">
+  <p><strong>On phones and tablets, point people at the notice, not the picture</strong></p>
+  <p>
+    Tapping the picture does not take focus on a touch device &mdash; the touch
+    handling suppresses the browser's default behaviour, which is what would
+    otherwise move focus. Tapping the notice does work, on every device. If you
+    build your own banner, make the banner itself the thing they tap, and call
+    <code>frame.focus()</code> from its handler.
+  </p>
+</aside>
+
+<h2>Troubleshooting</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>What you see</th><th>What it means</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Keys do nothing from the moment the stream starts, mouse works fine</td>
+      <td>The frame has never had focus. Normal on page load &mdash; your page
+          has it. One click or tap on the stream fixes it.</td>
+    </tr>
+    <tr>
+      <td>Keys worked, then stopped after using a control on your page</td>
+      <td>Focus moved to your page and stayed there. This is the case the
+          handler in section 2 exists for.</td>
+    </tr>
+    <tr>
+      <td>The notice says the stream has no focus, and clicking the picture
+          does nothing</td>
+      <td>You are on a player build from before the click-to-focus fix. Tap or
+          click the <em>notice</em> instead, which always works, and update when
+          you can.</td>
+    </tr>
+    <tr>
+      <td>Typing reaches the app, but push-to-talk still does nothing</td>
+      <td>Not focus. The microphone track is separate and unaffected by it
+          &mdash; check the microphone itself.</td>
+    </tr>
+    <tr>
+      <td>Nothing works on a phone, no keyboard attached</td>
+      <td>Expected, and usually harmless: with no keyboard there are no
+          keystrokes to lose. It matters on mobile only with a Bluetooth
+          keyboard or an on-screen keyboard.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 <h2>Checking whether focus is the problem</h2>
 
 <p>
