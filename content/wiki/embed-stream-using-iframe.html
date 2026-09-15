@@ -87,23 +87,9 @@
 
 <p>
   Setting <code>iframe.src</code> back to its own value does nothing &mdash;
-  the browser sees an unchanged URL and skips the reload. Point it at
-  <code>about:blank</code> first, then restore the original URL a moment
-  later, and the frame tears down and reconnects from scratch:
-</p>
-
-<pre><code class="language-javascript">function restartIframe() {
-  const iframe = document.getElementById("iframe_1");
-  const originalSrc = "YOUR_STREAM_URL";
-
-  iframe.src = "about:blank";
-  setTimeout(() => { iframe.src = originalSrc; }, 50);
-}</code></pre>
-
-<p>
-  Wire it to a button positioned above the iframe with a higher
-  <code>z-index</code>, so it floats over the stream instead of being
-  captured by it.
+  the browser sees an unchanged URL and skips the reload. See
+  <a href="/wiki/reload-iframe-src">reload the iframe src</a> for the trick
+  that forces a real reconnect, and how to wire it to a button.
 </p>
 
 <h2>The five stages of a session</h2>
