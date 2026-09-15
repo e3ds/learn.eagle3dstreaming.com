@@ -55,6 +55,43 @@
   </p>
 </aside>
 
+<h2>Full-page embed with a restart button</h2>
+
+<p>
+  If the stream should fill the whole browser window rather than sit inside a
+  page layout, drop the surrounding chrome and size the iframe to the
+  viewport instead of a fixed box. A <a href="/stream.html" rel="noreferrer"
+  target="_blank">live example</a> is included in this site.
+</p>
+
+<pre><code class="language-html">&lt;style&gt;
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+  .stream-container { position: relative; width: 100vw; height: 100vh; }
+  iframe {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; border: none;
+  }
+&lt;/style&gt;
+
+&lt;div class="stream-container"&gt;
+  &lt;iframe id="iframe_1" src="YOUR_STREAM_URL" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;</code></pre>
+
+<p>
+  <code>overflow: hidden</code> on <code>html, body</code> removes scrollbars,
+  and the absolutely positioned iframe stretches to fill its container
+  regardless of window size.
+</p>
+
+<h3>Add a restart button</h3>
+
+<p>
+  Setting <code>iframe.src</code> back to its own value does nothing &mdash;
+  the browser sees an unchanged URL and skips the reload. See
+  <a href="/wiki/reload-iframe-src">reload the iframe src</a> for the trick
+  that forces a real reconnect, and how to wire it to a button.
+</p>
+
 <h2>The five stages of a session</h2>
 
 <p>

@@ -1,0 +1,12 @@
+{
+ "title": "Reload the iframe src",
+ "slug": "reload-iframe-src",
+ "section": "Embed Stream into Webpage",
+ "parents": [
+  "embed-stream-using-iframe"
+ ],
+ "source": "split out of embed-stream-using-iframe, 2026-09-15",
+ "rewritten": true,
+ "replaces": [],
+ "order": 1
+}
