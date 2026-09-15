@@ -1,0 +1,78 @@
+<p class="standfirst">
+  Force the stream to reconnect from scratch by clearing and restoring the
+  iframe's <code>src</code>.
+</p>
+
+<p>
+  This is the child of <a href="/wiki/embed-stream-using-iframe">Embed with an
+  iframe</a> &mdash; use it once you already have a working iframe embed and
+  want a "restart" control on top of it.
+</p>
+
+<h2>Why you cannot just re-set the src</h2>
+
+<p>
+  Setting <code>iframe.src</code> back to the URL it already has does nothing.
+  The browser compares the new value to the current one, sees no change, and
+  skips the reload entirely &mdash; even though you clearly intended to
+  refresh the frame.
+</p>
+
+<h2>Clear it first</h2>
+
+<p>
+  Point the iframe at <code>about:blank</code> first, then restore the
+  original URL a moment later. The blank navigation forces the browser to
+  actually tear down the old frame &mdash; and its session &mdash; before the
+  real URL loads again:
+</p>
+
+<pre><code class="language-javascript">function restartIframe() {
+  const iframe = document.getElementById("iframe_1");
+  const originalSrc = "YOUR_STREAM_URL";
+
+  iframe.src = "about:blank";
+
+  // small delay so the browser tears down the old frame
+  // before the real URL loads again
+  setTimeout(() => {
+    iframe.src = originalSrc;
+  }, 50);
+}</code></pre>
+
+<aside class="callout note">
+  <p>
+    <strong>The delay matters.</strong> Restoring the URL in the same tick as
+    the <code>about:blank</code> assignment is unreliable &mdash; some
+    browsers coalesce the two navigations into one. A short
+    <code>setTimeout</code> (50&ndash;100ms) gives the teardown time to
+    actually happen first.
+  </p>
+</aside>
+
+<h2>Wire it to a button</h2>
+
+<p>
+  A restart button needs to sit visually above the iframe, not behind it:
+</p>
+
+<pre><code class="language-html">&lt;button
+  style="position: absolute; top: 16px; left: 16px; z-index: 10;"
+  onclick="restartIframe()"
+&gt;
+  Restart
+&lt;/button&gt;</code></pre>
+
+<p>
+  The iframe itself should not carry a <code>z-index</code> higher than the
+  button's, or clicks on the button will be captured by the frame instead.
+</p>
+
+<div class="outcome">
+  <strong>You will know it worked when</strong>
+  <p>
+    Pressing the button drops the current session and starts a fresh queue
+    &mdash; the same as if the viewer had reloaded the whole page, but without
+    losing anything else on it.
+  </p>
+</div>
