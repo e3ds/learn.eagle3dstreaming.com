@@ -1,0 +1,11 @@
+{
+ "title": "Resolution",
+ "slug": "resolution",
+ "section": "App Configuration",
+ "parents": [
+  "app-configuration"
+ ],
+ "rewritten": true,
+ "order": 2,
+ "description": "The size of the picture every viewer receives: whether to follow each viewer's window or hold one fixed size, what each size needs from a viewer's internet connection, and why a slow connection makes the picture blurry rather than smaller."
+}

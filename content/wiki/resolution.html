@@ -1,0 +1,386 @@
+<p class="standfirst">
+  Resolution is the number of pixels in the picture each viewer receives. It is
+  set once, in the app configuration, and it is the single setting with the
+  largest effect on how the stream looks and how much internet each viewer
+  needs. There are two choices, and the right one depends on who is watching.
+</p>
+
+<style>
+  /* SVG, so the figures stay sharp and keep their proportions at any zoom or
+     window size, and take their colours from the page's own tokens so they
+     follow the light and dark themes. */
+  .fig { margin: 26px 0; }
+  .fig svg { display: block; width: 100%; height: auto; max-width: 720px; margin: 0 auto; }
+  .fig figcaption {
+    max-width: var(--measure);
+    margin: 10px auto 0;
+    color: var(--ink-3);
+    font-size: 14.5px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .fig .box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+  .fig .boxAlt { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+  .fig .ttl { fill: var(--ink); font: 600 14px Archivo, Arial, sans-serif; }
+  .fig .sub { fill: var(--ink-3); font: 11.5px Archivo, Arial, sans-serif; }
+  .fig .lbl { fill: var(--ink-2); font: 13px Archivo, Arial, sans-serif; }
+  .fig .good { fill: var(--tip); font: 600 12.5px Archivo, Arial, sans-serif; }
+  .fig .bad  { fill: var(--warn); font: 600 12.5px Archivo, Arial, sans-serif; }
+  .fig .wire { stroke: var(--ink-3); stroke-width: 1.4; fill: none; }
+  .fig .wireAcc { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+  .fig .dev { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.4; }
+</style>
+
+<details class="sect" id="two-choices" open>
+  <summary><h2>The two choices</h2><span class="hint">Follow each viewer's window, or give everybody the same size</span></summary>
+  <div class="body">
+
+<p>
+  In the Control Panel the setting sits in the app configuration, under
+  <strong>Resolution</strong>. It offers two things.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead>
+      <tr><th>Choice</th><th>What every viewer gets</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Match the viewer's window</strong></td>
+        <td>
+          A picture exactly the size of the area it is displayed in, changing
+          again whenever that viewer resizes the window or turns their phone.
+          Two people watching at once can be receiving two different sizes.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Fixed resolution</strong></td>
+        <td>
+          One size, chosen once, the same for everybody. If it does not match a
+          viewer's window the picture is scaled to fit, exactly as a video is.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  <strong>Match the viewer's window is the default</strong>, and is what a
+  configuration saved before this setting existed does too.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="match-window">
+  <summary><h2>Match the viewer's window</h2><span class="hint">What it follows, and the one thing it does not look at</span></summary>
+  <div class="body">
+
+<p>
+  While a viewer is watching, the Eagle 3D Streaming page measures the area the
+  video occupies and asks the Unreal application to render at that size. It does
+  this again every time the area changes — a resized window, a rotated phone, a
+  sidebar opening on the host page — at most about three times a second, so a
+  slow drag of a window corner does not turn into hundreds of resolution
+  changes.
+</p>
+
+<p>
+  The result is a picture that is never scaled and never soft from being
+  stretched. On a large monitor it is large. On a phone it is small, which is
+  why the same application looks softer on a phone than on a desktop: the frame
+  really is smaller, and correctly so.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>The size follows the window and nothing else. The viewer's internet
+    speed is not part of that measurement.</strong> Somebody on a large monitor
+    asks for a large picture whether or not their connection can carry it. The
+    stream does not stop or freeze — it lowers the picture quality instead — but
+    a large picture squeezed into a small amount of bandwidth arrives soft and
+    blocky, with more delay than a smaller one would have had. For an audience
+    that may be on hotel Wi-Fi, mobile data or a rural line, a
+    <strong>fixed resolution</strong> is the safer setting.
+  </p>
+</aside>
+
+<h3>Two details worth knowing</h3>
+
+<p>
+  <strong>Screen scaling counts, so a 4K laptop is usually fine.</strong> The
+  size asked for is measured in the browser's own pixels, not the screen's. A 4K
+  laptop running Windows at 200&nbsp;% scaling reports a 1920-wide window and
+  streams at 1920 wide. The large sizes come from large desktop monitors running
+  at 100&nbsp;% scaling, where the window really is 2560 or 3840 pixels across.
+</p>
+
+<p>
+  <strong>Some applications crop on a phone held upright.</strong> In a tall,
+  narrow window a few applications lose the right-hand side of the scene, with
+  no black bars to show that anything is missing. That is a camera setting
+  inside the Unreal project, not a fault in the stream: the camera's
+  <em>Aspect Ratio Axis Constraint</em> is set to <em>Maintain Y FOV</em>, which
+  holds the vertical field of view fixed and narrows the horizontal one as the
+  window narrows. Setting it to <em>Maintain X FOV</em> in the project fixes it.
+  Most applications are unaffected.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="fixed">
+  <summary><h2>Fixed resolution</h2><span class="hint">Pick a standard size, or type an exact one</span></summary>
+  <div class="body">
+
+<p>
+  Choosing <strong>Fixed resolution</strong> gives a list of the four standard
+  sizes, each shown with the connection speed a viewer needs for it:
+</p>
+
+<div class="scroll">
+  <table>
+    <thead>
+      <tr><th>Size</th><th>Known as</th><th>Suits</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1280 &times; 720</td><td>720p HD</td><td>The safe choice. Works on most home connections, and on mobile data.</td></tr>
+      <tr><td>1920 &times; 1080</td><td>1080p Full HD</td><td>Most streams. Needs a good connection.</td></tr>
+      <tr><td>2560 &times; 1440</td><td>1440p QHD</td><td>A fast, wired connection.</td></tr>
+      <tr><td>3840 &times; 2160</td><td>4K UHD</td><td>A very fast connection, and a great deal of the streaming machine.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  Below the list is <strong>Something else…</strong>, which leaves the width and
+  height for you to type. Use it when the application has to render one exact
+  size — a kiosk screen, a video wall, an ultrawide monitor, a portrait display.
+</p>
+
+<aside class="callout warning">
+  <p>
+    <strong>Choosing Fixed resolution and leaving the width and height empty
+    does not fix anything.</strong> A blank size is treated as an unfinished
+    setting rather than as a request for a default, so the stream falls back to
+    following each viewer's window. If the intention was a fixed size, both boxes
+    must have a number in them.
+  </p>
+</aside>
+
+<h3>What a good fixed size looks like</h3>
+
+<ul>
+  <li><strong>Even numbers.</strong> Video encoders work in blocks, and an odd
+    width or height can produce a thin band of mush along one edge.</li>
+  <li><strong>Not larger than the screens it will be watched on.</strong> Pixels
+    a viewer's monitor cannot show still cost the viewer bandwidth and cost the
+    streaming machine work.</li>
+  <li><strong>1920 &times; 1080 unless there is a reason.</strong> It is what
+    most streams run at and what most screens are.</li>
+</ul>
+
+  </div>
+</details>
+
+<details class="sect" id="bandwidth">
+  <summary><h2>What each size needs from the viewer's connection</h2><span class="hint">Measured from real sessions, with the weak figures marked as weak</span></summary>
+  <div class="body">
+
+<p>
+  These are the speeds a viewer's connection needs. A stream that is mostly
+  still — a paused scene, a menu — uses far less than one where the camera is
+  moving, and the figures below are for the moving case, because that is the
+  moment a connection that is only just fast enough starts to struggle.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th>Recommend the viewer has</th>
+        <th>What real sessions used</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1280 &times; 720</td>
+        <td>about 10 Mbps</td>
+        <td>2,547 sessions measured: about 1.8 Mbps most of the time, rising to about 8.2 Mbps when the picture was busy.</td>
+      </tr>
+      <tr>
+        <td>1920 &times; 1080</td>
+        <td>about 15 Mbps</td>
+        <td>1,305 sessions measured: about 2.4 Mbps most of the time, rising to about 9.3 Mbps when the picture was busy.</td>
+      </tr>
+      <tr>
+        <td>2560 &times; 1440</td>
+        <td>around 25 Mbps <em>(estimated)</em></td>
+        <td>Only 4 sessions ran at this size. That is too few to call a measurement, so the figure is worked out from the pixel count against 1080p.</td>
+      </tr>
+      <tr>
+        <td>3840 &times; 2160</td>
+        <td>35 Mbps or more <em>(estimated)</em></td>
+        <td>Only 1 session ran at this size. The figure is worked out from the pixel count against 1080p.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  The recommended figures are deliberately higher than the busiest measured
+  ones. A connection that only just meets the average stutters the moment the
+  picture starts moving, which is exactly when somebody is looking at it.
+</p>
+
+<p>
+  <strong>There is a ceiling.</strong> A single stream is capped at 20 Mbps
+  however fast the viewer's connection is. At 1280 &times; 720 and
+  1920 &times; 1080 that cap is never reached. At 3840 &times; 2160 it is the
+  limit on how good the picture can get, which is part of why 4K is rarely worth
+  its cost for a remote viewer.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="quality-vs-size">
+  <summary><h2>Resolution and quality are not the same setting</h2><span class="hint">One is how many pixels; the other is how much detail survives</span></summary>
+  <div class="body">
+
+<p>
+  These two are easy to confuse, and knowing the difference explains most of
+  what a stream does on a slow connection.
+</p>
+
+<div class="scroll">
+  <table>
+    <thead>
+      <tr><th></th><th>Resolution</th><th>Quality</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>What it is</td>
+        <td>How many pixels the picture has.</td>
+        <td>How much detail survives being compressed into the bandwidth available.</td>
+      </tr>
+      <tr>
+        <td>Who sets it</td>
+        <td>This setting, or the viewer's window.</td>
+        <td>The stream itself, second by second.</td>
+      </tr>
+      <tr>
+        <td>When the connection slows</td>
+        <td>Does not change.</td>
+        <td>Drops, and the picture goes soft and blocky.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>
+  So the common assumption — <em>it adapts, so a slow connection will be fine</em>
+  — is half true. What adapts is the <strong>quality</strong>. The
+  <strong>size</strong> stays exactly where it was set. Asking for a big picture
+  on a slow connection does not produce a smaller picture; it produces a big
+  blurry one.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="choosing">
+  <summary><h2>Which to choose</h2><span class="hint">Three situations and what each one calls for</span></summary>
+  <div class="body">
+
+<figure class="fig">
+  <svg viewBox="0 0 720 268" role="img" aria-label="Three situations and the resolution setting each one calls for: viewers on fast connections suit matching the window; viewers who may be on slow connections suit a fixed 1280 by 720; an application that must render one exact size suits a fixed custom size.">
+    <defs>
+      <marker id="resArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-3)"></path>
+      </marker>
+    </defs>
+
+    <rect class="box" x="1" y="6" width="330" height="66" rx="8"></rect>
+    <text class="ttl" x="18" y="32">Everyone watches on a fast connection</text>
+    <text class="sub" x="18" y="52">An office, a trade stand, a controlled network</text>
+    <line class="wire" x1="336" y1="39" x2="416" y2="39" marker-end="url(#resArrow)"></line>
+    <rect class="dev" x="424" y="6" width="295" height="66" rx="8"></rect>
+    <text class="ttl" x="442" y="32">Match the viewer's window</text>
+    <text class="sub" x="442" y="52">Sharpest picture, never scaled</text>
+
+    <rect class="box" x="1" y="101" width="330" height="66" rx="8"></rect>
+    <text class="ttl" x="18" y="127">Some viewers may be on a slow one</text>
+    <text class="sub" x="18" y="147">Mobile data, hotel Wi-Fi, a public link</text>
+    <line class="wire" x1="336" y1="134" x2="416" y2="134" marker-end="url(#resArrow)"></line>
+    <rect class="boxAlt" x="424" y="101" width="295" height="66" rx="8"></rect>
+    <text class="ttl" x="442" y="127">Fixed, 1280 &#215; 720</text>
+    <text class="sub" x="442" y="147">The same picture for everybody, on almost any line</text>
+
+    <rect class="box" x="1" y="196" width="330" height="66" rx="8"></rect>
+    <text class="ttl" x="18" y="222">The application needs one exact size</text>
+    <text class="sub" x="18" y="242">A kiosk, a video wall, a portrait screen</text>
+    <line class="wire" x1="336" y1="229" x2="416" y2="229" marker-end="url(#resArrow)"></line>
+    <rect class="boxAlt" x="424" y="196" width="295" height="66" rx="8"></rect>
+    <text class="ttl" x="442" y="222">Fixed, typed in</text>
+    <text class="sub" x="442" y="242">Choose Something else&#8230; and enter both numbers</text>
+  </svg>
+  <figcaption>
+    When the audience is known and well connected, following the window gives the
+    best picture. When it is not, a fixed size is what keeps every viewer working.
+  </figcaption>
+</figure>
+
+<p>
+  If the audience is unknown — a link on a public website, a QR code at an event
+  — <strong>1280 &times; 720 fixed</strong> is the setting that disappoints
+  nobody. It looks slightly softer on a large monitor and it works on a phone on
+  mobile data, which is the trade most audiences want made for them.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="notes">
+  <summary><h2>Older settings, and guests</h2><span class="hint">What configurations saved years ago do, and what a shared viewer gets</span></summary>
+  <div class="body">
+
+<p>
+  <strong>Configurations saved before this setting existed</strong> follow each
+  viewer's window, which is the default. Nothing needs changing unless a fixed
+  size is wanted.
+</p>
+
+<p>
+  <strong>Older configurations set to <em>720p</em>, <em>1080p</em> or
+  <em>Max</em></strong> still work. <em>720p</em> and <em>1080p</em> behave
+  exactly like the fixed sizes of the same name. <em>Max</em> behaves like
+  matching the viewer's window, which is what "as large as possible" means in
+  practice — the real window, rather than a stored idea of a maximum.
+</p>
+
+<p>
+  <strong>Guests invited into a session</strong> watch at a fixed size and cannot
+  change it. Only the person who started the session drives the resolution, so
+  one viewer resizing a window never resizes the picture for everybody else.
+</p>
+
+  </div>
+</details>
+
+<details class="sect" id="developers">
+  <summary><h2>Changing it from your own page</h2><span class="hint">For an embedded stream, from the SDK or an iframe</span></summary>
+  <div class="body">
+
+<p>
+  When the stream is embedded in your own website, the resolution can be changed
+  at runtime instead of being fixed in the configuration — pinned to a size, or
+  released to follow the window again. Both calls are on
+  <a href="/wiki/controlling-the-stream.html#resolution">Controlling the
+  stream</a>, along with the reason a raw resolution command does not work.
+</p>
+
+  </div>
+</details>
