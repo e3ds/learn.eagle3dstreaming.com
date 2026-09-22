@@ -468,6 +468,136 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 </p>
 
 <details class="sect" open>
+  <summary><h2>A worked example, and the two kinds of parameter</h2>
+  <span class="hint">One demo app, three links, and everything else on this page follows from it.</span></summary>
+
+  <p>
+    These three links open the same application with the same configuration, and
+    differ only in what comes after <code>?exeLunchArgs=</code>:
+  </p>
+
+  <pre><code>...?exeLunchArgs=-boothno=12%20-red
+...?exeLunchArgs=-boothno=12%20-pink
+...?exeLunchArgs=-boothno=12%20-green</code></pre>
+
+  <p>
+    The third one starts the application with the command line
+    <code>-boothno=12 -green</code>. Here is what the application does with it:
+  </p>
+
+  <ul>
+    <li>
+      <strong><code>-boothno=12</code></strong> &mdash; a Blueprint reads the
+      number <code>12</code>, searches the map for the booth with that number,
+      and places the player in front of it as the level starts. Open the link
+      with <code>-boothno=7</code> instead and the player starts at a different
+      booth.
+    </li>
+    <li>
+      <strong><code>-green</code></strong> &mdash; inside that booth there is a
+      ball, and this sets the colour of its texture. <code>-red</code> and
+      <code>-pink</code> are the other two the demo understands.
+    </li>
+  </ul>
+
+  <p>
+    Those two parameters are <strong>different kinds of thing</strong>, and the
+    difference decides how the application has to read each one. It is the single
+    most important idea on this page.
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th></th><th>What it looks like</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Named value</strong></td>
+          <td><code>-boothno=12</code></td>
+          <td>Carries a value after an <code>=</code>. The application needs to know <em>which booth</em>, so a bare flag could not do the job.</td>
+        </tr>
+        <tr>
+          <td><strong>Bare switch</strong></td>
+          <td><code>-green</code></td>
+          <td>Present or absent, and carries nothing. Its whole meaning is that it is there.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Unreal reads those two with <strong>two different functions</strong>, and
+    using the wrong one silently never works. That is covered in
+    <em>Reading a parameter inside your application</em> below, and it is worth
+    reading before writing any code that checks a parameter &mdash; it is the
+    mistake that costs people the most time.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>The same parameters without a link</h2>
+  <span class="hint">Every one of those links has an equivalent configuration command line.</span></summary>
+
+  <p>
+    Anything that can go in a link can go in the configuration's command-line
+    field instead, written the same way but <strong>without any URL
+    encoding</strong> &mdash; it is not a URL, so spaces are just spaces:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>As a link</th><th>As a configuration command line</th></tr></thead>
+      <tbody>
+        <tr><td><code>?exeLunchArgs=-boothno=12%20-red</code></td><td><code>-boothno=12 -red</code></td></tr>
+        <tr><td><code>?exeLunchArgs=-boothno=12%20-pink</code></td><td><code>-boothno=12 -pink</code></td></tr>
+        <tr><td><code>?exeLunchArgs=-boothno=12%20-green</code></td><td><code>-boothno=12 -green</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    So why use links at all? Because a configuration command line is
+    <strong>one fixed value for everybody</strong>. To hand one visitor green,
+    another red and another pink, three configurations have to exist &mdash; three
+    stream links, three sets of settings to keep in step, and a fourth colour
+    means a fourth of everything.
+  </p>
+
+  <p>
+    That is merely annoying for three colours. It stops working entirely at the
+    thing people actually want it for: <strong>telling the application who is
+    watching</strong>. A username or a login token is different for every single
+    visitor, so doing it through configurations would mean one configuration per
+    user &mdash; a thousand users, a thousand configurations. There is no version
+    of that which is workable.
+  </p>
+
+  <p>
+    <strong>That is what <code>?exeLunchArgs=</code> exists for.</strong> One
+    configuration and one application, with the per-visitor part carried by the
+    link:
+  </p>
+
+  <pre><code>...?exeLunchArgs=-username=alice
+...?exeLunchArgs=-username=bob</code></pre>
+
+  <p>
+    Alice and Bob open the same stream link with different values on it, and the
+    application knows which of them is watching. From there it is an ordinary
+    named value: read it in Blueprint or C++ and the application can greet them
+    by name, load their saved state, show only what they are allowed to see, or
+    take a login token and verify it against your own server before showing
+    anything at all.
+  </p>
+
+  <p class="note">
+    <strong>A link is visible to the person who opens it.</strong> Anything put
+    on a URL can be read and changed by the visitor, so a value that decides what
+    someone is allowed to see should be a token your own service can verify, not
+    a plain username the application trusts on sight.
+  </p>
+</details>
+
+<details class="sect">
   <summary><h2>The two places a parameter can come from</h2>
   <span class="hint">One is fixed per configuration. The other changes per visitor.</span></summary>
 
@@ -770,6 +900,58 @@ bool bHasLevel = FParse::Value(FCommandLine::Get(), TEXT("Level="), Level);</cod
     <code>MyFlag</code>, <code>myflag</code> and <code>MYFLAG</code> all behave
     the same. If a check is failing, the function is the thing to look at, not
     the spelling.
+  </p>
+
+  <h3>The mistake to avoid</h3>
+
+  <p>
+    This is the one that costs real time, and it has cost it more than once. Do
+    <strong>not</strong> do this with the booth number from the example at the
+    top of the page:
+  </p>
+
+  <pre><code>// WRONG - returns false on every launch
+bool bHasBooth = FParse::Param(FCommandLine::Get(), TEXT("boothno"));</code></pre>
+
+  <p>
+    <code>-boothno=12</code> is a named value, so
+    <code>FParse::Param</code> reports <code>false</code> even though
+    <code>-boothno=12</code> is sitting in the command line. Do this instead:
+  </p>
+
+  <pre><code>// RIGHT
+FString Booth;
+bool bHasBooth = FParse::Value(FCommandLine::Get(), TEXT("boothno="), Booth);</code></pre>
+
+  <p>
+    <code>-green</code> is the other case, and there
+    <code>FParse::Param</code> is exactly right:
+  </p>
+
+  <pre><code>// RIGHT - -green is a bare switch
+bool bGreen = FParse::Param(FCommandLine::Get(), TEXT("green"));</code></pre>
+
+  <p>
+    What makes this expensive is <strong>how it fails</strong>. Nothing errors.
+    The parameter is passed correctly, it arrives correctly, it is in the
+    application's command line &mdash; and the check quietly says no. Time then
+    goes into the link, the encoding and the configuration, none of which are
+    wrong, while the fault is one word in the application's own source.
+  </p>
+
+  <p>
+    It is also worth knowing that a check written this way can appear to work for
+    months. If a condition combines several parameters:
+  </p>
+
+  <pre><code>if (bHasBooth || bHasIP || bHasRenderOffScreen)</code></pre>
+
+  <p>
+    then one working check carries the whole condition, and the two broken ones
+    are invisible. The day anything changes about the one that works, the
+    condition fails and it looks like a new problem &mdash; when in fact two of
+    the three had never worked at all. If a parameter matters, test it on its
+    own.
   </p>
 </details>
 
