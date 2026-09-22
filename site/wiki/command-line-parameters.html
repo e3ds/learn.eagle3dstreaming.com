@@ -457,14 +457,27 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
   .fig .mono { fill: var(--ink-2); font: 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .fig .monoBig { fill: var(--ink); font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .fig .wireAcc { stroke: var(--accent); stroke-width: 1.8; fill: none; }
-  .demo { margin: 14px 0 18px; }
+  .demo { margin: 16px 0 20px; }
   .demo a {
-    display: inline-block;
-    padding: 9px 15px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+    padding: 11px 13px;
+    background: var(--accent-soft);
     border: 1px solid var(--accent);
-    border-radius: 6px;
-    font-weight: 600;
+    border-radius: 8px;
     text-decoration: none;
+  }
+  .demo a:hover { box-shadow: 0 0 0 3px var(--accent-soft); }
+  .demo .demo-url {
+    flex: 1 1 320px;
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; line-height: 1.55;
+    color: var(--ink); word-break: break-all;
+  }
+  .demo .demo-go {
+    flex: 0 0 auto;
+    background: var(--accent); color: var(--ground);
+    padding: 7px 13px; border-radius: 6px;
+    font-weight: 600; font-size: 13px; white-space: nowrap;
   }
 </style>
 
@@ -509,7 +522,9 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 
   <p class="demo">
     <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default" target="_blank" rel="noopener">
-      Open the demo with nothing set &rarr;</a>
+      <span class="demo-url">connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default</span>
+      <span class="demo-go">Open in a new tab &#8599;</span>
+    </a>
   </p>
 
   <p>
@@ -547,7 +562,9 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 
   <p class="demo">
     <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo" target="_blank" rel="noopener">
-      Open the demo with those parameters &rarr;</a>
+      <span class="demo-url">connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo</span>
+      <span class="demo-go">Open in a new tab &#8599;</span>
+    </a>
   </p>
 
   <p>
@@ -584,7 +601,9 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 
   <p class="demo">
     <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=12 -green" target="_blank" rel="noopener">
-      Open the empty configuration, with the parameters on the link &rarr;</a>
+      <span class="demo-url">connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=12 -green</span>
+      <span class="demo-go">Open in a new tab &#8599;</span>
+    </a>
   </p>
 
   <p>
@@ -604,7 +623,9 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 
   <p class="demo">
     <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -blue -pink" target="_blank" rel="noopener">
-      Open it with two colours &rarr;</a>
+      <span class="demo-url">connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -blue -pink</span>
+      <span class="demo-go">Open in a new tab &#8599;</span>
+    </a>
   </p>
 
   <figure>
@@ -621,7 +642,9 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 
   <p class="demo">
     <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -blue -green -red" target="_blank" rel="noopener">
-      Open it with three colours &rarr;</a>
+      <span class="demo-url">connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -blue -green -red</span>
+      <span class="demo-go">Open in a new tab &#8599;</span>
+    </a>
   </p>
 
   <figure>
@@ -646,7 +669,9 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 
   <p class="demo">
     <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -turquoise" target="_blank" rel="noopener">
-      Open it with a colour the demo does not know &rarr;</a>
+      <span class="demo-url">connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -turquoise</span>
+      <span class="demo-go">Open in a new tab &#8599;</span>
+    </a>
   </p>
 
   <p>
@@ -672,7 +697,9 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 
   <p class="demo">
     <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo?exeLunchArgs=-green pink red" target="_blank" rel="noopener">
-      Open CmdLineDemo with three colours on the link &rarr;</a>
+      <span class="demo-url">connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo?exeLunchArgs=-green pink red</span>
+      <span class="demo-go">Open in a new tab &#8599;</span>
+    </a>
   </p>
 
   <figure>
