@@ -273,6 +273,75 @@
     green, pink, red.
   </p>
 
+  <h3>The command line the application actually received</h3>
+
+  <p>
+    The application logs its own command line when it starts, which is the
+    definitive answer to what reached it. For the step above it reads:
+  </p>
+
+  <figure>
+    <img src="/images/cmdline-unreal-log-commandline.png"
+         alt="An Unreal log window showing the Command Line entry, beginning with the configuration's parameters, then the link's, then the platform's"
+         loading="lazy">
+    <figcaption>
+      The application's own log. Everything after
+      <code>-PixelStreamingURL=</code> is trimmed here, along with the machine's
+      hardware details.
+    </figcaption>
+  </figure>
+
+  <p>
+    Read left to right, it is assembled in three groups, always in this order:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Order</th><th>In the log</th><th>Came from</th></tr></thead>
+      <tbody>
+        <tr><td>1st</td><td><code>-boothno=12 -green</code></td><td><em>Parameters To Pass To App</em></td></tr>
+        <tr><td>2nd</td><td><code>-green pink red</code></td><td>the link</td></tr>
+        <tr><td>3rd</td><td><code>-AudioMixer -AllowPixelStreamingCommands -PixelStreamingURL=</code> &hellip;</td><td>Eagle 3D Streaming</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <strong>Your parameters come before Eagle 3D Streaming's</strong>, and within
+    your own, <strong>the configuration comes before the link</strong>. Nothing
+    is removed to make room &mdash; note that <code>-green</code> appears twice,
+    once from each of your two sources, and both survive.
+  </p>
+
+  <p>
+    If you ever need to see this for your own application, turn on
+    <em>Print UE Log In Browser Console</em> on the same <em>Developer</em> tab
+    and the log appears in your browser's console.
+  </p>
+
+  <h3>A note on <code>-green pink red</code></h3>
+
+  <p>
+    Only the first of those three carries a dash. <code>pink</code> and
+    <code>red</code> are bare words, and they still worked.
+  </p>
+
+  <p>
+    That is not a rule of the platform, and it is not a rule of Unreal either
+    &mdash; it is this demo's own Blueprint. Because a Blueprint reads the
+    command line as <strong>one long string</strong> and searches it, whatever it
+    searches for is what counts. This one looks for colour names anywhere in the
+    text, so a dash is optional.
+  </p>
+
+  <p>
+    Worth knowing because it cuts both ways. <strong>In Blueprint you define your
+    own syntax</strong> and can be as forgiving as you like. In C++,
+    <code>FParse</code> is strict: <code>-green</code> is a flag it can find and
+    <code>green</code> on its own is not. If you are writing the C++ side, keep
+    the dashes.
+  </p>
+
   <h3>Step 8 &mdash; turn that switch off</h3>
 
   <p>
