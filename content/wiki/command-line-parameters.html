@@ -169,7 +169,98 @@
     <strong>A link is visible to the person who opens it.</strong> Anything put
     on a URL can be read and changed by the visitor, so a value that decides what
     someone is allowed to see should be a token your own service can verify, not
-    a plain username the application trusts on sight.
+    a plain username the application trusts on sight. If your application has no
+    use for parameters from links at all, they can be switched off entirely
+    &mdash; see <em>Turning off parameters from links</em> below.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>Two names for the same thing</h2>
+  <span class="hint">appParameters and exeLunchArgs both work. Prefer the first.</span></summary>
+
+  <p>
+    The parameter on the link can be written either way, and both do exactly the
+    same thing:
+  </p>
+
+  <pre><code>...?appParameters=-boothno=12 -green     preferred
+...?exeLunchArgs=-boothno=12 -green     the original name, still supported</code></pre>
+
+  <p>
+    <strong><code>appParameters</code></strong> is the one to use in anything
+    written from now on. It says what it is, and it matches the
+    <em>Parameters To Pass To App</em> field in the Control Panel, so the same
+    idea has the same name in both places.
+  </p>
+
+  <p>
+    <strong><code>exeLunchArgs</code> keeps working, permanently.</strong> It is
+    the original name and it is written into links, printed material, QR codes,
+    kiosk setups and emails that have been in circulation for years. Nothing that
+    works today stops working &mdash; the new name is an addition, not a
+    replacement, and there is no need to go and change existing links.
+  </p>
+
+  <p>
+    If a link somehow carries both, <code>appParameters</code> is the one used.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>Turning off parameters from links</h2>
+  <span class="hint">For applications that should not accept anything from a URL.</span></summary>
+
+  <p>
+    A link can be edited by whoever holds it. That is the point of the feature
+    when you are passing a username, and a liability when you are not: a visitor
+    can add parameters of their own choosing to the end of a stream link and the
+    application will be started with them. That includes Unreal's own
+    parameters, not just the ones your application knows about.
+  </p>
+
+  <p>
+    If your application never needs per-visitor parameters, switch the whole
+    thing off for that configuration. Parameters from links are then
+    <strong>ignored completely</strong> &mdash; only <em>Parameters To Pass To
+    App</em> is used, and it makes no difference what a visitor puts on the URL
+    or how <em>Append Parameters To URL</em> is set.
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Setting</th><th>A link carrying <code>?appParameters=-blue</code></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Parameters from links allowed</strong> (the default)</td>
+          <td><code>-blue</code> reaches the application, appended to or replacing <em>Parameters To Pass To App</em>.</td>
+        </tr>
+        <tr>
+          <td><strong>Parameters from links turned off</strong></td>
+          <td><code>-blue</code> is discarded. The application starts with <em>Parameters To Pass To App</em> only.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <strong>It is allowed by default</strong>, so nothing changes for any
+    configuration that exists today, and everything else on this page continues
+    to describe what happens. Turning it off is a deliberate choice for an
+    application that does not want it.
+  </p>
+
+  <p>
+    An attempt that gets refused is recorded, with what the link tried to pass.
+    If you suspect someone is experimenting with your links, that is what to ask
+    support for.
+  </p>
+
+  <p class="note">
+    <strong>Availability.</strong> The streaming platform honours this setting
+    now. The switch for it is still being added to the <em>Developer</em> tab, so
+    if you want it applied to a configuration before it appears there, ask
+    support and it can be set for you.
   </p>
 </details>
 
