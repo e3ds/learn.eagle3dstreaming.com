@@ -36,9 +36,9 @@
     differ only in what comes after <code>?exeLunchArgs=</code>:
   </p>
 
-  <pre><code>...?exeLunchArgs=-boothno=12%20-red
-...?exeLunchArgs=-boothno=12%20-pink
-...?exeLunchArgs=-boothno=12%20-green</code></pre>
+  <pre><code>...?exeLunchArgs=-boothno=12 -red
+...?exeLunchArgs=-boothno=12 -pink
+...?exeLunchArgs=-boothno=12 -green</code></pre>
 
   <p>
     The third one starts the application with the command line
@@ -107,9 +107,9 @@
     <table>
       <thead><tr><th>As a link</th><th>As a configuration command line</th></tr></thead>
       <tbody>
-        <tr><td><code>?exeLunchArgs=-boothno=12%20-red</code></td><td><code>-boothno=12 -red</code></td></tr>
-        <tr><td><code>?exeLunchArgs=-boothno=12%20-pink</code></td><td><code>-boothno=12 -pink</code></td></tr>
-        <tr><td><code>?exeLunchArgs=-boothno=12%20-green</code></td><td><code>-boothno=12 -green</code></td></tr>
+        <tr><td><code>?exeLunchArgs=-boothno=12 -red</code></td><td><code>-boothno=12 -red</code></td></tr>
+        <tr><td><code>?exeLunchArgs=-boothno=12 -pink</code></td><td><code>-boothno=12 -pink</code></td></tr>
+        <tr><td><code>?exeLunchArgs=-boothno=12 -green</code></td><td><code>-boothno=12 -green</code></td></tr>
       </tbody>
     </table>
   </div>
@@ -185,36 +185,48 @@
     That link starts the application with <code>-boothno=12 -green</code>.
   </p>
 
-  <h3>What has to be encoded, and what does not</h3>
+  <h3>Spaces and the rest: what the browser fixes for you</h3>
 
   <p>
-    <strong>Spaces must be <code>%20</code>.</strong> That is the one that
-    always matters, because a command line is mostly spaces and a raw space ends
-    the link as far as many browsers and chat clients are concerned.
+    Write the link with <strong>ordinary spaces</strong>, exactly as shown above.
+    A URL cannot carry a space, so the browser replaces it with <code>%20</code>
+    on the way out, and the application still receives
+    <code>-boothno=12 -green</code>.
   </p>
 
   <p>
-    <strong>An <code>=</code> inside your parameters does not need encoding.</strong>
-    A link's value is separated from its name at the <em>first</em>
+    <strong>Verified</strong> by opening that link in a browser with a real
+    space in it and reading what arrived at the server:
+  </p>
+
+  <pre><code>typed into the browser   ?exeLunchArgs=-boothno=12 -green
+arrived at the server    ?exeLunchArgs=-boothno=12%20-green</code></pre>
+
+  <p>
+    Writing <code>%20</code> yourself works too and produces exactly the same
+    result. Neither is more correct &mdash; use whichever is easier to read,
+    which for a link you are writing by hand is usually the space.
+  </p>
+
+  <p>
+    An <strong><code>=</code> inside your parameters needs nothing done to
+    it.</strong> A link's value is separated from its name at the <em>first</em>
     <code>=</code> only, so every <code>=</code> after that is part of the value
     and arrives untouched. <code>-boothno=12</code> works exactly as written.
-    <code>%3D</code> also works if you prefer it &mdash; both produce the same
-    command line &mdash; but it is not required.
   </p>
 
+  <h3>Three characters the browser will not rescue</h3>
+
   <p>
-    <strong>Two characters silently cut the rest off</strong>, and these are the
-    ones to watch:
+    The browser encodes a space because a space cannot mean anything in a URL.
+    These three <em>already</em> mean something, so they are left alone &mdash;
+    and they take part of your command line with them:
   </p>
 
   <div class="scroll">
     <table>
       <thead><tr><th>Character</th><th>Write it as</th><th>What happens if you do not</th></tr></thead>
       <tbody>
-        <tr>
-          <td>space</td><td><code>%20</code></td>
-          <td>The link may be cut at the space by the browser or by whatever you pasted it into.</td>
-        </tr>
         <tr>
           <td><code>&amp;</code></td><td><code>%26</code></td>
           <td>Starts a new URL parameter. Everything after it is lost from your command line.</td>
@@ -223,6 +235,10 @@
           <td><code>#</code></td><td><code>%23</code></td>
           <td>Starts the page fragment. Everything after it never reaches the server at all.</td>
         </tr>
+        <tr>
+          <td><code>+</code></td><td><code>%2B</code></td>
+          <td>Arrives as a <strong>space</strong>. <code>-x=1+2</code> becomes <code>-x=1 2</code>, which is two parameters instead of one value.</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -230,8 +246,24 @@
   <p>
     So <code>-a=1&amp;-b=2</code> in a link delivers only <code>-a=1</code>, and
     <code>-b=2</code> is gone. The application starts, the stream works, and one
-    of your parameters is simply missing &mdash; nothing announces it. Encode
-    both characters and the whole command line arrives.
+    of your parameters is simply missing &mdash; nothing announces it.
+  </p>
+
+  <p>
+    All three matter most for values you did not write by hand: a token, a
+    signature, a password. Those routinely contain <code>+</code> and
+    <code>&amp;</code>, so anything generated rather than typed should be
+    encoded rather than trusted to survive.
+  </p>
+
+  <p>
+    The full list of what every character becomes is worth a bookmark:
+    <a href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding">MDN's
+    percent-encoding reference</a> explains which characters are reserved and
+    why, and
+    <a href="https://www.w3schools.com/tags/ref_urlencode.asp">W3Schools' URL
+    encoding reference</a> is a plain table of every character and its
+    replacement.
   </p>
 </details>
 
@@ -521,12 +553,12 @@ bool bGreen = FParse::Param(FCommandLine::Get(), TEXT("green"));</code></pre>
 
   <ol>
     <li>
-      <strong>Does the link contain a raw space, <code>&amp;</code> or
-      <code>#</code>?</strong> Spaces must be <code>%20</code>,
-      <code>&amp;</code> must be <code>%26</code> and <code>#</code> must be
-      <code>%23</code>. Each of those cuts the rest of your command line off
-      without any warning. An <code>=</code> inside your parameters is fine
-      either way and is not the problem.
+      <strong>Does the link contain <code>&amp;</code>, <code>#</code> or
+      <code>+</code>?</strong> They must be <code>%26</code>, <code>%23</code>
+      and <code>%2B</code>. The first two cut the rest of the command line off
+      and the third turns into a space, all without any warning. Spaces are
+      fine as they are &mdash; the browser encodes those &mdash; and an
+      <code>=</code> inside your parameters is fine too. Neither is the problem.
     </li>
     <li>
       <strong>Is the append setting what you think?</strong> With it off, a link
