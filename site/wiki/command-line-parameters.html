@@ -468,58 +468,249 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
 </p>
 
 <details class="sect" open>
-  <summary><h2>A worked example, and the two kinds of parameter</h2>
-  <span class="hint">One demo app, three links, and everything else on this page follows from it.</span></summary>
+  <summary><h2>Run the demo, one change at a time</h2>
+  <span class="hint">Nine steps. Each adds one thing, and everything else on this page follows from them.</span></summary>
 
   <p>
-    These three links open the same application with the same configuration, and
-    differ only in what comes after <code>?exeLunchArgs=</code>:
+    The demo application used below is <code>E3DSFeaturesTemplate</code>. It has
+    a row of numbered booths, and in one of them a panel reading
+    <em>Command Line Arguments Received</em> with three objects in front of it:
+    a <strong>ball</strong>, a <strong>cone</strong> and a <strong>box</strong>.
+    Follow the steps in order and each one changes exactly one thing.
   </p>
 
-  <pre><code>...?exeLunchArgs=-boothno=12 -red
-...?exeLunchArgs=-boothno=12 -pink
-...?exeLunchArgs=-boothno=12 -green</code></pre>
+  <h3>Step 1 &mdash; open it with nothing set</h3>
 
   <p>
-    The third one starts the application with the command line
-    <code>-boothno=12 -green</code>. Here is what the application does with it:
+    Open the stream link with a configuration whose <em>Parameters To Pass To
+    App</em> is empty, and add nothing to the link:
   </p>
 
-  <ul>
-    <li>
-      <strong><code>-boothno=12</code></strong> &mdash; a Blueprint reads the
-      number <code>12</code>, searches the map for the booth with that number,
-      and places the player in front of it as the level starts. Open the link
-      with <code>-boothno=7</code> instead and the player starts at a different
-      booth.
-    </li>
-    <li>
-      <strong><code>-green</code></strong> &mdash; inside that booth there are
-      objects whose texture colour this sets. <code>-red</code>,
-      <code>-pink</code> and <code>-blue</code> are the others the demo
-      understands.
-    </li>
-  </ul>
+  <pre><code>.../v5/demo/E3DSFeaturesTemplate/default</code></pre>
+
+  <p>
+    The player starts at <strong>booth 1</strong>. Nothing has told the
+    application to do anything else, so it does what it does by default. That is
+    the baseline every other step is compared against.
+  </p>
+
+  <h3>Step 2 &mdash; put a parameter in the configuration</h3>
+
+  <p>
+    In the Control Panel, open the configuration, go to the <em>Developer</em>
+    tab and turn on <strong>Parameters To Pass To App</strong>. The field accepts
+    a command line, and its own example text shows the shape:
+    <code>Ex- param1=value1 param2=value2</code>.
+  </p>
 
   <figure>
-    <img src="/images/cmdline-booth-demo-result.png"
-         alt="The demo app running at booth 12, with a blue ball coloured by the URL parameter and a green cone coloured by the configuration parameter"
+    <img src="/images/cmdline-developer-tab-empty.png"
+         alt="The Developer tab of a configuration, with the Parameters To Pass To App switch highlighted and its field empty"
          loading="lazy">
     <figcaption>
-      The result, with both sources in play at once. The player has been placed
-      at <strong>booth 12</strong>. The <strong>ball is blue</strong> because
-      the link carried <code>?exeLunchArgs=-blue</code>, and the
-      <strong>cone is green</strong> because the configuration's
-      <em>Parameters To Pass To App</em> holds <code>-green</code>. Both arrived
-      because <em>Append Parameters To URL</em> was on &mdash; with it off, only
-      the link's <code>-blue</code> would have applied.
+      The <em>Developer</em> tab. <strong>Parameters To Pass To App</strong> has
+      its own switch, and the field below it takes the command line. Note
+      <em>Append Parameters To URL</em> underneath, off &mdash; step 9 turns it
+      on.
     </figcaption>
   </figure>
 
   <p>
-    Those two parameters are <strong>different kinds of thing</strong>, and the
-    difference decides how the application has to read each one. It is the single
-    most important idea on this page.
+    The <code>CmdLineDemo</code> configuration has <code>-boothno=12</code> in
+    that field. Open the link using it and nothing else:
+  </p>
+
+  <pre><code>.../v5/demo/E3DSFeaturesTemplate/CmdLineDemo</code></pre>
+
+  <p>
+    The player now starts at <strong>booth 12</strong>, not booth 1. Inside the
+    application a Blueprint reads the number <code>12</code> out of the command
+    line, searches the map for the booth carrying that number, and places the
+    player in front of it as the level loads. Change the field to
+    <code>-boothno=7</code> and the player starts at booth 7 instead.
+  </p>
+
+  <h3>Step 3 &mdash; get the same result from the link instead</h3>
+
+  <p>
+    Now go back to the configuration with the <strong>empty</strong> field &mdash;
+    <code>default</code>, which put the player at booth 1 in step 1 &mdash; and
+    put the parameter on the link instead:
+  </p>
+
+  <pre><code>.../v5/demo/E3DSFeaturesTemplate/default?appParameters=-boothno=12</code></pre>
+
+  <p>
+    The player starts at <strong>booth 12</strong> again. Identical to step 2,
+    with an empty configuration.
+  </p>
+
+  <p>
+    <strong>That is the whole idea of this page.</strong> There are two places a
+    parameter can come from &mdash; <em>Parameters To Pass To App</em> in the
+    configuration, and <code>?appParameters=</code> on the link &mdash; and the
+    application cannot tell which one it came from. It receives a command line
+    either way.
+  </p>
+
+  <h3>Step 4 &mdash; add a colour</h3>
+
+  <pre><code>.../v5/demo/E3DSFeaturesTemplate/default?appParameters=-boothno=12 -green</code></pre>
+
+  <figure>
+    <img src="/images/cmdline-booth12-green-ball.png"
+         alt="The demo at booth 12 with a green ball, and the cone and box still white"
+         loading="lazy">
+    <figcaption>
+      Booth 12, and the <strong>ball is green</strong>. The cone and the box are
+      untouched &mdash; one colour was given, so one object changed.
+    </figcaption>
+  </figure>
+
+  <p>
+    A different part of the Blueprint handles this one. It checks the colour
+    against the ones it knows and applies it to the ball. Try
+    <code>-red</code>, <code>-pink</code> and <code>-blue</code> in its place and
+    the ball changes accordingly.
+  </p>
+
+  <h3>Step 5 &mdash; add a second colour</h3>
+
+  <pre><code>...?appParameters=-boothno=11 -blue -pink</code></pre>
+
+  <figure>
+    <img src="/images/cmdline-booth11-two-colours.png"
+         alt="The demo at booth 11 with a blue ball and a pink cone, the box still white"
+         loading="lazy">
+    <figcaption>
+      Two colours: the <strong>ball takes the first</strong> and the
+      <strong>cone takes the second</strong>. The box is still white.
+    </figcaption>
+  </figure>
+
+  <h3>Step 6 &mdash; add a third</h3>
+
+  <pre><code>...?appParameters=-boothno=11 -blue -green -red</code></pre>
+
+  <figure>
+    <img src="/images/cmdline-booth11-three-colours.png"
+         alt="The demo at booth 11 with a blue ball, a green cone and a red box"
+         loading="lazy">
+    <figcaption>
+      Three colours, three objects: <strong>ball, then cone, then box</strong>,
+      in the order the colours were written.
+    </figcaption>
+  </figure>
+
+  <p>
+    The Blueprint walks the command line in order. The first colour it
+    recognises goes on the ball, the next on the cone, the next on the box. So
+    <strong>position decides which object changes</strong>, and swapping
+    <code>-blue -green</code> to <code>-green -blue</code> swaps the ball and the
+    cone.
+  </p>
+
+  <h3>Step 7 &mdash; try a colour the demo does not know</h3>
+
+  <pre><code>...?appParameters=-boothno=11 -turquoise</code></pre>
+
+  <p>
+    Nothing happens. The objects stay white, and no error appears anywhere.
+    <code>-turquoise</code> was passed to the application correctly &mdash; it
+    simply is not one of the colours this Blueprint was written to recognise.
+  </p>
+
+  <p>
+    Worth sitting with for a moment, because it is true of every parameter on
+    this page: <strong>the platform delivers the command line, and the
+    application decides what any of it means.</strong> A parameter that does
+    nothing is almost always an application that was not written to look for it.
+  </p>
+
+  <h3>Step 8 &mdash; set the same parameter in both places</h3>
+
+  <p>
+    Use <code>CmdLineDemo</code>, which holds <code>-boothno=12</code> in its
+    configuration, and put a <em>different</em> booth on the link:
+  </p>
+
+  <pre><code>.../v5/demo/E3DSFeaturesTemplate/CmdLineDemo?appParameters=-boothno=10</code></pre>
+
+  <p>
+    The player starts at <strong>booth 10</strong>. The configuration said 12 and
+    the link said 10, and <strong>the link won</strong>.
+  </p>
+
+  <p>
+    By default the link does not merely take priority &mdash; it
+    <strong>replaces</strong> the configuration's command line entirely.
+    Anything else that had been in <em>Parameters To Pass To App</em> is not used
+    either.
+  </p>
+
+  <h3>Step 9 &mdash; make them add up instead</h3>
+
+  <p>
+    Turn on <strong>Append Parameters To URL</strong> on the same
+    <em>Developer</em> tab:
+  </p>
+
+  <figure>
+    <img src="/images/cmdline-developer-tab.png"
+         alt="The Developer tab with Parameters To Pass To App holding -green and the Append Parameters To URL switch turned on"
+         loading="lazy">
+    <figcaption>
+      <em>Parameters To Pass To App</em> holds <code>-green</code>, and
+      <strong>Append Parameters To URL</strong> is now on.
+    </figcaption>
+  </figure>
+
+  <p>
+    With that on, the link's parameters are <strong>added to</strong> the
+    configuration's instead of replacing them, and the application receives both:
+  </p>
+
+  <figure>
+    <img src="/images/cmdline-booth-demo-result.png"
+         alt="The demo with a blue ball from the link parameter and a green cone from the configuration parameter"
+         loading="lazy">
+    <figcaption>
+      Both sources at once. The <strong>ball is blue</strong> from
+      <code>-blue</code> on the link, and the <strong>cone is green</strong> from
+      <code>-green</code> in the configuration. With <em>Append Parameters To
+      URL</em> off, only <code>-blue</code> would have applied and the cone would
+      be white.
+    </figcaption>
+  </figure>
+
+  <h3>What those nine steps established</h3>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Step</th><th>What it showed</th></tr></thead>
+      <tbody>
+        <tr><td>1&ndash;2</td><td>A parameter in the configuration changes what the application does.</td></tr>
+        <tr><td>3</td><td>The same parameter on the link does the same thing. Two sources, one outcome.</td></tr>
+        <tr><td>4&ndash;6</td><td>Parameters accumulate, and their order can matter to the application.</td></tr>
+        <tr><td>7</td><td>The application decides what a parameter means. Unknown ones do nothing, silently.</td></tr>
+        <tr><td>8</td><td>When both places set the same thing, the link wins &mdash; and by default replaces.</td></tr>
+        <tr><td>9</td><td><em>Append Parameters To URL</em> changes replace into add.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    The rest of this page is the detail behind those six lines: how to write a
+    link safely, how to read a parameter inside Unreal, and how to switch link
+    parameters off altogether.
+  </p>
+
+  <h3>The two kinds of parameter</h3>
+
+  <p>
+    One more thing from the demo, because it decides how the application has to
+    read each one. <code>-boothno=12</code> and <code>-green</code> are not the
+    same shape:
   </p>
 
   <div class="scroll">

@@ -202,6 +202,52 @@ And give a symptom table, because failures are not interchangeable: "no
 Microphone row at all" and "listed but unnamed" need different actions, and
 treating them as one thing sends people round in circles.
 
+## 17. Open with a demo, told as a story that grows one step at a time
+
+**Every page starts by running something.** Not with what the feature is, not
+with a table of settings, not with a definition — with one concrete thing a
+reader can open, and then the same thing again with one more piece added. The
+explanation comes afterwards, when the reader has already watched the behaviour
+change and is looking for the reason.
+
+The shape, using the command-line page as the worked case:
+
+| step | what changes | what the reader learns without being told |
+|---|---|---|
+| 1 | the demo with an empty configuration | there is a default, and it is booth 1 |
+| 2 | a configuration holding `-boothno=12` | a parameter changes where the player starts |
+| 3 | the empty configuration again, `?appParameters=-boothno=12` on the link | **two places, same result** |
+| 4 | add `-pink` | a second parameter, and a different kind of one |
+| 5 | add a second and third colour | ball, then cone, then box — position matters |
+| 6 | a colour the demo does not know | it is the application that decides, not the platform |
+| 7 | configuration says 12, link says 10 | **the link wins** — there is a priority |
+| 8 | turn on *Append Parameters To URL* | the priority can be changed to addition |
+
+Step 3 is the one that does the teaching, and it only works because steps 1 and
+2 came first. Step 7 teaches precedence in one move, and a reader who has
+watched it does not need the word "precedence" explained.
+
+**Rules for the demo:**
+
+- **One thing changes per step.** Two changes at once and the reader cannot
+  attribute either.
+- **Carry the same values the whole way through.** Booth 12 stays booth 12 until
+  the step whose entire point is changing it.
+- **Show the result, not a description of the result.** A screenshot of the
+  running application after each meaningful step. The reader should be able to
+  match what they see on their screen to what is on the page.
+- **Give the demo away.** Link the project or source, so a reader can open the
+  exact thing the page is describing rather than an approximation of it.
+- **Then, and only then, generalise.** After the story, a short section that
+  names what just happened: the two sources, the precedence, the switch that
+  changes it. That section is short *because* the story did the work.
+
+**Why this rather than explaining first.** A reader who arrives at a definition
+has to hold it in mind with nothing to attach it to, and most of them stop. A
+reader who has just watched booth 1 become booth 12 already has the question the
+next paragraph answers. The page stops being something to study and becomes
+something to follow.
+
 ---
 
 ## Before publishing
@@ -217,3 +263,5 @@ treating them as one thing sends people round in circles.
 - [ ] Long page folded, exactly one section open
 - [ ] Nothing explained here that is already explained elsewhere
 - [ ] Anything unverified is marked as unverified
+- [ ] Opens with a demo told as a story, one change per step, result shown
+- [ ] The demo is linked or downloadable, not just described
