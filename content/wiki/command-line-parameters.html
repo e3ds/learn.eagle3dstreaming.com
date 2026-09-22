@@ -49,28 +49,59 @@
     A stream link with parameters on it looks like this:
   </p>
 
-  <pre><code>https://connector.eagle3dstreaming.com/v5/demo/MyApp/MyConfig?exeLunchArgs=-ResX%3D1920%20-MyFlag</code></pre>
+  <pre><code>https://connector.eagle3dstreaming.com/v5/demo/MyApp/MyConfig?exeLunchArgs=-boothno=12%20-green</code></pre>
 
   <p>
-    The value has to be <strong>URL-encoded</strong>, because a command line
-    contains characters a URL treats as punctuation. Two matter:
+    That link starts the application with <code>-boothno=12 -green</code>.
+  </p>
+
+  <h3>What has to be encoded, and what does not</h3>
+
+  <p>
+    <strong>Spaces must be <code>%20</code>.</strong> That is the one that
+    always matters, because a command line is mostly spaces and a raw space ends
+    the link as far as many browsers and chat clients are concerned.
+  </p>
+
+  <p>
+    <strong>An <code>=</code> inside your parameters does not need encoding.</strong>
+    A link's value is separated from its name at the <em>first</em>
+    <code>=</code> only, so every <code>=</code> after that is part of the value
+    and arrives untouched. <code>-boothno=12</code> works exactly as written.
+    <code>%3D</code> also works if you prefer it &mdash; both produce the same
+    command line &mdash; but it is not required.
+  </p>
+
+  <p>
+    <strong>Two characters silently cut the rest off</strong>, and these are the
+    ones to watch:
   </p>
 
   <div class="scroll">
     <table>
-      <thead><tr><th>Character</th><th>Write it as</th><th>Why</th></tr></thead>
+      <thead><tr><th>Character</th><th>Write it as</th><th>What happens if you do not</th></tr></thead>
       <tbody>
-        <tr><td>space</td><td><code>%20</code></td><td>A raw space ends the URL as far as some browsers and chat clients are concerned.</td></tr>
-        <tr><td><code>=</code></td><td><code>%3D</code></td><td>A raw <code>=</code> is read as the start of another URL parameter.</td></tr>
+        <tr>
+          <td>space</td><td><code>%20</code></td>
+          <td>The link may be cut at the space by the browser or by whatever you pasted it into.</td>
+        </tr>
+        <tr>
+          <td><code>&amp;</code></td><td><code>%26</code></td>
+          <td>Starts a new URL parameter. Everything after it is lost from your command line.</td>
+        </tr>
+        <tr>
+          <td><code>#</code></td><td><code>%23</code></td>
+          <td>Starts the page fragment. Everything after it never reaches the server at all.</td>
+        </tr>
       </tbody>
     </table>
   </div>
 
   <p>
-    So <code>-ResX=1920 -MyFlag</code> becomes
-    <code>-ResX%3D1920%20-MyFlag</code>. Leaving the <code>=</code> unencoded is
-    the most common mistake, and it does not fail loudly &mdash; the app simply
-    starts without the parameter.
+    So <code>-a=1&amp;-b=2</code> in a link delivers only <code>-a=1</code>, and
+    <code>-b=2</code> is gone. The application starts, the stream works, and one
+    of your parameters is simply missing &mdash; nothing announces it. Encode
+    both characters and the whole command line arrives.
   </p>
 </details>
 
@@ -308,9 +339,12 @@ bool bHasLevel = FParse::Value(FCommandLine::Get(), TEXT("Level="), Level);</cod
 
   <ol>
     <li>
-      <strong>Is the <code>=</code> encoded?</strong> In a link it must be
-      <code>%3D</code>, and spaces must be <code>%20</code>. An unencoded
-      <code>=</code> means the parameter never leaves the browser.
+      <strong>Does the link contain a raw space, <code>&amp;</code> or
+      <code>#</code>?</strong> Spaces must be <code>%20</code>,
+      <code>&amp;</code> must be <code>%26</code> and <code>#</code> must be
+      <code>%23</code>. Each of those cuts the rest of your command line off
+      without any warning. An <code>=</code> inside your parameters is fine
+      either way and is not the problem.
     </li>
     <li>
       <strong>Is the append setting what you think?</strong> With it off, a link
