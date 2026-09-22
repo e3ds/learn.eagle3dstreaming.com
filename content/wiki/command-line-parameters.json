@@ -1,0 +1,12 @@
+{
+ "title": "Command-line parameters",
+ "slug": "command-line-parameters",
+ "section": "Developer Guides",
+ "parents": [],
+ "source": "https://docs.eagle3dstreaming.com/wiki/append-parameters-to-a-url",
+ "rewritten": true,
+ "replaces": [
+  "append-parameters-to-a-url",
+  "pass-parameters-to-your-app-from-the-new-control-p"
+ ]
+}

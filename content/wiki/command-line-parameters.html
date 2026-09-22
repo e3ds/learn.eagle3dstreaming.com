@@ -1,0 +1,339 @@
+<style>
+  .fig { margin: 26px 0; }
+  .fig svg { display: block; width: 100%; height: auto; max-width: 720px; margin: 0 auto; }
+  .fig figcaption {
+    max-width: var(--measure);
+    margin: 10px auto 0;
+    color: var(--ink-3);
+    font-size: 14.5px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .fig .box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+  .fig .boxAlt { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5; }
+  .fig .ttl { fill: var(--ink); font: 600 14px Archivo, Arial, sans-serif; }
+  .fig .sub { fill: var(--ink-3); font: 11.5px Archivo, Arial, sans-serif; }
+  .fig .lbl { fill: var(--ink-2); font: 13px Archivo, Arial, sans-serif; }
+  .fig .mono { fill: var(--ink-2); font: 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .fig .monoBig { fill: var(--ink); font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .fig .wireAcc { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+</style>
+
+<p class="standfirst">
+  Your Unreal application can be started with command-line parameters of your
+  own &mdash; a resolution, a level to load, a flag your own code checks. There
+  are two places to put them: the configuration attached to a stream link, and
+  the stream link itself. This page covers both, what happens when both are
+  used, and how they sit alongside the parameters Eagle 3D Streaming adds.
+</p>
+
+<details class="sect" open>
+  <summary><h2>The two places a parameter can come from</h2>
+  <span class="hint">One is fixed per configuration. The other changes per visitor.</span></summary>
+
+  <p>
+    <strong>The configuration's command line.</strong> In the Control Panel, open
+    the configuration attached to your stream link and fill in its command-line
+    field. Every visitor who opens that link gets these parameters. Use this for
+    anything that is true of the app always.
+  </p>
+
+  <p>
+    <strong>The stream link.</strong> Add <code>?exeLunchArgs=</code> to the URL
+    and the parameters after it apply to <em>that visit only</em>. Use this when
+    the parameters depend on who is opening the link, or on where it was opened
+    from.
+  </p>
+
+  <p>
+    A stream link with parameters on it looks like this:
+  </p>
+
+  <pre><code>https://connector.eagle3dstreaming.com/v5/demo/MyApp/MyConfig?exeLunchArgs=-ResX%3D1920%20-MyFlag</code></pre>
+
+  <p>
+    The value has to be <strong>URL-encoded</strong>, because a command line
+    contains characters a URL treats as punctuation. Two matter:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Character</th><th>Write it as</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>space</td><td><code>%20</code></td><td>A raw space ends the URL as far as some browsers and chat clients are concerned.</td></tr>
+        <tr><td><code>=</code></td><td><code>%3D</code></td><td>A raw <code>=</code> is read as the start of another URL parameter.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    So <code>-ResX=1920 -MyFlag</code> becomes
+    <code>-ResX%3D1920%20-MyFlag</code>. Leaving the <code>=</code> unencoded is
+    the most common mistake, and it does not fail loudly &mdash; the app simply
+    starts without the parameter.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>When both places are used at once</h2>
+  <span class="hint">One checkbox decides whether the link adds to the configuration or takes over from it.</span></summary>
+
+  <p>
+    If a configuration has a command line <em>and</em> the link carries
+    <code>?exeLunchArgs=</code>, one setting on the configuration decides what
+    happens. In the Control Panel it is the option to append overriding
+    command-line arguments.
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Setting</th><th>What the app receives</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Off</strong> (the default)</td>
+          <td>The link's parameters <strong>replace</strong> the configuration's command line entirely.</td>
+        </tr>
+        <tr>
+          <td><strong>On</strong></td>
+          <td>The link's parameters are <strong>added after</strong> the configuration's command line. Both apply.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Worked through with one set of values. The configuration's command line is
+    <code>-ResX=1280 -MyFlag</code>, and the link carries
+    <code>?exeLunchArgs=-Level%3DArena</code>:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Setting</th><th>Parameters that reach the app</th></tr></thead>
+      <tbody>
+        <tr><td>Off</td><td><code>-Level=Arena</code></td></tr>
+        <tr><td>On</td><td><code>-ResX=1280 -MyFlag -Level=Arena</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Read the first row carefully: with the setting <strong>off</strong>,
+    <code>-ResX=1280</code> and <code>-MyFlag</code> are gone. That is what
+    replace means, and it is the default. If you want the link to add to the
+    configuration rather than take over from it, turn the setting on.
+  </p>
+
+  <p>
+    One case behaves differently and is worth knowing, because it is the
+    ordinary one: <strong>a link with no <code>?exeLunchArgs=</code> on it
+    leaves the configuration's command line completely alone</strong>, whichever
+    way the setting is set. A normal visit can never lose what the configuration
+    holds. Only a link that actually carries parameters can displace it.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>Where your parameters sit, and what that gives you</h2>
+  <span class="hint">Yours come first. Eagle 3D Streaming's own parameters follow.</span></summary>
+
+  <p>
+    Eagle 3D Streaming adds parameters of its own to every launch &mdash; the
+    address of the signalling server, the encoder settings, the window size and
+    others. Your parameters and those are combined into one command line, and
+    <strong>yours are placed first</strong>.
+  </p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 700 230" role="img"
+         aria-label="Your configuration command line and your URL parameters are combined into one list, which is then placed in front of the parameters Eagle 3D Streaming adds, producing the command line the application receives.">
+      <rect class="box" x="10" y="14" width="200" height="54" rx="6"/>
+      <text class="ttl" x="26" y="36">Configuration</text>
+      <text class="mono" x="26" y="55">-ResX=1280 -MyFlag</text>
+
+      <rect class="box" x="10" y="92" width="200" height="54" rx="6"/>
+      <text class="ttl" x="26" y="114">Stream link</text>
+      <text class="mono" x="26" y="133">-Level=Arena</text>
+
+      <path class="wireAcc" d="M210 41 H250 V75 H286"/>
+      <path class="wireAcc" d="M210 119 H250 V85 H286"/>
+
+      <rect class="boxAlt" x="286" y="52" width="176" height="56" rx="6"/>
+      <text class="ttl" x="302" y="74">Your parameters</text>
+      <text class="sub" x="302" y="92">combined, in order</text>
+
+      <rect class="box" x="286" y="132" width="176" height="56" rx="6"/>
+      <text class="ttl" x="302" y="154">Eagle 3D Streaming</text>
+      <text class="sub" x="302" y="172">adds its own</text>
+
+      <path class="wireAcc" d="M462 80 H506 V108 H540"/>
+      <path class="wireAcc" d="M462 160 H506 V126 H540"/>
+
+      <rect class="boxAlt" x="540" y="86" width="150" height="70" rx="6"/>
+      <text class="ttl" x="556" y="108">The app starts</text>
+      <text class="monoBig" x="556" y="128">yours</text>
+      <text class="mono" x="556" y="146">then Eagle 3D's</text>
+    </svg>
+    <figcaption>
+      Your two sources are combined first, and the result is placed in front of
+      the parameters Eagle 3D Streaming adds.
+    </figcaption>
+  </figure>
+
+  <p>
+    Being first is what lets you <strong>change one of Eagle 3D Streaming's
+    defaults</strong>. Pass <code>-ResX=1920</code> and it appears in the command
+    line before Eagle 3D Streaming's own <code>-ResX</code>, so yours is the one
+    Unreal reads. Nothing is deleted to make that work &mdash; both values are
+    present, and position decides.
+  </p>
+
+  <p>
+    It also means <strong>nothing removes a parameter you supplied</strong>. If
+    you put <code>-RenderOffScreen</code> in your configuration, it reaches the
+    application even on a machine where Eagle 3D Streaming would not have added
+    it itself. What you ask for is what the app gets.
+  </p>
+
+  <p class="note">
+    <strong>Not fully measured.</strong> Overriding relies on Unreal reading the
+    first occurrence of a repeated parameter. That is how
+    <code>FParse::Value</code> works, which is what reads a
+    <code>-Name=value</code> parameter. A setting your app reads as a console
+    variable instead may take the last occurrence. If an override does not take
+    effect, this is the first thing to suspect &mdash; and worth telling support
+    about, because the answer belongs on this page.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>Values Eagle 3D Streaming can fill in for you</h2>
+  <span class="hint">Placeholders for things you cannot know when you write the configuration.</span></summary>
+
+  <p>
+    Some values are only decided when a machine is assigned, so they cannot be
+    typed into a configuration ahead of time. Write a placeholder instead and it
+    is replaced at launch:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Placeholder</th><th>Replaced with</th></tr></thead>
+      <tbody>
+        <tr><td><code>%ip_ss%</code></td><td>The address of the signalling server for this session.</td></tr>
+        <tr><td><code>%port_streamer2ss%</code></td><td>The port the application connects to that server on.</td></tr>
+        <tr><td><code>%ip_streamer%</code></td><td>The public address of the machine the app is running on.</td></tr>
+        <tr><td><code>%instance_id%</code></td><td>The identifier of that machine.</td></tr>
+        <tr><td><code>%vm_region%</code></td><td>The region the machine is in.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    So a configuration command line of <code>-MyServer=%ip_ss%</code> starts the
+    application with <code>-MyServer=10.0.0.5</code> when the session is served
+    from a machine at that address.
+  </p>
+
+  <p>
+    Placeholders work in both places &mdash; the configuration's command line and
+    <code>?exeLunchArgs=</code> on the link.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>Reading a parameter inside your application</h2>
+  <span class="hint">Unreal has two different functions, and using the wrong one always returns false.</span></summary>
+
+  <p>
+    Unreal treats two kinds of parameter differently, and the difference catches
+    people out badly enough to be worth stating plainly.
+  </p>
+
+  <p>
+    <strong>A bare switch</strong> is present or absent and carries no value:
+    <code>-MyFlag</code>. Read it with <code>FParse::Param</code>:
+  </p>
+
+  <pre><code>bool bMyFlag = FParse::Param(FCommandLine::Get(), TEXT("MyFlag"));</code></pre>
+
+  <p>
+    <strong>A named value</strong> carries a value after an <code>=</code>:
+    <code>-Level=Arena</code>. Read it with <code>FParse::Value</code>, and note
+    the trailing <code>=</code> inside <code>TEXT()</code>:
+  </p>
+
+  <pre><code>FString Level;
+bool bHasLevel = FParse::Value(FCommandLine::Get(), TEXT("Level="), Level);</code></pre>
+
+  <p>
+    <strong>They are not interchangeable.</strong> Using
+    <code>FParse::Param</code> on a named value returns <code>false</code> on
+    every launch, even though the parameter is right there in the command line.
+    <code>FParse::Param</code> checks the character immediately after the name
+    and accepts only a space or the end of the line &mdash; and a named value has
+    an <code>=</code> there.
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Command line</th><th>Read with</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td><code>-MyFlag</code></td><td><code>Param("MyFlag")</code></td><td>true</td></tr>
+        <tr><td><code>-Level=Arena</code></td><td><code>Param("Level")</code></td><td><strong>false</strong>, always</td></tr>
+        <tr><td><code>-Level=Arena</code></td><td><code>Value("Level=", Out)</code></td><td>true, <code>Out</code> is <code>Arena</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Adding the <code>=</code> to <code>FParse::Param</code> does not fix it. It
+    only moves the problem: <code>Param("Level=")</code> then matches when the
+    value has been accidentally separated from its parameter, which is to say it
+    reports success exactly when the value is unusable.
+  </p>
+
+  <p>
+    This is <strong>not a capitalisation problem</strong>.
+    <code>FParse::Param</code> ignores case on both sides, so
+    <code>MyFlag</code>, <code>myflag</code> and <code>MYFLAG</code> all behave
+    the same. If a check is failing, the function is the thing to look at, not
+    the spelling.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>If a parameter does not seem to arrive</h2>
+  <span class="hint">In the order worth checking.</span></summary>
+
+  <ol>
+    <li>
+      <strong>Is the <code>=</code> encoded?</strong> In a link it must be
+      <code>%3D</code>, and spaces must be <code>%20</code>. An unencoded
+      <code>=</code> means the parameter never leaves the browser.
+    </li>
+    <li>
+      <strong>Is the append setting what you think?</strong> With it off, a link
+      carrying <code>?exeLunchArgs=</code> replaces the configuration's command
+      line completely. Parameters you expected from the configuration will be
+      absent.
+    </li>
+    <li>
+      <strong>Is the app reading it with the right function?</strong> A
+      <code>-Name=value</code> parameter read with <code>FParse::Param</code>
+      returns false however correctly it was passed. See the section above.
+    </li>
+    <li>
+      <strong>Is another parameter of the same name set earlier?</strong> Your
+      own two sources are combined in order &mdash; configuration first, then the
+      link &mdash; so with the append setting on, a configuration value for the
+      same parameter comes before the link's.
+    </li>
+  </ol>
+
+  <p>
+    If all four check out, contact support with the stream link and the
+    parameter you expected. The command line each application was started with
+    can be looked up for a session.
+  </p>
+</details>
