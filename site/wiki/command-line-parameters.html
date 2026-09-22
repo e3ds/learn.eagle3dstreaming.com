@@ -457,19 +457,40 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
   .fig .mono { fill: var(--ink-2); font: 12.5px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .fig .monoBig { fill: var(--ink); font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
   .fig .wireAcc { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+  .demo { margin: 14px 0 18px; }
+  .demo a {
+    display: inline-block;
+    padding: 9px 15px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+  }
 </style>
 
 <p class="standfirst">
-  Your Unreal application can be started with command-line parameters of your
-  own &mdash; a resolution, a level to load, a flag your own code checks. There
-  are two places to put them: the configuration attached to a stream link, and
-  the stream link itself. This page covers both, what happens when both are
-  used, and how they sit alongside the parameters Eagle 3D Streaming adds.
+  A command-line parameter is a value handed to your Unreal application at the
+  moment it starts. Your application decides what any of them mean, so what you
+  can do with them is up to your own code:
+</p>
+
+<ul>
+  <li>load a particular level</li>
+  <li>start the player somewhere specific</li>
+  <li>set a resolution or a quality option</li>
+  <li>turn a feature of your own on or off</li>
+  <li>tell the application which user is watching</li>
+</ul>
+
+<p>
+  There are two places to put them &mdash; the configuration attached to a
+  stream link, and the stream link itself. The demo below shows both, one step
+  at a time.
 </p>
 
 <details class="sect" open>
   <summary><h2>Run the demo, one change at a time</h2>
-  <span class="hint">Nine steps. Each adds one thing, and everything else on this page follows from them.</span></summary>
+  <span class="hint">Eight steps. Each adds one thing, and everything else on this page follows from them.</span></summary>
 
   <p>
     The demo application used below is <code>E3DSFeaturesTemplate</code>. It has
@@ -486,7 +507,10 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     App</em> is empty, and add nothing to the link:
   </p>
 
-  <pre><code>.../v5/demo/E3DSFeaturesTemplate/default</code></pre>
+  <p class="demo">
+    <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default">
+      Open the demo with nothing set &rarr;</a>
+  </p>
 
   <p>
     The player starts at <strong>booth 1</strong>. Nothing has told the
@@ -510,23 +534,43 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     <figcaption>
       The <em>Developer</em> tab. <strong>Parameters To Pass To App</strong> has
       its own switch, and the field below it takes the command line. Note
-      <em>Append Parameters To URL</em> underneath, off &mdash; step 9 turns it
+      <em>Append Parameters To URL</em> underneath, off &mdash; step 8 turns it
       on.
     </figcaption>
   </figure>
 
   <p>
-    The <code>CmdLineDemo</code> configuration has <code>-boothno=12</code> in
-    that field. Open the link using it and nothing else:
+    The <code>CmdLineDemo</code> configuration has this in that field:
   </p>
 
-  <pre><code>.../v5/demo/E3DSFeaturesTemplate/CmdLineDemo</code></pre>
+  <pre><code>-boothno=12 -green</code></pre>
+
+  <p class="demo">
+    <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo">
+      Open the demo with those parameters &rarr;</a>
+  </p>
 
   <p>
-    The player now starts at <strong>booth 12</strong>, not booth 1. Inside the
-    application a Blueprint reads the number <code>12</code> out of the command
-    line, searches the map for the booth carrying that number, and places the
-    player in front of it as the level loads. Change the field to
+    Two things are different from step 1. The player now starts at
+    <strong>booth 12</strong> instead of booth 1, and the <strong>ball is
+    green</strong> instead of white:
+  </p>
+
+  <figure>
+    <img src="/images/cmdline-booth12-green-ball.png"
+         alt="The demo at booth 12 with a green ball, and the cone and box still white"
+         loading="lazy">
+    <figcaption>
+      Booth 12 from <code>-boothno=12</code>, and a green ball from
+      <code>-green</code>. The cone and the box are untouched &mdash; one colour
+      was given, so one object changed.
+    </figcaption>
+  </figure>
+
+  <p>
+    Inside the application a Blueprint reads the number <code>12</code> out of
+    the command line, searches the map for the booth carrying that number, and
+    places the player in front of it as the level loads. Change the field to
     <code>-boothno=7</code> and the player starts at booth 7 instead.
   </p>
 
@@ -538,45 +582,30 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     put the parameter on the link instead:
   </p>
 
-  <pre><code>.../v5/demo/E3DSFeaturesTemplate/default?appParameters=-boothno=12</code></pre>
+  <p class="demo">
+    <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=12 -green">
+      Open the empty configuration, with the parameters on the link &rarr;</a>
+  </p>
 
   <p>
-    The player starts at <strong>booth 12</strong> again. Identical to step 2,
-    with an empty configuration.
+    <strong>Booth 12, green ball.</strong> Exactly what step 2 produced &mdash;
+    from a configuration with an empty field.
   </p>
 
   <p>
     <strong>That is the whole idea of this page.</strong> There are two places a
     parameter can come from &mdash; <em>Parameters To Pass To App</em> in the
-    configuration, and <code>?appParameters=</code> on the link &mdash; and the
+    configuration, and <code>?exeLunchArgs=</code> on the link &mdash; and the
     application cannot tell which one it came from. It receives a command line
-    either way.
+    either way, and behaves identically.
   </p>
 
-  <h3>Step 4 &mdash; add a colour</h3>
+  <h3>Step 4 &mdash; add a second colour</h3>
 
-  <pre><code>.../v5/demo/E3DSFeaturesTemplate/default?appParameters=-boothno=12 -green</code></pre>
-
-  <figure>
-    <img src="/images/cmdline-booth12-green-ball.png"
-         alt="The demo at booth 12 with a green ball, and the cone and box still white"
-         loading="lazy">
-    <figcaption>
-      Booth 12, and the <strong>ball is green</strong>. The cone and the box are
-      untouched &mdash; one colour was given, so one object changed.
-    </figcaption>
-  </figure>
-
-  <p>
-    A different part of the Blueprint handles this one. It checks the colour
-    against the ones it knows and applies it to the ball. Try
-    <code>-red</code>, <code>-pink</code> and <code>-blue</code> in its place and
-    the ball changes accordingly.
+  <p class="demo">
+    <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -blue -pink">
+      Open it with two colours &rarr;</a>
   </p>
-
-  <h3>Step 5 &mdash; add a second colour</h3>
-
-  <pre><code>...?appParameters=-boothno=11 -blue -pink</code></pre>
 
   <figure>
     <img src="/images/cmdline-booth11-two-colours.png"
@@ -588,9 +617,12 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     </figcaption>
   </figure>
 
-  <h3>Step 6 &mdash; add a third</h3>
+  <h3>Step 5 &mdash; add a third</h3>
 
-  <pre><code>...?appParameters=-boothno=11 -blue -green -red</code></pre>
+  <p class="demo">
+    <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -blue -green -red">
+      Open it with three colours &rarr;</a>
+  </p>
 
   <figure>
     <img src="/images/cmdline-booth11-three-colours.png"
@@ -610,9 +642,12 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     cone.
   </p>
 
-  <h3>Step 7 &mdash; try a colour the demo does not know</h3>
+  <h3>Step 6 &mdash; try a colour the demo does not know</h3>
 
-  <pre><code>...?appParameters=-boothno=11 -turquoise</code></pre>
+  <p class="demo">
+    <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/default?exeLunchArgs=-boothno=11 -turquoise">
+      Open it with a colour the demo does not know &rarr;</a>
+  </p>
 
   <p>
     Nothing happens. The objects stay white, and no error appears anywhere.
@@ -627,63 +662,76 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     nothing is almost always an application that was not written to look for it.
   </p>
 
-  <h3>Step 8 &mdash; set the same parameter in both places</h3>
+  <h3>Step 7 &mdash; use both places at once</h3>
 
   <p>
-    Use <code>CmdLineDemo</code>, which holds <code>-boothno=12</code> in its
-    configuration, and put a <em>different</em> booth on the link:
+    So far the configuration and the link have been used one at a time. Use both.
+    <code>CmdLineDemo</code> holds <code>-boothno=12 -green</code>, so put only
+    colours on the link &mdash; <strong>no booth number at all</strong>:
   </p>
 
-  <pre><code>.../v5/demo/E3DSFeaturesTemplate/CmdLineDemo?appParameters=-boothno=10</code></pre>
-
-  <p>
-    The player starts at <strong>booth 10</strong>. The configuration said 12 and
-    the link said 10, and <strong>the link won</strong>.
-  </p>
-
-  <p>
-    By default the link does not merely take priority &mdash; it
-    <strong>replaces</strong> the configuration's command line entirely.
-    Anything else that had been in <em>Parameters To Pass To App</em> is not used
-    either.
-  </p>
-
-  <h3>Step 9 &mdash; make them add up instead</h3>
-
-  <p>
-    Turn on <strong>Append Parameters To URL</strong> on the same
-    <em>Developer</em> tab:
+  <p class="demo">
+    <a href="https://connector.eagle3dstreaming.com/v5/demo/E3DSFeaturesTemplate/CmdLineDemo?exeLunchArgs=-green pink red">
+      Open CmdLineDemo with three colours on the link &rarr;</a>
   </p>
 
   <figure>
-    <img src="/images/cmdline-developer-tab.png"
-         alt="The Developer tab with Parameters To Pass To App holding -green and the Append Parameters To URL switch turned on"
+    <img src="/images/cmdline-append-url-and-config.webp"
+         alt="The demo at booth 12 with a green ball, pink cone and red box, and the browser address bar showing a link that contains only colours and no booth number"
          loading="lazy">
     <figcaption>
-      <em>Parameters To Pass To App</em> holds <code>-green</code>, and
-      <strong>Append Parameters To URL</strong> is now on.
+      Look at the address bar: the link says
+      <code>?exeLunchArgs=-green pink red</code> and <strong>no booth
+      number</strong> &mdash; yet the player is at <strong>booth 12</strong>. The
+      booth came from the configuration and the three colours came from the link,
+      and the application received both.
     </figcaption>
   </figure>
 
   <p>
-    With that on, the link's parameters are <strong>added to</strong> the
-    configuration's instead of replacing them, and the application receives both:
+    That is worth pausing on. The link never mentioned booth 12, so the only
+    place it could have come from is <em>Parameters To Pass To App</em>. The
+    link's parameters were <strong>added to</strong> the configuration's rather
+    than replacing them, which is what <strong>Append Parameters To URL</strong>
+    does &mdash; and <code>CmdLineDemo</code> has it on:
   </p>
 
   <figure>
-    <img src="/images/cmdline-booth-demo-result.png"
-         alt="The demo with a blue ball from the link parameter and a green cone from the configuration parameter"
+    <img src="/images/cmdline-developer-tab-cmdlinedemo.png"
+         alt="The Developer tab of the CmdLineDemo configuration, with Parameters To Pass To App holding -boothno=12 -green and Append Parameters To URL switched on"
          loading="lazy">
     <figcaption>
-      Both sources at once. The <strong>ball is blue</strong> from
-      <code>-blue</code> on the link, and the <strong>cone is green</strong> from
-      <code>-green</code> in the configuration. With <em>Append Parameters To
-      URL</em> off, only <code>-blue</code> would have applied and the cone would
-      be white.
+      <code>CmdLineDemo</code>'s own settings. <em>Parameters To Pass To App</em>
+      holds <code>-boothno=12 -green</code>, and <strong>Append Parameters To
+      URL</strong> is on.
     </figcaption>
   </figure>
 
-  <h3>What those nine steps established</h3>
+  <p>
+    The colours also confirm what step 5 showed: they landed on the
+    <strong>ball, cone and box in the order they were written</strong> &mdash;
+    green, pink, red.
+  </p>
+
+  <h3>Step 8 &mdash; turn that switch off</h3>
+
+  <p>
+    Turn <strong>Append Parameters To URL</strong> off and open the same link
+    again. The configuration's <code>-boothno=12 -green</code> is
+    <strong>not used at all</strong>: the link's <code>-blue</code> replaces it
+    entirely, so the player is back at booth 1 with a blue ball.
+  </p>
+
+  <p>
+    <strong>Off is the default</strong>, and it is the behaviour to be sure
+    about. A link carrying <code>?exeLunchArgs=</code> does not merely take
+    priority over <em>Parameters To Pass To App</em> &mdash; it replaces it
+    completely, including parameters the link says nothing about.
+    <code>CmdLineDemo</code> has the switch on, which is why steps 1&ndash;7
+    behaved as they did.
+  </p>
+
+  <h3>What those eight steps established</h3>
 
   <div class="scroll">
     <table>
@@ -691,10 +739,10 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
       <tbody>
         <tr><td>1&ndash;2</td><td>A parameter in the configuration changes what the application does.</td></tr>
         <tr><td>3</td><td>The same parameter on the link does the same thing. Two sources, one outcome.</td></tr>
-        <tr><td>4&ndash;6</td><td>Parameters accumulate, and their order can matter to the application.</td></tr>
-        <tr><td>7</td><td>The application decides what a parameter means. Unknown ones do nothing, silently.</td></tr>
-        <tr><td>8</td><td>When both places set the same thing, the link wins &mdash; and by default replaces.</td></tr>
-        <tr><td>9</td><td><em>Append Parameters To URL</em> changes replace into add.</td></tr>
+        <tr><td>4&ndash;5</td><td>Parameters accumulate, and their order can matter to the application.</td></tr>
+        <tr><td>6</td><td>The application decides what a parameter means. Unknown ones do nothing, silently.</td></tr>
+        <tr><td>7</td><td>When both places set the same thing, the link wins &mdash; and by default replaces.</td></tr>
+        <tr><td>8</td><td><em>Append Parameters To URL</em> changes replace into add.</td></tr>
       </tbody>
     </table>
   </div>
@@ -737,161 +785,6 @@ summary .hint{color:var(--ink-3);font-size:14.5px;min-width:0}
     <em>Reading a parameter inside your application</em> below, and it is worth
     reading before writing any code that checks a parameter &mdash; it is the
     mistake that costs people the most time.
-  </p>
-</details>
-
-<details class="sect">
-  <summary><h2>The same parameters without a link</h2>
-  <span class="hint">Every one of those links has an equivalent configuration command line.</span></summary>
-
-  <p>
-    Anything that can go in a link can go in <em>Parameters To Pass To App</em>
-    instead, written the same way but <strong>without any URL
-    encoding</strong> &mdash; it is not a URL, so spaces are just spaces:
-  </p>
-
-  <div class="scroll">
-    <table>
-      <thead><tr><th>As a link</th><th>In <em>Parameters To Pass To App</em></th></tr></thead>
-      <tbody>
-        <tr><td><code>?exeLunchArgs=-boothno=12 -red</code></td><td><code>-boothno=12 -red</code></td></tr>
-        <tr><td><code>?exeLunchArgs=-boothno=12 -pink</code></td><td><code>-boothno=12 -pink</code></td></tr>
-        <tr><td><code>?exeLunchArgs=-boothno=12 -green</code></td><td><code>-boothno=12 -green</code></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p>
-    So why use links at all? Because a configuration command line is
-    <strong>one fixed value for everybody</strong>. To hand one visitor green,
-    another red and another pink, three configurations have to exist &mdash; three
-    stream links, three sets of settings to keep in step, and a fourth colour
-    means a fourth of everything.
-  </p>
-
-  <p>
-    That is merely annoying for three colours. It stops working entirely at the
-    thing people actually want it for: <strong>telling the application who is
-    watching</strong>. A username or a login token is different for every single
-    visitor, so doing it through configurations would mean one configuration per
-    user &mdash; a thousand users, a thousand configurations. There is no version
-    of that which is workable.
-  </p>
-
-  <p>
-    <strong>That is what <code>?exeLunchArgs=</code> exists for.</strong> One
-    configuration and one application, with the per-visitor part carried by the
-    link:
-  </p>
-
-  <pre><code>...?exeLunchArgs=-username=alice
-...?exeLunchArgs=-username=bob</code></pre>
-
-  <p>
-    Alice and Bob open the same stream link with different values on it, and the
-    application knows which of them is watching. From there it is an ordinary
-    named value: read it in Blueprint or C++ and the application can greet them
-    by name, load their saved state, show only what they are allowed to see, or
-    take a login token and verify it against your own server before showing
-    anything at all.
-  </p>
-
-  <p class="note">
-    <strong>A link is visible to the person who opens it.</strong> Anything put
-    on a URL can be read and changed by the visitor, so a value that decides what
-    someone is allowed to see should be a token your own service can verify, not
-    a plain username the application trusts on sight. If your application has no
-    use for parameters from links at all, they can be switched off entirely
-    &mdash; see <em>Turning off parameters from links</em> below.
-  </p>
-</details>
-
-<details class="sect">
-  <summary><h2>Two names for the same thing</h2>
-  <span class="hint">appParameters and exeLunchArgs both work. Prefer the first.</span></summary>
-
-  <p>
-    The parameter on the link can be written either way, and both do exactly the
-    same thing:
-  </p>
-
-  <pre><code>...?appParameters=-boothno=12 -green     preferred
-...?exeLunchArgs=-boothno=12 -green     the original name, still supported</code></pre>
-
-  <p>
-    <strong><code>appParameters</code></strong> is the one to use in anything
-    written from now on. It says what it is, and it matches the
-    <em>Parameters To Pass To App</em> field in the Control Panel, so the same
-    idea has the same name in both places.
-  </p>
-
-  <p>
-    <strong><code>exeLunchArgs</code> keeps working, permanently.</strong> It is
-    the original name and it is written into links, printed material, QR codes,
-    kiosk setups and emails that have been in circulation for years. Nothing that
-    works today stops working &mdash; the new name is an addition, not a
-    replacement, and there is no need to go and change existing links.
-  </p>
-
-  <p>
-    If a link somehow carries both, <code>appParameters</code> is the one used.
-  </p>
-</details>
-
-<details class="sect">
-  <summary><h2>Turning off parameters from links</h2>
-  <span class="hint">For applications that should not accept anything from a URL.</span></summary>
-
-  <p>
-    A link can be edited by whoever holds it. That is the point of the feature
-    when you are passing a username, and a liability when you are not: a visitor
-    can add parameters of their own choosing to the end of a stream link and the
-    application will be started with them. That includes Unreal's own
-    parameters, not just the ones your application knows about.
-  </p>
-
-  <p>
-    If your application never needs per-visitor parameters, switch the whole
-    thing off for that configuration. Parameters from links are then
-    <strong>ignored completely</strong> &mdash; only <em>Parameters To Pass To
-    App</em> is used, and it makes no difference what a visitor puts on the URL
-    or how <em>Append Parameters To URL</em> is set.
-  </p>
-
-  <div class="scroll">
-    <table>
-      <thead><tr><th>Setting</th><th>A link carrying <code>?appParameters=-blue</code></th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>Parameters from links allowed</strong> (the default)</td>
-          <td><code>-blue</code> reaches the application, appended to or replacing <em>Parameters To Pass To App</em>.</td>
-        </tr>
-        <tr>
-          <td><strong>Parameters from links turned off</strong></td>
-          <td><code>-blue</code> is discarded. The application starts with <em>Parameters To Pass To App</em> only.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p>
-    <strong>It is allowed by default</strong>, so nothing changes for any
-    configuration that exists today, and everything else on this page continues
-    to describe what happens. Turning it off is a deliberate choice for an
-    application that does not want it.
-  </p>
-
-  <p>
-    An attempt that gets refused is recorded, with what the link tried to pass.
-    If you suspect someone is experimenting with your links, that is what to ask
-    support for.
-  </p>
-
-  <p class="note">
-    <strong>Availability.</strong> The streaming platform honours this setting
-    now. The switch for it is still being added to the <em>Developer</em> tab, so
-    if you want it applied to a configuration before it appears there, ask
-    support and it can be set for you.
   </p>
 </details>
 
@@ -1173,43 +1066,105 @@ arrived at the server    ?exeLunchArgs=-boothno=12%20-green</code></pre>
 </details>
 
 <details class="sect">
-  <summary><h2>Values Eagle 3D Streaming can fill in for you</h2>
-  <span class="hint">Placeholders for things you cannot know when you write the configuration.</span></summary>
+  <summary><h2>The same parameters without a link</h2>
+  <span class="hint">Every one of those links has an equivalent configuration command line.</span></summary>
 
   <p>
-    Some values are only decided when a machine is assigned, so they cannot be
-    typed into a configuration ahead of time. Write a placeholder instead and it
-    is replaced at launch:
+    Anything that can go in a link can go in <em>Parameters To Pass To App</em>
+    instead, written the same way but <strong>without any URL
+    encoding</strong> &mdash; it is not a URL, so spaces are just spaces:
   </p>
 
   <div class="scroll">
     <table>
-      <thead><tr><th>Placeholder</th><th>Replaced with</th></tr></thead>
+      <thead><tr><th>As a link</th><th>In <em>Parameters To Pass To App</em></th></tr></thead>
       <tbody>
-        <tr><td><code>%ip_ss%</code></td><td>The address of the signalling server for this session.</td></tr>
-        <tr><td><code>%port_streamer2ss%</code></td><td>The port the application connects to that server on.</td></tr>
-        <tr><td><code>%ip_streamer%</code></td><td>The public address of the machine the app is running on.</td></tr>
-        <tr><td><code>%instance_id%</code></td><td>The identifier of that machine.</td></tr>
-        <tr><td><code>%vm_region%</code></td><td>The region the machine is in.</td></tr>
+        <tr><td><code>?exeLunchArgs=-boothno=12 -red</code></td><td><code>-boothno=12 -red</code></td></tr>
+        <tr><td><code>?exeLunchArgs=-boothno=12 -pink</code></td><td><code>-boothno=12 -pink</code></td></tr>
+        <tr><td><code>?exeLunchArgs=-boothno=12 -green</code></td><td><code>-boothno=12 -green</code></td></tr>
       </tbody>
     </table>
   </div>
 
   <p>
-    So a configuration command line of <code>-MyServer=%ip_ss%</code> starts the
-    application with <code>-MyServer=10.0.0.5</code> when the session is served
-    from a machine at that address.
+    So why use links at all? Because a configuration command line is
+    <strong>one fixed value for everybody</strong>. To hand one visitor green,
+    another red and another pink, three configurations have to exist &mdash; three
+    stream links, three sets of settings to keep in step, and a fourth colour
+    means a fourth of everything.
   </p>
 
   <p>
-    Placeholders work in both places &mdash; <em>Parameters To Pass To App</em> and
-    <code>?exeLunchArgs=</code> on the link.
+    That is merely annoying for three colours. It stops working entirely at the
+    thing people actually want it for: <strong>telling the application who is
+    watching</strong>. A username or a login token is different for every single
+    visitor, so doing it through configurations would mean one configuration per
+    user &mdash; a thousand users, a thousand configurations. There is no version
+    of that which is workable.
+  </p>
+
+  <p>
+    <strong>That is what <code>?exeLunchArgs=</code> exists for.</strong> One
+    configuration and one application, with the per-visitor part carried by the
+    link:
+  </p>
+
+  <pre><code>...?exeLunchArgs=-username=alice
+...?exeLunchArgs=-username=bob</code></pre>
+
+  <p>
+    Alice and Bob open the same stream link with different values on it, and the
+    application knows which of them is watching. From there it is an ordinary
+    named value: read it in Blueprint or C++ and the application can greet them
+    by name, load their saved state, show only what they are allowed to see, or
+    take a login token and verify it against your own server before showing
+    anything at all.
+  </p>
+
+  <p class="note">
+    <strong>A link is visible to the person who opens it.</strong> Anything put
+    on a URL can be read and changed by the visitor, so a value that decides what
+    someone is allowed to see should be a token your own service can verify, not
+    a plain username the application trusts on sight. If your application has no
+    use for parameters from links at all, they can be switched off entirely
+    &mdash; see <em>Turning off parameters from links</em> below.
   </p>
 </details>
 
 <details class="sect">
   <summary><h2>Reading a parameter inside your application</h2>
-  <span class="hint">Unreal has two different functions, and using the wrong one always returns false.</span></summary>
+  <span class="hint">Two ways in: C++ at startup, or Blueprint once the level has loaded.</span></summary>
+
+  <p>
+    There are two places your application can read the command line, and they
+    happen at different moments:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th></th><th>When it runs</th><th>Use it for</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>C++</strong></td>
+          <td>While the engine is still starting, before any level has loaded and before the stream has begun.</td>
+          <td>Anything that has to be decided before the map exists &mdash; which map to load, whether to run in a particular mode at all.</td>
+        </tr>
+        <tr>
+          <td><strong>Blueprint</strong></td>
+          <td>Once a level has loaded, on <em>Begin Play</em> or later.</td>
+          <td>Anything about the world &mdash; where to place the player, what colour to make an object. The demo does all of its work here.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    The command line is the same in both. Only the timing differs, and the
+    difference matters: a Blueprint cannot act before its level exists, so a
+    parameter that decides <em>which</em> level to load has to be read in C++.
+  </p>
+
+  <h3>In C++, during startup</h3>
 
   <p>
     Unreal treats two kinds of parameter differently, and the difference catches
@@ -1317,6 +1272,152 @@ bool bGreen = FParse::Param(FCommandLine::Get(), TEXT("green"));</code></pre>
     condition fails and it looks like a new problem &mdash; when in fact two of
     the three had never worked at all. If a parameter matters, test it on its
     own.
+  </p>
+
+  <h3>In Blueprint, once the level has loaded</h3>
+
+  <p>
+    Blueprint does not have <code>FParse</code>. What it has is a node that
+    returns the <strong>entire command line as one string</strong> &mdash;
+    <strong>Get Command Line</strong> &mdash; and everything after that is string
+    handling you do yourself.
+  </p>
+
+  <p>
+    The pattern the demo uses, and the one to copy:
+  </p>
+
+  <ol>
+    <li>
+      On <strong>Begin Play</strong>, call <strong>Get Command Line</strong>.
+      It returns something like
+      <code>-boothno=12 -green -PixelStreamingURL=ws://...</code> &mdash; your own
+      parameters and the platform's together, in one string.
+    </li>
+    <li>
+      <strong>Split it on spaces</strong> into an array, so each parameter is
+      one entry.
+    </li>
+    <li>
+      <strong>Handle the two kinds separately.</strong> For a named value like
+      <code>-boothno=12</code>, find the entry starting with
+      <code>-boothno=</code> and take what follows the <code>=</code> &mdash; that
+      is the booth number, as text, ready to convert to an integer. For a bare
+      switch like <code>-green</code>, you are only asking whether that entry is
+      in the array at all.
+    </li>
+    <li>
+      Act on it. The demo looks up the booth with that number and moves the
+      player there, then walks the array in order applying the first colour it
+      recognises to the ball, the next to the cone, the next to the box &mdash;
+      which is why order decided which object changed in steps 4 and 5.
+    </li>
+  </ol>
+
+  <p>
+    <strong>Timing is the thing to watch.</strong> A Blueprint runs when its
+    level loads, which is after the engine has started and around when the stream
+    becomes available. That is early enough to place a player or colour an object
+    before anyone sees it, and too late to choose which level loads. If a
+    parameter has to decide that, read it in C++ as above.
+  </p>
+
+  <p class="note">
+    <strong>The demo's own Blueprint is the best reference.</strong> It does
+    exactly the four steps above, for both a named value and a bare switch, and
+    it is the code behind every screenshot on this page.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>Values Eagle 3D Streaming can fill in for you</h2>
+  <span class="hint">Placeholders for things you cannot know when you write the configuration.</span></summary>
+
+  <p>
+    Some values are only decided when a machine is assigned, so they cannot be
+    typed into a configuration ahead of time. Write a placeholder instead and it
+    is replaced at launch:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Placeholder</th><th>Replaced with</th></tr></thead>
+      <tbody>
+        <tr><td><code>%ip_ss%</code></td><td>The address of the signalling server for this session.</td></tr>
+        <tr><td><code>%port_streamer2ss%</code></td><td>The port the application connects to that server on.</td></tr>
+        <tr><td><code>%ip_streamer%</code></td><td>The public address of the machine the app is running on.</td></tr>
+        <tr><td><code>%instance_id%</code></td><td>The identifier of that machine.</td></tr>
+        <tr><td><code>%vm_region%</code></td><td>The region the machine is in.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    So a configuration command line of <code>-MyServer=%ip_ss%</code> starts the
+    application with <code>-MyServer=10.0.0.5</code> when the session is served
+    from a machine at that address.
+  </p>
+
+  <p>
+    Placeholders work in both places &mdash; <em>Parameters To Pass To App</em> and
+    <code>?exeLunchArgs=</code> on the link.
+  </p>
+</details>
+
+<details class="sect">
+  <summary><h2>Turning off parameters from links</h2>
+  <span class="hint">For applications that should not accept anything from a URL.</span></summary>
+
+  <p>
+    A link can be edited by whoever holds it. That is the point of the feature
+    when you are passing a username, and a liability when you are not: a visitor
+    can add parameters of their own choosing to the end of a stream link and the
+    application will be started with them. That includes Unreal's own
+    parameters, not just the ones your application knows about.
+  </p>
+
+  <p>
+    If your application never needs per-visitor parameters, switch the whole
+    thing off for that configuration. Parameters from links are then
+    <strong>ignored completely</strong> &mdash; only <em>Parameters To Pass To
+    App</em> is used, and it makes no difference what a visitor puts on the URL
+    or how <em>Append Parameters To URL</em> is set.
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Setting</th><th>A link carrying <code>?exeLunchArgs=-blue</code></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Parameters from links allowed</strong> (the default)</td>
+          <td><code>-blue</code> reaches the application, appended to or replacing <em>Parameters To Pass To App</em>.</td>
+        </tr>
+        <tr>
+          <td><strong>Parameters from links turned off</strong></td>
+          <td><code>-blue</code> is discarded. The application starts with <em>Parameters To Pass To App</em> only.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <strong>It is allowed by default</strong>, so nothing changes for any
+    configuration that exists today, and everything else on this page continues
+    to describe what happens. Turning it off is a deliberate choice for an
+    application that does not want it.
+  </p>
+
+  <p>
+    An attempt that gets refused is recorded, with what the link tried to pass.
+    If you suspect someone is experimenting with your links, that is what to ask
+    support for.
+  </p>
+
+  <p class="note">
+    <strong>Availability.</strong> The streaming platform honours this setting
+    now. The switch for it is still being added to the <em>Developer</em> tab, so
+    if you want it applied to a configuration before it appears there, ask
+    support and it can be set for you.
   </p>
 </details>
 
